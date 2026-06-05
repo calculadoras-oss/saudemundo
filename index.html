@@ -354,8 +354,9 @@ const savedTheme = localStorage.getItem('sm-theme');
 if (savedTheme === 'dark') {
   document.body.classList.add('dark');
   document.getElementById('theme-btn').textContent = '☀️';
+} else {
+  localStorage.setItem('sm-theme', 'light');
 }
-
 function toggleTheme() {
   const isDark = document.body.classList.toggle('dark');
   document.getElementById('theme-btn').textContent = isDark ? '☀️' : '🌙';
