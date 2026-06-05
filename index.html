@@ -477,7 +477,7 @@ function abrirChatGPT() {
   if (!lastResult) return;
   const { meta, tmb, tdee, protG, carbG, fatG, objLabel } = lastResult;
   const prompt = `Você é um nutricionista. Analise esses dados:\n\n- Objetivo: ${objLabel}\n- Meta calórica: ${meta} kcal/dia\n- TMB: ${tmb} kcal\n- TDEE: ${tdee} kcal\n- Proteína: ${protG}g/dia\n- Carboidrato: ${carbG}g/dia\n- Gordura: ${fatG}g/dia\n\nPor favor: 1) Avalie se é um bom plano, 2) Sugira 3 alimentos para bater cada macro, 3) Dê 2 dicas práticas.`;
-  window.open('https://chat.openai.com/?q=' + encodeURIComponent(prompt), '_blank');
+  window.open('https://chatgpt.com/?q=' + encodeURIComponent(prompt), '_blank');
 }
 
 function shareWhatsApp() {
