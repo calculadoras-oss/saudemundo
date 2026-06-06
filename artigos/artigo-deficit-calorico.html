@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantas Calorias Comer para Emagrecer? O Guia do Déficit Calórico</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-card: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --primary: #10b981;
+            --primary-hover: #059669;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: #334155;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        /* Header e Navegação */
+        header {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-home {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-home:hover {
+            color: var(--primary);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary);
+            background-color: var(--bg-primary);
+        }
+
+        /* Estrutura do Artigo */
+        .main-container {
+            max-width: 800px;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .article-header {
+            margin-bottom: 2rem;
+        }
+
+        .category-tag {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+
+        .post-meta {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .article-body {
+            background-color: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .article-body p {
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem 0;
+            color: var(--primary);
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem 0;
+        }
+
+        ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        /* Card de Chamada para Ação (CTA) */
+        .card-cta {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
+            border: 2px dashed var(--primary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .card-cta h3 {
+            margin-top: 0;
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-cta p {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn-cta:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Rodapé */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+            background-color: var(--bg-card);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            .article-body { padding: 1.5rem; }
+            .main-container { margin: 1.5rem auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <i class="fa-solid fa-heart-pulse"></i> SaúdeMundo
+            </a>
+            <div class="nav-actions">
+                <a href="../index.html" class="btn-home">
+                    <i class="fa-solid fa-house"></i> Início
+                </a>
+                <button class="theme-toggle" id="themeToggle" title="Alternar tema">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <article>
+            <div class="article-header">
+                <span class="category-tag">Emagrecimento</span>
+                <h1>Quantas Calorias Comer para Emagrecer? O Guia do Déficit Calórico Sem Passar Fome</h1>
+                <div class="post-meta">
+                    <span><i class="fa-solid fa-calendar"></i> Atualizado Recentemente</span>
+                    <span><i class="fa-solid fa-clock"></i> 5 min de leitura</span>
+                </div>
+            </div>
+
+            <div class="article-body">
+                <p>Emagrecer depende principalmente de um conceito simples, mas que gera muitas dúvidas: o <strong>déficit calórico</strong>. Isso significa, basicamente, consumir menos energia (calorias) através da alimentação do que o seu corpo gasta para se manter ativo ao longo do dia. Quando isso acontece de forma consistente, o organismo é obrigado a utilizar a gordura corporal estocada como fonte de combustível.</p>
+
+                <h2>O Que é Déficit Calórico e Como Ele Funciona?</h2>
+                <p>O déficit calórico é o principal mecanismo responsável pela perda de gordura corporal. Sem ele, não existe emagrecimento sustentável. Todos os dias, o seu corpo gasta energia para realizar funções vitais (como respirar, digerir alimentos e manter os órgãos funcionando) e para realizar atividades físicas (como caminhar e treinar). Esse gasto total diário é chamado de TDEE (Gasto Energético Total Diário).</p>
+                <p>Se o seu corpo gasta, por exemplo, 2.300 kcal por dia para se manter, e você passa a consumir 1.800 kcal, você gerou um déficit de 500 kcal diárias. Essa constância pode resultar em aproximadamente 0,5 kg de perda de peso por semana.</p>
+
+                <h2>Qual é o Déficit Calórico Ideal para o Seu Objetivo?</h2>
+                <p>A resposta para "quantas calorias devo comer" depende de fatores individuais como idade, sexo, peso, altura e nível de atividade física. No mercado, os déficits são divididos em três tipos:</p>
+                <ul>
+                    <li><strong>Leve:</strong> Redução de 200 a 300 kcal por dia (perda lenta e muito confortável).</li>
+                    <li><strong>Moderado:</strong> Redução de 400 a 600 kcal por dia (o mais recomendado, pois preserva os músculos).</li>
+                    <li><strong>Agressivo:</strong> Redução acima de 800 kcal por dia (difícil de manter e perigoso).</li>
+                </ul>
+                <p>Reduzir entre 300 e 500 calorias do seu gasto diário costuma gerar uma perda gradual de gordura sem prejudicar a sua massa muscular ou causar fadigamento.</p>
+
+                <h2>Comer Pouco Demais Faz Mal? Os Perigos da Restrição Extrema</h2>
+                <p>Sim! Dietas extremamente restritivas (déficits agressivos e sem orientação) ativam um sinal de alerta no organismo, provocando:</p>
+                <ul>
+                    <li>Perda severa de massa muscular;</li>
+                    <li>Fome excessiva e rebotes de compulsão alimentar;</li>
+                    <li>Fadiga constante e desânimo para treinar;</li>
+                    <li>Desaceleração metabólica (o corpo passa a gastar menos energia para tentar te proteger).</li>
+                </ul>
+
+                <h2>Como Fazer Déficit Calórico Sem Passar Fome</h2>
+                <p>Para emagrecer de forma sustentável, você deve usar estratégias inteligentes de saciedade:</p>
+                <ul>
+                    <li><strong>Aumente o consumo de proteínas:</strong> Elas demoram mais para serem digeridas e preservam os músculos.</li>
+                    <li><strong>Consumir mais fibras:</strong> Vegetais e frutas aumentam o volume da refeição no estômago.</li>
+                    <li><strong>Beba água constantemente:</strong> Muitas vezes a sensação de fome é apenas desidratação.</li>
+                    <li><strong>Evite calorias líquidas:</strong> Sucos adoçados e refrigerantes normais não trazem saciedade e acumulam calorias rapidamente.</li>
+                </ul>
+
+                <h3>Cardio ou Musculação: Qual Escolher?</h3>
+                <p>Os dois ajudam a aumentar o gasto calórico diário, facilitando a criação do déficit. No entanto, a musculação é fundamental no emagrecimento, pois ela sinaliza ao corpo que os músculos são necessários, forçando o organismo a queimar gordura em vez de tecido muscular.</p>
+
+                <h3>Quanto Tempo Demora para Ver os Resultados?</h3>
+                <p>Os resultados variam conforme a sua consistência, mas em geral, as primeiras mudanças visíveis no espelho ou nas roupas surgem entre 2 a 4 semanas. Mudanças mais profundas e perceptíveis por outras pessoas costumam fixar-se entre 2 a 3 meses de fluxo contínuo.</p>
+
+                <div class="card-cta">
+                    <h3>Descubra Seu Déficit Ideal Agora</h3>
+                    <p>Não tente adivinhar os números. Use a nossa Calculadora de Calorias e Macros para descobrir gratuitamente quantas calorias você precisa comer por dia para emagrecer com segurança e eficiência.</p>
+                    <a href="../index.html" class="btn-cta">
+                        <i class="fa-solid fa-calculator"></i> Acessar Calculadora Grátis
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 SaúdeMundo. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const icon = themeToggle.querySelector('i');
+
+        // Carrega o tema salvo
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateIcon(newTheme);
+        });
+
+        function updateIcon(theme) {
+            if (theme === 'dark') {
+                icon.className = 'fa-solid fa-sun';
+            } else {
+                icon.className = 'fa-solid fa-moon';
+            }
+        }
+    </script>
+</body>
+</html>
