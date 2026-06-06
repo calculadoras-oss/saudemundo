@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creatina Funciona Mesmo? Benefícios, Como Tomar e Verdades Sobre a Retenção</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-card: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --primary: #10b981;
+            --primary-hover: #059669;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --accent: #eab308;
+            --accent-hover: #ca8a04;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: #334155;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        /* Header e Navegação */
+        header {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-home {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-home:hover {
+            color: var(--primary);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary);
+            background-color: var(--bg-primary);
+        }
+
+        /* Estrutura do Artigo */
+        .main-container {
+            max-width: 800px;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .article-header {
+            margin-bottom: 2rem;
+        }
+
+        .category-tag {
+            background-color: rgba(234, 179, 8, 0.1);
+            color: var(--accent);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+
+        .post-meta {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            display: flex;
+            gap: 1rem;
+                }
+
+        .article-body {
+            background-color: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .article-body p {
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem 0;
+            color: var(--primary);
+        }
+
+        ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        /* Box de Afiliado */
+        .box-afiliado {
+            background-color: rgba(234, 179, 8, 0.05);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .btn-afiliado {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--accent);
+            color: #1e293b;
+            text-decoration: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .btn-afiliado:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Card de Chamada para Ação (CTA) */
+        .card-cta {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
+            border: 2px dashed var(--primary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .card-cta h3 {
+            margin-top: 0;
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-cta p {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn-cta:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Rodapé */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+            background-color: var(--bg-card);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            .article-body { padding: 1.5rem; }
+            .main-container { margin: 1.5rem auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <i class="fa-solid fa-heart-pulse"></i> SaúdeMundo
+            </a>
+            <div class="nav-actions">
+                <a href="../index.html" class="btn-home">
+                    <i class="fa-solid fa-house"></i> Início
+                </a>
+                <button class="theme-toggle" id="themeToggle" title="Alternar tema">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <article>
+            <div class="article-header">
+                <span class="category-tag">Suplementação</span>
+                <h1>Creatina Funciona Mesmo? Benefícios, Como Tomar e Verdades Sobre a Retenção de Líquido</h1>
+                <div class="post-meta">
+                    <span><i class="fa-solid fa-calendar"></i> Atualizado Recentemente</span>
+                    <span><i class="fa-solid fa-clock"></i> 5 min de leitura</span>
+                </div>
+            </div>
+
+            <div class="article-body">
+                <p>A creatina se consolidou como o suplemento mais procurado e vendido do mercado fitness. Utilizada por atletas, iniciantes da academia e até mesmo por pessoas de mais idade que buscam mais qualidade de vida, ela é uma das substâncias com maior embasamento científico no mundo. Mas afinal: a creatina realmente funciona ou tudo não passa de marketing? E ela provoca retenção de líquido?</p>
+
+                <h2>A Creatina Funciona de Verdade?</h2>
+                <p>A resposta curta e científica é: <strong>sim, ela funciona perfeitamente</strong>. A creatina é um composto produzido naturalmente pelo nosso organismo e encontrado em pequenas doses na carne vermelha e nos peixes. Ela atuará diretamente nas células musculares, acelerando a ressíntese de ATP (a principal molécula de energia rápida do corpo). Isso se traduz em força explosiva, permitindo que você levante mais peso ou faça mais repetições antes de atingir a falha.</p>
+
+                <h2>O Mito da Retenção: Creatina Retém Líquido ou Engorda?</h2>
+                <p>Este é o maior medo de quem começa a suplementar: ver o ponteiro da balança subir. É preciso entender a diferença dos processos biológicos:</p>
+                <ul>
+                    <li><strong>A Creatina retém líquido?</strong> Sim, mas de forma 100% intracelular. Ela puxa a água para dentro do músculo, e não para baixo da pele (que é aquela retenção externa que deixa com aspecto inchado). Essa hidratação deixa o músculo com uma aparência mais cheia e volumosa, além de auxiliar no transporte de nutrientes.</li>
+                    <li><strong>Creatina engorda?</strong> Não, a creatina possui calorias zero e é incapaz de acumular gordura corporal. Qualquer aumento de peso inicial nas primeiras semanas é puro reflexo da água armazenada nos músculos.</li>
+                </ul>
+
+                <h2>Principais Benefícios da Creatina no Corpo</h2>
+                <ul>
+                    <li>Aumento notável de força e potência nos treinos de musculação;</li>
+                    <li>Melhora significativa na recuperação muscular entre as séries;</li>
+                    <li>Estímulo direto ao ganho de massa magra (hipertrofia);</li>
+                    <li>Prevenção da perda muscular natural (sarcopenia) com o avançar da idade;</li>
+                    <li>Benefícios cognitivos secundários, como melhora do foco e disposição mental.</li>
+                </ul>
+
+                <h2>Como Tomar Creatina Corretamente?</h2>
+                <p>A dosagem padrão e mais recomendada por nutricionistas varia entre <strong>3g e 5g por dia</strong>. Você não precisa fazer ciclos ou pausas de interrupção; o uso contínuo a longo prazo mostrou-se totalmente seguro para pessoas saudáveis.</p>
+                <p>O horário em que você toma a creatina não é o fator principal, pois ela funciona por efeito acumulativo (saturação nos músculos). O segredo absoluto é a consistência: você deve tomar todos os dias, inclusive nos dias em que não treinar.</p>
+
+                <h2>Qual Tipo de Creatina Escolher?</h2>
+                <p>Não caia em armadilhas de marketing caro. O tipo ideal, mais testado e com melhor custo-benefício é a <strong>Creatina Monohidratada 100% Pura</strong>. Opte por marcas reconhecidas que apresentem laudos de pureza.</p>
+
+                <div class="box-afiliado">
+                    <p><strong>👉 VEJA AQUI A CREATINA MAIS VENDIDA E RECOMENDADA DO MOMENTO:</strong></p>
+                    <!-- Substitua o # pelo seu link de afiliado real do produto -->
+                    <a href="#" target="_blank" class="btn-afiliado">
+                        <i class="fa-solid fa-shopping-cart"></i> Conferir Produto na Loja
+                    </a>
+                </div>
+
+                <div class="card-cta">
+                    <h3>Ajuste Seus Macronutrientes</h3>
+                    <p>Para a creatina entregar o máximo de resultado, seus carboidratos e proteínas diárias precisam estar alinhados. Use nossa Calculadora de Calorias e Macros e monte seu plano ideal.</p>
+                    <a href="../index.html" class="btn-cta">
+                        <i class="fa-solid fa-calculator"></i> Ajustar Minha Dieta
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 SaúdeMundo. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const icon = themeToggle.querySelector('i');
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateIcon(newTheme);
+        });
+
+        function updateIcon(theme) {
+            if (theme === 'dark') {
+                icon.className = 'fa-solid fa-sun';
+            } else {
+                icon.className = 'fa-solid fa-moon';
+            }
+        }
+    </script>
+</body>
+</html>
