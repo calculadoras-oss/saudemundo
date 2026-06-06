@@ -147,7 +147,19 @@ body.dark .article-tag { color: var(--green); }
 .article-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px; }
 .article-cta { font-size: 13px; color: var(--green-dark); font-weight: 600; }
 body.dark .article-cta { color: var(--green); }
-
+.btn-read {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--green-dark);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.btn-read:hover { color: var(--green); text-decoration: underline; }
+body.dark .btn-read { color: var(--green); }
+body.dark .btn-read:hover { color: var(--green-light); }
+  
 /* FAQ */
 .faq-section { background: var(--dark2); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; margin-bottom: 24px; }
 .faq-item { border-bottom: 1px solid var(--border); padding: 16px 0; }
