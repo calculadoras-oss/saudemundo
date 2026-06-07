@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<!-- Google AdSense -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9184321382546271" crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,16 +18,15 @@
   --dark:#F8FAF8; --dark2:#FFFFFF; --dark3:#F0F4F0; --dark4:#E0E7E0;
   --text:#111827; --text-muted:#4B5563; --border:#E0E0E0; --radius:16px;
 }
-body.dark {
+body.dark{
   --dark:#050A05; --dark2:#0D150D; --dark3:#142014; --dark4:#1C2E1C;
   --text:#F0FFF4; --text-muted:#6EE7A0; --border:#1C2E1C;
 }
-  *{margin:0;padding:0;box-sizing:border-box;}
+*{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;transition:background 0.3s,color 0.3s;}
-body.light{--dark:#F0FAF4;--dark2:#FFFFFF;--dark3:#E8F5EC;--dark4:#D0EAD8;--text:#0E1A13;--text-muted:#4A7A58;}
 .bg-grid{position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(46,204,113,0.03)1px,transparent 1px),linear-gradient(90deg,rgba(46,204,113,0.03)1px,transparent 1px);background-size:40px 40px;pointer-events:none;}
-nav{position:sticky;top:0;z-index:100;background:rgba(7,13,10,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--dark4);padding:0 20px;}
-body.light nav{background:rgba(240,250,244,0.92);}
+nav{position:sticky;top:0;z-index:100;background:rgba(248,250,248,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--dark4);padding:0 20px;transition:background 0.3s;}
+body.dark nav{background:rgba(5,10,5,0.96);}
 .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:54px;}
 .nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--green);text-decoration:none;font-weight:700;}
 .nav-links{display:flex;gap:6px;flex-wrap:wrap;}
@@ -70,13 +68,18 @@ label{display:block;font-size:12px;letter-spacing:1px;text-transform:uppercase;c
 .tool-link:hover{border-color:var(--green);}
 .tool-link-name{font-size:0.9rem;color:var(--green);margin-bottom:4px;}
 .tool-link-desc{font-size:12px;color:var(--text-muted);}
+footer{text-align:center;padding:40px 20px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--dark4);background:var(--dark2);position:relative;z-index:10;}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:15px;align-items:center;}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-bottom:6px;}
+.footer-links a{color:var(--text-muted);text-decoration:none;transition:color 0.2s;}
+.footer-links a:hover{color:var(--accent);}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
-<body class="light">
+<body>
 <div class="bg-grid"></div>
 <nav>
- <div class="nav-inner">
+  <div class="nav-inner">
     <a href="index.html" class="nav-logo">✦ saudemundo</a>
     <div class="nav-links">
       <a href="index.html">Calorias</a>
@@ -95,101 +98,51 @@ label{display:block;font-size:12px;letter-spacing:1px;text-transform:uppercase;c
   </div>
 </nav>
 <header>
-<div class="badge">✦ saudemundo · Nutrição</div>
-<h1>Calculadora de Proteína</h1>
-<p class="subtitle">Descubra quanto de proteína você precisa por dia para atingir seu objetivo.</p>
+  <div class="badge">✦ saudemundo · Nutrição</div>
+  <h1>Calculadora de Proteína</h1>
+  <p class="subtitle">Descubra quanto de proteína você precisa por dia para atingir seu objetivo.</p>
 </header>
 <div class="container">
-<div class="card">
-<div class="card-title">💪 Seus dados</div>
-<div class="field"><label>Peso (kg)</label><div class="input-row"><span class="input-prefix">kg</span><input type="number" id="peso" value="70" min="30" max="300"></div></div>
-<div class="field">
-<label>Nível de atividade</label>
-<div class="input-row">
-<select id="atividade">
-<option value="0.8">Sedentário</option>
-<option value="1.2">Levemente ativo</option>
-<option value="1.6" selected>Moderadamente ativo</option>
-<option value="2.0">Muito ativo / musculação</option>
-<option value="2.2">Atleta / alta performance</option>
-</select>
-</div>
-</div>
-<div class="field">
-<label>Objetivo</label>
-<div class="toggle-group" id="obj-group">
-<button onclick="setObj('emagrecer',this)">Emagrecer</button>
-<button class="active" onclick="setObj('manter',this)">Manter</button>
-<button onclick="setObj('ganhar',this)">Ganhar massa</button>
-</div>
-</div>
-<button class="btn-calc" onclick="calcProteina()">Calcular minha proteína →</button>
-</div>
-<div class="result-box" id="result">
-<div class="prot-main">
-<div class="prot-val" id="prot-val">—</div>
-<div class="prot-unit">gramas de proteína por dia</div>
-<div class="prot-kg" id="prot-kg">—</div>
-</div>
-<div class="card" style="padding:20px;margin-bottom:0;">
-<div class="card-title" style="margin-bottom:16px;">🍗 Equivalências em alimentos</div>
-<div class="sources-grid">
-<div class="source-item"><div class="source-label">🍗 Frango grelhado</div><div class="source-val" id="src-frango">—</div></div>
-<div class="source-item"><div class="source-label">🥚 Ovos inteiros</div><div class="source-val" id="src-ovo">—</div></div>
-<div class="source-item"><div class="source-label">🐟 Atum em lata</div><div class="source-val" id="src-atum">—</div></div>
-<div class="source-item"><div class="source-label">🥛 Whey protein</div><div class="source-val" id="src-whey">—</div></div>
-</div>
-</div>
-</div>
-<div class="card">
-<div class="card-title">🛠️ Outras calculadoras</div>
-<div class="other-tools">
-<a href="index.html" class="tool-link"><div class="tool-link-name">🥗 Calorias e Macros</div><div class="tool-link-desc">Meta calórica e macronutrientes</div></a>
-<a href="calculadora-imc.html" class="tool-link"><div class="tool-link-name">⚖️ IMC</div><div class="tool-link-desc">Índice de Massa Corporal</div></a>
-<a href="calculadora-tmb.html" class="tool-link"><div class="tool-link-name">🔥 TMB</div><div class="tool-link-desc">Taxa Metabólica Basal</div></a>
-<a href="calculadora-agua.html" class="tool-link"><div class="tool-link-name">💧 Água</div><div class="tool-link-desc">Hidratação diária ideal</div></a>
-</div>
-</div>
-</div>
-<footer>
-  <div class="footer-inner">
-    <div class="footer-links">
-      <a href="sobre.html">Sobre Nós</a>
-      <a href="contato.html">Contato</a>
-      <a href="privacidade.html">Política de Privacidade</a>
-      <a href="termos.html">Termos de Uso</a>
+  <div class="card">
+    <div class="card-title">💪 Seus dados</div>
+    <div class="field"><label>Peso (kg)</label><div class="input-row"><span class="input-prefix">kg</span><input type="number" id="peso" value="70" min="30" max="300"></div></div>
+    <div class="field">
+      <label>Nível de atividade</label>
+      <div class="input-row">
+        <select id="atividade">
+          <option value="0.8">Sedentário</option>
+          <option value="1.2">Levemente ativo</option>
+          <option value="1.6" selected>Moderadamente ativo</option>
+          <option value="2.0">Muito ativo / musculação</option>
+          <option value="2.2">Atleta / alta performance</option>
+        </select>
+      </div>
     </div>
-    <p style="max-width:600px;line-height:1.6;font-size:12px;">Aviso: As calculadoras do SaúdeMundo têm fins educativos. Os resultados não substituem orientação de nutricionista ou médico.</p>
-    <p>© <span id="year-auto"></span> · <a href="https://saudemundo.com.br" style="color:var(--accent);text-decoration:none;font-weight:500;">saudemundo.com.br</a> · Todos os direitos reservados.</p>
+    <div class="field">
+      <label>Objetivo</label>
+      <div class="toggle-group" id="obj-group">
+        <button onclick="setObj('emagrecer',this)">Emagrecer</button>
+        <button class="active" onclick="setObj('manter',this)">Manter</button>
+        <button onclick="setObj('ganhar',this)">Ganhar massa</button>
+      </div>
+    </div>
+    <button class="btn-calc" onclick="calcProteina()">Calcular minha proteína →</button>
   </div>
-</footer>
-<script>
-const savedTheme = localStorage.getItem('sm-theme');
-if (savedTheme === 'dark') { document.body.classList.add('dark'); document.getElementById('theme-btn').textContent = '☀️'; }
-function toggleTheme() {
-  const isDark = document.body.classList.toggle('dark');
-  document.getElementById('theme-btn').textContent = isDark ? '☀️' : '🌙';
-  localStorage.setItem('sm-theme', isDark ? 'dark' : 'light');
-}
-document.getElementById('year-auto').textContent = new Date().getFullYear();
-let objetivo='manter';
-function setObj(o,btn){objetivo=o;document.getElementById('obj-group').querySelectorAll('button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
-function calcProteina(){
-  const peso=parseFloat(document.getElementById('peso').value)||0;
-  const fator=parseFloat(document.getElementById('atividade').value)||1.6;
-  let mult=fator;
-  if(objetivo==='ganhar')mult=Math.min(fator+0.2,2.4);
-  if(objetivo==='emagrecer')mult=Math.max(fator,1.8);
-  const prot=Math.round(peso*mult);
-  const protKg=(prot/peso).toFixed(1);
-  document.getElementById('prot-val').textContent=prot+'g';
-  document.getElementById('prot-kg').textContent=protKg+'g de proteína por kg de peso corporal';
-  document.getElementById('src-frango').textContent=Math.round(prot/0.31)+'g';
-  document.getElementById('src-ovo').textContent=Math.round(prot/6)+' ovos';
-  document.getElementById('src-atum').textContent=Math.round(prot/25)+' latas';
-  document.getElementById('src-whey').textContent=Math.round(prot/25)+' scoops';
-  document.getElementById('result').classList.add('show');
-}
-</script>
-</body>
-</html>
+  <div class="result-box" id="result">
+    <div class="prot-main">
+      <div class="prot-val" id="prot-val">—</div>
+      <div class="prot-unit">gramas de proteína por dia</div>
+      <div class="prot-kg" id="prot-kg">—</div>
+    </div>
+    <div class="card" style="padding:20px;margin-bottom:0;">
+      <div class="card-title" style="margin-bottom:16px;">🍗 Equivalências em alimentos</div>
+      <div class="sources-grid">
+        <div class="source-item"><div class="source-label">🍗 Frango grelhado</div><div class="source-val" id="src-frango">—</div></div>
+        <div class="source-item"><div class="source-label">🥚 Ovos inteiros</div><div class="source-val" id="src-ovo">—</div></div>
+        <div class="source-item"><div class="source-label">🐟 Atum em lata</div><div class="source-val" id="src-atum">—</div></div>
+        <div class="source-item"><div class="source-label">🥛 Whey protein</div><div class="source-val" id="src-whey">—</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">🛠️ Outras
