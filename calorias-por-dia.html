@@ -230,13 +230,8 @@ font-size:0.95rem;
 color:var(--text-muted);
 }
 
-footer{
-text-align:center;
-padding:40px 20px;
-border-top:1px solid var(--dark4);
-background:var(--dark2);
-font-size:13px;
-color:var(--text-muted);
+footer{text-align:center;padding:40px 20px;border-top:1px solid var(--dark4);background:var(--dark2);
+font-size:13px;color:var(--text-muted);
 }
 </style>
 </head>
@@ -375,7 +370,16 @@ O cálculo utiliza a fórmula de Mifflin-St Jeor para estimar seu metabolismo ba
 </div>
 
 <footer>
-© <span id="ano"></span> · saudemundo.com.br · Todos os direitos reservados.
+<div class="footer-inner">
+    <div class="footer-links">
+      <a href="sobre.html">Sobre Nós</a>
+      <a href="contato.html">Contato</a>
+      <a href="privacidade.html">Política de Privacidade</a>
+      <a href="termos.html">Termos de Uso</a>
+    </div>
+    <p style="max-width:600px;line-height:1.6;font-size:12px;">Aviso: As calculadoras do SaúdeMundo têm fins educativos. Os resultados não substituem orientação de nutricionista ou médico.</p>
+    <p>© <span id="year-auto"></span> · <a href="https://saudemundo.com.br" style="color:var(--accent);text-decoration:none;font-weight:500;">saudemundo.com.br</a> · Todos os direitos reservados.</p>
+  </div>
 </footer>
 
 <script>
