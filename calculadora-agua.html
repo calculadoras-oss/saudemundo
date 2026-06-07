@@ -165,6 +165,7 @@ function toggleTheme() {
   document.getElementById('theme-btn').textContent = isDark ? '☀️' : '🌙';
   localStorage.setItem('sm-theme', isDark ? 'dark' : 'light');
 }
+document.getElementById('year-auto').textContent = new Date().getFullYear();
 function calcAgua(){
   const peso=parseFloat(document.getElementById('peso').value)||0;
   const ml=parseInt(document.getElementById('atividade').value)||35;
