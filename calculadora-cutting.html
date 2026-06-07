@@ -94,7 +94,14 @@ font-weight:700;
 .nav-links{
 display:flex;
 gap:6px;
-flex-wrap:wrap;
+flex-wrap:nowrap;
+overflow-x:auto;
+-webkit-overflow-scrolling:touch;
+scrollbar-width:none;
+}
+
+.nav-links::-webkit-scrollbar{
+display:none;
 }
 
 .nav-links a{
