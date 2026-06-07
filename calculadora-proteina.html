@@ -145,4 +145,54 @@ footer{text-align:center;padding:40px 20px;color:var(--text-muted);font-size:13p
     </div>
   </div>
   <div class="card">
-    <div class="card-title">🛠️ Outras
+    <div class="card-title">🛠️ Outras calculadoras</div>
+    <div class="other-tools">
+      <a href="index.html" class="tool-link"><div class="tool-link-name">🥗 Calorias e Macros</div><div class="tool-link-desc">Meta calórica e macronutrientes</div></a>
+      <a href="calculadora-imc.html" class="tool-link"><div class="tool-link-name">⚖️ IMC</div><div class="tool-link-desc">Índice de Massa Corporal</div></a>
+      <a href="calculadora-tmb.html" class="tool-link"><div class="tool-link-name">🔥 TMB</div><div class="tool-link-desc">Taxa Metabólica Basal</div></a>
+      <a href="calculadora-agua.html" class="tool-link"><div class="tool-link-name">💧 Água</div><div class="tool-link-desc">Hidratação diária ideal</div></a>
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="sobre.html">Sobre Nós</a>
+      <a href="contato.html">Contato</a>
+      <a href="privacidade.html">Política de Privacidade</a>
+      <a href="termos.html">Termos de Uso</a>
+    </div>
+    <p style="max-width:600px;line-height:1.6;font-size:12px;">Aviso: As calculadoras do SaúdeMundo têm fins educativos. Os resultados não substituem orientação de nutricionista ou médico.</p>
+    <p>© <span id="year-auto"></span> · <a href="https://saudemundo.com.br" style="color:var(--accent);text-decoration:none;font-weight:500;">saudemundo.com.br</a> · Todos os direitos reservados.</p>
+  </div>
+</footer>
+<script>
+const savedTheme = localStorage.getItem('sm-theme');
+if (savedTheme === 'dark') { document.body.classList.add('dark'); document.getElementById('theme-btn').textContent = '☀️'; }
+function toggleTheme() {
+  const isDark = document.body.classList.toggle('dark');
+  document.getElementById('theme-btn').textContent = isDark ? '☀️' : '🌙';
+  localStorage.setItem('sm-theme', isDark ? 'dark' : 'light');
+}
+document.getElementById('year-auto').textContent = new Date().getFullYear();
+let objetivo='manter';
+function setObj(o,btn){objetivo=o;document.getElementById('obj-group').querySelectorAll('button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+function calcProteina(){
+  const peso=parseFloat(document.getElementById('peso').value)||0;
+  const fator=parseFloat(document.getElementById('atividade').value)||1.6;
+  let mult=fator;
+  if(objetivo==='ganhar')mult=Math.min(fator+0.2,2.4);
+  if(objetivo==='emagrecer')mult=Math.max(fator,1.8);
+  const prot=Math.round(peso*mult);
+  const protKg=(prot/peso).toFixed(1);
+  document.getElementById('prot-val').textContent=prot+'g';
+  document.getElementById('prot-kg').textContent=protKg+'g de proteína por kg de peso corporal';
+  document.getElementById('src-frango').textContent=Math.round(prot/0.31)+'g';
+  document.getElementById('src-ovo').textContent=Math.round(prot/6)+' ovos';
+  document.getElementById('src-atum').textContent=Math.round(prot/25)+' latas';
+  document.getElementById('src-whey').textContent=Math.round(prot/25)+' scoops';
+  document.getElementById('result').classList.add('show');
+}
+</script>
+</body>
+</html>
