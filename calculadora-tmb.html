@@ -158,18 +158,17 @@ label{display:block;font-size:12px;letter-spacing:1px;text-transform:uppercase;c
     </div>
   </div>
 </div>
-<footer style="text-align:center;padding:40px 20px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--dark4);background:var(--dark2);position:relative;z-index:10;">
-  <div style="max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:15px;align-items:center;">
-    <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-bottom:10px;">
-      <a href="sobre.html" style="color:var(--text-muted);text-decoration:none;" onmouseover="this.style.color='var(--green)'" onmouseout="this.style.color='var(--text-muted)'">Sobre Nós</a>
-      <a href="contato.html" style="color:var(--text-muted);text-decoration:none;" onmouseover="this.style.color='var(--green)'" onmouseout="this.style.color='var(--text-muted)'">Contato</a>
-      <a href="privacidade.html" style="color:var(--text-muted);text-decoration:none;" onmouseover="this.style.color='var(--green)'" onmouseout="this.style.color='var(--text-muted)'">Política de Privacidade</a>
-      <a href="termos.html" style="color:var(--text-muted);text-decoration:none;" onmouseover="this.style.color='var(--green)'" onmouseout="this.style.color='var(--text-muted)'">Termos de Uso</a>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="sobre.html">Sobre Nós</a>
+      <a href="contato.html">Contato</a>
+      <a href="privacidade.html">Política de Privacidade</a>
+      <a href="termos.html">Termos de Uso</a>
     </div>
-    <p style="max-width:600px;line-height:1.6;font-size:12px;margin-bottom:10px;">Aviso: As calculadoras do SaúdeMundo têm fins educativos e informativos. Os resultados não substituem orientação de nutricionista ou médico.</p>
-    <p>© <span id="year-auto">2026</span> · <a href="https://saudemundo.com.br" style="color:var(--green);text-decoration:none;font-weight:500;">saudemundo.com.br</a> · Todos os direitos reservados.</p>
+    <p style="max-width:600px;line-height:1.6;font-size:12px;">Aviso: As calculadoras do SaúdeMundo têm fins educativos. Os resultados não substituem orientação de nutricionista ou médico.</p>
+    <p>© <span id="year-auto"></span> · <a href="https://saudemundo.com.br" style="color:var(--accent);text-decoration:none;font-weight:500;">saudemundo.com.br</a> · Todos os direitos reservados.</p>
   </div>
-  <script>document.getElementById('year-auto').textContent = new Date().getFullYear();</script>
 </footer>
 <script>
 let sexo='M';
