@@ -163,9 +163,16 @@ label{display:block;font-size:12px;letter-spacing:1px;text-transform:uppercase;c
   </div>
 </footer>
 <script>
+const savedTheme = localStorage.getItem('sm-theme');
+if (savedTheme === 'dark') { document.body.classList.add('dark'); document.getElementById('theme-btn').textContent = '☀️'; }
+function toggleTheme() {
+  const isDark = document.body.classList.toggle('dark');
+  document.getElementById('theme-btn').textContent = isDark ? '☀️' : '🌙';
+  localStorage.setItem('sm-theme', isDark ? 'dark' : 'light');
+}
+document.getElementById('year-auto').textContent = new Date().getFullYear();
 let objetivo='manter';
 function setObj(o,btn){objetivo=o;document.getElementById('obj-group').querySelectorAll('button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
-function toggleTheme(){document.body.classList.toggle('light');document.querySelector('.theme-btn').textContent=document.body.classList.contains('light')?'☀️':'🌙';}
 function calcProteina(){
   const peso=parseFloat(document.getElementById('peso').value)||0;
   const fator=parseFloat(document.getElementById('atividade').value)||1.6;
