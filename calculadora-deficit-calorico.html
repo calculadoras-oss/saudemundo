@@ -56,25 +56,7 @@ body.dark .tool-name { color: #D4AC0D; }
 </head>
 <body>
 <div class="bg-grid"></div>
-<nav>
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">✦ saudemundo</a>
-    <div class="nav-links">
-      <a href="index.html">Calorias</a>
-      <a href="calculadora-imc.html">IMC</a>
-      <a href="calculadora-tmb.html">TMB</a>
-      <a href="calculadora-agua.html">Água</a>
-      <a href="calculadora-proteina.html">Proteína</a>
-      <a href="calculadora-tdee.html">TDEE</a>
-      <a href="calculadora-deficit-calorico.html" class="active">Déficit</a>
-      <a href="calculadora-cutting.html">Cutting</a>
-      <a href="calculadora-bulking.html">Bulking</a>
-      <a href="calculadora-macros.html">Macros</a>
-      <a href="calorias-por-dia.html">Cal/Dia</a>
-    </div>
-    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()">🌙</button>
-  </div>
-</nav>
+
 <header>
   <div class="badge">✦ saudemundo · Emagrecimento</div>
   <h1>Calculadora de<br>Déficit Calórico</h1>
@@ -164,19 +146,6 @@ body.dark .tool-name { color: #D4AC0D; }
   </div>
 </div>
 
-<footer>
-  <div class="footer-inner">
-    <div class="footer-links">
-      <a href="sobre.html">Sobre Nós</a>
-      <a href="contato.html">Contato</a>
-      <a href="privacidade.html">Política de Privacidade</a>
-      <a href="termos.html">Termos de Uso</a>
-    </div>
-    <p style="max-width:600px;line-height:1.6;font-size:12px;">Aviso: As calculadoras do SaúdeMundo têm fins educativos. Os resultados não substituem orientação de nutricionista ou médico.</p>
-    <p>© <span id="year-auto"></span> · <a href="https://saudemundo.com.br" style="color:var(--accent);text-decoration:none;font-weight:500;">saudemundo.com.br</a> · Todos os direitos reservados.</p>
-  </div>
-</footer>
-
 <script>
 let sexo = 'M', ritmo = 'moderado';
 const savedTheme = localStorage.getItem('sm-theme');
@@ -241,5 +210,6 @@ function calcular() {
   document.getElementById('resultado').classList.add('show');
 }
 </script>
+<script src="shared.js"></script>
 </body>
 </html>
