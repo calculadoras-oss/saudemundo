@@ -297,3 +297,43 @@ footer {
 /* --- Animações --- */
 @keyframes fadeDown { from { opacity:0; transform:translateY(-20px); } to { opacity:1; transform:translateY(0); } }
 @keyframes fadeIn   { from { opacity:0; transform:translateY(10px);  } to { opacity:1; transform:translateY(0); } }
+/* --- Nav scroll horizontal no mobile --- */
+@media (max-width: 768px) {
+  nav {
+    padding: 0 12px;
+  }
+
+  .nav-inner {
+    height: auto;
+    flex-wrap: wrap;
+    padding: 10px 0;
+    gap: 6px;
+  }
+
+  .nav-logo {
+    flex-shrink: 0;
+  }
+
+  .nav-links {
+    order: 3;
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+
+  .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-links a {
+    flex-shrink: 0;
+  }
+
+  .theme-btn {
+    order: 2;
+    margin-left: auto;
+  }
+}
