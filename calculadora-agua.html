@@ -8,40 +8,41 @@
 <meta name="description" content="Descubra quantos litros de água você deve beber por dia com base no seu peso e nível de atividade física.">
 <link rel="canonical" href="https://saudemundo.com.br/calculadora-agua.html">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9EPL2XNX6H"></script>
-<script>
-window.dataLayer=window.dataLayer||[];
-function gtag(){dataLayer.push(arguments);}
-gtag('js',new Date());
-gtag('config','G-9EPL2XNX6H');
-</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EPL2XNX6H');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared.css">
 <style>
-/* Água — cor azul no lugar do verde */
 .container { max-width: 700px; }
 
 .input-row:focus-within { border-color: #3498DB; box-shadow: 0 0 0 3px rgba(52,152,219,0.1); }
 .input-prefix { color: #3498DB; }
+body.dark .input-prefix { color: #5DADE2; }
+.btn-calc { background: linear-gradient(135deg, #1A6FA0, #3498DB); }
+h1 { background: linear-gradient(135deg, #3498DB, #85C1E9); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-/* Resultado */
-.result-box { display: none; animation: fadeIn 0.4s ease; margin-bottom: 20px; }
-.result-box.show { display: block; }
-.water-main { background: linear-gradient(135deg,rgba(52,152,219,0.1),rgba(52,152,219,0.05)); border: 1px solid rgba(52,152,219,0.3); border-radius: var(--radius); padding: 28px; text-align: center; margin-bottom: 16px; }
-.water-val { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 900; color: #3498DB; margin-bottom: 8px; }
-.water-unit { font-size: 1rem; color: var(--text-muted); }
-.cups-info { font-size: 14px; color: var(--text-muted); margin-top: 12px; }
-.meta-val { font-size: 0.95rem; font-weight: 600; color: #3498DB; }
+.result-card { display: none; animation: fadeIn 0.5s ease; }
+.result-card.show { display: block; }
+
+.water-main { background: var(--dark2); border: 1px solid rgba(52,152,219,0.2); border-radius: var(--radius); padding: 28px; text-align: center; margin-bottom: 16px; }
+.water-val { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 8vw, 4.5rem); font-weight: 900; color: #3498DB; margin-bottom: 8px; }
+.water-unit { font-size: 1rem; color: var(--text-muted); margin-bottom: 6px; }
+.water-desc { font-size: 13px; color: var(--text-muted); }
+
+.meta-item-value { color: #3498DB !important; }
 </style>
 </head>
 <body>
 <div class="bg-grid"></div>
+
+<!-- NAV É INJETADO PELO shared.js -->
 
 <header>
   <div class="badge">✦ saudemundo · Hidratação</div>
   <h1>Calculadora de Água Diária</h1>
   <p class="subtitle">Descubra quantos litros de água você deve beber por dia para se manter hidratado e saudável.</p>
 </header>
+
 <div class="container">
   <div class="card">
     <div class="card-title">💧 Seus dados</div>
@@ -59,49 +60,59 @@ gtag('config','G-9EPL2XNX6H');
     </div>
     <button class="btn-calc" onclick="calcAgua()">Calcular minha hidratação →</button>
   </div>
-  <div class="result-box" id="result">
+
+  <div class="result-card" id="result">
     <div class="water-main">
       <div class="water-val" id="agua-val">—</div>
       <div class="water-unit">litros por dia</div>
-      <div class="cups-info" id="cups-info">—</div>
+      <div class="water-desc" id="agua-desc">—</div>
     </div>
     <div class="meta-grid">
-      <div class="meta-item"><div class="meta-label">🥤 Copos de 250ml</div><div class="meta-val" id="copos-250">—</div></div>
-      <div class="meta-item"><div class="meta-label">🍶 Garrafas de 500ml</div><div class="meta-val" id="garrafas-500">—</div></div>
-      <div class="meta-item"><div class="meta-label">⏰ Por hora acordado</div><div class="meta-val" id="por-hora">—</div></div>
-      <div class="meta-item"><div class="meta-label">📏 ml por kg</div><div class="meta-val" id="ml-kg">—</div></div>
+      <div class="meta-item"><div class="meta-item-label">🥤 Copos de 250ml</div><div class="meta-item-value" id="copos-250">—</div></div>
+      <div class="meta-item"><div class="meta-item-label">🍶 Garrafas de 500ml</div><div class="meta-item-value" id="garrafas-500">—</div></div>
+      <div class="meta-item"><div class="meta-item-label">⏰ Por hora acordado</div><div class="meta-item-value" id="por-hora">—</div></div>
+      <div class="meta-item"><div class="meta-item-label">📏 ml por kg</div><div class="meta-item-value" id="ml-kg">—</div></div>
     </div>
   </div>
+
   <div class="card">
-    <div class="card-title">🛠️ Outras calculadoras</div>
-    <div class="other-tools">
-    </div>
+    <div class="section-title">📖 Por que a hidratação é tão importante?</div>
+    <p style="line-height:1.8;color:var(--text-muted);">A água representa cerca de 60% do corpo humano e participa de praticamente todos os processos fisiológicos: regulação da temperatura, transporte de nutrientes, digestão e função renal. Mesmo uma desidratação leve de 1-2% já reduz o desempenho cognitivo e físico.</p>
+    <p style="line-height:1.8;color:var(--text-muted);margin-top:12px;">A recomendação de 35 ml/kg é um ponto de partida. Em dias quentes, durante exercícios intensos ou em casos de febre, a necessidade aumenta significativamente.</p>
   </div>
+
+  <div class="section-title">❓ Perguntas Frequentes</div>
+  <div class="faq-section">
+    <div class="faq-item"><div class="faq-q">Café e chá contam como hidratação?</div><div class="faq-a">Sim, em sua maior parte. Apesar da leve ação diurética da cafeína, estudos mostram que bebidas com cafeína contribuem para o balanço hídrico quando consumidas com moderação.</div></div>
+    <div class="faq-item"><div class="faq-q">Posso beber água demais?</div><div class="faq-a">Sim. A hiper-hidratação (intoxicação por água) é rara mas possível, especialmente em atletas que bebem excessivamente durante exercícios prolongados. Siga a sede como guia adicional.</div></div>
+    <div class="faq-item"><div class="faq-q">A cor da urina é um bom indicador?</div><div class="faq-a">Sim. Urina amarelo-claro a transparente indica boa hidratação. Amarelo escuro ou âmbar sinaliza que você precisa beber mais água.</div></div>
+  </div>
+
+  <div class="section-title">🛠️ Outras Calculadoras</div>
+  <div class="tools-grid"></div>
 </div>
 
+<script src="shared.js"></script>
+
 <script>
-const savedTheme = localStorage.getItem('sm-theme');
-if (savedTheme === 'dark') { document.body.classList.add('dark'); document.getElementById('theme-btn').textContent = '☀️'; }
-function toggleTheme() {
-  const isDark = document.body.classList.toggle('dark');
-  document.getElementById('theme-btn').textContent = isDark ? '☀️' : '🌙';
-  localStorage.setItem('sm-theme', isDark ? 'dark' : 'light');
-}
-document.getElementById('year-auto').textContent = new Date().getFullYear();
-function calcAgua(){
-  const peso=parseFloat(document.getElementById('peso').value)||0;
-  const ml=parseInt(document.getElementById('atividade').value)||35;
-  const total=peso*ml;
-  const litros=(total/1000).toFixed(1);
-  document.getElementById('agua-val').textContent=litros;
-  document.getElementById('cups-info').textContent='Equivale a '+Math.round(total/250)+' copos de 250ml por dia';
-  document.getElementById('copos-250').textContent=Math.round(total/250)+' copos';
-  document.getElementById('garrafas-500').textContent=Math.round(total/500)+' garrafas';
-  document.getElementById('por-hora').textContent=(total/16/1000*1000).toFixed(0)+' ml/h';
-  document.getElementById('ml-kg').textContent=ml+' ml/kg';
+function calcAgua() {
+  const peso = parseFloat(document.getElementById('peso').value) || 0;
+  const ml   = parseInt(document.getElementById('atividade').value) || 35;
+  if (!peso) return;
+
+  const total  = peso * ml;
+  const litros = (total / 1000).toFixed(1);
+
+  document.getElementById('agua-val').textContent    = litros;
+  document.getElementById('agua-desc').textContent   = 'Equivale a ' + Math.round(total / 250) + ' copos de 250ml por dia';
+  document.getElementById('copos-250').textContent   = Math.round(total / 250) + ' copos';
+  document.getElementById('garrafas-500').textContent = Math.round(total / 500) + ' garrafas';
+  document.getElementById('por-hora').textContent    = (total / 16).toFixed(0) + ' ml/h';
+  document.getElementById('ml-kg').textContent       = ml + ' ml/kg';
   document.getElementById('result').classList.add('show');
+
+  smSaveUserData({ peso });
 }
 </script>
-<script src="shared.js"></script>
 </body>
 </html>

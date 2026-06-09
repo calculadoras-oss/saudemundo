@@ -17,22 +17,27 @@
 
 .input-row:focus-within { border-color: #E74C3C; box-shadow: 0 0 0 3px rgba(231,76,60,0.1); }
 .input-prefix { color: #E74C3C; }
+body.dark .input-prefix { color: #EC7063; }
 .toggle-group button.active { background: #E74C3C; }
 .btn-calc { background: linear-gradient(135deg, #A01A1A, #E74C3C); }
 .btn-calc:hover { box-shadow: 0 8px 30px rgba(231,76,60,0.3); }
 h1 { background: linear-gradient(135deg, #F0A8A8, #E74C3C, #A01A1A); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-.result-box { display: none; animation: fadeIn 0.4s ease; margin-bottom: 20px; }
-.result-box.show { display: block; }
-.prot-main { background: linear-gradient(135deg, rgba(231,76,60,0.1), rgba(231,76,60,0.05)); border: 1px solid rgba(231,76,60,0.3); border-radius: var(--radius); padding: 28px; text-align: center; margin-bottom: 16px; }
-.prot-val { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 900; color: #E74C3C; margin-bottom: 8px; }
-.prot-unit { font-size: 1rem; color: var(--text-muted); }
-.prot-kg { font-size: 14px; color: var(--text-muted); margin-top: 8px; }
-.source-val { font-size: 0.95rem; font-weight: 600; color: #E74C3C; }
+.result-card { display: none; animation: fadeIn 0.5s ease; }
+.result-card.show { display: block; }
+
+.prot-main { background: var(--dark2); border: 1px solid rgba(231,76,60,0.2); border-radius: var(--radius); padding: 28px; text-align: center; margin-bottom: 16px; }
+.prot-val { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 8vw, 4.5rem); font-weight: 900; color: #E74C3C; margin-bottom: 8px; }
+.prot-unit { font-size: 1rem; color: var(--text-muted); margin-bottom: 6px; }
+.prot-desc { font-size: 13px; color: var(--text-muted); }
+
+.meta-item-value { color: #E74C3C !important; }
 </style>
 </head>
 <body>
 <div class="bg-grid"></div>
+
+<!-- NAV É INJETADO PELO shared.js -->
 
 <header>
   <div class="badge">✦ saudemundo · Nutrição</div>
@@ -67,28 +72,38 @@ h1 { background: linear-gradient(135deg, #F0A8A8, #E74C3C, #A01A1A); -webkit-bac
     <button class="btn-calc" onclick="calcProteina()">Calcular minha proteína →</button>
   </div>
 
-  <div class="result-box" id="result">
+  <div class="result-card" id="result">
     <div class="prot-main">
       <div class="prot-val" id="prot-val">—</div>
       <div class="prot-unit">gramas de proteína por dia</div>
-      <div class="prot-kg" id="prot-kg">—</div>
+      <div class="prot-desc" id="prot-desc">—</div>
     </div>
-    <div class="card" style="padding:20px;margin-bottom:0;">
-      <div class="card-title" style="margin-bottom:16px;">🍗 Equivalências em alimentos</div>
-      <div class="sources-grid">
-        <div class="source-item"><div class="source-label">🍗 Frango grelhado</div><div class="source-val" id="src-frango">—</div></div>
-        <div class="source-item"><div class="source-label">🥚 Ovos inteiros</div><div class="source-val" id="src-ovo">—</div></div>
-        <div class="source-item"><div class="source-label">🐟 Atum em lata</div><div class="source-val" id="src-atum">—</div></div>
-        <div class="source-item"><div class="source-label">🥛 Whey protein</div><div class="source-val" id="src-whey">—</div></div>
-      </div>
+    <div class="meta-grid">
+      <div class="meta-item"><div class="meta-item-label">🍗 Frango grelhado</div><div class="meta-item-value" id="src-frango">—</div></div>
+      <div class="meta-item"><div class="meta-item-label">🥚 Ovos inteiros</div><div class="meta-item-value" id="src-ovo">—</div></div>
+      <div class="meta-item"><div class="meta-item-label">🐟 Atum em lata</div><div class="meta-item-value" id="src-atum">—</div></div>
+      <div class="meta-item"><div class="meta-item-label">🥛 Whey protein</div><div class="meta-item-value" id="src-whey">—</div></div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title">🛠️ Outras Calculadoras</div>
-    <div class="other-tools"></div>
+    <div class="section-title">📖 Por que a proteína é tão importante?</div>
+    <p style="line-height:1.8;color:var(--text-muted);">A proteína é o macronutriente responsável pela construção e reparação muscular, produção de enzimas e hormônios, e manutenção do sistema imune. Ao contrário de carboidratos e gorduras, o corpo não armazena proteína — você precisa consumir o suficiente diariamente.</p>
+    <p style="line-height:1.8;color:var(--text-muted);margin-top:12px;">A recomendação varia conforme o objetivo: quem pratica musculação ou quer ganhar massa precisa de mais proteína do que uma pessoa sedentária. Distribuir o consumo em 4-5 refeições otimiza a síntese proteica muscular.</p>
   </div>
+
+  <div class="section-title">❓ Perguntas Frequentes</div>
+  <div class="faq-section">
+    <div class="faq-item"><div class="faq-q">Comer muita proteína faz mal aos rins?</div><div class="faq-a">Em pessoas saudáveis, ingestas de até 2,2g/kg são consideradas seguras. Pessoas com doença renal preexistente devem consultar um médico antes de aumentar o consumo.</div></div>
+    <div class="faq-item"><div class="faq-q">Whey protein é necessário?</div><div class="faq-a">Não. O whey é apenas uma fonte conveniente e de rápida absorção. Você pode atingir sua meta proteica facilmente com frango, ovos, peixe, carne vermelha, queijo cottage e leguminosas.</div></div>
+    <div class="faq-item"><div class="faq-q">Proteína vegetal é equivalente à animal?</div><div class="faq-a">A proteína animal geralmente tem perfil de aminoácidos mais completo. Veganos devem combinar fontes variadas (leguminosas + cereais) para garantir todos os aminoácidos essenciais.</div></div>
+  </div>
+
+  <div class="section-title">🛠️ Outras Calculadoras</div>
+  <div class="tools-grid"></div>
 </div>
+
+<script src="shared.js"></script>
 
 <script>
 let objetivo = 'manter';
@@ -102,25 +117,25 @@ function setObj(o, btn) {
 function calcProteina() {
   const peso  = parseFloat(document.getElementById('peso').value)     || 0;
   const fator = parseFloat(document.getElementById('atividade').value) || 1.6;
+  if (!peso) return;
 
   let mult = fator;
   if (objetivo === 'ganhar')    mult = Math.min(fator + 0.2, 2.4);
   if (objetivo === 'emagrecer') mult = Math.max(fator, 1.8);
 
-  const prot  = Math.round(peso * mult);
+  const prot   = Math.round(peso * mult);
   const protKg = (prot / peso).toFixed(1);
 
-  document.getElementById('prot-val').textContent  = prot + 'g';
-  document.getElementById('prot-kg').textContent   = protKg + 'g de proteína por kg de peso corporal';
-  document.getElementById('src-frango').textContent = Math.round(prot / 0.31) + 'g';
-  document.getElementById('src-ovo').textContent   = Math.round(prot / 6) + ' ovos';
-  document.getElementById('src-atum').textContent  = Math.round(prot / 25) + ' latas';
-  document.getElementById('src-whey').textContent  = Math.round(prot / 25) + ' scoops';
+  document.getElementById('prot-val').textContent    = prot + 'g';
+  document.getElementById('prot-desc').textContent   = protKg + 'g de proteína por kg de peso corporal';
+  document.getElementById('src-frango').textContent  = Math.round(prot / 0.31) + 'g de frango';
+  document.getElementById('src-ovo').textContent     = Math.round(prot / 6) + ' ovos';
+  document.getElementById('src-atum').textContent    = Math.round(prot / 25) + ' latas';
+  document.getElementById('src-whey').textContent    = Math.round(prot / 25) + ' scoops';
   document.getElementById('result').classList.add('show');
 
   smSaveUserData({ peso });
 }
 </script>
-<script src="shared.js"></script>
 </body>
 </html>

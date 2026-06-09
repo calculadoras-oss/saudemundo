@@ -22,22 +22,29 @@ body.dark .input-prefix { color: #E67E22; }
 .btn-calc { background: linear-gradient(135deg, #CA6F1E, #E67E22); }
 h1 { background: linear-gradient(135deg, #CA6F1E, #E67E22); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-.result-box { display: none; animation: fadeIn 0.4s ease; margin-bottom: 20px; }
-.result-box.show { display: block; }
-.res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
-.res-item { background: var(--dark3); border: 1px solid var(--border); border-radius: 12px; padding: 20px; text-align: center; }
-.res-item.highlight { border-color: #E67E22; background: rgba(230,126,34,0.05); }
-.res-val { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: #E67E22; }
-.res-unit { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+.result-card { display: none; animation: fadeIn 0.5s ease; }
+.result-card.show { display: block; }
+
+.tmb-main { background: var(--dark2); border: 1px solid rgba(230,126,34,0.2); border-radius: var(--radius); padding: 28px; text-align: center; margin-bottom: 16px; }
+
+.meta-item-value { color: #E67E22 !important; }
 
 .activity-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .activity-table th { text-align: left; padding: 10px 12px; color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border); }
 .activity-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted); }
 .activity-table td:last-child { color: #E67E22; font-weight: 600; text-align: right; }
+
+.tmb-values { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.tmb-box { background: var(--dark2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; text-align: center; }
+.tmb-box.highlight { border-color: rgba(230,126,34,0.4); }
+.tmb-box-val { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: #E67E22; }
+.tmb-box-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
 </style>
 </head>
 <body>
 <div class="bg-grid"></div>
+
+<!-- NAV É INJETADO PELO shared.js -->
 
 <header>
   <div class="badge">✦ saudemundo · Metabolismo</div>
@@ -73,29 +80,47 @@ h1 { background: linear-gradient(135deg, #CA6F1E, #E67E22); -webkit-background-c
     <button class="btn-calc" onclick="calcTMB()">Calcular meu metabolismo →</button>
   </div>
 
-  <div class="result-box" id="result">
-    <div class="res-grid">
-      <div class="res-item"><div class="res-label">🔥 TMB (repouso)</div><div class="res-val" id="res-tmb">—</div><div class="res-unit">kcal/dia</div></div>
-      <div class="res-item highlight"><div class="res-label">⚡ TDEE (total)</div><div class="res-val" id="res-tdee">—</div><div class="res-unit">kcal/dia</div></div>
+  <div class="result-card" id="result">
+    <div class="tmb-values">
+      <div class="tmb-box">
+        <div class="tmb-box-label">🔥 TMB (repouso)</div>
+        <div class="tmb-box-val" id="res-tmb">—</div>
+        <div class="tmb-box-label">kcal/dia</div>
+      </div>
+      <div class="tmb-box highlight">
+        <div class="tmb-box-label">⚡ TDEE (total)</div>
+        <div class="tmb-box-val" id="res-tdee">—</div>
+        <div class="tmb-box-label">kcal/dia</div>
+      </div>
     </div>
-    <div class="card" style="padding:20px;">
-      <div class="card-title" style="margin-bottom:16px;">📊 Calorias por nível de atividade</div>
-      <table class="activity-table">
-        <tr><th>Nível</th><th>kcal/dia</th></tr>
-        <tr><td>Sedentário</td><td id="at-1">—</td></tr>
-        <tr><td>Levemente ativo</td><td id="at-2">—</td></tr>
-        <tr><td>Moderadamente ativo</td><td id="at-3">—</td></tr>
-        <tr><td>Muito ativo</td><td id="at-4">—</td></tr>
-        <tr><td>Extremamente ativo</td><td id="at-5">—</td></tr>
-      </table>
+
+    <div class="meta-grid">
+      <div class="meta-item"><div class="meta-item-label">🪑 Sedentário</div><div class="meta-item-value" id="at-1">—</div></div>
+      <div class="meta-item"><div class="meta-item-label">🚶 Levemente ativo</div><div class="meta-item-value" id="at-2">—</div></div>
+      <div class="meta-item"><div class="meta-item-label">🏃 Moderadamente ativo</div><div class="meta-item-value" id="at-3">—</div></div>
+      <div class="meta-item"><div class="meta-item-label">💪 Muito ativo</div><div class="meta-item-value" id="at-4">—</div></div>
+      <div class="meta-item"><div class="meta-item-label">🏋️ Extremamente ativo</div><div class="meta-item-value" id="at-5">—</div></div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title">🛠️ Outras Calculadoras</div>
-    <div class="other-tools"></div>
+    <div class="section-title">📖 O que é TMB e TDEE?</div>
+    <p style="line-height:1.8;color:var(--text-muted);">A Taxa Metabólica Basal (TMB) é a quantidade de calorias que seu corpo precisa apenas para manter funções vitais em repouso completo — respiração, circulação, temperatura corporal. Calculada pela fórmula de Mifflin-St Jeor, a mais validada cientificamente.</p>
+    <p style="line-height:1.8;color:var(--text-muted);margin-top:12px;">O TDEE (Total Daily Energy Expenditure) é o gasto calórico total considerando seu nível de atividade física. Esse é o número que você deve usar como referência para montar sua dieta.</p>
   </div>
+
+  <div class="section-title">❓ Perguntas Frequentes</div>
+  <div class="faq-section">
+    <div class="faq-item"><div class="faq-q">Qual a diferença entre TMB e TDEE?</div><div class="faq-a">TMB é o gasto calórico em repouso total. TDEE multiplica a TMB pelo fator de atividade física, representando o gasto real no dia a dia.</div></div>
+    <div class="faq-item"><div class="faq-q">Como usar o TDEE para emagrecer?</div><div class="faq-a">Para perder peso, consuma entre 300 e 500 kcal abaixo do seu TDEE. Déficits maiores podem causar perda de massa muscular.</div></div>
+    <div class="faq-item"><div class="faq-q">Essa fórmula é precisa para todos?</div><div class="faq-a">A fórmula de Mifflin-St Jeor é a mais precisa para a maioria das pessoas, mas pode variar para atletas de elite ou pessoas com condições metabólicas específicas.</div></div>
+  </div>
+
+  <div class="section-title">🛠️ Outras Calculadoras</div>
+  <div class="tools-grid"></div>
 </div>
+
+<script src="shared.js"></script>
 
 <script>
 let sexo = 'M';
@@ -113,6 +138,7 @@ function calcTMB() {
   const altura = parseFloat(document.getElementById('altura').value) || 0;
   const idade  = parseInt(document.getElementById('idade').value)    || 0;
   const fator  = parseFloat(document.getElementById('atividade').value) || 1.55;
+  if (!peso || !altura || !idade) return;
 
   let tmb = sexo === 'M'
     ? 10 * peso + 6.25 * altura - 5 * idade + 5
@@ -132,6 +158,5 @@ function calcTMB() {
   smSaveUserData({ peso, altura, idade, sexo, atividade: String(fator) });
 }
 </script>
-<script src="shared.js"></script>
 </body>
 </html>
