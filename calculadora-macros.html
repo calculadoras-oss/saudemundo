@@ -1,19 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<!-- Google AdSense -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9184321382546271" crossorigin="anonymous"></script>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Calculadora de Macronutrientes | SaúdeMundo</title>
-
 <meta name="description" content="Calcule a quantidade ideal de proteínas, carboidratos e gorduras para emagrecer, manter ou ganhar massa muscular.">
-
 <link rel="canonical" href="https://saudemundo.com.br/calculadora-macros.html">
-
-<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9EPL2XNX6H"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
@@ -21,128 +14,74 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-9EPL2XNX6H');
 </script>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
 <link rel="stylesheet" href="shared.css">
 <style>
 .container { max-width: 760px; }
-
 .result { display: none; }
 .result.show { display: block; }
 .result-main { text-align: center; padding: 18px 0 28px; }
 .result-main h2 { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--green); margin-bottom: 6px; }
-
 .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
 .box { background: var(--dark3); border-radius: 12px; padding: 18px; text-align: center; }
 .box-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; color: var(--text-muted); }
 .box-value { font-size: 1.4rem; font-weight: 700; }
 </style>
 </head>
-
 <body>
-<body class="light">
+
+<!-- NAV É INJETADO PELO shared.js -->
 
 <header>
-<div class="badge">✦ saudemundo · Nutrição</div>
-
-<h1>Calculadora de Macronutrientes</h1>
-
-<p class="subtitle">
-Descubra quanto consumir de proteínas, carboidratos e gorduras de acordo com sua meta calórica diária.
-</p>
+  <div class="badge">✦ saudemundo · Nutrição</div>
+  <h1>Calculadora de Macronutrientes</h1>
+  <p class="subtitle">Descubra quanto consumir de proteínas, carboidratos e gorduras de acordo com sua meta calórica diária.</p>
 </header>
 
 <div class="container">
 
-<div class="card">
-<div class="card-title">🥗 Seus dados</div>
+  <div class="card">
+    <div class="card-title">🥗 Seus dados</div>
+    <div class="field"><label>Calorias por dia</label><div class="input-row"><input type="number" id="calorias" value="2200"></div></div>
+    <div class="field"><label>Objetivo</label><div class="input-row"><select id="objetivo"><option value="emagrecer">Emagrecer</option><option value="manter" selected>Manter peso</option><option value="ganhar">Ganhar massa</option></select></div></div>
+    <button class="btn-calc" onclick="calcularMacros()">Calcular Macronutrientes →</button>
+  </div>
 
-<div class="field">
-<label>Calorias por dia</label>
-<div class="input-row">
-<input type="number" id="calorias" value="2200">
-</div>
-</div>
+  <div class="card result" id="resultado">
+    <div class="result-main">
+      <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;">Distribuição diária</div>
+      <h2 id="total">0 kcal</h2>
+    </div>
+    <div class="grid">
+      <div class="box"><div class="box-title">Proteína</div><div class="box-value" id="prot">0g</div></div>
+      <div class="box"><div class="box-title">Carboidrato</div><div class="box-value" id="carb">0g</div></div>
+      <div class="box"><div class="box-title">Gordura</div><div class="box-value" id="fat">0g</div></div>
+    </div>
+  </div>
 
-<div class="field">
-<label>Objetivo</label>
-<div class="input-row">
-<select id="objetivo">
-<option value="emagrecer">Emagrecer</option>
-<option value="manter" selected>Manter peso</option>
-<option value="ganhar">Ganhar massa</option>
-</select>
-</div>
-</div>
+  <div class="card">
+    <div class="card-title">📚 O que são macronutrientes?</div>
+    <p class="info">Proteínas ajudam na recuperação muscular e preservação da massa magra. Carboidratos fornecem energia para o treino e atividades do dia a dia. Gorduras são importantes para hormônios, cérebro e absorção de vitaminas.</p>
+  </div>
 
-<button class="btn-calc" onclick="calcularMacros()">
-Calcular Macronutrientes →
-</button>
-</div>
-
-<div class="card result" id="resultado">
-
-<div class="result-main">
-<div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;">
-Distribuição diária
-</div>
-
-<h2 id="total">0 kcal</h2>
-</div>
-
-<div class="grid">
-
-<div class="box">
-<div class="box-title">Proteína</div>
-<div class="box-value" id="prot">0g</div>
-</div>
-
-<div class="box">
-<div class="box-title">Carboidrato</div>
-<div class="box-value" id="carb">0g</div>
-</div>
-
-<div class="box">
-<div class="box-title">Gordura</div>
-<div class="box-value" id="fat">0g</div>
-</div>
+  <!-- ADICIONADO: seção Outras Calculadoras -->
+  <div class="section-title">🛠️ Outras Calculadoras</div>
+  <div class="tools-grid"></div>
 
 </div>
 
-</div>
-
-<div class="card">
-<div class="card-title">📚 O que são macronutrientes?</div>
-
-<p class="info">
-Proteínas ajudam na recuperação muscular e preservação da massa magra. Carboidratos fornecem energia para o treino e atividades do dia a dia. Gorduras são importantes para hormônios, cérebro e absorção de vitaminas.
-</p>
-</div>
-
-</div>
+<!-- shared.js ANTES do script inline -->
+<script src="shared.js"></script>
 
 <script>
-const savedTheme = localStorage.getItem('sm-theme');
-if (savedTheme === 'dark') { document.body.classList.add('dark'); document.getElementById('theme-btn').textContent = '☀️'; }
-function toggleTheme() {
-  const isDark = document.body.classList.toggle('dark');
-  document.getElementById('theme-btn').textContent = isDark ? '☀️' : '🌙';
-  localStorage.setItem('sm-theme', isDark ? 'dark' : 'light');
-}
-document.getElementById('year-auto').textContent = new Date().getFullYear();
 function calcularMacros(){
   const kcal = parseFloat(document.getElementById('calorias').value) || 0;
   const objetivo = document.getElementById('objetivo').value;
   let protPct, carbPct, fatPct;
-  if(objetivo === 'emagrecer'){
-    protPct = 0.40; carbPct = 0.30; fatPct = 0.30;
-  } else if(objetivo === 'ganhar'){
-    protPct = 0.30; carbPct = 0.45; fatPct = 0.25;
-  } else {
-    protPct = 0.30; carbPct = 0.40; fatPct = 0.30;
-  }
+  if(objetivo === 'emagrecer'){ protPct = 0.40; carbPct = 0.30; fatPct = 0.30; }
+  else if(objetivo === 'ganhar'){ protPct = 0.30; carbPct = 0.45; fatPct = 0.25; }
+  else { protPct = 0.30; carbPct = 0.40; fatPct = 0.30; }
   const prot = Math.round((kcal * protPct) / 4);
   const carb = Math.round((kcal * carbPct) / 4);
   const fat  = Math.round((kcal * fatPct) / 9);
@@ -153,6 +92,5 @@ function calcularMacros(){
   document.getElementById('resultado').classList.add('show');
 }
 </script>
-<script src="shared.js"></script>
 </body>
 </html>

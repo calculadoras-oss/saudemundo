@@ -1,39 +1,26 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9184321382546271" crossorigin="anonymous"></script>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Quantas Calorias Devo Comer Por Dia? | SaúdeMundo</title>
-
 <meta name="description" content="Descubra quantas calorias você deve consumir por dia para emagrecer, manter peso ou ganhar massa muscular.">
-
 <link rel="canonical" href="https://saudemundo.com.br/calorias-por-dia.html">
-
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9EPL2XNX6H"></script>
-
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-9EPL2XNX6H');
 </script>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
-
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
 <link rel="stylesheet" href="shared.css">
 <style>
 .container { max-width: 760px; }
-
-/* Esse arquivo usa .btn em vez de .btn-calc */
 .btn { width: 100%; padding: 18px; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--green-dark), var(--green)); color: white; font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: all 0.3s; }
 .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(46,204,113,0.3); }
-
 .result { display: none; }
 .result.show { display: block; }
 .result-main { text-align: center; padding: 15px 0 25px; }
@@ -42,128 +29,50 @@ gtag('config', 'G-9EPL2XNX6H');
 </head>
 <body>
 
+<!-- NAV É INJETADO PELO shared.js -->
+
 <header>
-
-<div class="badge">✦ saudemundo · Nutrição</div>
-
-<h1>Quantas Calorias Comer Por Dia?</h1>
-
-<p class="subtitle">
-Descubra sua necessidade calórica diária para emagrecer, manter peso ou ganhar massa muscular.
-</p>
-
+  <div class="badge">✦ saudemundo · Nutrição</div>
+  <h1>Quantas Calorias Comer Por Dia?</h1>
+  <p class="subtitle">Descubra sua necessidade calórica diária para emagrecer, manter peso ou ganhar massa muscular.</p>
 </header>
 
 <div class="container">
 
-<div class="card">
+  <div class="card">
+    <div class="card-title">🍽️ Seus dados</div>
+    <div class="field"><label>Sexo</label><div class="input-row"><select id="sexo"><option value="M">Masculino</option><option value="F">Feminino</option></select></div></div>
+    <div class="field"><label>Idade</label><div class="input-row"><input type="number" id="idade" value="30"></div></div>
+    <div class="field"><label>Peso (kg)</label><div class="input-row"><input type="number" id="peso" value="70"></div></div>
+    <div class="field"><label>Altura (cm)</label><div class="input-row"><input type="number" id="altura" value="170"></div></div>
+    <div class="field"><label>Atividade física</label><div class="input-row"><select id="atividade"><option value="1.2">Sedentário</option><option value="1.375">Levemente ativo</option><option value="1.55" selected>Moderadamente ativo</option><option value="1.725">Muito ativo</option><option value="1.9">Extremamente ativo</option></select></div></div>
+    <div class="field"><label>Objetivo</label><div class="input-row"><select id="objetivo"><option value="emagrecer">Emagrecer</option><option value="manter" selected>Manter peso</option><option value="ganhar">Ganhar massa</option></select></div></div>
+    <button class="btn" onclick="calcularCalorias()">Calcular Calorias →</button>
+  </div>
 
-<div class="card-title">🍽️ Seus dados</div>
+  <div class="card result" id="resultado">
+    <div class="result-main">
+      <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;">Sua meta diária</div>
+      <h2 id="calorias">0 kcal</h2>
+      <p class="result-text" id="textoResultado"></p>
+    </div>
+  </div>
 
-<div class="field">
-<label>Sexo</label>
+  <div class="card">
+    <div class="card-title">📚 Como funciona?</div>
+    <p class="info">O cálculo utiliza a fórmula de Mifflin-St Jeor para estimar seu metabolismo basal e depois aplica o nível de atividade física para descobrir o gasto total diário de energia.</p>
+  </div>
 
-<div class="input-row">
-<select id="sexo">
-<option value="M">Masculino</option>
-<option value="F">Feminino</option>
-</select>
-</div>
-</div>
-
-<div class="field">
-<label>Idade</label>
-
-<div class="input-row">
-<input type="number" id="idade" value="30">
-</div>
-</div>
-
-<div class="field">
-<label>Peso (kg)</label>
-
-<div class="input-row">
-<input type="number" id="peso" value="70">
-</div>
-</div>
-
-<div class="field">
-<label>Altura (cm)</label>
-
-<div class="input-row">
-<input type="number" id="altura" value="170">
-</div>
-</div>
-
-<div class="field">
-<label>Atividade física</label>
-
-<div class="input-row">
-<select id="atividade">
-<option value="1.2">Sedentário</option>
-<option value="1.375">Levemente ativo</option>
-<option value="1.55" selected>Moderadamente ativo</option>
-<option value="1.725">Muito ativo</option>
-<option value="1.9">Extremamente ativo</option>
-</select>
-</div>
-</div>
-
-<div class="field">
-<label>Objetivo</label>
-
-<div class="input-row">
-<select id="objetivo">
-<option value="emagrecer">Emagrecer</option>
-<option value="manter" selected>Manter peso</option>
-<option value="ganhar">Ganhar massa</option>
-</select>
-</div>
-</div>
-
-<button class="btn" onclick="calcularCalorias()">
-Calcular Calorias →
-</button>
+  <!-- ADICIONADO: seção Outras Calculadoras -->
+  <div class="section-title">🛠️ Outras Calculadoras</div>
+  <div class="tools-grid"></div>
 
 </div>
 
-<div class="card result" id="resultado">
-
-<div class="result-main">
-
-<div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;">
-Sua meta diária
-</div>
-
-<h2 id="calorias">0 kcal</h2>
-
-<p class="result-text" id="textoResultado"></p>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<div class="card-title">📚 Como funciona?</div>
-
-<p class="info">
-O cálculo utiliza a fórmula de Mifflin-St Jeor para estimar seu metabolismo basal e depois aplica o nível de atividade física para descobrir o gasto total diário de energia.
-</p>
-
-</div>
-
-</div>
+<!-- shared.js ANTES do script inline -->
+<script src="shared.js"></script>
 
 <script>
-const savedTheme = localStorage.getItem('sm-theme');
-if (savedTheme === 'dark') { document.body.classList.add('dark'); document.getElementById('theme-btn').textContent = '☀️'; }
-function toggleTheme() {
-  const isDark = document.body.classList.toggle('dark');
-  document.getElementById('theme-btn').textContent = isDark ? '☀️' : '🌙';
-  localStorage.setItem('sm-theme', isDark ? 'dark' : 'light');
-}
-document.getElementById('year-auto').textContent = new Date().getFullYear();
 function calcularCalorias(){
   const sexo = document.getElementById('sexo').value;
   const idade = parseFloat(document.getElementById('idade').value) || 0;
@@ -172,34 +81,20 @@ function calcularCalorias(){
   const atividade = parseFloat(document.getElementById('atividade').value);
   const objetivo = document.getElementById('objetivo').value;
   let tmb;
-  if(sexo === 'M'){
-tmb = 10 * peso + 6.25 * altura - 5 * idade + 5;
-}else{
-tmb = 10 * peso + 6.25 * altura - 5 * idade - 161;
-}
-let calorias = tmb * atividade;
-if(objetivo === 'emagrecer'){
-calorias -= 500;
-}
-if(objetivo === 'ganhar'){
-calorias += 300;
-}
-calorias = Math.round(calorias);
-document.getElementById('calorias').textContent = calorias + ' kcal';
-let texto = '';
-if(objetivo === 'emagrecer'){
-texto = 'Essa estimativa ajuda você a perder gordura corporal com déficit calórico.';
-}
-if(objetivo === 'manter'){
-texto = 'Essa estimativa ajuda você a manter seu peso atual.';
-}
-if(objetivo === 'ganhar'){
-texto = 'Essa estimativa ajuda no ganho de massa muscular.';
-}
-document.getElementById('textoResultado').textContent = texto;
-document.getElementById('resultado').classList.add('show');
+  if(sexo === 'M'){ tmb = 10 * peso + 6.25 * altura - 5 * idade + 5; }
+  else { tmb = 10 * peso + 6.25 * altura - 5 * idade - 161; }
+  let calorias = tmb * atividade;
+  if(objetivo === 'emagrecer'){ calorias -= 500; }
+  if(objetivo === 'ganhar'){ calorias += 300; }
+  calorias = Math.round(calorias);
+  document.getElementById('calorias').textContent = calorias + ' kcal';
+  let texto = '';
+  if(objetivo === 'emagrecer'){ texto = 'Essa estimativa ajuda você a perder gordura corporal com déficit calórico.'; }
+  if(objetivo === 'manter'){ texto = 'Essa estimativa ajuda você a manter seu peso atual.'; }
+  if(objetivo === 'ganhar'){ texto = 'Essa estimativa ajuda no ganho de massa muscular.'; }
+  document.getElementById('textoResultado').textContent = texto;
+  document.getElementById('resultado').classList.add('show');
 }
 </script>
-<script src="shared.js"></script>
 </body>
 </html>
