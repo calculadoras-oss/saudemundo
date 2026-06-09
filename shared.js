@@ -5,10 +5,9 @@
 
 /* ---------- Constantes ---------- */
 const SITE_URL = 'https://saudemundo.com.br';
-const SM_STORAGE_KEY = 'sm-user-data'; // dados do usuário (peso, altura, etc.)
+const SM_STORAGE_KEY = 'sm-user-data';
 
 /* ---------- Nav HTML ---------- */
-/* A página atual é detectada automaticamente pela URL */
 (function injectNav() {
   const pages = [
     { href: 'index.html',                    label: 'Calorias' },
@@ -24,7 +23,6 @@ const SM_STORAGE_KEY = 'sm-user-data'; // dados do usuário (peso, altura, etc.)
     { href: 'calorias-por-dia.html',         label: 'Cal/Dia' },
   ];
 
-  // Detecta página atual
   const current = window.location.pathname.split('/').pop() || 'index.html';
 
   const links = pages.map(p =>
@@ -40,7 +38,6 @@ const SM_STORAGE_KEY = 'sm-user-data'; // dados do usuário (peso, altura, etc.)
       </div>
     </nav>`;
 
-  // Insere antes do primeiro elemento do body
   document.body.insertAdjacentHTML('afterbegin', navHTML);
 })();
 
@@ -69,7 +66,6 @@ const SM_STORAGE_KEY = 'sm-user-data'; // dados do usuário (peso, altura, etc.)
 
   document.body.insertAdjacentHTML('beforeend', footerHTML);
 
-  // Preenche ano automaticamente em todos os spans .year-auto
   document.querySelectorAll('.year-auto').forEach(el => {
     el.textContent = new Date().getFullYear();
   });
@@ -82,12 +78,9 @@ function toggleTheme() {
   localStorage.setItem('sm-theme', isDark ? 'dark' : 'light');
 }
 
-// Aplica tema salvo ao carregar
 (function applyTheme() {
   if (localStorage.getItem('sm-theme') === 'dark') {
     document.body.classList.add('dark');
-    // theme-btn ainda pode não existir (injectNav roda antes, mas DOM pode não ter renderizado)
-    // Usamos requestAnimationFrame para garantir
     requestAnimationFrame(() => {
       const btn = document.getElementById('theme-btn');
       if (btn) btn.textContent = '☀️';
@@ -111,22 +104,50 @@ function copyLink() {
   }
 }
 
+/* ---------- Outras Calculadoras ---------- */
+const SM_TOOLS = [
+  { href: 'index.html',                       icon: '🥗', name: 'Calorias e Macros',  desc: 'Meta calórica e macronutrientes' },
+  { href: 'calculadora-imc.html',             icon: '⚖️', name: 'IMC',                desc: 'Índice de Massa Corporal' },
+  { href: 'calculadora-tmb.html',             icon: '🔥', name: 'TMB e TDEE',         desc: 'Quantas calorias você queima' },
+  { href: 'calculadora-proteina.html',        icon: '💪', name: 'Proteína',           desc: 'Ingestão ideal de proteínas' },
+  { href: 'calculadora-agua.html',            icon: '💧', name: 'Água',               desc: 'Hidratação diária ideal' },
+  { href: 'calculadora-tdee.html',            icon: '⚡', name: 'TDEE',              desc: 'Gasto energético total' },
+  { href: 'calculadora-deficit-calorico.html',icon: '📉', name: 'Déficit Calórico',   desc: 'Calcule seu déficit calórico' },
+  { href: 'calculadora-cutting.html',         icon: '✂️', name: 'Cutting',            desc: 'Planejamento de cutting' },
+  { href: 'calculadora-bulking.html',         icon: '💪', name: 'Bulking',            desc: 'Planejamento de bulking' },
+  { href: 'calculadora-macros.html',          icon: '🥧', name: 'Macronutrientes',    desc: 'Distribuição de macros' },
+  { href: 'calorias-por-dia.html',            icon: '📅', name: 'Calorias por Dia',   desc: 'Estimativa calórica diária' },
+];
+
+function smRenderOtherTools() {
+  const current = window.location.pathname.split('/').pop() || 'index.html';
+  const filtered = SM_TOOLS.filter(t => t.href !== current);
+
+  // .tools-grid → cards grandes (usado no index.html)
+  document.querySelectorAll('.tools-grid').forEach(container => {
+    container.innerHTML = filtered.map(t =>
+      `<a href="${t.href}" class="tool-card">
+        <div class="tool-icon">${t.icon}</div>
+        <div class="tool-name">${t.name}</div>
+        <div class="tool-desc">${t.desc}</div>
+      </a>`
+    ).join('');
+  });
+
+  // .other-tools → links compactos (usado nas demais páginas)
+  document.querySelectorAll('.other-tools').forEach(container => {
+    container.innerHTML = filtered.map(t =>
+      `<a href="${t.href}" class="tool-link">
+        <div class="tool-link-name">${t.icon} ${t.name}</div>
+        <div class="tool-link-desc">${t.desc}</div>
+      </a>`
+    ).join('');
+  });
+}
+
 /* ============================================================
    DADOS DO USUÁRIO — compartilhados entre calculadoras
-   ============================================================
-
-   Como usar em qualquer calculadora:
-
-   SALVAR (chame depois de calcular):
-     smSaveUserData({ peso: 70, altura: 170, idade: 25, sexo: 'M' });
-
-   CARREGAR (chame no início da página para preencher campos):
-     smLoadUserData();   ← preenche automaticamente campos com os IDs:
-                           #peso, #altura, #idade, #sexo-group (toggle)
-
-   OBTER objeto completo:
-     const d = smGetUserData(); // { peso, altura, idade, sexo, ... } ou {}
-*/
+   ============================================================ */
 
 function smGetUserData() {
   try { return JSON.parse(localStorage.getItem(SM_STORAGE_KEY)) || {}; }
@@ -141,16 +162,14 @@ function smSaveUserData(newData) {
 
 function smLoadUserData() {
   const d = smGetUserData();
-  if (!d || !Object.keys(d).length) return; // sem dados salvos, não faz nada
+  if (!d || !Object.keys(d).length) return;
 
-  // Preenche campos comuns se existirem na página
   const fields = ['peso', 'altura', 'idade'];
   fields.forEach(id => {
     const el = document.getElementById(id);
     if (el && d[id]) el.value = d[id];
   });
 
-  // Sexo (toggle group)
   if (d.sexo) {
     const btns = document.querySelectorAll('#sexo-group button');
     btns.forEach(b => {
@@ -158,12 +177,13 @@ function smLoadUserData() {
     });
   }
 
-  // Atividade física (select)
   if (d.atividade) {
     const sel = document.getElementById('atividade');
     if (sel) sel.value = d.atividade;
   }
 }
 
-// Carrega dados ao iniciar (funciona em todas as páginas)
-document.addEventListener('DOMContentLoaded', smLoadUserData);
+document.addEventListener('DOMContentLoaded', () => {
+  smLoadUserData();
+  smRenderOtherTools();
+});
