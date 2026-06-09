@@ -1,39 +1,27 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9184321382546271" crossorigin="anonymous"></script>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Calculadora de Bulking | SaúdeMundo</title>
-
 <meta name="description" content="Calcule suas calorias de bulking para ganho de massa muscular com menos gordura.">
-
 <link rel="canonical" href="https://saudemundo.com.br/calculadora-bulking.html">
-
 <meta property="og:title" content="Calculadora de Bulking | SaúdeMundo">
 <meta property="og:description" content="Descubra quantas calorias consumir para ganhar massa muscular.">
 <meta property="og:type" content="website">
-
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9EPL2XNX6H"></script>
-
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-9EPL2XNX6H');
 </script>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
-
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared.css">
 <style>
 .container { max-width: 700px; }
-
 .result { display: none; }
 .result.show { display: block; }
 .result-main { text-align: center; padding: 20px; border-radius: 16px; background: linear-gradient(135deg, var(--dark2), var(--dark3)); border: 1px solid rgba(46,204,113,0.2); margin-bottom: 20px; }
@@ -41,126 +29,56 @@ gtag('config', 'G-9EPL2XNX6H');
 .result-label { font-size: 1rem; color: var(--text-muted); margin-top: 6px; }
 </style>
 </head>
-
 <body>
-
 <div class="bg-grid"></div>
 
+<!-- NAV É INJETADO PELO shared.js -->
 
 <header>
-
-<div class="badge">
-✦ saudemundo · ganho muscular
-</div>
-
-<h1>Calculadora de Bulking</h1>
-
-<p class="subtitle">
-Descubra quantas calorias consumir para ganhar massa muscular de forma eficiente.
-</p>
-
+  <div class="badge">✦ saudemundo · ganho muscular</div>
+  <h1>Calculadora de Bulking</h1>
+  <p class="subtitle">Descubra quantas calorias consumir para ganhar massa muscular de forma eficiente.</p>
 </header>
 
 <div class="container">
 
-<div class="card">
+  <div class="card">
+    <div class="card-title">💪 Seus dados</div>
+    <div class="field"><label>Peso</label><div class="input-row"><span class="input-prefix">kg</span><input type="number" id="peso" value="75"></div></div>
+    <div class="field"><label>Altura</label><div class="input-row"><span class="input-prefix">cm</span><input type="number" id="altura" value="175"></div></div>
+    <div class="field"><label>Idade</label><div class="input-row"><input type="number" id="idade" value="28"></div></div>
+    <div class="field"><label>Nível de treino</label><div class="input-row"><select id="atividade"><option value="1.375">Leve</option><option value="1.55" selected>Moderado</option><option value="1.725">Intenso</option></select></div></div>
+    <button class="btn-calc" onclick="calcular()">Calcular bulking →</button>
+  </div>
 
-<div class="card-title">
-💪 Seus dados
-</div>
+  <div class="result" id="resultado">
+    <div class="result-main">
+      <div class="result-number" id="kcal">0</div>
+      <div class="result-label">kcal por dia para bulking</div>
+    </div>
+    <div class="meta-grid">
+      <div class="meta-item"><div class="meta-item-label">💪 Proteína ideal</div><div class="meta-item-value" id="proteina">0g</div></div>
+      <div class="meta-item"><div class="meta-item-label">📈 Superávit aplicado</div><div class="meta-item-value">15%</div></div>
+    </div>
+  </div>
 
-<div class="field">
-<label>Peso</label>
-<div class="input-row">
-<span class="input-prefix">kg</span>
-<input type="number" id="peso" value="75">
-</div>
-</div>
+  <div class="card">
+    <div class="card-title">📚 O que é bulking?</div>
+    <p class="info">Bulking é uma estratégia nutricional utilizada para ganho de massa muscular através de superávit calórico controlado.</p>
+    <br>
+    <p class="info">O objetivo é fornecer calorias suficientes para construção muscular enquanto minimiza o ganho excessivo de gordura corporal.</p>
+  </div>
 
-<div class="field">
-<label>Altura</label>
-<div class="input-row">
-<span class="input-prefix">cm</span>
-<input type="number" id="altura" value="175">
-</div>
-</div>
-
-<div class="field">
-<label>Idade</label>
-<div class="input-row">
-<input type="number" id="idade" value="28">
-</div>
-</div>
-
-<div class="field">
-<label>Nível de treino</label>
-<div class="input-row">
-<select id="atividade">
-<option value="1.375">Leve</option>
-<option value="1.55" selected>Moderado</option>
-<option value="1.725">Intenso</option>
-</select>
-</div>
-</div>
-
-<button class="btn-calc" onclick="calcular()">
-Calcular bulking →
-</button>
+  <!-- ADICIONADO: seção Outras Calculadoras (igual ao IMC de referência) -->
+  <div class="section-title">🛠️ Outras Calculadoras</div>
+  <div class="tools-grid"></div>
 
 </div>
 
-<div class="result" id="resultado">
-
-<div class="result-main">
-<div class="result-number" id="kcal">0</div>
-<div class="result-label">kcal por dia para bulking</div>
-</div>
-
-<div class="meta-grid">
-
-<div class="meta-item">
-<div class="meta-item-label">💪 Proteína ideal</div>
-<div class="meta-item-value" id="proteina">0g</div>
-</div>
-
-<div class="meta-item">
-<div class="meta-item-label">📈 Superávit aplicado</div>
-<div class="meta-item-value">15%</div>
-</div>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<div class="card-title">
-📚 O que é bulking?
-</div>
-
-<p class="info">
-Bulking é uma estratégia nutricional utilizada para ganho de massa muscular através de superávit calórico controlado.
-</p>
-
-<br>
-
-<p class="info">
-O objetivo é fornecer calorias suficientes para construção muscular enquanto minimiza o ganho excessivo de gordura corporal.
-</p>
-
-</div>
-
-</div>
+<!-- shared.js MOVIDO PARA ANTES do script inline para que nav/theme-btn/year-auto já existam -->
+<script src="shared.js"></script>
 
 <script>
-const savedTheme = localStorage.getItem('sm-theme');
-if (savedTheme === 'dark') { document.body.classList.add('dark'); document.getElementById('theme-btn').textContent = '☀️'; }
-function toggleTheme() {
-  const isDark = document.body.classList.toggle('dark');
-  document.getElementById('theme-btn').textContent = isDark ? '☀️' : '🌙';
-  localStorage.setItem('sm-theme', isDark ? 'dark' : 'light');
-}
-document.getElementById('year-auto').textContent = new Date().getFullYear();
 function calcular(){
   const peso = parseFloat(document.getElementById('peso').value) || 75;
   const altura = parseFloat(document.getElementById('altura').value) || 175;
@@ -175,6 +93,5 @@ function calcular(){
   document.getElementById('resultado').classList.add('show');
 }
 </script>
-<script src="shared.js"></script>
 </body>
 </html>

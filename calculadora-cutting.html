@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -31,124 +30,55 @@ gtag('config', 'G-9EPL2XNX6H');
 </style>
 </head>
 <body>
-<body class="light">
 <div class="bg-grid"></div>
 
+<!-- NAV É INJETADO PELO shared.js -->
 
 <header>
-
-<div class="badge">
-✦ saudemundo · definição muscular
-</div>
-
-<h1>Calculadora de Cutting</h1>
-
-<p class="subtitle">
-Descubra quantas calorias consumir para perder gordura mantendo o máximo de massa muscular.
-</p>
-
+  <div class="badge">✦ saudemundo · definição muscular</div>
+  <h1>Calculadora de Cutting</h1>
+  <p class="subtitle">Descubra quantas calorias consumir para perder gordura mantendo o máximo de massa muscular.</p>
 </header>
 
 <div class="container">
 
-<div class="card">
+  <div class="card">
+    <div class="card-title">🔥 Seus dados</div>
+    <div class="field"><label>Peso</label><div class="input-row"><span class="input-prefix">kg</span><input type="number" id="peso" value="80"></div></div>
+    <div class="field"><label>Altura</label><div class="input-row"><span class="input-prefix">cm</span><input type="number" id="altura" value="180"></div></div>
+    <div class="field"><label>Idade</label><div class="input-row"><input type="number" id="idade" value="30"></div></div>
+    <div class="field"><label>Nível de treino</label><div class="input-row"><select id="atividade"><option value="1.375">Leve</option><option value="1.55" selected>Moderado</option><option value="1.725">Intenso</option></select></div></div>
+    <button class="btn-calc" onclick="calcular()">Calcular cutting →</button>
+  </div>
 
-<div class="card-title">
-🔥 Seus dados
-</div>
+  <div class="result" id="resultado">
+    <div class="result-main">
+      <div class="result-number" id="kcal">0</div>
+      <div class="result-label">kcal por dia para cutting</div>
+    </div>
+    <div class="meta-grid">
+      <div class="meta-item"><div class="meta-item-label">💪 Proteína ideal</div><div class="meta-item-value" id="proteina">0g</div></div>
+      <div class="meta-item"><div class="meta-item-label">🔥 Déficit aplicado</div><div class="meta-item-value">20%</div></div>
+    </div>
+  </div>
 
-<div class="field">
-<label>Peso</label>
-<div class="input-row">
-<span class="input-prefix">kg</span>
-<input type="number" id="peso" value="80">
-</div>
-</div>
+  <div class="card">
+    <div class="card-title">📚 O que é cutting?</div>
+    <p class="info">Cutting é uma estratégia nutricional focada em reduzir gordura corporal enquanto preserva massa muscular. Normalmente envolve déficit calórico moderado e alta ingestão de proteínas.</p>
+    <br>
+    <p class="info">A maioria das pessoas utiliza cutting após fases de bulking ou ganho de massa muscular.</p>
+  </div>
 
-<div class="field">
-<label>Altura</label>
-<div class="input-row">
-<span class="input-prefix">cm</span>
-<input type="number" id="altura" value="180">
-</div>
-</div>
-
-<div class="field">
-<label>Idade</label>
-<div class="input-row">
-<input type="number" id="idade" value="30">
-</div>
-</div>
-
-<div class="field">
-<label>Nível de treino</label>
-<div class="input-row">
-<select id="atividade">
-<option value="1.375">Leve</option>
-<option value="1.55" selected>Moderado</option>
-<option value="1.725">Intenso</option>
-</select>
-</div>
-</div>
-
-<button class="btn-calc" onclick="calcular()">
-Calcular cutting →
-</button>
+  <!-- ADICIONADO: seção Outras Calculadoras (igual ao IMC de referência) -->
+  <div class="section-title">🛠️ Outras Calculadoras</div>
+  <div class="tools-grid"></div>
 
 </div>
 
-<div class="result" id="resultado">
-
-<div class="result-main">
-<div class="result-number" id="kcal">0</div>
-<div class="result-label">kcal por dia para cutting</div>
-</div>
-
-<div class="meta-grid">
-
-<div class="meta-item">
-<div class="meta-item-label">💪 Proteína ideal</div>
-<div class="meta-item-value" id="proteina">0g</div>
-</div>
-
-<div class="meta-item">
-<div class="meta-item-label">🔥 Déficit aplicado</div>
-<div class="meta-item-value">20%</div>
-</div>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<div class="card-title">
-📚 O que é cutting?
-</div>
-
-<p class="info">
-Cutting é uma estratégia nutricional focada em reduzir gordura corporal enquanto preserva massa muscular. Normalmente envolve déficit calórico moderado e alta ingestão de proteínas.
-</p>
-
-<br>
-
-<p class="info">
-A maioria das pessoas utiliza cutting após fases de bulking ou ganho de massa muscular.
-</p>
-
-</div>
-
-</div>
+<!-- shared.js MOVIDO PARA ANTES do script inline para que nav/theme-btn/year-auto já existam -->
+<script src="shared.js"></script>
 
 <script>
-const savedTheme = localStorage.getItem('sm-theme');
-if (savedTheme === 'dark') { document.body.classList.add('dark'); document.getElementById('theme-btn').textContent = '☀️'; }
-function toggleTheme() {
-  const isDark = document.body.classList.toggle('dark');
-  document.getElementById('theme-btn').textContent = isDark ? '☀️' : '🌙';
-  localStorage.setItem('sm-theme', isDark ? 'dark' : 'light');
-}
-document.getElementById('year-auto').textContent = new Date().getFullYear();
 function calcular(){
   const peso = parseFloat(document.getElementById('peso').value) || 80;
   const altura = parseFloat(document.getElementById('altura').value) || 180;
@@ -163,7 +93,5 @@ function calcular(){
   document.getElementById('resultado').classList.add('show');
 }
 </script>
-<script src="shared.js"></script>
 </body>
 </html>
-```
