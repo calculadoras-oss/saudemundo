@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jejum Intermitente: Funciona para Emagrecer e Ganhar Massa?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-card: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --primary: #10b981;
+            --primary-hover: #059669;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --accent: #eab308;
+            --accent-hover: #ca8a04;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: #334155;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        header {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-home {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-home:hover { color: var(--primary); }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary);
+            background-color: var(--bg-primary);
+        }
+
+        .main-container {
+            max-width: 800px;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .article-header { margin-bottom: 2rem; }
+
+        .category-tag {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+
+        .post-meta {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .article-body {
+            background-color: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .article-body p {
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem 0;
+            color: var(--primary);
+        }
+
+        ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .box-afiliado {
+            background-color: rgba(234, 179, 8, 0.05);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .btn-afiliado {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--accent);
+            color: #1e293b;
+            text-decoration: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .btn-afiliado:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .card-cta {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
+            border: 2px dashed var(--primary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .card-cta h3 {
+            margin-top: 0;
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-cta p {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn-cta:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+            background-color: var(--bg-card);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            .article-body { padding: 1.5rem; }
+            .main-container { margin: 1.5rem auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <i class="fa-solid fa-heart-pulse"></i> SaúdeMundo
+            </a>
+            <div class="nav-actions">
+                <a href="../index.html" class="btn-home">
+                    <i class="fa-solid fa-house"></i> Início
+                </a>
+                <button class="theme-toggle" id="themeToggle" title="Alternar tema">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <article>
+            <div class="article-header">
+                <span class="category-tag">Nutrição</span>
+                <h1>Jejum Intermitente: Funciona de Verdade para Emagrecer e Ganhar Massa?</h1>
+                <div class="post-meta">
+                    <span><i class="fa-solid fa-calendar"></i> Atualizado Recentemente</span>
+                    <span><i class="fa-solid fa-clock"></i> 6 min de leitura</span>
+                </div>
+            </div>
+
+            <div class="article-body">
+                <p>Poucos temas geraram tanto debate na nutrição esportiva nos últimos anos quanto o jejum intermitente. Vilão para uns, solução milagrosa para outros — a realidade, como quase sempre na ciência, está no meio-termo. Entender como ele funciona de fato pode mudar a forma como você organiza sua alimentação e seus resultados.</p>
+
+                <h2>O Que é o Jejum Intermitente, Afinal?</h2>
+                <p>O jejum intermitente não é uma dieta no sentido tradicional — ele não dita <em>o que</em> você come, mas <em>quando</em> você come. As janelas de alimentação mais comuns são o protocolo <strong>16:8</strong> (16 horas em jejum, 8 horas para se alimentar) e o <strong>18:6</strong> para quem busca resultados mais acelerados. Também existe o protocolo <strong>5:2</strong>, em que se come normalmente por 5 dias e se restringe bastante a ingestão calórica em 2 dias da semana.</p>
+                <p>O objetivo central é criar um ambiente hormonal que favoreça a queima de gordura como fonte de energia, reduzindo os picos de insulina ao longo do dia.</p>
+
+                <h2>O Que Acontece no Seu Corpo Durante o Jejum</h2>
+                <p>Nas primeiras horas após a última refeição, o corpo esgota as reservas de glicogênio hepático. A partir daí, os níveis de insulina despencam e o glucagon assume o controle, sinalizando para o organismo buscar energia no tecido adiposo. Além disso, há um aumento natural do hormônio do crescimento (GH) durante o período de jejum, o que pode contribuir para a preservação da massa magra.</p>
+                <p>Outro benefício bastante documentado é a <strong>autofagia</strong> — o processo de "limpeza celular" em que o corpo elimina células danificadas e recicla componentes. Esse mecanismo está associado a saúde metabólica, longevidade e até redução do risco de doenças crônicas.</p>
+
+                <h2>Jejum Intermitente e Ganho de Massa Muscular: É Possível?</h2>
+                <p>Aqui mora a maior dúvida de quem pratica musculação. A resposta curta é: <strong>sim, é possível</strong> — desde que o total calórico e proteico diário seja respeitado. O músculo não é construído no horário da refeição, mas sim ao longo do processo de recuperação nas horas seguintes ao treino. Se dentro da sua janela alimentar você consumir proteína suficiente (em torno de 1,6 a 2,2g por kg de peso corporal) e calorias acima do seu gasto energético, o ganho de massa ocorre normalmente.</p>
+                <p>O grande desafio prático é conseguir ingerir toda essa quantidade de nutrientes em uma janela de apenas 6 a 8 horas, o que pode ser difícil para quem tem metabolismo acelerado ou volume de treino elevado.</p>
+
+                <h2>Quem Deve Evitar o Jejum Intermitente</h2>
+                <ul>
+                    <li><strong>Mulheres com histórico de desregulação hormonal:</strong> O jejum prolongado pode elevar o cortisol e impactar negativamente o eixo hormonal feminino em alguns casos.</li>
+                    <li><strong>Pessoas com histórico de transtornos alimentares:</strong> A restrição de janela pode reforçar padrões obsessivos com comida.</li>
+                    <li><strong>Iniciantes no treino de força:</strong> Nessa fase, a consistência na ingestão proteica distribuída ao longo do dia tende a trazer resultados superiores.</li>
+                    <li><strong>Quem treina pela manhã em jejum prolongado:</strong> Treinos de alta intensidade com mais de 16h de jejum podem comprometer a performance e a recuperação.</li>
+                </ul>
+
+                <h2>Como Montar Sua Janela Alimentar de Forma Inteligente</h2>
+                <p>A estratégia mais eficiente para a maioria das pessoas que treinam à tarde ou à noite é começar a janela alimentar no almoço e encerrá-la no início da noite. Isso permite treinar em estado de alimentação, consumir a refeição pós-treino dentro da janela e ainda ter um café da manhã (ou quebrá-lo levemente) sem comprometer o protocolo.</p>
+                <p>O café preto sem açúcar, o chá sem adoçante e a água não quebram o jejum e podem ser consumidos livremente para facilitar as primeiras horas da manhã.</p>
+
+                <div class="box-afiliado">
+                    <p><strong>👉 CONFIRA O WHEY PROTEIN MAIS VENDIDO E APROVADO ONLINE:</strong></p>
+                    <a href="https://meli.la/2kBYBxc" target="_blank" class="btn-afiliado">
+                        <i class="fa-solid fa-shopping-cart"></i> Conferir Produto na Loja
+                    </a>
+                </div>
+
+                <h2>Jejum Intermitente Não é Mágica — Mas Pode Ser uma Ferramenta Poderosa</h2>
+                <p>O jejum intermitente não cria um déficit calórico por si só — ele apenas facilita que você consuma menos calorias de forma natural, ao reduzir o número de horas disponíveis para comer. Se dentro da janela você compensar com comidas de alta densidade calórica, o resultado não virá. O segredo continua sendo a qualidade e a quantidade do que se come. O jejum é o <em>contexto</em>, não a solução.</p>
+
+                <div class="card-cta">
+                    <h3>Descubra Suas Calorias Ideais</h3>
+                    <p>Para usar o jejum intermitente a seu favor, você precisa saber exatamente quantas calorias e gramas de proteína consumir dentro da sua janela alimentar. Nossa calculadora faz isso por você em segundos.</p>
+                    <a href="../index.html" class="btn-cta">
+                        <i class="fa-solid fa-calculator"></i> Calcular Meus Macros Personalizados
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 SaúdeMundo. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const icon = themeToggle.querySelector('i');
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateIcon(newTheme);
+        });
+
+        function updateIcon(theme) {
+            icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        }
+    </script>
+</body>
+</html>
