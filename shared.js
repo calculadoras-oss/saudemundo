@@ -63,6 +63,8 @@ const SM_ARTIGOS = [
   { file: 'artigo-sobrecarga-progressiva.html',   icon: '📈', cat: 'Treino',         name: 'Sobrecarga Progressiva: O Segredo Para Nunca Parar de Crescer',    desc: 'Descubra as 6 formas de progredir no treino e por que fazer sempre o mesmo te mantém no platô.' },
   { file: 'artigo-hipertrofia-feminina.html',     icon: '💪', cat: 'Treino',         name: 'Hipertrofia Feminina: Mitos, Verdades e Treino de Superiores',     desc: 'Mulheres não ficam masculinizadas por treinar braços. Descubra como moldar a linha da cintura.' },
   { file: 'artigo-ovos-diarios.html',             icon: '🥚', cat: 'Nutrição',       name: 'Quantos Ovos Posso Comer por Dia? O Que a Ciência Diz',            desc: 'O mito do colesterol caiu. Entenda quantos ovos você pode comer com segurança todos os dias.' },
+  { file: 'artigo-desenvolvimento-motor-infantil.html', icon: '🧠', cat: 'Desenvolvimento Infantil', name: 'Desenvolvimento Motor Infantil: Guia Completo da Primeira Infância', desc: 'Marcos motores por idade e como escolher a primeira atividade física do seu filho.' },
+  { file: 'artigo-esporte-infantil.html',         icon: '🛹', cat: 'Desenvolvimento Infantil', name: 'Patinete e Skate na Primeira Infância: Relato de um Pai',          desc: 'A progressão real de duas crianças de 2 e 3 anos no patinete, etapa por etapa.' },
 ];
 
 /* ---------- Footer HTML + seção "Artigos do Blog" ---------- */
