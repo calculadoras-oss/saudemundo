@@ -50,19 +50,19 @@ function smArtigoHref(file) { return SM_IN_ARTIGOS ? file : 'artigos/' + file; }
 /* ---------- Artigos do blog ---------- */
 /* Para adicionar um novo artigo, basta acrescentar uma linha aqui. */
 const SM_ARTIGOS = [
-  { file: 'artigo-deficit-calorico.html',        icon: '📉', cat: 'Nutrição',       name: 'O que é Déficit Calórico?',                          desc: 'O guia definitivo para começar a emagrecer com saúde.' },
-  { file: 'artigo-creatina.html',                 icon: '💊', cat: 'Suplementação',  name: 'Guia Prático sobre Creatina',                        desc: 'Como tomar, horários e mitos sobre o suplemento mais estudado.' },
-  { file: 'artigo-guia-whey-protein.html',        icon: '🥛', cat: 'Suplementação',  name: 'Whey Protein: Guia Completo',                        desc: 'Concentrado, isolado e hidrolisado — as diferenças reais.' },
-  { file: 'artigo-whey-protein-emagrece.html',    icon: '⚖️', cat: 'Emagrecimento',  name: 'Whey Protein Engorda ou Emagrece?',                  desc: 'Entenda o mito e use o suplemento como aliado na saciedade.' },
-  { file: 'artigo-pre-treino.html',               icon: '⚡', cat: 'Suplementação',  name: 'Suplementos Pré-Treino: Guia Completo',              desc: 'Benefícios, riscos e como escolher o melhor pra você.' },
-  { file: 'artigo-pre-pos-treino.html',           icon: '🍽️', cat: 'Nutrição',       name: 'O que Comer no Pré e Pós-Treino',                    desc: 'Abasteça suas células nos horários certos para acelerar ganhos.' },
-  { file: 'artigo-sono-e-massa-muscular.html',    icon: '😴', cat: 'Estilo de Vida', name: 'Como a Falta de Sono Destrói Seus Ganhos',          desc: 'Sono ruim sabota testosterona, eleva cortisol e aumenta fome.' },
-  { file: 'artigo-divisoes-de-treino.html',       icon: '🏋️', cat: 'Treino',         name: 'Como Montar Divisões de Treino',                     desc: 'Distribua seus treinos na semana respeitando o descanso ideal.' },
-  { file: 'artigo-jejum-intermitente.html',       icon: '⏱️', cat: 'Nutrição',       name: 'Jejum Intermitente: Funciona Mesmo?',                desc: 'O que acontece no corpo durante o jejum e como usar a seu favor.' },
-  { file: 'artigo-fontes-de-proteina.html',       icon: '🍗', cat: 'Nutrição',       name: 'Fontes de Proteína Além do Whey',                    desc: 'Tabela completa com custo-benefício e distribuição ao longo do dia.' },
-  { file: 'artigo-sobrecarga-progressiva.html',   icon: '📈', cat: 'Treino',         name: 'Sobrecarga Progressiva',                             desc: 'As 6 formas de progredir no treino e sair do platô.' },
-  { file: 'artigo-hipertrofia-feminina.html',     icon: '💪', cat: 'Treino',         name: 'Hipertrofia Feminina: Mitos e Verdades',             desc: 'Treino de superiores sem medo de "ficar masculinizada".' },
-  { file: 'artigo-ovos-diarios.html',             icon: '🥚', cat: 'Nutrição',       name: 'Quantos Ovos Comer por Dia?',                        desc: 'O que a ciência diz sobre colesterol e consumo diário de ovos.' },
+  { file: 'artigo-deficit-calorico.html',        icon: '📉', cat: 'Nutrição',       name: 'O que é Déficit Calórico? O Guia Definitivo para Começar',        desc: 'Entenda o conceito biológico mais importante por trás do emagrecimento saudável e como aplicá-lo.' },
+  { file: 'artigo-creatina.html',                 icon: '💊', cat: 'Suplementação',  name: 'Guia Prático sobre Creatina: Como Tomar, Horários e Mitos',        desc: 'O suplemento mais estudado do mundo. Saiba se vale a pena fazer saturação e se ela causa retenção.' },
+  { file: 'artigo-guia-whey-protein.html',        icon: '🥛', cat: 'Suplementação',  name: 'Whey Protein Concentrado, Isolado e Hidrolisado: As Diferenças',   desc: 'Não jogue dinheiro fora. Aprenda as reais distinções industriais e escolha o melhor custo-benefício.' },
+  { file: 'artigo-whey-protein-emagrece.html',    icon: '⚖️', cat: 'Emagrecimento',  name: 'Whey Protein Engorda ou Ajuda a Emagrecer? Descubra a Verdade',    desc: 'Entenda o grande mito e aprenda a usar o suplemento proteico como um forte aliado na saciedade.' },
+  { file: 'artigo-pre-treino.html',               icon: '⚡', cat: 'Suplementação',  name: 'Suplementos Pré-Treino: Benefícios, Riscos e Como Escolher',       desc: 'Promessas de foco e explosão muscular. Analise o papel da cafeína e os cuidados com o coração.' },
+  { file: 'artigo-pre-pos-treino.html',           icon: '🍽️', cat: 'Nutrição',       name: 'O que Comer no Pré e Pós-Treino para Maximizar a Hipertrofia',     desc: 'Abasteça suas células de glicogênio e aminoácidos nos horários corretos para acelerar seus ganhos.' },
+  { file: 'artigo-sono-e-massa-muscular.html',    icon: '😴', cat: 'Estilo de Vida', name: 'Como a Falta de Sono Destrói Seus Ganhos de Massa Magra',          desc: 'Dormir pouco sabota seus níveis de testosterona, eleva o cortisol e aumenta sua fome por doces.' },
+  { file: 'artigo-divisoes-de-treino.html',       icon: '🏋️', cat: 'Treino',         name: 'Como Montar Divisões de Treino de Musculação: Guia Prático',       desc: 'Aprenda a distribuir seus treinos na semana (ABC, AB, ABCDE) respeitando o descanso ideal.' },
+  { file: 'artigo-jejum-intermitente.html',       icon: '⏱️', cat: 'Nutrição',       name: 'Jejum Intermitente: Funciona para Emagrecer e Ganhar Massa?',      desc: 'Entenda o que acontece no seu corpo durante o jejum e como usar essa estratégia a seu favor.' },
+  { file: 'artigo-fontes-de-proteina.html',       icon: '🍗', cat: 'Nutrição',       name: 'Fontes de Proteína: O Guia Completo Além do Whey',                 desc: 'Tabela completa com as melhores fontes de proteína, custo-benefício e como distribuir ao longo do dia.' },
+  { file: 'artigo-sobrecarga-progressiva.html',   icon: '📈', cat: 'Treino',         name: 'Sobrecarga Progressiva: O Segredo Para Nunca Parar de Crescer',    desc: 'Descubra as 6 formas de progredir no treino e por que fazer sempre o mesmo te mantém no platô.' },
+  { file: 'artigo-hipertrofia-feminina.html',     icon: '💪', cat: 'Treino',         name: 'Hipertrofia Feminina: Mitos, Verdades e Treino de Superiores',     desc: 'Mulheres não ficam masculinizadas por treinar braços. Descubra como moldar a linha da cintura.' },
+  { file: 'artigo-ovos-diarios.html',             icon: '🥚', cat: 'Nutrição',       name: 'Quantos Ovos Posso Comer por Dia? O Que a Ciência Diz',            desc: 'O mito do colesterol caiu. Entenda quantos ovos você pode comer com segurança todos os dias.' },
 ];
 
 /* ---------- Footer HTML + seção "Artigos do Blog" ---------- */
