@@ -40,120 +40,89 @@
 }
 </script>
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EPL2XNX6H"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EPL2XNX6H');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="shared.css">
 
 <style>
-  .author-card {
-    display: flex;
-    gap: 24px;
-    align-items: flex-start;
-  }
-  .author-avatar {
-    flex-shrink: 0;
-    width: 96px;
-    height: 96px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 3px solid var(--green-dark, #007A3D);
-    background: #f0faf4;
-  }
-  .author-avatar svg {
-    width: 100%;
-    height: 100%;
-  }
-  .author-info {
-    flex: 1;
-  }
-  .author-name {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text, #1a1a1a);
-    margin: 0 0 4px 0;
-  }
-  .author-role {
-    font-size: 0.82rem;
-    color: var(--green-dark, #007A3D);
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    margin: 0 0 12px 0;
-  }
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 12px;
-  }
-  .tag {
-    font-size: 0.75rem;
-    padding: 3px 10px;
-    border-radius: 20px;
-    background: rgba(0,166,81,0.10);
-    color: var(--green-dark, #007A3D);
-    border: 1px solid rgba(0,166,81,0.25);
-  }
-  .author-divider {
-    border: none;
-    border-top: 1px solid rgba(0,0,0,0.08);
-    margin: 24px 0;
-  }
-  @media (max-width: 500px) {
-    .author-card { flex-direction: column; align-items: center; text-align: center; }
-    .tags { justify-content: center; }
-  }
+:root{--green:#00A651;--green-dark:#007A3D;--white:#FFFFFF;--gray-light:#F5F5F5;--gray-mid:#E0E0E0;--gray-dark:#555555;--text:#1A1A1A;--text-muted:#555555;--radius:16px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--white);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;}
+body.dark{--white:#0A0F0A;--gray-light:#12181A;--gray-mid:#1A2A1A;--text:#E8F0E8;--text-muted:#88AA88;}
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--gray-mid);padding:0 20px;}
+body.dark nav{background:rgba(10,15,10,0.95);}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:54px;}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--green-dark);text-decoration:none;font-weight:700;}
+.nav-links{display:flex;gap:6px;flex-wrap:wrap;}
+.nav-links a{color:var(--text-muted);text-decoration:none;font-size:12px;padding:6px 10px;border-radius:8px;transition:all 0.2s;}
+.nav-links a:hover{color:var(--green-dark);background:rgba(0,122,61,0.08);}
+.theme-btn{background:var(--gray-light);border:1px solid var(--gray-mid);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;flex-shrink:0;}
+
+.container{max-width:760px;margin:0 auto;padding:40px 24px 80px;}
+h1{font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--green-dark);margin-bottom:8px;}
+.page-subtitle{color:var(--text-muted);font-size:1rem;margin-bottom:40px;line-height:1.6;}
+
+.card{background:var(--gray-light);border:1px solid var(--gray-mid);border-radius:var(--radius);padding:28px;margin-bottom:20px;}
+body.dark .card{background:#12181A;border-color:#1A2A1A;}
+.section-title{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--green-dark);margin-bottom:18px;}
+p{color:var(--text-muted);line-height:1.8;}
+p+p{margin-top:12px;}
+
+.author-card{display:flex;gap:20px;align-items:flex-start;}
+.author-avatar{flex-shrink:0;width:88px;height:88px;border-radius:50%;overflow:hidden;border:3px solid var(--green-dark);}
+.author-avatar svg{width:100%;height:100%;}
+.author-name{font-size:1rem;font-weight:600;color:var(--text);margin:0 0 3px;}
+.author-role{font-size:0.75rem;color:var(--green-dark);font-weight:500;letter-spacing:0.05em;text-transform:uppercase;margin:0 0 10px;}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+.tag{font-size:0.72rem;padding:3px 10px;border-radius:20px;background:rgba(0,122,61,0.08);color:var(--green-dark);border:1px solid rgba(0,122,61,0.2);}
+.author-divider{border:none;border-top:1px solid var(--gray-mid);margin:24px 0;}
+@media(max-width:500px){.author-card{flex-direction:column;align-items:center;text-align:center;}.tags{justify-content:center;}}
 </style>
 </head>
 <body>
-<div class="bg-grid"></div>
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">✦ saudemundo</a>
+    <div class="nav-links">
+      <a href="index.html">Calorias</a>
+      <a href="calculadora-imc.html">IMC</a>
+      <a href="calculadora-tmb.html">TMB</a>
+      <a href="calculadora-agua.html">Água</a>
+      <a href="calculadora-proteina.html">Proteína</a>
+    </div>
+    <button class="theme-btn" onclick="toggleTheme()">🌙</button>
+  </div>
+</nav>
 
-<header>
-  <div class="badge">✦ saudemundo · Sobre</div>
-  <h1>Sobre o<br>SaúdeMundo</h1>
-  <p class="subtitle">Quem escreve, quem revisa o conteúdo e como garantimos que as informações sejam confiáveis.</p>
-</header>
-
-<div class="container" style="max-width:760px;">
+<div class="container">
+  <h1>Sobre o SaúdeMundo</h1>
+  <p class="page-subtitle">Quem escreve, quem revisa o conteúdo e como garantimos que as informações sejam confiáveis.</p>
 
   <section class="card">
     <h2 class="section-title">👋 Quem Escreve o SaúdeMundo</h2>
-
     <div class="author-card">
       <div class="author-avatar">
-        <!-- Avatar SVG: homem jovem/adulto, visual fitness -->
         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <rect width="100" height="100" fill="#e8f5ee"/>
-          <!-- corpo / camiseta -->
           <ellipse cx="50" cy="95" rx="32" ry="20" fill="#00A651"/>
           <rect x="34" y="60" width="32" height="32" rx="6" fill="#00A651"/>
-          <!-- pescoço -->
           <rect x="44" y="52" width="12" height="12" fill="#c8a070"/>
-          <!-- cabeça -->
           <ellipse cx="50" cy="42" rx="18" ry="20" fill="#c8a070"/>
-          <!-- cabelo escuro -->
           <ellipse cx="50" cy="25" rx="18" ry="10" fill="#2a1a0a"/>
           <ellipse cx="33" cy="34" rx="5" ry="9" fill="#2a1a0a"/>
           <ellipse cx="67" cy="34" rx="5" ry="9" fill="#2a1a0a"/>
-          <!-- olhos -->
           <ellipse cx="43" cy="42" rx="2.5" ry="2.5" fill="#2a1a0a"/>
           <ellipse cx="57" cy="42" rx="2.5" ry="2.5" fill="#2a1a0a"/>
-          <!-- sobrancelhas -->
           <rect x="39" y="37" width="8" height="2" rx="1" fill="#2a1a0a"/>
           <rect x="53" y="37" width="8" height="2" rx="1" fill="#2a1a0a"/>
-          <!-- sorriso -->
           <path d="M43 50 Q50 55 57 50" stroke="#a07040" stroke-width="1.5" fill="none" stroke-linecap="round"/>
         </svg>
       </div>
-      <div class="author-info">
+      <div>
         <p class="author-name">Lucas Andrade</p>
         <p class="author-role">Fundador · Bacharel em Educação Física</p>
-        <p style="line-height:1.8;color:var(--text-muted);margin:0;">
-          Formado em <strong style="color:var(--text)">Educação Física</strong>, Lucas une o embasamento
-          acadêmico do movimento humano com mais de 10 anos de prática pessoal em treino de força e
-          alimentação saudável. Entusiasta de nutrição esportiva, estuda continuamente os temas de
-          macronutrientes, periodização alimentar e suplementação.
-        </p>
+        <p>Formado em <strong style="color:var(--text)">Educação Física</strong>, Lucas une o embasamento acadêmico do movimento humano com mais de 10 anos de prática pessoal em treino de força e alimentação saudável. Entusiasta de nutrição esportiva, estuda continuamente temas como macronutrientes, periodização alimentar e suplementação.</p>
         <div class="tags">
           <span class="tag">Educação Física</span>
           <span class="tag">Treino de Força</span>
@@ -163,54 +132,34 @@
         </div>
       </div>
     </div>
-
-    <p style="line-height:1.8;color:var(--text-muted);margin-top:20px;">
-      Criei o <strong style="color:var(--text)">SaúdeMundo</strong> para organizar, de forma simples e baseada em
-      evidências, o conhecimento que reuni ao longo desses anos sobre déficit calórico, ganho de massa, definição
-      e hábitos saudáveis no dia a dia — sem fórmulas mágicas e sem promessas irreais.
-    </p>
+    <p style="margin-top:20px;">Criei o <strong style="color:var(--text)">SaúdeMundo</strong> para organizar, de forma simples e baseada em evidências, o conhecimento que reuni ao longo desses anos sobre déficit calórico, ganho de massa, definição e hábitos saudáveis no dia a dia — sem fórmulas mágicas e sem promessas irreais.</p>
   </section>
 
   <section class="card">
     <h2 class="section-title">🔬 Revisão Técnica</h2>
-
     <div class="author-card">
       <div class="author-avatar">
-        <!-- Avatar SVG: mulher adulta/madura, visual saúde -->
         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <rect width="100" height="100" fill="#e8f5ee"/>
-          <!-- corpo / blusa -->
           <ellipse cx="50" cy="95" rx="32" ry="20" fill="#007A3D"/>
           <rect x="34" y="60" width="32" height="32" rx="6" fill="#007A3D"/>
-          <!-- pescoço -->
           <rect x="44" y="52" width="12" height="12" fill="#d4a882"/>
-          <!-- cabeça -->
           <ellipse cx="50" cy="42" rx="18" ry="20" fill="#d4a882"/>
-          <!-- cabelo castanho com fio branco (maturidade) -->
           <ellipse cx="50" cy="24" rx="19" ry="11" fill="#6a4a2a"/>
           <ellipse cx="31" cy="36" rx="7" ry="14" fill="#6a4a2a"/>
           <ellipse cx="69" cy="36" rx="7" ry="14" fill="#6a4a2a"/>
-          <!-- mechas claras sutis -->
           <ellipse cx="33" cy="32" rx="2" ry="8" fill="#9a7a5a" opacity="0.5"/>
-          <!-- olhos -->
           <ellipse cx="43" cy="43" rx="2.5" ry="2.5" fill="#3a2a1a"/>
           <ellipse cx="57" cy="43" rx="2.5" ry="2.5" fill="#3a2a1a"/>
-          <!-- sobrancelhas -->
           <path d="M39 38 Q43 36 47 38" stroke="#4a3a2a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
           <path d="M53 38 Q57 36 61 38" stroke="#4a3a2a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <!-- sorriso -->
           <path d="M44 50 Q50 55 56 50" stroke="#b08060" stroke-width="1.5" fill="none" stroke-linecap="round"/>
         </svg>
       </div>
-      <div class="author-info">
+      <div>
         <p class="author-name">Carolina Velneri</p>
         <p class="author-role">Revisora Técnica · Ciências da Saúde</p>
-        <p style="line-height:1.8;color:var(--text-muted);margin:0;">
-          Profissional aposentada com formação em <strong style="color:var(--text)">Ciências da Saúde</strong>,
-          Carolina traz ao SaúdeMundo o olhar criterioso de quem passou décadas na área da saúde. 
-          Entusiasta de nutrição e frequentadora assídua de academia, aplica na prática o que acompanha
-          na literatura sobre alimentação saudável e condicionamento físico.
-        </p>
+        <p>Profissional aposentada com formação em <strong style="color:var(--text)">Ciências da Saúde</strong>, Carolina traz ao SaúdeMundo o olhar criterioso de quem passou décadas na área da saúde. Entusiasta de nutrição e frequentadora assídua de academia, aplica na prática o que acompanha na literatura sobre alimentação saudável e condicionamento físico.</p>
         <div class="tags">
           <span class="tag">Ciências da Saúde</span>
           <span class="tag">Nutrição</span>
@@ -219,44 +168,41 @@
         </div>
       </div>
     </div>
-
-    <p style="line-height:1.8;color:var(--text-muted);margin-top:20px;">
-      Artigos que envolvem temas de saúde mais sensíveis (déficit calórico, suplementação, fisiologia) passam por
-      essa revisão antes de serem publicados ou atualizados.
-    </p>
+    <p style="margin-top:20px;">Artigos que envolvem temas de saúde mais sensíveis (déficit calórico, suplementação, fisiologia) passam por essa revisão antes de serem publicados ou atualizados.</p>
   </section>
 
   <section class="card">
     <h2 class="section-title">🔍 Metodologia e Fontes</h2>
-    <p style="line-height:1.8;color:var(--text-muted);">
-      As calculadoras do SaúdeMundo usam fórmulas amplamente reconhecidas, como a equação de Mifflin-St Jeor para
-      cálculo de TMB (Taxa Metabólica Basal) e TDEE (Gasto Energético Total Diário). Os artigos seguem consensos
-      da literatura sobre nutrição esportiva e treinamento de força.
-    </p>
-    <p style="line-height:1.8;color:var(--text-muted);margin-top:12px;">
-      Sempre que uma página é atualizada, a data fica visível no topo do conteúdo, para que você saiba o quão
-      recente é a informação.
-    </p>
+    <p>As calculadoras do SaúdeMundo usam fórmulas amplamente reconhecidas, como a equação de Mifflin-St Jeor para cálculo de TMB (Taxa Metabólica Basal) e TDEE (Gasto Energético Total Diário). Os artigos seguem consensos da literatura sobre nutrição esportiva e treinamento de força.</p>
+    <p>Sempre que uma página é atualizada, a data fica visível no topo do conteúdo, para que você saiba o quão recente é a informação.</p>
   </section>
 
   <section class="card">
     <h2 class="section-title">⚠️ Aviso Importante</h2>
-    <p style="line-height:1.8;color:var(--text-muted);">
-      O conteúdo do SaúdeMundo tem caráter exclusivamente informativo e não substitui a orientação de nutricionistas, médicos ou educadores físicos. Antes de iniciar dietas,
-      suplementação ou programas de treino, consulte um profissional de saúde qualificado.
-    </p>
+    <p>O conteúdo do SaúdeMundo tem caráter exclusivamente informativo e não substitui a orientação de nutricionistas, médicos ou educadores físicos. Antes de iniciar dietas, suplementação ou programas de treino, consulte um profissional de saúde qualificado.</p>
   </section>
 
   <section class="card">
     <h2 class="section-title">✉️ Contato</h2>
-    <p style="line-height:1.8;color:var(--text-muted);">
-      Encontrou algum erro, tem uma sugestão de conteúdo ou quer relatar um problema técnico?
-      Fale com a gente pela <a href="contato.html" style="color:var(--green-dark);text-decoration:none;font-weight:500;">página de contato</a>.
-    </p>
+    <p>Encontrou algum erro, tem uma sugestão de conteúdo ou quer relatar um problema técnico? Fale com a gente pela <a href="contato.html" style="color:var(--green-dark);text-decoration:none;font-weight:500;">página de contato</a>.</p>
   </section>
-
 </div>
 
-<script src="shared.js"></script>
+<footer style="text-align:center;padding:40px 20px;color:var(--text-muted);font-size:13px;border-top:1px solid var(--gray-mid);background:var(--gray-light);position:relative;z-index:10;">
+  <div style="max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:15px;align-items:center;">
+    <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-bottom:10px;">
+      <a href="/sobre.html" style="color:var(--text-muted);text-decoration:none;" onmouseover="this.style.color='var(--green-dark)'" onmouseout="this.style.color='var(--text-muted)'">Sobre Nós</a>
+      <a href="/contato.html" style="color:var(--text-muted);text-decoration:none;" onmouseover="this.style.color='var(--green-dark)'" onmouseout="this.style.color='var(--text-muted)'">Contato</a>
+      <a href="/privacidade.html" style="color:var(--text-muted);text-decoration:none;" onmouseover="this.style.color='var(--green-dark)'" onmouseout="this.style.color='var(--text-muted)'">Política de Privacidade</a>
+      <a href="/termos.html" style="color:var(--text-muted);text-decoration:none;" onmouseover="this.style.color='var(--green-dark)'" onmouseout="this.style.color='var(--text-muted)'">Termos de Uso</a>
+    </div>
+    <p>© <span id="year-auto">2026</span> · <a href="https://saudemundo.com.br" style="color:var(--green-dark);text-decoration:none;font-weight:500;">saudemundo.com.br</a> · Todos os direitos reservados.</p>
+  </div>
+  <script>document.getElementById('year-auto').textContent = new Date().getFullYear();</script>
+</footer>
+
+<script>
+function toggleTheme(){document.body.classList.toggle('dark');document.querySelector('.theme-btn').textContent=document.body.classList.contains('dark')?'☀️':'🌙';}
+</script>
 </body>
 </html>
