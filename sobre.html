@@ -1,4 +1,4 @@
-lu<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -19,15 +19,15 @@ lu<!DOCTYPE html>
       "@type": "Person",
       "name": "Lucas Andrade",
       "url": "https://saudemundo.com.br/sobre.html",
-      "description": "Entusiasta de nutrição e treino de força com mais de 10 anos de prática, criador do SaúdeMundo.",
-      "knowsAbout": ["Nutrição Esportiva", "Treino de Força", "Déficit Calórico", "Suplementação"]
+      "description": "Bacharel em Educação Física e entusiasta de nutrição esportiva com mais de 10 anos de prática em treino de força e alimentação saudável, criador do SaúdeMundo.",
+      "knowsAbout": ["Nutrição Esportiva", "Treino de Força", "Déficit Calórico", "Suplementação", "Educação Física"]
     },
     {
       "@type": "Person",
       "name": "Carolina Velneri",
       "url": "https://saudemundo.com.br/sobre.html",
-      "description": "Profissional com formação em ciências da saúde, responsável pela revisão técnica de conteúdos do SaúdeMundo.",
-      "jobTitle": "Revisora técnica"
+      "description": "Profissional aposentada com formação em ciências da saúde e conhecimento prático em nutrição e treino em academia, responsável pela revisão técnica dos conteúdos do SaúdeMundo.",
+      "jobTitle": "Revisora Técnica"
     },
     {
       "@type": "Organization",
@@ -43,6 +43,67 @@ lu<!DOCTYPE html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared.css">
+
+<style>
+  .author-card {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+  .author-avatar {
+    flex-shrink: 0;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--green-dark, #007A3D);
+    background: #f0faf4;
+  }
+  .author-avatar svg {
+    width: 100%;
+    height: 100%;
+  }
+  .author-info {
+    flex: 1;
+  }
+  .author-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text, #1a1a1a);
+    margin: 0 0 4px 0;
+  }
+  .author-role {
+    font-size: 0.82rem;
+    color: var(--green-dark, #007A3D);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0 0 12px 0;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+  }
+  .tag {
+    font-size: 0.75rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: rgba(0,166,81,0.10);
+    color: var(--green-dark, #007A3D);
+    border: 1px solid rgba(0,166,81,0.25);
+  }
+  .author-divider {
+    border: none;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    margin: 24px 0;
+  }
+  @media (max-width: 500px) {
+    .author-card { flex-direction: column; align-items: center; text-align: center; }
+    .tags { justify-content: center; }
+  }
+</style>
 </head>
 <body>
 <div class="bg-grid"></div>
@@ -57,12 +118,53 @@ lu<!DOCTYPE html>
 
   <section class="card">
     <h2 class="section-title">👋 Quem Escreve o SaúdeMundo</h2>
-    <p style="line-height:1.8;color:var(--text-muted);">
-      Olá! Meu nome é <strong style="color:var(--text)">Lucas Andrade</strong> e me interesso por nutrição e treino
-      de força há mais de 10 anos, testando na prática estratégias de dieta, suplementação e periodização de
-      treino.
-    </p>
-    <p style="line-height:1.8;color:var(--text-muted);margin-top:12px;">
+
+    <div class="author-card">
+      <div class="author-avatar">
+        <!-- Avatar SVG: homem jovem/adulto, visual fitness -->
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <rect width="100" height="100" fill="#e8f5ee"/>
+          <!-- corpo / camiseta -->
+          <ellipse cx="50" cy="95" rx="32" ry="20" fill="#00A651"/>
+          <rect x="34" y="60" width="32" height="32" rx="6" fill="#00A651"/>
+          <!-- pescoço -->
+          <rect x="44" y="52" width="12" height="12" fill="#c8a070"/>
+          <!-- cabeça -->
+          <ellipse cx="50" cy="42" rx="18" ry="20" fill="#c8a070"/>
+          <!-- cabelo escuro -->
+          <ellipse cx="50" cy="25" rx="18" ry="10" fill="#2a1a0a"/>
+          <ellipse cx="33" cy="34" rx="5" ry="9" fill="#2a1a0a"/>
+          <ellipse cx="67" cy="34" rx="5" ry="9" fill="#2a1a0a"/>
+          <!-- olhos -->
+          <ellipse cx="43" cy="42" rx="2.5" ry="2.5" fill="#2a1a0a"/>
+          <ellipse cx="57" cy="42" rx="2.5" ry="2.5" fill="#2a1a0a"/>
+          <!-- sobrancelhas -->
+          <rect x="39" y="37" width="8" height="2" rx="1" fill="#2a1a0a"/>
+          <rect x="53" y="37" width="8" height="2" rx="1" fill="#2a1a0a"/>
+          <!-- sorriso -->
+          <path d="M43 50 Q50 55 57 50" stroke="#a07040" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="author-info">
+        <p class="author-name">Lucas Andrade</p>
+        <p class="author-role">Fundador · Bacharel em Educação Física</p>
+        <p style="line-height:1.8;color:var(--text-muted);margin:0;">
+          Formado em <strong style="color:var(--text)">Educação Física</strong>, Lucas une o embasamento
+          acadêmico do movimento humano com mais de 10 anos de prática pessoal em treino de força e
+          alimentação saudável. Entusiasta de nutrição esportiva, estuda continuamente os temas de
+          macronutrientes, periodização alimentar e suplementação.
+        </p>
+        <div class="tags">
+          <span class="tag">Educação Física</span>
+          <span class="tag">Treino de Força</span>
+          <span class="tag">Nutrição Esportiva</span>
+          <span class="tag">Déficit Calórico</span>
+          <span class="tag">Suplementação</span>
+        </div>
+      </div>
+    </div>
+
+    <p style="line-height:1.8;color:var(--text-muted);margin-top:20px;">
       Criei o <strong style="color:var(--text)">SaúdeMundo</strong> para organizar, de forma simples e baseada em
       evidências, o conhecimento que reuni ao longo desses anos sobre déficit calórico, ganho de massa, definição
       e hábitos saudáveis no dia a dia — sem fórmulas mágicas e sem promessas irreais.
@@ -71,12 +173,54 @@ lu<!DOCTYPE html>
 
   <section class="card">
     <h2 class="section-title">🔬 Revisão Técnica</h2>
-    <p style="line-height:1.8;color:var(--text-muted);">
-      Os conteúdos do SaúdeMundo contam com a colaboração de <strong style="color:var(--text)">Carolina Velneri</strong>,
-      profissional com formação em ciências da saúde. A revisão técnica ajuda a garantir que as informações
-      sobre fisiologia, metabolismo e saúde geral estejam alinhadas com o conhecimento científico atual.
-    </p>
-    <p style="line-height:1.8;color:var(--text-muted);margin-top:12px;">
+
+    <div class="author-card">
+      <div class="author-avatar">
+        <!-- Avatar SVG: mulher adulta/madura, visual saúde -->
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <rect width="100" height="100" fill="#e8f5ee"/>
+          <!-- corpo / blusa -->
+          <ellipse cx="50" cy="95" rx="32" ry="20" fill="#007A3D"/>
+          <rect x="34" y="60" width="32" height="32" rx="6" fill="#007A3D"/>
+          <!-- pescoço -->
+          <rect x="44" y="52" width="12" height="12" fill="#d4a882"/>
+          <!-- cabeça -->
+          <ellipse cx="50" cy="42" rx="18" ry="20" fill="#d4a882"/>
+          <!-- cabelo castanho com fio branco (maturidade) -->
+          <ellipse cx="50" cy="24" rx="19" ry="11" fill="#6a4a2a"/>
+          <ellipse cx="31" cy="36" rx="7" ry="14" fill="#6a4a2a"/>
+          <ellipse cx="69" cy="36" rx="7" ry="14" fill="#6a4a2a"/>
+          <!-- mechas claras sutis -->
+          <ellipse cx="33" cy="32" rx="2" ry="8" fill="#9a7a5a" opacity="0.5"/>
+          <!-- olhos -->
+          <ellipse cx="43" cy="43" rx="2.5" ry="2.5" fill="#3a2a1a"/>
+          <ellipse cx="57" cy="43" rx="2.5" ry="2.5" fill="#3a2a1a"/>
+          <!-- sobrancelhas -->
+          <path d="M39 38 Q43 36 47 38" stroke="#4a3a2a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M53 38 Q57 36 61 38" stroke="#4a3a2a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- sorriso -->
+          <path d="M44 50 Q50 55 56 50" stroke="#b08060" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="author-info">
+        <p class="author-name">Carolina Velneri</p>
+        <p class="author-role">Revisora Técnica · Ciências da Saúde</p>
+        <p style="line-height:1.8;color:var(--text-muted);margin:0;">
+          Profissional aposentada com formação em <strong style="color:var(--text)">Ciências da Saúde</strong>,
+          Carolina traz ao SaúdeMundo o olhar criterioso de quem passou décadas na área da saúde. 
+          Entusiasta de nutrição e frequentadora assídua de academia, aplica na prática o que acompanha
+          na literatura sobre alimentação saudável e condicionamento físico.
+        </p>
+        <div class="tags">
+          <span class="tag">Ciências da Saúde</span>
+          <span class="tag">Nutrição</span>
+          <span class="tag">Treino em Academia</span>
+          <span class="tag">Revisão de Conteúdo</span>
+        </div>
+      </div>
+    </div>
+
+    <p style="line-height:1.8;color:var(--text-muted);margin-top:20px;">
       Artigos que envolvem temas de saúde mais sensíveis (déficit calórico, suplementação, fisiologia) passam por
       essa revisão antes de serem publicados ou atualizados.
     </p>
@@ -99,7 +243,7 @@ lu<!DOCTYPE html>
     <h2 class="section-title">⚠️ Aviso Importante</h2>
     <p style="line-height:1.8;color:var(--text-muted);">
       O conteúdo do SaúdeMundo tem caráter exclusivamente informativo e não substitui a orientação de nutricionistas, médicos ou educadores físicos. Antes de iniciar dietas,
-      suplementação ou programas de treino, consulte um profissional de saúde, qualificado.
+      suplementação ou programas de treino, consulte um profissional de saúde qualificado.
     </p>
   </section>
 
