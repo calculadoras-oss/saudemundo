@@ -1,377 +1,177 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Como Montar Divisões de Treino de Musculação: ABC, ABCDE e Mais</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg-primary: #f8fafc;
-            --bg-card: #ffffff;
-            --text-primary: #1e293b;
-            --text-secondary: #64748b;
-            --primary: #10b981;
-            --primary-hover: #059669;
-            --border: #e2e8f0;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --accent: #eab308;
-            --accent-hover: #ca8a04;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Como Montar Divisões de Treino: ABC, ABCDE e Upper/Lower | SaúdeMundo</title>
+<meta name="description" content="Guia prático para montar divisões de treino de musculação (ABC, AB Upper/Lower e ABCDE), entendendo frequência, volume e como escolher o modelo certo para sua rotina.">
+<link rel="canonical" href="https://saudemundo.com.br/artigos/artigo-divisoes-de-treino.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared.css">
 
-        [data-theme="dark"] {
-            --bg-primary: #0f172a;
-            --bg-card: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --border: #334155;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.5);
-        }
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Como Montar Divisões de Treino de Musculação: Guia Prático (ABC, ABCDE e Mais)",
+  "author": {"@type":"Person","name":"Lucas Andrade","url":"https://saudemundo.com.br/sobre.html"},
+  "reviewedBy": {"@type":"Person","name":"Carolina Velneri","url":"https://saudemundo.com.br/sobre.html"},
+  "datePublished": "2026-06-25",
+  "dateModified": "2026-06-25",
+  "publisher": {"@type":"Organization","name":"SaúdeMundo","url":"https://saudemundo.com.br"}
+}
+</script>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
-        }
-
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.7;
-        }
-
-        /* Header e Navegação */
-        header {
-            background-color: var(--bg-card);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: var(--shadow);
-        }
-
-        .nav-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 1rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .btn-home {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .btn-home:hover {
-            color: var(--primary);
-        }
-
-        .theme-toggle {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.2rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 50%;
-        }
-
-        .theme-toggle:hover {
-            color: var(--primary);
-            background-color: var(--bg-primary);
-        }
-
-        /* Estrutura do Artigo */
-        .main-container {
-            max-width: 800px;
-            margin: 2.5rem auto;
-            padding: 0 1.5rem;
-        }
-
-        .article-header {
-            margin-bottom: 2rem;
-        }
-
-        .category-tag {
-            background-color: rgba(16, 185, 129, 0.1);
-            color: var(--primary);
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            line-height: 1.3;
-            margin-bottom: 1rem;
-        }
-
-        .post-meta {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            display: flex;
-            gap: 1rem;
-        }
-
-        .article-body {
-            background-color: var(--bg-card);
-            padding: 2.5rem;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-        }
-
-        .article-body p {
-            margin-bottom: 1.5rem;
-            font-size: 1.05rem;
-            color: var(--text-primary);
-        }
-
-        h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin: 2rem 0 1rem 0;
-            color: var(--primary);
-        }
-
-        ul {
-            margin-bottom: 1.5rem;
-            padding-left: 1.5rem;
-        }
-
-        li {
-            margin-bottom: 0.75rem;
-            font-size: 1.05rem;
-        }
-
-        /* Box de Afiliado */
-        .box-afiliado {
-            background-color: rgba(234, 179, 8, 0.05);
-            border: 1px solid rgba(234, 179, 8, 0.3);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .btn-afiliado {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background-color: var(--accent);
-            color: #1e293b;
-            text-decoration: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            margin-top: 1rem;
-            transition: background-color 0.2s, transform 0.2s;
-        }
-
-        .btn-afiliado:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-1px);
-        }
-
-        /* Card de Chamada para Ação (CTA) */
-        .card-cta {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
-            border: 2px dashed var(--primary);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-top: 3rem;
-            text-align: center;
-        }
-
-        .card-cta h3 {
-            margin-top: 0;
-            color: var(--primary);
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .card-cta p {
-            font-size: 0.95rem;
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-        }
-
-        .btn-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background-color: var(--primary);
-            color: white;
-            text-decoration: none;
-            padding: 0.8rem 1.8rem;
-            border-radius: 8px;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
-            transition: transform 0.2s, background-color 0.2s;
-        }
-
-        .btn-cta:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-2px);
-        }
-
-        /* Rodapé */
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            border-top: 1px solid var(--border);
-            margin-top: 4rem;
-            background-color: var(--bg-card);
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 1.8rem; }
-            .article-body { padding: 1.5rem; }
-            .main-container { margin: 1.5rem auto; }
-        }
-    </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "O que é uma divisão de treino?",
+      "acceptedAnswer": { "@type": "Answer", "text": "É a forma como os grupos musculares são distribuídos ao longo dos dias de treino na semana, garantindo estímulo suficiente para cada músculo e tempo adequado de descanso entre as sessões." }
+    },
+    {
+      "@type": "Question",
+      "name": "Qual a diferença entre ABC e AB (Upper/Lower)?",
+      "acceptedAnswer": { "@type": "Answer", "text": "A divisão ABC separa o corpo por função mecânica (empurrar, puxar, pernas), geralmente em 3 a 5 dias. Já a divisão AB Upper/Lower separa apenas em metade superior e inferior do corpo, sendo ideal para quem tem 4 dias disponíveis na semana." }
+    },
+    {
+      "@type": "Question",
+      "name": "A divisão ABCDE é boa para quem está começando?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Não é a recomendação ideal para iniciantes. O ABCDE exige alta intensidade por sessão e maturidade muscular para que o estímulo seja suficiente, já que cada grupo é trabalhado apenas uma vez por semana." }
+    },
+    {
+      "@type": "Question",
+      "name": "Quantas vezes por semana devo treinar cada grupo muscular?",
+      "acceptedAnswer": { "@type": "Answer", "text": "A maioria das evidências aponta para frequências de 2 vezes por semana por grupo muscular como ponto ideal para hipertrofia, equilibrando volume de trabalho e tempo de recuperação." }
+    },
+    {
+      "@type": "Question",
+      "name": "Como escolher a melhor divisão de treino para mim?",
+      "acceptedAnswer": { "@type": "Answer", "text": "A escolha depende da quantidade de dias disponíveis na semana e do nível de experiência. Quem treina 3 vezes por semana tende a se beneficiar mais do modelo ABC, enquanto quem treina 4 vezes se encaixa melhor no Upper/Lower." }
+    }
+  ]
+}
+</script>
 </head>
 <body>
+<div class="bg-grid"></div>
 
-    <header>
-        <a href="../index.html" class="logo">
-                    ✦ SaúdeMundo
-                </a>
-            <div class="nav-actions">
-                <a href="../index.html" class="btn-home">
-                    <i class="fa-solid fa-house"></i> Início
-                </a>
-                <button class="theme-toggle" id="themeToggle" title="Alternar tema">
-                    <i class="fa-solid fa-moon"></i>
-                </button>
-            </div>
-        </div>
-    </header>
+<header>
+  <h1>Como Montar Divisões de Treino de Musculação: Guia Prático (ABC, ABCDE e Mais)</h1>
+  <p class="subtitle">Entenda a lógica por trás de ABC, AB Upper/Lower e ABCDE, e descubra qual divisão de treino se encaixa melhor na sua rotina semanal.</p>
+</header>
 
-    <main class="main-container">
-        <article>
-            <div class="article-header">
-                <span class="category-tag">Treino</span>
-                <h1>Como Montar Divisões de Treino de Musculação: Guia Prático (ABC, ABCDE e Mais)</h1>
-                <div class="post-meta">
-                    <span><i class="fa-solid fa-calendar"></i> Atualizado Recentemente</span>
-                    <span><i class="fa-solid fa-clock"></i> 5 min de leitura</span>
-                </div>
-            </div>
+<div class="container" style="max-width:760px;">
 
-            <div class="article-body">
-                <p>Montar uma rotina de exercícios eficiente na musculação exige muito mais do que apenas escolher aparelhos aleatórios no salão da academia. Para colher resultados reais de hipertrofia ou perda de gordura, você precisa organizar as famosas <strong>divisões de treino</strong>. Essa distribuição determina a frequência ideal com que cada grupo muscular será estimulado e, consequentemente, o tempo que ele terá para descansar.</p>
+  <div class="author-box">
+    <span>✍️ Por <a href="../sobre.html">Lucas Andrade</a></span>
+    <span>✅ Revisão técnica: <a href="../sobre.html">Carolina Velneri</a></span>
+    <span>📅 Atualizado em 25 de junho de 2026</span>
+  </div>
 
-                <h2>A Regra de Ouro: Frequência vs Volume</h2>
-                <p>O músculo precisa de estímulo intenso mecânico para crescer, mas necessita de 48 a 72 horas de repouso absoluto para se recuperar totalmente e hipertrofiar. Se você treina o mesmo músculo todo santo dia, você interrompe o processo regenerativo. Se treina de menos, não acumula volume de trabalho semanal suficiente. Abaixo, conheça os modelos de divisões mais consolidados pela ciência da educação física:</p>
+  <div class="card">
+    <p>Montar uma rotina de exercícios eficiente na musculação exige muito mais do que apenas escolher aparelhos aleatórios no salão da academia. Para colher resultados reais de hipertrofia ou perda de gordura, você precisa organizar as famosas <strong>divisões de treino</strong>. Essa distribuição determina a frequência ideal com que cada grupo muscular será estimulado e, consequentemente, o tempo que ele terá para descansar.</p>
+    <p>Na prática, a divisão de treino é a ferramenta que conecta dois objetivos que parecem conflitantes: gerar volume de trabalho suficiente para provocar adaptação muscular e, ao mesmo tempo, respeitar a capacidade de recuperação do corpo. Escolher mal esse equilíbrio é uma das razões mais comuns de estagnação em pessoas que treinam com consistência, mas não veem progresso proporcional ao esforço.</p>
+  </div>
 
-                <h2>1. Divisão ABC (Push / Pull / Legs)</h2>
-                <p>É uma das rotinas mais equilibradas e recomendadas do mundo, tanto para iniciantes quanto para avançados. Ela divide o corpo de acordo com as funções mecânicas naturais:</p>
-                <ul>
-                    <li><strong>Treino A (Push - Empurrar):</strong> Peitoral, Ombros (porção anterior e lateral) e Tríceps.</li>
-                    <li><strong>Treino B (Pull - Puxar):</strong> Costas, Trapézio, Bíceps e Antebraço.</li>
-                    <li><strong>Treino C (Legs - Pernas):</strong> Quadríceps, Posteriores de Coxa, Glúteos e Panturrilhas.</li>
-                </ul>
-                <p><em>Frequência recomendada:</em> Pode ser feita de forma sequencial 3 a 5 vezes por semana (ex: Segunda, Quarta e Sexta) ou no formato ABC sequencial repetido.</p>
+  <div class="section-title">⚖️ A Regra de Ouro: Frequência vs Volume</div>
+  <div class="card">
+    <p>O músculo precisa de estímulo intenso mecânico para crescer, mas necessita de 48 a 72 horas de repouso absoluto para se recuperar totalmente e hipertrofiar. Se você treina o mesmo músculo todo santo dia, você interrompe o processo regenerativo. Se treina de menos, não acumula volume de trabalho semanal suficiente.</p>
+    <p>Esse equilíbrio entre frequência e volume é regulado, em grande parte, pela síntese proteica muscular — o processo bioquímico que reconstrói as fibras danificadas pelo treino. Estudos de fisiologia do exercício mostram que essa síntese permanece elevada por 24 a 48 horas após uma sessão intensa e depois retorna a níveis basais, o que ajuda a explicar por que estimular o mesmo grupo muscular 2 vezes por semana costuma superar tanto o excesso quanto a escassez de frequência.</p>
+  </div>
 
-                <h2>2. Divisão AB (Upper / Lower)</h2>
-                <p>Ideal para quem tem apenas 4 dias disponíveis na semana para treinar. Separa o corpo em metade superior e metade inferior:</p>
-                <ul>
-                    <li><strong>Treino A (Upper):</strong> Todos os músculos da cintura para cima (Peito, Costas, Ombros e Braços).</li>
-                    <li><strong>Treino B (Lower):</strong> Todos os músculos da cintura para baixo (Pernas completas e Core/Abdômen).</li>
-                </ul>
+  <div class="section-title">💪 1. Divisão ABC (Push / Pull / Legs)</div>
+  <div class="card">
+    <p>É uma das rotinas mais equilibradas e recomendadas do mundo, tanto para iniciantes quanto para avançados. Ela divide o corpo de acordo com as funções mecânicas naturais:</p>
+    <p><strong>Treino A (Push - Empurrar):</strong> Peitoral, Ombros (porção anterior e lateral) e Tríceps.</p>
+    <p><strong>Treino B (Pull - Puxar):</strong> Costas, Trapézio, Bíceps e Antebraço.</p>
+    <p><strong>Treino C (Legs - Pernas):</strong> Quadríceps, Posteriores de Coxa, Glúteos e Panturrilhas.</p>
+    <p><em>Frequência recomendada:</em> pode ser feita de forma sequencial 3 a 5 vezes por semana (ex: Segunda, Quarta e Sexta) ou no formato ABC sequencial repetido, o que permite treinar cada grupo muscular duas vezes dentro de uma semana de 6 dias.</p>
+  </div>
 
-                <h2>3. Divisão ABCDE (Isolamento por Grupo Muscular)</h2>
-                <p>Muito popular no meio do fisiculturismo avançado. Consiste em massacrar um ou dois grupos musculares por dia com um volume altíssimo de séries:</p>
-                <ul>
-                    <li><strong>A:</strong> Peitoral | <strong>B:</strong> Costas | <strong>C:</strong> Pernas completas | <strong>D:</strong> Ombros | <strong>E:</strong> Braços (Bíceps e Tríceps).</li>
-                </ul>
-                <p><em>Veredito:</em> Só funciona de verdade para indivíduos que já possuem uma excelente maturidade muscular e conseguem gerar uma intensidade destrutiva em uma única sessão a ponto de o músculo precisar de uma semana inteira de descanso.</p>
+  <div class="section-title">🔼 2. Divisão AB (Upper / Lower)</div>
+  <div class="card">
+    <p>Ideal para quem tem apenas 4 dias disponíveis na semana para treinar. Separa o corpo em metade superior e metade inferior:</p>
+    <p><strong>Treino A (Upper):</strong> todos os músculos da cintura para cima (Peito, Costas, Ombros e Braços).</p>
+    <p><strong>Treino B (Lower):</strong> todos os músculos da cintura para baixo (Pernas completas e Core/Abdômen).</p>
+    <p>Uma das grandes vantagens desse modelo é permitir frequência 2x por semana para cada grupo muscular dentro de apenas 4 sessões semanais, o que o torna uma opção eficiente para quem concilia treino com rotina de trabalho cheia.</p>
+  </div>
 
-                <h2>Como Escolher a Melhor Divisão Para Você?</h2>
-                <p>A melhor rotina não é a que o atleta mais forte da internet faz, mas sim <strong>aquela que se encaixa na sua rotina semanal</strong>. Se você só pode ir à academia 3 vezes na semana, um protocolo ABCDE será ineficiente. Prefira um modelo ABC. Se pode ir 4 vezes, o modelo Upper/Lower se encaixa perfeitamente.</p>
+  <div class="section-title">🏋️ 3. Divisão ABCDE (Isolamento por Grupo Muscular)</div>
+  <div class="card">
+    <p>Muito popular no meio do fisiculturismo avançado. Consiste em massacrar um ou dois grupos musculares por dia com um volume altíssimo de séries:</p>
+    <p><strong>A:</strong> Peitoral | <strong>B:</strong> Costas | <strong>C:</strong> Pernas completas | <strong>D:</strong> Ombros | <strong>E:</strong> Braços (Bíceps e Tríceps).</p>
+    <p><em>Veredito:</em> só funciona de verdade para indivíduos que já possuem uma excelente maturidade muscular e conseguem gerar uma intensidade destrutiva em uma única sessão a ponto de o músculo precisar de uma semana inteira de descanso. Para a maioria das pessoas, frequência baixa por grupo muscular tende a gerar menos resultado acumulado ao longo do mês do que modelos com frequência 2x.</p>
+  </div>
 
-                <div class="box-afiliado">
-                    <p><strong>👉 OTIMIZE SEUS DIAS DE TREINO INTENSO COM ACESSÓRIOS E SUPLEMENTAÇÃO DE QUALIDADE:</strong></p>
-                    <!-- Substitua o # pelo seu link de afiliado -->
-                    <a href="https://meli.la/12eqXsn" target="_blank" class="btn-afiliado">
-                        <i class="fa-solid fa-shopping-cart"></i> Conferir Melhores Ofertas
-                    </a>
-                </div>
+  <div class="section-title">🎯 Como Escolher a Melhor Divisão Para Você?</div>
+  <div class="card">
+    <p>A melhor rotina não é a que o atleta mais forte da internet faz, mas sim <strong>aquela que se encaixa na sua rotina semanal</strong>. Se você só pode ir à academia 3 vezes na semana, um protocolo ABCDE será ineficiente. Prefira um modelo ABC. Se pode ir 4 vezes, o modelo Upper/Lower se encaixa perfeitamente.</p>
+    <p>Vale lembrar que a divisão de treino é apenas uma parte da equação. O resultado final de qualquer programa de hipertrofia depende também de estar em superávit calórico moderado e ingerir proteína suficiente para sustentar a reconstrução muscular — por isso vale conferir quantas calorias o seu corpo realmente precisa antes de fechar o planejamento da semana.</p>
+  </div>
 
-                <div class="card-cta">
-                    <h3>Alimente a Divisão de Treino Escolhida</h3>
-                    <p>Treinos intensos exigem o suporte calórico correto. Não adianta treinar perfeitamente se você não ingere a quantidade certa de macronutrientes. Use nossa Calculadora de Calorias e Macros para blindar seus resultados.</p>
-                    <a href="../index.html" class="btn-cta">
-                        <i class="fa-solid fa-calculator"></i> Configurar Meus Macros e Calorias
-                    </a>
-                </div>
-            </div>
-        </article>
-    </main>
+  <div style="background-color: rgba(234,179,8,0.05); border: 1px solid rgba(234,179,8,0.3); border-radius:12px; padding:1.5rem; margin:2rem 0; text-align:center;">
+    <p><strong>👉 OTIMIZE SEUS DIAS DE TREINO INTENSO COM ACESSÓRIOS E SUPLEMENTAÇÃO DE QUALIDADE:</strong></p>
+    <a href="https://meli.la/12eqXsn" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:0.5rem; background-color:#eab308; color:#1e293b; text-decoration:none; padding:0.7rem 1.5rem; border-radius:8px; font-weight:600; margin-top:1rem;">🛒 Conferir Melhores Ofertas</a>
+  </div>
 
-    <footer>
-        <p>&copy; 2026 SaúdeMundo. Todos os direitos reservados.</p>
-    </footer>
+  <div class="section-title">⚠️ Erros Comuns ao Montar uma Divisão de Treino</div>
+  <div class="card">
+    <p><strong>Copiar a divisão de outra pessoa</strong> sem considerar a própria disponibilidade semanal, levando a treinos pulados e frequência irregular.</p>
+    <p><strong>Trocar de divisão a cada poucas semanas</strong> por impulso, o que impede acumular volume suficiente em qualquer um dos modelos para ver resultado.</p>
+    <p><strong>Ignorar o descanso entre sessões</strong> do mesmo grupo muscular, treinando peito ou pernas em dias consecutivos por ansiedade de "fazer mais".</p>
+    <p><strong>Negligenciar a alimentação</strong> e tratar a divisão de treino como se fosse, isoladamente, suficiente para gerar hipertrofia.</p>
+  </div>
 
-    <script>
-        const themeToggle = document.getElementById('themeToggle');
-        const icon = themeToggle.querySelector('i');
+  <a href="../calculadora-macros.html" class="tool-card" style="margin-bottom:24px;">
+    <div class="tool-icon">🍽️</div>
+    <div class="tool-name">Calculadora de Calorias e Macros</div>
+    <div class="tool-desc">Treinos intensos exigem o suporte calórico correto. Descubra quantas calorias e gramas de proteína você precisa para sustentar a divisão de treino escolhida.</div>
+  </a>
 
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        updateIcon(savedTheme);
+  <div class="faq-section">
+    <div class="card-title">❓ Perguntas Frequentes</div>
+    <div class="faq-item">
+      <div class="faq-q">O que é uma divisão de treino?</div>
+      <div class="faq-a">É a forma como os grupos musculares são distribuídos ao longo dos dias de treino na semana, garantindo estímulo suficiente para cada músculo e tempo adequado de descanso entre as sessões.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Qual a diferença entre ABC e AB (Upper/Lower)?</div>
+      <div class="faq-a">A divisão ABC separa o corpo por função mecânica (empurrar, puxar, pernas), geralmente em 3 a 5 dias. Já a divisão AB Upper/Lower separa apenas em metade superior e inferior do corpo, sendo ideal para quem tem 4 dias disponíveis na semana.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">A divisão ABCDE é boa para quem está começando?</div>
+      <div class="faq-a">Não é a recomendação ideal para iniciantes. O ABCDE exige alta intensidade por sessão e maturidade muscular, já que cada grupo é trabalhado apenas uma vez por semana.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Quantas vezes por semana devo treinar cada grupo muscular?</div>
+      <div class="faq-a">A maioria das evidências aponta para frequências de 2 vezes por semana por grupo muscular como ponto ideal para hipertrofia.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Como escolher a melhor divisão de treino para mim?</div>
+      <div class="faq-a">A escolha depende da quantidade de dias disponíveis na semana e do nível de experiência. Quem treina 3 vezes se beneficia mais do ABC; quem treina 4 vezes se encaixa melhor no Upper/Lower.</div>
+    </div>
+  </div>
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateIcon(newTheme);
-        });
+  <div style="background:#f0faf4;border:1px solid #c0e0cc;border-radius:12px;padding:20px 24px;margin-top:28px;">
+    <p style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#007A3D;opacity:0.8;margin-bottom:14px;">📚 Fontes e Referências</p>
+    <ol style="color:#555;font-size:0.82rem;line-height:1.8;padding-left:18px;margin:0;">
+      <li style="margin-bottom:6px;">Schoenfeld BJ, Ogborn D, Krieger JW. <em>Effects of Resistance Training Frequency on Measures of Muscle Hypertrophy: A Systematic Review and Meta-Analysis.</em> Sports Medicine, 2016. <a href="https://link.springer.com/article/10.1007/s40279-016-0543-8" target="_blank" rel="noopener" style="color:#007A3D;text-decoration:none;">link.springer.com</a></li>
+      <li style="margin-bottom:6px;">Schoenfeld BJ, Grgic J, Krieger J. <em>How many times per week should a muscle be trained to maximize muscle hypertrophy?</em> Journal of Sports Sciences, 2019.</li>
+      <li style="margin-bottom:6px;">American College of Sports Medicine. <em>Progression Models in Resistance Training for Healthy Adults.</em> Medicine & Science in Sports & Exercise, 2009.</li>
+      <li style="margin-bottom:6px;">CONFEF — Conselho Federal de Educação Física. <em>Diretrizes para Prescrição de Treinamento Resistido.</em> <a href="https://www.confef.org.br" target="_blank" rel="noopener" style="color:#007A3D;text-decoration:none;">confef.org.br</a></li>
+    </ol>
+  </div>
 
-        function updateIcon(theme) {
-            if (theme === 'dark') {
-                icon.className = 'fa-solid fa-sun';
-            } else {
-                icon.className = 'fa-solid fa-moon';
-            }
-        }
-    </script>
+  <div id="sm-blog-placeholder"></div>
+
+</div>
+
+<script src="../shared.js"></script>
 </body>
 </html>

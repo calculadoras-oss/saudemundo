@@ -1,376 +1,170 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guia do Whey Protein: O que é, Tipos e Como Escolher o Melhor</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg-primary: #f8fafc;
-            --bg-card: #ffffff;
-            --text-primary: #1e293b;
-            --text-secondary: #64748b;
-            --primary: #10b981;
-            --primary-hover: #059669;
-            --border: #e2e8f0;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --accent: #eab308;
-            --accent-hover: #ca8a04;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia do Whey Protein: O que é, Tipos e Como Escolher o Melhor | SaúdeMundo</title>
+<meta name="description" content="Entenda o que é o whey protein, as diferenças entre concentrado, isolado e hidrolisado, e como escolher o melhor produto para o seu objetivo e bolso.">
+<link rel="canonical" href="https://saudemundo.com.br/artigos/artigo-guia-whey-protein.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared.css">
 
-        [data-theme="dark"] {
-            --bg-primary: #0f172a;
-            --bg-card: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --border: #334155;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.5);
-        }
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Guia do Whey Protein: O que é, Tipos (Isolado vs Concentrado) e Como Escolher o Melhor",
+  "author": {"@type":"Person","name":"Lucas Andrade","url":"https://saudemundo.com.br/sobre.html"},
+  "reviewedBy": {"@type":"Person","name":"Carolina Velneri","url":"https://saudemundo.com.br/sobre.html"},
+  "datePublished": "2026-06-25",
+  "dateModified": "2026-06-25",
+  "publisher": {"@type":"Organization","name":"SaúdeMundo","url":"https://saudemundo.com.br"}
+}
+</script>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
-        }
-
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.7;
-        }
-
-        /* Header e Navegação */
-        header {
-            background-color: var(--bg-card);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: var(--shadow);
-        }
-
-        .nav-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 1rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .btn-home {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .btn-home:hover {
-            color: var(--primary);
-        }
-
-        .theme-toggle {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.2rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 50%;
-        }
-
-        .theme-toggle:hover {
-            color: var(--primary);
-            background-color: var(--bg-primary);
-        }
-
-        /* Estrutura do Artigo */
-        .main-container {
-            max-width: 800px;
-            margin: 2.5rem auto;
-            padding: 0 1.5rem;
-        }
-
-        .article-header {
-            margin-bottom: 2rem;
-        }
-
-        .category-tag {
-            background-color: rgba(234, 179, 8, 0.1);
-            color: var(--accent);
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            line-height: 1.3;
-            margin-bottom: 1rem;
-        }
-
-        .post-meta {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            display: flex;
-            gap: 1rem;
-        }
-
-        .article-body {
-            background-color: var(--bg-card);
-            padding: 2.5rem;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-        }
-
-        .article-body p {
-            margin-bottom: 1.5rem;
-            font-size: 1.05rem;
-            color: var(--text-primary);
-        }
-
-        h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin: 2rem 0 1rem 0;
-            color: var(--primary);
-        }
-
-        ul {
-            margin-bottom: 1.5rem;
-            padding-left: 1.5rem;
-        }
-
-        li {
-            margin-bottom: 0.75rem;
-            font-size: 1.05rem;
-        }
-
-        /* Box de Afiliado */
-        .box-afiliado {
-            background-color: rgba(234, 179, 8, 0.05);
-            border: 1px solid rgba(234, 179, 8, 0.3);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .btn-afiliado {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background-color: var(--accent);
-            color: #1e293b;
-            text-decoration: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            margin-top: 1rem;
-            transition: background-color 0.2s, transform 0.2s;
-        }
-
-        .btn-afiliado:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-1px);
-        }
-
-        /* Card de Chamada para Ação (CTA) */
-        .card-cta {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
-            border: 2px dashed var(--primary);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-top: 3rem;
-            text-align: center;
-        }
-
-        .card-cta h3 {
-            margin-top: 0;
-            color: var(--primary);
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .card-cta p {
-            font-size: 0.95rem;
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-        }
-
-        .btn-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background-color: var(--primary);
-            color: white;
-            text-decoration: none;
-            padding: 0.8rem 1.8rem;
-            border-radius: 8px;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
-            transition: transform 0.2s, background-color 0.2s;
-        }
-
-        .btn-cta:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-2px);
-        }
-
-        /* Rodapé */
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            border-top: 1px solid var(--border);
-            margin-top: 4rem;
-            background-color: var(--bg-card);
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 1.8rem; }
-            .article-body { padding: 1.5rem; }
-            .main-container { margin: 1.5rem auto; }
-        }
-    </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "O que é o whey protein?",
+      "acceptedAnswer": { "@type": "Answer", "text": "É uma proteína de alto valor biológico extraída do soro do leite, um subproduto da fabricação de queijos, com rápida absorção e rica em aminoácidos essenciais, incluindo os BCAAs." }
+    },
+    {
+      "@type": "Question",
+      "name": "Qual a diferença entre whey concentrado, isolado e hidrolisado?",
+      "acceptedAnswer": { "@type": "Answer", "text": "O concentrado tem 70-80% de proteína e mantém um pouco de lactose e gordura. O isolado tem 90% ou mais de proteína, com pouquíssima lactose. O hidrolisado é pré-digerido, tendo absorção ainda mais rápida e custo geralmente mais elevado." }
+    },
+    {
+      "@type": "Question",
+      "name": "Whey protein engorda?",
+      "acceptedAnswer": { "@type": "Answer", "text": "O whey protein, por si só, não engorda. O ganho de peso depende do balanço calórico total do dia. Como qualquer fonte calórica, consumido em excesso e fora do contexto da dieta, pode contribuir para superávit calórico." }
+    },
+    {
+      "@type": "Question",
+      "name": "Quem tem intolerância à lactose pode tomar whey protein?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Sim, mas geralmente deve optar pela versão isolada (WPI), que possui quantidade de lactose próxima de zero, ou pelo hidrolisado, evitando o whey concentrado, que retém mais lactose." }
+    },
+    {
+      "@type": "Question",
+      "name": "Quanto de whey protein devo consumir por dia?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Isso depende da meta total de proteína diária da pessoa, calculada com base no peso corporal e objetivo. O whey deve complementar, e não substituir, as fontes de proteína da alimentação." }
+    }
+  ]
+}
+</script>
 </head>
 <body>
+<div class="bg-grid"></div>
 
-    <header>
-        <a href="../index.html" class="logo">
-                    ✦ SaúdeMundo
-                </a>
-            <div class="nav-actions">
-                <a href="../index.html" class="btn-home">
-                    <i class="fa-solid fa-house"></i> Início
-                </a>
-                <button class="theme-toggle" id="themeToggle" title="Alternar tema">
-                    <i class="fa-solid fa-moon"></i>
-                </button>
-            </div>
-        </div>
-    </header>
+<header>
+  <h1>Guia do Whey Protein: O que é, Tipos (Isolado vs Concentrado) e Como Escolher o Melhor</h1>
+  <p class="subtitle">Entenda as diferenças entre whey concentrado, isolado e hidrolisado, e saiba o que avaliar no rótulo antes de comprar.</p>
+</header>
 
-    <main class="main-container">
-        <article>
-            <div class="article-header">
-                <span class="category-tag">Suplementação</span>
-                <h1>Guia do Whey Protein: O que é, Tipos (Isolado vs Concentrado) e Como Escolher o Melhor</h1>
-                <div class="post-meta">
-                    <span><i class="fa-solid fa-calendar"></i> Atualizado Recentemente</span>
-                    <span><i class="fa-solid fa-clock"></i> 5 min de leitura</span>
-                </div>
-            </div>
+<div class="container" style="max-width:760px;">
 
-            <div class="article-body">
-                <p>Se você frequenta a academia ou busca melhorar a qualidade da sua alimentação, certamente já ouviu falar do Whey Protein. Ele se tornou o suplemento mais prático e popular do mundo para quem deseja bater as metas de proteínas diárias, ganhar massa muscular ou melhorar a recuperação após exercícios físicos intensos. Mas diante de tantas marcas e tipos, você sabe como escolher o melhor Whey Protein?</p>
+  <div class="author-box">
+    <span>✍️ Por <a href="../sobre.html">Lucas Andrade</a></span>
+    <span>✅ Revisão técnica: <a href="../sobre.html">Carolina Velneri</a></span>
+    <span>📅 Atualizado em 25 de junho de 2026</span>
+  </div>
 
-                <h2>O Que é o Whey Protein?</h2>
-                <p>O Whey Protein é uma proteína de altíssimo valor biológico extraída diretamente do soro do leite (um subproduto natural do processo de fabricação de queijos). Ele se destaca das demais fontes de proteínas pela sua rápida velocidade de absorção pelo organismo e por concentrar altas quantidades de aminoácidos essenciais, especialmente os BCAAs, que são indispensáveis para sinalizar a hipertrofia muscular.</p>
+  <div class="card">
+    <p>Se você frequenta a academia ou busca melhorar a qualidade da sua alimentação, certamente já ouviu falar do Whey Protein. Ele se tornou o suplemento mais prático e popular do mundo para quem deseja bater as metas de proteínas diárias, ganhar massa muscular ou melhorar a recuperação após exercícios físicos intensos. Mas diante de tantas marcas e tipos, você sabe como escolher o melhor Whey Protein?</p>
+    <p>Vale lembrar que o whey é, antes de tudo, uma ferramenta de praticidade — ele não substitui a alimentação como um todo, mas resolve um problema real: a dificuldade de consumir proteína de qualidade suficiente em refeições rápidas ou logo após o treino, quando o apetite costuma estar reduzido.</p>
+  </div>
 
-                <h2>Diferença Entre os Tipos de Whey Protein: Concentrado, Isolado e Hidrolisado</h2>
-                <p>Ao entrar em uma loja de suplementos, você se deparará com três nomenclaturas fundamentais. Entenda o que cada uma significa na prática:</p>
-                
-                <ul>
-                    <li><strong>1. Whey Protein Concentrado (WPC):</strong> Passa por um processo de filtragem mais simples. Contém entre 70% e 80% de proteína pura por dose. Mantém pequenas quantidades de carboidratos (lactose) e gorduras naturais do leite. <br><em>Veredito:</em> É a opção com o melhor custo-benefício do mercado e atende perfeitamente a maioria esmagadora das pessoas.</li>
-                    <li><strong>2. Whey Protein Isolado (WPI):</strong> Passa por um processo extremamente rígido de filtragem e isolamento. Geralmente possui 90% ou mais de proteína pura por dose. A quantidade de carboidratos, gorduras e lactose é quase zero ou nula. <br><em>Veredito:</em> Excelente opção para intolerantes à lactose ou para indivíduos em dietas de restrição calórica extrema (fase final de definição).</li>
-                    <li><strong>3. Whey Protein Hidrolisado (WPH):</strong> Passa por um processo chamado hidrólise, onde as cadeias de proteínas são "pré-digeridas" e quebradas em pedaços menores. Possui absorção e digestão extremamente rápidas. Geralmente apresenta o valor de mercado mais elevado.</li>
-                </ul>
+  <div class="section-title">🥛 O Que é o Whey Protein?</div>
+  <div class="card">
+    <p>O Whey Protein é uma proteína de altíssimo valor biológico extraída diretamente do soro do leite (um subproduto natural do processo de fabricação de queijos). Ele se destaca das demais fontes de proteínas pela sua rápida velocidade de absorção pelo organismo e por concentrar altas quantidades de aminoácidos essenciais, especialmente os BCAAs, que são indispensáveis para sinalizar a hipertrofia muscular.</p>
+    <p>Entre os BCAAs, a leucina merece destaque especial: é considerada o "gatilho" molecular que ativa a via mTOR, responsável por iniciar o processo de síntese proteica muscular. O whey protein é, proporcionalmente, uma das fontes alimentares mais ricas em leucina disponíveis, o que ajuda a explicar sua eficácia mesmo em doses relativamente pequenas.</p>
+  </div>
 
-                <h2>O Que Você Deve Avaliar Antes de Comprar?</h2>
-                <p>Para não comprar "gato por lebre", sempre leia a tabela nutricional e a lista de ingredientes no verso do pote:</p>
-                <ul>
-                    <li><strong>Quantidade de Proteína por Dose:</strong> Uma boa dose de whey deve fornecer entre 20g e 26g de proteína pura.</li>
-                    <li><strong>Lista de Ingredientes:</strong> O primeiro ingrediente da lista deve ser a proteína (concentrada ou isolada), e não carboidratos de preenchimento como maltodextrina.</li>
-                    <li><strong>Quantidade de Açúcares:</strong> Fuja de marcas que adicionam muito açúcar ou xaropes para mascarar o sabor do produto.</li>
-                </ul>
+  <div class="section-title">🔬 Diferença Entre os Tipos de Whey Protein: Concentrado, Isolado e Hidrolisado</div>
+  <div class="card">
+    <p>Ao entrar em uma loja de suplementos, você se deparará com três nomenclaturas fundamentais. Entenda o que cada uma significa na prática:</p>
+    <p><strong>1. Whey Protein Concentrado (WPC):</strong> passa por um processo de filtragem mais simples. Contém entre 70% e 80% de proteína pura por dose. Mantém pequenas quantidades de carboidratos (lactose) e gorduras naturais do leite. <em>Veredito:</em> é a opção com o melhor custo-benefício do mercado e atende perfeitamente a maioria esmagadora das pessoas.</p>
+    <p><strong>2. Whey Protein Isolado (WPI):</strong> passa por um processo extremamente rígido de filtragem e isolamento. Geralmente possui 90% ou mais de proteína pura por dose. A quantidade de carboidratos, gorduras e lactose é quase zero ou nula. <em>Veredito:</em> excelente opção para intolerantes à lactose ou para indivíduos em dietas de restrição calórica extrema (fase final de definição).</p>
+    <p><strong>3. Whey Protein Hidrolisado (WPH):</strong> passa por um processo chamado hidrólise, onde as cadeias de proteínas são "pré-digeridas" e quebradas em pedaços menores. Possui absorção e digestão extremamente rápidas. Geralmente apresenta o valor de mercado mais elevado.</p>
+  </div>
 
-                <div class="box-afiliado">
-                    <p><strong>👉 CONFIRA O WHEY PROTEIN MAIS VENDIDO E APROVADO ONLINE:</strong></p>
-                    <!-- Substitua o # pelo seu link de afiliado do Whey Protein -->
-                    <a href="https://meli.la/2kBYBxc" target="_blank" class="btn-afiliado">
-                        <i class="fa-solid fa-shopping-cart"></i> Conferir Produto na Loja
-                    </a>
-                </div>
+  <div class="section-title">🏷️ O Que Você Deve Avaliar Antes de Comprar?</div>
+  <div class="card">
+    <p>Para não comprar "gato por lebre", sempre leia a tabela nutricional e a lista de ingredientes no verso do pote:</p>
+    <p><strong>Quantidade de Proteína por Dose:</strong> uma boa dose de whey deve fornecer entre 20g e 26g de proteína pura.</p>
+    <p><strong>Lista de Ingredientes:</strong> o primeiro ingrediente da lista deve ser a proteína (concentrada ou isolada), e não carboidratos de preenchimento como maltodextrina.</p>
+    <p><strong>Quantidade de Açúcares:</strong> fuja de marcas que adicionam muito açúcar ou xaropes para mascarar o sabor do produto.</p>
+    <p>Também vale comparar o preço por grama de proteína entre marcas, e não apenas o preço do pote. Um produto mais caro, mas com maior concentração proteica por dose, pode sair mais barato no fim das contas do que uma opção aparentemente "promocional".</p>
+  </div>
 
-                <div class="card-cta">
-                    <h3>Descubra Quanto de Proteína Você Precisa</h3>
-                    <p>O whey protein é um grande facilitador da rotina, mas você sabe qual o seu teto de ingestão diária ideal? Use a nossa Calculadora de Proteínas para descobrir o valor exato para o seu peso e objetivo.</p>
-                    <a href="../calculadora-proteina.html" class="btn-cta">
-                        <i class="fa-solid fa-calculator"></i> Calcular Minha Meta Diária
-                    </a>
-                </div>
-            </div>
-        </article>
-    </main>
-     <div style="background:#f0faf4;border:1px solid #c0e0cc;border-radius:12px;padding:20px 24px;margin-top:28px;">
-      <p style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#007A3D;opacity:0.8;margin-bottom:14px;">📚 Fontes e Referências</p>
-      <ol style="color:#555;font-size:0.82rem;line-height:1.8;padding-left:18px;margin:0;">
-        <li style="margin-bottom:6px;">Phillips SM, Van Loon LJ. <em>Dietary protein for athletes: From requirements to optimum adaptation.</em> Journal of Sports Sciences, 2011.</li>
-        <li style="margin-bottom:6px;">Wolfe RR. <em>Branched-chain amino acids and muscle protein synthesis in humans.</em> Journal of the International Society of Sports Nutrition, 2017. <a href="https://jissn.biomedcentral.com" target="_blank" rel="noopener" style="color:#007A3D;text-decoration:none;">jissn.biomedcentral.com</a></li>
-        <li style="margin-bottom:6px;">ANVISA — Agência Nacional de Vigilância Sanitária. <em>Regulamento Técnico sobre Alimentos para Atletas (RDC nº 18/2010).</em> <a href="https://www.gov.br/anvisa/pt-br" target="_blank" rel="noopener" style="color:#007A3D;text-decoration:none;">gov.br/anvisa</a></li>
-        <li style="margin-bottom:6px;">CFN — Conselho Federal de Nutricionistas. <em>Recomendações de Proteína para Praticantes de Exercício.</em> <a href="https://www.cfn.org.br" target="_blank" rel="noopener" style="color:#007A3D;text-decoration:none;">cfn.org.br</a></li>
-      </ol>
+  <div class="section-title">⚠️ Erros Comuns na Hora de Escolher e Usar Whey Protein</div>
+  <div class="card">
+    <p><strong>Achar que mais whey é sempre melhor</strong>, ignorando a meta diária total de proteína e ultrapassando o necessário sem ganho adicional de resultado.</p>
+    <p><strong>Comprar pelo rótulo de marketing</strong> ("hipercalórico", "premium") sem checar a tabela nutricional real do produto.</p>
+    <p><strong>Usar o whey como substituto de refeição</strong> de forma recorrente, em vez de complemento pontual à dieta.</p>
+    <p><strong>Ignorar sintomas digestivos</strong> compatíveis com intolerância à lactose ao usar a versão concentrada, quando a versão isolada resolveria o problema.</p>
+  </div>
+
+  <p><em>Dosagem e protocolo devem ser definidos com nutricionista ou médico, que vai considerar suas necessidades individuais.</em></p>
+
+  <div style="background-color: rgba(234,179,8,0.05); border: 1px solid rgba(234,179,8,0.3); border-radius:12px; padding:1.5rem; margin:2rem 0; text-align:center;">
+    <p><strong>👉 CONFIRA O WHEY PROTEIN MAIS VENDIDO E APROVADO ONLINE:</strong></p>
+    <a href="https://meli.la/2kBYBxc" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:0.5rem; background-color:#eab308; color:#1e293b; text-decoration:none; padding:0.7rem 1.5rem; border-radius:8px; font-weight:600; margin-top:1rem;">🛒 Conferir Produto na Loja</a>
+  </div>
+
+  <div class="card">
+    <p>O whey protein é um grande facilitador da rotina, mas a pergunta que realmente importa é: quanto de proteína o seu corpo precisa por dia, considerando seu peso e objetivo? Antes de decidir quantas doses tomar, vale calcular sua meta diária de macronutrientes.</p>
+  </div>
+
+  <a href="../calculadora-macros.html" class="tool-card" style="margin-bottom:24px;">
+    <div class="tool-icon">🧮</div>
+    <div class="tool-name">Calculadora de Calorias e Macros</div>
+    <div class="tool-desc">Descubra sua meta diária exata de proteína e calorias para saber quanto do whey protein cabe no seu plano alimentar.</div>
+  </a>
+
+  <div class="faq-section">
+    <div class="card-title">❓ Perguntas Frequentes</div>
+    <div class="faq-item">
+      <div class="faq-q">O que é o whey protein?</div>
+      <div class="faq-a">É uma proteína de alto valor biológico extraída do soro do leite, com rápida absorção e rica em aminoácidos essenciais, incluindo os BCAAs.</div>
     </div>
-    <footer>
-        <p>&copy; 2026 SaúdeMundo. Todos os direitos reservados.</p>
-    </footer>
-    
-    <script>
-        const themeToggle = document.getElementById('themeToggle');
-        const icon = themeToggle.querySelector('i');
+    <div class="faq-item">
+      <div class="faq-q">Qual a diferença entre whey concentrado, isolado e hidrolisado?</div>
+      <div class="faq-a">O concentrado tem 70-80% de proteína e mantém um pouco de lactose. O isolado tem 90% ou mais, com pouquíssima lactose. O hidrolisado é pré-digerido e tem absorção ainda mais rápida.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Whey protein engorda?</div>
+      <div class="faq-a">Por si só, não. O ganho de peso depende do balanço calórico total do dia; em excesso e fora do contexto da dieta, qualquer fonte calórica pode contribuir para superávit.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Quem tem intolerância à lactose pode tomar whey protein?</div>
+      <div class="faq-a">Sim, geralmente optando pela versão isolada (WPI) ou hidrolisada, que têm quantidade de lactose muito reduzida.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Quanto de whey protein devo consumir por dia?</div>
+      <div class="faq-a">Depende da meta total de proteína diária da pessoa. O whey deve complementar, e não substituir, as fontes de proteína da alimentação.</div>
+    </div>
+  </div>
 
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        updateIcon(savedTheme);
+  <div style="background:#f0faf4;border:1px solid #c0e0cc;border-radius:12px;padding:20px 24px;margin-top:28px;">
+    <p style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#007A3D;opacity:0.8;margin-bottom:14px;">📚 Fontes e Referências</p>
+    <ol style="color:#555;font-size:0.82rem;line-height:1.8;padding-left:18px;margin:0;">
+      <li style="margin-bottom:6px;">Phillips SM, Van Loon LJ. <em>Dietary protein for athletes: From requirements to optimum adaptation.</em> Journal of Sports Sciences, 2011.</li>
+      <li style="margin-bottom:6px;">Wolfe RR. <em>Branched-chain amino acids and muscle protein synthesis in humans.</em> Journal of the International Society of Sports Nutrition, 2017. <a href="https://jissn.biomedcentral.com" target="_blank" rel="noopener" style="color:#007A3D;text-decoration:none;">jissn.biomedcentral.com</a></li>
+      <li style="margin-bottom:6px;">ANVISA — Agência Nacional de Vigilância Sanitária. <em>Regulamento Técnico sobre Alimentos para Atletas (RDC nº 18/2010).</em> <a href="https://www.gov.br/anvisa/pt-br" target="_blank" rel="noopener" style="color:#007A3D;text-decoration:none;">gov.br/anvisa</a></li>
+      <li style="margin-bottom:6px;">CFN — Conselho Federal de Nutricionistas. <em>Recomendações de Proteína para Praticantes de Exercício.</em> <a href="https://www.cfn.org.br" target="_blank" rel="noopener" style="color:#007A3D;text-decoration:none;">cfn.org.br</a></li>
+    </ol>
+  </div>
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateIcon(newTheme);
-        });
+  <div id="sm-blog-placeholder"></div>
 
-        function updateIcon(theme) {
-            if (theme === 'dark') {
-                icon.className = 'fa-solid fa-sun';
-            } else {
-                icon.className = 'fa-solid fa-moon';
-            }
-        }
-    </script>
+</div>
+
+<script src="../shared.js"></script>
 </body>
 </html>

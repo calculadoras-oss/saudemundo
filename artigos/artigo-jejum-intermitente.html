@@ -1,361 +1,181 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jejum Intermitente: Funciona para Emagrecer e Ganhar Massa?</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg-primary: #f8fafc;
-            --bg-card: #ffffff;
-            --text-primary: #1e293b;
-            --text-secondary: #64748b;
-            --primary: #10b981;
-            --primary-hover: #059669;
-            --border: #e2e8f0;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --accent: #eab308;
-            --accent-hover: #ca8a04;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jejum Intermitente: Funciona para Emagrecer e Ganhar Massa? | SaúdeMundo</title>
+<meta name="description" content="Entenda como funciona o jejum intermitente (16:8, 18:6 e 5:2), o que acontece no corpo durante o jejum, se é possível ganhar massa muscular nesse protocolo e quem deve evitá-lo.">
+<link rel="canonical" href="https://saudemundo.com.br/artigos/artigo-jejum-intermitente.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared.css">
 
-        [data-theme="dark"] {
-            --bg-primary: #0f172a;
-            --bg-card: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --border: #334155;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.5);
-        }
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Jejum Intermitente: Funciona de Verdade para Emagrecer e Ganhar Massa?",
+  "author": {"@type":"Person","name":"Lucas Andrade","url":"https://saudemundo.com.br/sobre.html"},
+  "reviewedBy": {"@type":"Person","name":"Carolina Velneri","url":"https://saudemundo.com.br/sobre.html"},
+  "datePublished": "2026-06-25",
+  "dateModified": "2026-06-25",
+  "publisher": {"@type":"Organization","name":"SaúdeMundo","url":"https://saudemundo.com.br"}
+}
+</script>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
-        }
-
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.7;
-        }
-
-        header {
-            background-color: var(--bg-card);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: var(--shadow);
-        }
-
-        .nav-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 1rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .btn-home {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .btn-home:hover { color: var(--primary); }
-
-        .theme-toggle {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.2rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 50%;
-        }
-
-        .theme-toggle:hover {
-            color: var(--primary);
-            background-color: var(--bg-primary);
-        }
-
-        .main-container {
-            max-width: 800px;
-            margin: 2.5rem auto;
-            padding: 0 1.5rem;
-        }
-
-        .article-header { margin-bottom: 2rem; }
-
-        .category-tag {
-            background-color: rgba(16, 185, 129, 0.1);
-            color: var(--primary);
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            line-height: 1.3;
-            margin-bottom: 1rem;
-        }
-
-        .post-meta {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            display: flex;
-            gap: 1rem;
-        }
-
-        .article-body {
-            background-color: var(--bg-card);
-            padding: 2.5rem;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-        }
-
-        .article-body p {
-            margin-bottom: 1.5rem;
-            font-size: 1.05rem;
-            color: var(--text-primary);
-        }
-
-        h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin: 2rem 0 1rem 0;
-            color: var(--primary);
-        }
-
-        ul {
-            margin-bottom: 1.5rem;
-            padding-left: 1.5rem;
-        }
-
-        li {
-            margin-bottom: 0.5rem;
-            font-size: 1.05rem;
-        }
-
-        .box-afiliado {
-            background-color: rgba(234, 179, 8, 0.05);
-            border: 1px solid rgba(234, 179, 8, 0.3);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .btn-afiliado {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background-color: var(--accent);
-            color: #1e293b;
-            text-decoration: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            margin-top: 1rem;
-            transition: background-color 0.2s, transform 0.2s;
-        }
-
-        .btn-afiliado:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-1px);
-        }
-
-        .card-cta {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
-            border: 2px dashed var(--primary);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-top: 3rem;
-            text-align: center;
-        }
-
-        .card-cta h3 {
-            margin-top: 0;
-            color: var(--primary);
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .card-cta p {
-            font-size: 0.95rem;
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-        }
-
-        .btn-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background-color: var(--primary);
-            color: white;
-            text-decoration: none;
-            padding: 0.8rem 1.8rem;
-            border-radius: 8px;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
-            transition: transform 0.2s, background-color 0.2s;
-        }
-
-        .btn-cta:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-2px);
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            border-top: 1px solid var(--border);
-            margin-top: 4rem;
-            background-color: var(--bg-card);
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 1.8rem; }
-            .article-body { padding: 1.5rem; }
-            .main-container { margin: 1.5rem auto; }
-        }
-    </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "O que é o jejum intermitente?",
+      "acceptedAnswer": { "@type": "Answer", "text": "É um padrão alimentar que organiza quando você come, não o que você come. Os protocolos mais comuns são o 16:8, o 18:6 e o 5:2, que alternam períodos de jejum com janelas de alimentação." }
+    },
+    {
+      "@type": "Question",
+      "name": "É possível ganhar massa muscular fazendo jejum intermitente?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Sim, desde que o total calórico e proteico diário seja respeitado dentro da janela alimentar. O músculo é construído ao longo da recuperação nas horas seguintes ao treino, não no horário exato da refeição." }
+    },
+    {
+      "@type": "Question",
+      "name": "O jejum intermitente quebra o jejum se eu beber café?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Café preto sem açúcar, chá sem adoçante e água não quebram o jejum, pois não fornecem calorias significativas, e podem ser consumidos livremente durante o período de jejum." }
+    },
+    {
+      "@type": "Question",
+      "name": "Quem deve evitar o jejum intermitente?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Mulheres com histórico de desregulação hormonal, pessoas com histórico de transtornos alimentares, iniciantes no treino de força e quem treina pela manhã em jejum muito prolongado devem avaliar com cautela ou evitar o protocolo." }
+    },
+    {
+      "@type": "Question",
+      "name": "O jejum intermitente sozinho já garante perda de peso?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Não. O jejum apenas facilita reduzir as horas disponíveis para comer, o que tende a diminuir a ingestão calórica natural. Mas se a pessoa compensar com alimentos de alta densidade calórica dentro da janela, o déficit não acontece." }
+    }
+  ]
+}
+</script>
 </head>
 <body>
+<div class="bg-grid"></div>
 
-    <header>
-        <a href="../index.html" class="logo">
-                    ✦ SaúdeMundo
-                </a>
-            <div class="nav-actions">
-                <a href="../index.html" class="btn-home">
-                    <i class="fa-solid fa-house"></i> Início
-                </a>
-                <button class="theme-toggle" id="themeToggle" title="Alternar tema">
-                    <i class="fa-solid fa-moon"></i>
-                </button>
-            </div>
-        </div>
-    </header>
+<header>
+  <h1>Jejum Intermitente: Funciona de Verdade para Emagrecer e Ganhar Massa?</h1>
+  <p class="subtitle">Entenda os protocolos 16:8, 18:6 e 5:2, o que acontece no corpo durante o jejum e quem deve ter cautela antes de adotar essa estratégia.</p>
+</header>
 
-    <main class="main-container">
-        <article>
-            <div class="article-header">
-                <span class="category-tag">Nutrição</span>
-                <h1>Jejum Intermitente: Funciona de Verdade para Emagrecer e Ganhar Massa?</h1>
-                <div class="post-meta">
-                    <span><i class="fa-solid fa-calendar"></i> Atualizado Recentemente</span>
-                    <span><i class="fa-solid fa-clock"></i> 6 min de leitura</span>
-                </div>
-            </div>
+<div class="container" style="max-width:760px;">
 
-            <div class="article-body">
-                <p>Poucos temas geraram tanto debate na nutrição esportiva nos últimos anos quanto o jejum intermitente. Vilão para uns, solução milagrosa para outros — a realidade, como quase sempre na ciência, está no meio-termo. Entender como ele funciona de fato pode mudar a forma como você organiza sua alimentação e seus resultados.</p>
+  <div class="author-box">
+    <span>✍️ Por <a href="../sobre.html">Lucas Andrade</a></span>
+    <span>✅ Revisão técnica: <a href="../sobre.html">Carolina Velneri</a></span>
+    <span>📅 Atualizado em 25 de junho de 2026</span>
+  </div>
 
-                <h2>O Que é o Jejum Intermitente, Afinal?</h2>
-                <p>O jejum intermitente não é uma dieta no sentido tradicional — ele não dita <em>o que</em> você come, mas <em>quando</em> você come. As janelas de alimentação mais comuns são o protocolo <strong>16:8</strong> (16 horas em jejum, 8 horas para se alimentar) e o <strong>18:6</strong> para quem busca resultados mais acelerados. Também existe o protocolo <strong>5:2</strong>, em que se come normalmente por 5 dias e se restringe bastante a ingestão calórica em 2 dias da semana.</p>
-                <p>O objetivo central é criar um ambiente hormonal que favoreça a queima de gordura como fonte de energia, reduzindo os picos de insulina ao longo do dia.</p>
+  <div class="card">
+    <p>Poucos temas geraram tanto debate na nutrição esportiva nos últimos anos quanto o jejum intermitente. Vilão para uns, solução milagrosa para outros — a realidade, como quase sempre na ciência, está no meio-termo. Entender como ele funciona de fato pode mudar a forma como você organiza sua alimentação e seus resultados.</p>
+    <p>Mais do que um protocolo rígido, o jejum intermitente costuma funcionar melhor como uma ferramenta de organização da rotina alimentar — útil para algumas pessoas, irrelevante ou até prejudicial para outras. A diferença entre essas duas experiências quase sempre está em como o protocolo é encaixado na vida real de cada um, e não em alguma propriedade mágica do jejum em si.</p>
+  </div>
 
-                <h2>O Que Acontece no Seu Corpo Durante o Jejum</h2>
-                <p>Nas primeiras horas após a última refeição, o corpo esgota as reservas de glicogênio hepático. A partir daí, os níveis de insulina despencam e o glucagon assume o controle, sinalizando para o organismo buscar energia no tecido adiposo. Além disso, há um aumento natural do hormônio do crescimento (GH) durante o período de jejum, o que pode contribuir para a preservação da massa magra.</p>
-                <p>Outro benefício bastante documentado é a <strong>autofagia</strong> — o processo de "limpeza celular" em que o corpo elimina células danificadas e recicla componentes. Esse mecanismo está associado a saúde metabólica, longevidade e até redução do risco de doenças crônicas.</p>
+  <div class="section-title">⏱️ O Que é o Jejum Intermitente, Afinal?</div>
+  <div class="card">
+    <p>O jejum intermitente não é uma dieta no sentido tradicional — ele não dita <em>o que</em> você come, mas <em>quando</em> você come. As janelas de alimentação mais comuns são o protocolo <strong>16:8</strong> (16 horas em jejum, 8 horas para se alimentar) e o <strong>18:6</strong> para quem busca resultados mais acelerados. Também existe o protocolo <strong>5:2</strong>, em que se come normalmente por 5 dias e se restringe bastante a ingestão calórica em 2 dias da semana.</p>
+    <p>O objetivo central é criar um ambiente hormonal que favoreça a queima de gordura como fonte de energia, reduzindo os picos de insulina ao longo do dia.</p>
+  </div>
 
-                <h2>Jejum Intermitente e Ganho de Massa Muscular: É Possível?</h2>
-                <p>Aqui mora a maior dúvida de quem pratica musculação. A resposta curta é: <strong>sim, é possível</strong> — desde que o total calórico e proteico diário seja respeitado. O músculo não é construído no horário da refeição, mas sim ao longo do processo de recuperação nas horas seguintes ao treino. Se dentro da sua janela alimentar você consumir proteína suficiente (em torno de 1,6 a 2,2g por kg de peso corporal) e calorias acima do seu gasto energético, o ganho de massa ocorre normalmente.</p>
-                <p>O grande desafio prático é conseguir ingerir toda essa quantidade de nutrientes em uma janela de apenas 6 a 8 horas, o que pode ser difícil para quem tem metabolismo acelerado ou volume de treino elevado.</p>
+  <div class="section-title">🔬 O Que Acontece no Seu Corpo Durante o Jejum</div>
+  <div class="card">
+    <p>Nas primeiras horas após a última refeição, o corpo esgota as reservas de glicogênio hepático. A partir daí, os níveis de insulina despencam e o glucagon assume o controle, sinalizando para o organismo buscar energia no tecido adiposo. Além disso, há um aumento natural do hormônio do crescimento (GH) durante o período de jejum, o que pode contribuir para a preservação da massa magra.</p>
+    <p>Outro benefício bastante documentado é a <strong>autofagia</strong> — o processo de "limpeza celular" em que o corpo elimina células danificadas e recicla componentes. Esse mecanismo está associado a saúde metabólica, longevidade e até redução do risco de doenças crônicas.</p>
+    <p>Vale destacar que esses processos não são exclusivos do jejum intermitente — eles ocorrem, em menor grau, em qualquer período sem ingestão calórica, inclusive durante o sono. O jejum intermitente apenas estende e intensifica essa janela de forma estruturada.</p>
+  </div>
 
-                <h2>Quem Deve Evitar o Jejum Intermitente</h2>
-                <ul>
-                    <li><strong>Mulheres com histórico de desregulação hormonal:</strong> O jejum prolongado pode elevar o cortisol e impactar negativamente o eixo hormonal feminino em alguns casos.</li>
-                    <li><strong>Pessoas com histórico de transtornos alimentares:</strong> A restrição de janela pode reforçar padrões obsessivos com comida.</li>
-                    <li><strong>Iniciantes no treino de força:</strong> Nessa fase, a consistência na ingestão proteica distribuída ao longo do dia tende a trazer resultados superiores.</li>
-                    <li><strong>Quem treina pela manhã em jejum prolongado:</strong> Treinos de alta intensidade com mais de 16h de jejum podem comprometer a performance e a recuperação.</li>
-                </ul>
+  <div class="section-title">💪 Jejum Intermitente e Ganho de Massa Muscular: É Possível?</div>
+  <div class="card">
+    <p>Aqui mora a maior dúvida de quem pratica musculação. A resposta curta é: <strong>sim, é possível</strong> — desde que o total calórico e proteico diário seja respeitado. O músculo não é construído no horário da refeição, mas sim ao longo do processo de recuperação nas horas seguintes ao treino. Se dentro da sua janela alimentar você consumir proteína suficiente (em torno de 1,6 a 2,2g por kg de peso corporal) e calorias acima do seu gasto energético, o ganho de massa ocorre normalmente.</p>
+    <p>O grande desafio prático é conseguir ingerir toda essa quantidade de nutrientes em uma janela de apenas 6 a 8 horas, o que pode ser difícil para quem tem metabolismo acelerado ou volume de treino elevado.</p>
+  </div>
 
-                <h2>Como Montar Sua Janela Alimentar de Forma Inteligente</h2>
-                <p>A estratégia mais eficiente para a maioria das pessoas que treinam à tarde ou à noite é começar a janela alimentar no almoço e encerrá-la no início da noite. Isso permite treinar em estado de alimentação, consumir a refeição pós-treino dentro da janela e ainda ter um café da manhã (ou quebrá-lo levemente) sem comprometer o protocolo.</p>
-                <p>O café preto sem açúcar, o chá sem adoçante e a água não quebram o jejum e podem ser consumidos livremente para facilitar as primeiras horas da manhã.</p>
+  <div class="section-title">🚫 Quem Deve Evitar o Jejum Intermitente</div>
+  <div class="card">
+    <p><strong>Mulheres com histórico de desregulação hormonal:</strong> o jejum prolongado pode elevar o cortisol e impactar negativamente o eixo hormonal feminino em alguns casos.</p>
+    <p><strong>Pessoas com histórico de transtornos alimentares:</strong> a restrição de janela pode reforçar padrões obsessivos com comida.</p>
+    <p><strong>Iniciantes no treino de força:</strong> nessa fase, a consistência na ingestão proteica distribuída ao longo do dia tende a trazer resultados superiores.</p>
+    <p><strong>Quem treina pela manhã em jejum prolongado:</strong> treinos de alta intensidade com mais de 16h de jejum podem comprometer a performance e a recuperação.</p>
+  </div>
 
-                <div class="box-afiliado">
-                    <p><strong>⏰ Organização faz diferença na adesão ao jejum intermitente.</strong></p>
-                    <p>Confira itens que podem ajudar a planejar refeições, transportar alimentos e tornar sua rotina alimentar mais prática.</p>
-                    <a href="https://meli.la/2ZAw68a" target="_blank" class="btn-afiliado">
-                        <i class="fa-solid fa-utensils"></i> Ver Itens para Sua Rotina
-                    </a>
-                </div>
+  <div class="section-title">🗓️ Como Montar Sua Janela Alimentar de Forma Inteligente</div>
+  <div class="card">
+    <p>A estratégia mais eficiente para a maioria das pessoas que treinam à tarde ou à noite é começar a janela alimentar no almoço e encerrá-la no início da noite. Isso permite treinar em estado de alimentação, consumir a refeição pós-treino dentro da janela e ainda ter um café da manhã (ou quebrá-lo levemente) sem comprometer o protocolo.</p>
+    <p>O café preto sem açúcar, o chá sem adoçante e a água não quebram o jejum e podem ser consumidos livremente para facilitar as primeiras horas da manhã.</p>
+  </div>
 
-                <h2>Jejum Intermitente Não é Mágica — Mas Pode Ser uma Ferramenta Poderosa</h2>
-                <p>O jejum intermitente não cria um déficit calórico por si só — ele apenas facilita que você consuma menos calorias de forma natural, ao reduzir o número de horas disponíveis para comer. Se dentro da janela você compensar com comidas de alta densidade calórica, o resultado não virá. O segredo continua sendo a qualidade e a quantidade do que se come. O jejum é o <em>contexto</em>, não a solução.</p>
+  <div class="section-title">⚠️ Erros Comuns ao Praticar Jejum Intermitente</div>
+  <div class="card">
+    <p><strong>Compensar a janela alimentar curta com excesso calórico</strong>, anulando qualquer déficit que o jejum poderia ter favorecido.</p>
+    <p><strong>Treinar pesado em jejum prolongado</strong> sem adaptação prévia, gerando queda de performance e tontura.</p>
+    <p><strong>Ignorar a ingestão de proteína</strong> dentro da janela, comprometendo a manutenção de massa muscular.</p>
+    <p><strong>Adotar o protocolo mais extremo</strong> (como 18:6 ou mais) sem necessidade real, apenas por modismo, quando um 16:8 já atenderia ao objetivo com mais sustentabilidade.</p>
+  </div>
 
-                <div class="card-cta">
-                    <h3>Descubra Suas Calorias Ideais</h3>
-                    <p>Para usar o jejum intermitente a seu favor, você precisa saber exatamente quantas calorias e gramas de proteína consumir dentro da sua janela alimentar. Nossa calculadora faz isso por você em segundos.</p>
-                    <a href="../index.html" class="btn-cta">
-                        <i class="fa-solid fa-calculator"></i> Calcular Meus Macros Personalizados
-                    </a>
-                </div>
-            </div>
-        </article>
-    </main>
+  <p><em>Dosagem e protocolo devem ser definidos com nutricionista ou médico, que vai considerar suas necessidades individuais.</em></p>
 
-    <footer>
-        <p>&copy; 2026 SaúdeMundo. Todos os direitos reservados.</p>
-    </footer>
+  <div style="background-color: rgba(234,179,8,0.05); border: 1px solid rgba(234,179,8,0.3); border-radius:12px; padding:1.5rem; margin:2rem 0; text-align:center;">
+    <p><strong>⏰ Organização faz diferença na adesão ao jejum intermitente.</strong></p>
+    <p>Confira itens que podem ajudar a planejar refeições, transportar alimentos e tornar sua rotina alimentar mais prática.</p>
+    <a href="https://meli.la/2ZAw68a" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:0.5rem; background-color:#eab308; color:#1e293b; text-decoration:none; padding:0.7rem 1.5rem; border-radius:8px; font-weight:600; margin-top:1rem;">🍽️ Ver Itens para Sua Rotina</a>
+  </div>
 
-    <script>
-        const themeToggle = document.getElementById('themeToggle');
-        const icon = themeToggle.querySelector('i');
+  <div class="card">
+    <p>O jejum intermitente não cria um déficit calórico por si só — ele apenas facilita que você consuma menos calorias de forma natural, ao reduzir o número de horas disponíveis para comer. Se dentro da janela você compensar com comidas de alta densidade calórica, o resultado não virá. O segredo continua sendo a qualidade e a quantidade do que se come. O jejum é o <em>contexto</em>, não a solução.</p>
+  </div>
 
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        updateIcon(savedTheme);
+  <a href="../calculadora-tdee.html" class="tool-card" style="margin-bottom:24px;">
+    <div class="tool-icon">🧮</div>
+    <div class="tool-name">Calculadora de TDEE e Macros</div>
+    <div class="tool-desc">Para usar o jejum intermitente a seu favor, descubra exatamente quantas calorias e gramas de proteína consumir dentro da sua janela alimentar.</div>
+  </a>
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateIcon(newTheme);
-        });
+  <div class="faq-section">
+    <div class="card-title">❓ Perguntas Frequentes</div>
+    <div class="faq-item">
+      <div class="faq-q">O que é o jejum intermitente?</div>
+      <div class="faq-a">É um padrão alimentar que organiza quando você come, não o que você come. Os protocolos mais comuns são o 16:8, o 18:6 e o 5:2.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">É possível ganhar massa muscular fazendo jejum intermitente?</div>
+      <div class="faq-a">Sim, desde que o total calórico e proteico diário seja respeitado dentro da janela alimentar.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">O jejum intermitente quebra o jejum se eu beber café?</div>
+      <div class="faq-a">Café preto sem açúcar, chá sem adoçante e água não quebram o jejum, pois não fornecem calorias significativas.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Quem deve evitar o jejum intermitente?</div>
+      <div class="faq-a">Mulheres com desregulação hormonal, pessoas com histórico de transtornos alimentares, iniciantes no treino de força e quem treina pela manhã em jejum muito prolongado.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">O jejum intermitente sozinho já garante perda de peso?</div>
+      <div class="faq-a">Não. Ele apenas facilita reduzir as horas disponíveis para comer; se houver compensação calórica na janela, o déficit não acontece.</div>
+    </div>
+  </div>
 
-        function updateIcon(theme) {
-            icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-        }
-    </script>
+  <div style="background:#f0faf4;border:1px solid #c0e0cc;border-radius:12px;padding:20px 24px;margin-top:28px;">
+    <p style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#007A3D;opacity:0.8;margin-bottom:14px;">📚 Fontes e Referências</p>
+    <ol style="color:#555;font-size:0.82rem;line-height:1.8;padding-left:18px;margin:0;">
+      <li style="margin-bottom:6px;">de Cabo R, Mattson MP. <em>Effects of Intermittent Fasting on Health, Aging, and Disease.</em> New England Journal of Medicine, 2019. <a href="https://www.nejm.org/doi/full/10.1056/NEJMra1905136" target="_blank" rel="noopener" style="color:#007A3D;text-decoration:none;">nejm.org</a></li>
+      <li style="margin-bottom:6px;">Tinsley GM, La Bounty PM. <em>Effects of intermittent fasting on body composition and clinical health markers in humans.</em> Nutrition Reviews, 2015.</li>
+      <li style="margin-bottom:6px;">Moro T, et al. <em>Effects of eight weeks of time-restricted feeding on body composition and metabolic markers in resistance-trained males.</em> Journal of Translational Medicine, 2016.</li>
+      <li style="margin-bottom:6px;">CFN — Conselho Federal de Nutricionistas. <em>Posicionamento sobre Jejum Intermitente.</em> <a href="https://www.cfn.org.br" target="_blank" rel="noopener" style="color:#007A3D;text-decoration:none;">cfn.org.br</a></li>
+    </ol>
+  </div>
+
+  <div id="sm-blog-placeholder"></div>
+
+</div>
+
+<script src="../shared.js"></script>
 </body>
 </html>
