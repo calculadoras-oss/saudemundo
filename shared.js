@@ -247,7 +247,31 @@ function smLoadUserData() {
 document.addEventListener('DOMContentLoaded', () => {
   smLoadUserData();
   smRenderOtherTools();
+   /* ---------- Byline automático nas calculadoras ---------- */
+(function injectByline() {
+  if (SM_IN_ARTIGOS) return; // artigos já têm byline próprio no HTML
 
+  const h1 = document.querySelector('h1');
+  if (!h1) return;
+
+  // Lê data do atributo data-date da página, ou usa data padrão
+  const dateEl = document.querySelector('[data-date]');
+  let dataFormatada = '14 de junho de 2026';
+  if (dateEl) {
+    const raw = dateEl.getAttribute('data-date');
+    const MESES = ['janeiro','fevereiro','março','abril','maio','junho',
+                   'julho','agosto','setembro','outubro','novembro','dezembro'];
+    const [y, m, d] = raw.split('-').map(Number);
+    if (y && m && d) dataFormatada = `${d} de ${MESES[m - 1]} de ${y}`;
+  }
+
+  const byline = document.createElement('p');
+  byline.className = 'article-byline';
+  byline.innerHTML = `✍️ Por <a href="${smRootHref('sobre.html')}">Lucas Andrade</a> &nbsp;📅 Atualizado em ${dataFormatada}`;
+  byline.style.cssText = 'font-size:.85rem;color:var(--text-muted);margin:8px 0 24px;';
+
+  h1.insertAdjacentElement('afterend', byline);
+})();
   /* ---------- Corrige "atualizado recentemente" → data real ----------
      Adicione data-date="YYYY-MM-DD" em qualquer elemento da página
      (ex: no <article> ou na <div> que contém a autoria).
