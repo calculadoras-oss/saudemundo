@@ -1,365 +1,172 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whey Protein Engorda ou Ajuda a Emagrecer? Descubra a Verdade</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg-primary: #f8fafc;
-            --bg-card: #ffffff;
-            --text-primary: #1e293b;
-            --text-secondary: #64748b;
-            --primary: #10b981;
-            --primary-hover: #059669;
-            --border: #e2e8f0;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --accent: #eab308;
-            --accent-hover: #ca8a04;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whey Protein Engorda ou Ajuda a Emagrecer? Como Usar Corretamente | SaúdeMundo</title>
+<meta name="description" content="Whey protein engorda ou emagrece? Entenda a relação entre proteína, balanço calórico e emagrecimento, e saiba como usar o suplemento de forma estratégica na dieta.">
+<link rel="canonical" href="https://saudemundo.com.br/artigos/artigo-whey-protein-emagrece.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared.css">
 
-        [data-theme="dark"] {
-            --bg-primary: #0f172a;
-            --bg-card: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --border: #334155;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.5);
-        }
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Whey Protein Engorda ou Ajuda a Emagrecer? Como Usar Corretamente",
+  "author": {"@type": "Person", "name": "Lucas Andrade", "url": "https://saudemundo.com.br/sobre.html"},
+  "reviewedBy": {"@type": "Person", "name": "Carolina Velneri", "url": "https://saudemundo.com.br/sobre.html"},
+  "datePublished": "2026-06-25",
+  "dateModified": "2026-06-25",
+  "publisher": {"@type": "Organization", "name": "SaúdeMundo", "url": "https://saudemundo.com.br"}
+}
+</script>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
-        }
-
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.7;
-        }
-
-        /* Header e Navegação */
-        header {
-            background-color: var(--bg-card);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: var(--shadow);
-        }
-
-        .nav-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 1rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .btn-home {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .btn-home:hover {
-            color: var(--primary);
-        }
-
-        .theme-toggle {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.2rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 50%;
-        }
-
-        .theme-toggle:hover {
-            color: var(--primary);
-            background-color: var(--bg-primary);
-        }
-
-        /* Estrutura do Artigo */
-        .main-container {
-            max-width: 800px;
-            margin: 2.5rem auto;
-            padding: 0 1.5rem;
-        }
-
-        .article-header {
-            margin-bottom: 2rem;
-        }
-
-        .category-tag {
-            background-color: rgba(16, 185, 129, 0.1);
-            color: var(--primary);
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            line-height: 1.3;
-            margin-bottom: 1rem;
-        }
-
-        .post-meta {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            display: flex;
-            gap: 1rem;
-        }
-
-        .article-body {
-            background-color: var(--bg-card);
-            padding: 2.5rem;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-        }
-
-        .article-body p {
-            margin-bottom: 1.5rem;
-            font-size: 1.05rem;
-            color: var(--text-primary);
-        }
-
-        h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin: 2rem 0 1rem 0;
-            color: var(--primary);
-        }
-
-        ul {
-            margin-bottom: 1.5rem;
-            padding-left: 1.5rem;
-        }
-
-        li {
-            margin-bottom: 0.5rem;
-            font-size: 1.05rem;
-        }
-
-        /* Box de Afiliado */
-        .box-afiliado {
-            background-color: rgba(234, 179, 8, 0.05);
-            border: 1px solid rgba(234, 179, 8, 0.3);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .btn-afiliado {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background-color: var(--accent);
-            color: #1e293b;
-            text-decoration: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            margin-top: 1rem;
-            transition: background-color 0.2s, transform 0.2s;
-        }
-
-        .btn-afiliado:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-1px);
-        }
-
-        /* Card de Chamada para Ação (CTA) */
-        .card-cta {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
-            border: 2px dashed var(--primary);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-top: 3rem;
-            text-align: center;
-        }
-
-        .card-cta h3 {
-            margin-top: 0;
-            color: var(--primary);
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .card-cta p {
-            font-size: 0.95rem;
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-        }
-
-        .btn-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background-color: var(--primary);
-            color: white;
-            text-decoration: none;
-            padding: 0.8rem 1.8rem;
-            border-radius: 8px;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
-            transition: transform 0.2s, background-color 0.2s;
-        }
-
-        .btn-cta:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-2px);
-        }
-
-        /* Rodapé */
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            border-top: 1px solid var(--border);
-            margin-top: 4rem;
-            background-color: var(--bg-card);
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 1.8rem; }
-            .article-body { padding: 1.5rem; }
-            .main-container { margin: 1.5rem auto; }
-        }
-    </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Whey protein engorda?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Não por si só. O ganho de gordura depende do balanço calórico total do dia, não de um alimento isolado. O whey protein é uma fonte proteica de alta qualidade e baixa caloria — consumido dentro de um déficit calórico, ele não engorda."}
+    },
+    {
+      "@type": "Question",
+      "name": "Whey protein ajuda a emagrecer?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Sim, de forma indireta e dentro de uma dieta com déficit calórico. A proteína aumenta a saciedade, preserva a massa muscular durante a restrição calórica e tem efeito térmico elevado — o corpo gasta mais energia para digeri-la do que para digerir gorduras ou carboidratos."}
+    },
+    {
+      "@type": "Question",
+      "name": "Posso substituir refeições por whey protein?",
+      "acceptedAnswer": {"@type": "Answer", "text": "De forma crônica, não. O whey é um suplemento focado em proteína e não oferece o conjunto de fibras, micronutrientes e o efeito de saciedade prolongada de uma refeição sólida completa. Funciona bem para substituir lanches intermediários ou refeições ocasionais em contextos de logística difícil."}
+    },
+    {
+      "@type": "Question",
+      "name": "Qual o melhor horário para tomar whey protein no processo de emagrecimento?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Os momentos mais estratégicos são o lanche da tarde (para reduzir a fome até o jantar) e o pós-treino (para iniciar a recuperação muscular rapidamente). O horário exato tem impacto menor do que a consistência do consumo proteico ao longo do dia."}
+    },
+    {
+      "@type": "Question",
+      "name": "Whey protein com leite integral engorda mais do que com água?",
+      "acceptedAnswer": {"@type": "Answer", "text": "O que muda é o total calórico da preparação. Com água, um shake típico tem em torno de 100-130 kcal. Com leite integral, pode dobrar. O que importa é encaixar esse total dentro do seu limite calórico diário — a fonte do líquido não muda a fisiologia do emagrecimento."}
+    }
+  ]
+}
+</script>
 </head>
 <body>
+<div class="bg-grid"></div>
 
-    <header>
-        <a href="../index.html" class="logo">
-                    ✦ SaúdeMundo
-                </a>
-            <div class="nav-actions">
-                <a href="../index.html" class="btn-home">
-                    <i class="fa-solid fa-house"></i> Início
-                </a>
-                <button class="theme-toggle" id="themeToggle" title="Alternar tema">
-                    <i class="fa-solid fa-moon"></i>
-                </button>
-            </div>
-        </div>
-    </header>
+<header>
+  <h1>Whey Protein Engorda ou Ajuda a Emagrecer?</h1>
+  <p class="subtitle">A resposta direta para uma das dúvidas mais comuns de quem começa a fazer dieta — e como usar o suplemento de forma estratégica na perda de gordura.</p>
+</header>
 
-    <main class="main-container">
-        <article>
-            <div class="article-header">
-                <span class="category-tag">Emagrecimento</span>
-                <h1>Whey Protein Engorda ou Ajuda a Emagrecer? Descubra Como Usar Corretamente</h1>
-                <div class="post-meta">
-                    <span><i class="fa-solid fa-calendar"></i> Atualizado Recentemente</span>
-                    <span><i class="fa-solid fa-clock"></i> 4 min de leitura</span>
-                </div>
-            </div>
+<div class="container" style="max-width:760px;">
 
-            <div class="article-body">
-                <p>Uma dúvida muito comum paira na mente de quem deseja perder peso: <em>"O Whey Protein vai me engordar ou ele pode me ajudar a emagrecer?"</em>. Por ser fortemente associado a corpos musculosos e ganho de massa, muitas pessoas evitam o suplemento com medo de ganhar gordura. Vamos analisar o que a ciência diz sobre a relação entre o whey e a balança.</p>
+  <div class="author-box">
+    <span>✍️ Por <a href="../sobre.html">Lucas Andrade</a></span>
+    <span>✅ Revisão técnica: <a href="../sobre.html">Carolina Velneri</a></span>
+    <span>📅 Atualizado em 25 de junho de 2026</span>
+  </div>
 
-                <h2>A Verdade Direta: Whey Protein Engorda?</h2>
-                <p>A resposta curta é: <strong>nenhum alimento ou suplemento sozinho tem o poder de engordar você</strong>. O ganho de peso acumulado em gordura depende única e exclusivamente do balanço calórico total do seu dia. Se você consome mais calorias do que gasta (superávit calórico), você vai engordar — seja comendo whey, arroz, frango ou chocolate. O whey protein é apenas uma fonte de proteína em pó de alta qualidade e baixa caloria.</p>
+  <div class="card">
+    <p>Uma dúvida muito comum paira na cabeça de quem quer perder peso: <em>"O whey protein vai me engordar ou pode me ajudar a emagrecer?"</em>. Por ser fortemente associado a corpos musculosos e ganho de massa, muitas pessoas evitam o suplemento com medo de sair da dieta. Mas a resposta depende de um conceito mais básico — e mais importante — do que o suplemento em si.</p>
+  </div>
 
-                <h2>Como o Whey Protein Ajuda no Processo de Emagrecimento</h2>
-                <p>Se utilizado de forma estratégica dentro de uma dieta de déficit calórico, o whey protein se torna um dos maiores aliados da perda de peso por três motivos principais:</p>
-                <ul>
-                    <li><strong>Aumento drástico da saciedade:</strong> As proteínas demoram mais tempo para serem digeridas pelo estômago do que os carboidratos. Tomar um shake de whey protein diminui o apetite e ajuda a controlar as beliscadas fora de hora ao longo do dia.</li>
-                    <li><strong>Preservação da massa magra:</strong> Quando você consome menos calorias, o corpo tende a queimar músculos para gerar energia rápida. Manter a ingestão proteica alta com o whey impede que isso aconteça, garantindo que o peso perdido seja gordura pura.</li>
-                    <li><strong>Efeito térmico dos alimentos:</strong> O corpo gasta mais energia para digerir e quebrar proteínas do que gorduras ou carboidratos, o que otimiza sutilmente o funcionamento metabólico.</li>
-                </ul>
+  <div class="section-title">⚖️ O Que Realmente Determina Se Você Engorda</div>
+  <div class="card">
+    <p>Nenhum alimento ou suplemento engorda ou emagrece por conta própria. O que determina se você acumula gordura é o <strong>balanço calórico total do dia</strong>: se você consome mais calorias do que gasta (superávit), o corpo armazena o excesso como gordura — independentemente de ser whey, arroz, frango ou chocolate.</p>
+    <p>O whey protein é uma fonte de proteína em pó de alta qualidade e baixa densidade calórica. Uma dose típica (30 g) entrega entre 100 e 130 kcal e cerca de 24 g de proteína. Isso o torna um dos suplementos com melhor relação proteína/caloria disponíveis.</p>
+    <p>Se você quer entender exatamente quantas calorias precisa consumir para emagrecer com segurança, a <a href="../calculadora-tdee.html">calculadora de TDEE do SaúdeMundo</a> calcula seu gasto energético real com base em peso, altura, idade e nível de atividade — o ponto de partida para montar qualquer protocolo de déficit calórico.</p>
+  </div>
 
-                <h2>O Whey Protein Pode Substituir uma Refeição?</h2>
-                <p>Não de forma crônica. O whey protein é um suplemento alimentar focado em macronutrientes específicos e não possui o leque completo de micronutrientes, fibras e o fator de mastigação que uma refeição sólida estruturada (como o almoço e o jantar) oferece ao organismo.</p>
-                <p>No entanto, ele funciona perfeitamente para substituir lanches intermediários de difícil logística, misturado com frutas batidas no café da manhã ou em momentos corridos da rotina onde a única alternativa seria comer um salgado industrializado na rua.</p>
+  <div class="section-title">💪 Por Que o Whey Pode Ser Aliado do Emagrecimento</div>
+  <div class="card">
+    <p>Dentro de uma dieta com déficit calórico, o whey protein tem três mecanismos concretos a favor da perda de gordura:</p>
+    <p><strong>Aumento da saciedade.</strong> Proteínas demoram mais para ser digeridas do que carboidratos. Um shake de whey reduz o apetite nas horas seguintes e ajuda a controlar beliscadas fora de hora — o que, na prática, torna mais fácil manter o déficit calórico.</p>
+    <p><strong>Preservação da massa muscular.</strong> Em restrição calórica, o corpo tende a catabolizar tecido muscular para gerar energia. Manter a ingestão proteica elevada — e o whey facilita isso — protege a massa magra e garante que o peso perdido seja majoritariamente gordura, não músculo.</p>
+    <p><strong>Efeito térmico elevado.</strong> O organismo gasta mais energia para digerir proteína (20-30% das calorias ingeridas) do que para processar gordura (0-3%) ou carboidrato (5-10%). Esse gasto extra, embora não seja enorme, acumula diferença ao longo de semanas.</p>
+  </div>
 
-                <h2>Como e Quando Consumir o Whey para Emagrecer?</h2>
-                <p>Você pode encaixar o whey protein em shakes rápidos com água ou leite desnatado, misturar em receitas saudáveis (como bolinhos de aveia de caneca) ou combiná-lo com iogurte grego. Os momentos mais estratégicos são nos lanches da tarde (para segurar a fome até o horário do jantar) ou logo após o término do treino de musculação.</p>
+  <div class="section-title">🍽️ Whey Protein Pode Substituir Refeições?</div>
+  <div class="card">
+    <p>De forma crônica, não. O whey é um suplemento focado em proteína e não entrega o conjunto de fibras, vitaminas, minerais e o efeito de mastigação que uma refeição sólida oferece ao organismo. Usar whey no lugar do almoço e jantar todos os dias é estratégia de curtíssimo prazo que tende a gerar deficiências nutricionais e fadiga.</p>
+    <p>O que funciona bem é usá-lo para substituir <strong>lanches intermediários</strong> — aquele momento em que a opção disponível seria um salgado industrializado ou um biscoito recheado. Nesse contexto, o shake ganha na densidade proteica e perde na caloria.</p>
+  </div>
 
-                <div class="box-afiliado">
-                    <p><strong>👉 CONFIRA O WHEY PROTEIN MAIS RECOMENDADO PARA PROTOCOLOS DE EMAGRECIMENTO:</strong></p>
-                    <a href="https://meli.la/2kBYBxc" target="_blank" class="btn-afiliado">
-                        <i class="fa-solid fa-shopping-cart"></i> Conferir Produto na Loja
-                    </a>
-                </div>
+  <div class="section-title">🕐 Quando e Como Usar para Emagrecer</div>
+  <div class="card">
+    <p>O horário exato tem menos importância do que a consistência do consumo proteico ao longo do dia. Dito isso, dois momentos são particularmente estratégicos:</p>
+    <p><strong>Lanche da tarde.</strong> Reduz a fome acumulada entre o almoço e o jantar — o período em que a maioria das pessoas mais escorrega na dieta. Um shake com água ou leite desnatado resolve o volume de fome por 2-3 horas com menos de 150 kcal.</p>
+    <p><strong>Pós-treino.</strong> Logo após a musculação, o organismo está em estado de reparação muscular. Fornecer proteína de rápida absorção nesse momento acelera a recuperação e reduz o catabolismo gerado pelo treino intenso.</p>
+    <p>Formas de consumir: shake batido com água, leite desnatado ou bebida vegetal; misturado em iogurte grego; incorporado a receitas como panquecas de aveia ou mug cake proteico.</p>
+    <p><em>Nota: dosagem e protocolo de suplementação devem ser definidos com nutricionista, que vai considerar suas necessidades individuais, ingestão alimentar total e objetivos específicos.</em></p>
+  </div>
 
-                <div class="card-cta">
-                    <h3>Monitore Seus Macronutrientes</h3>
-                    <p>Para emagrecer com o auxílio do whey protein, você precisa mapear sua ingestão total de comida. Acesse a nossa Calculadora de Calorias e Macros para ter o controle total da sua dieta de secagem.</p>
-                    <a href="../index.html" class="btn-cta">
-                        <i class="fa-solid fa-calculator"></i> Ajustar Minhas Calorias e Macros
-                    </a>
-                </div>
-            </div>
-        </article>
-    </main>
+  <div class="section-title">❌ Erros Comuns de Quem Usa Whey na Dieta</div>
+  <div class="card">
+    <p><strong>Tomar whey "em cima" da dieta normal.</strong> Se você já atinge seu limite calórico diário com as refeições, adicionar um shake é superávit — e superávit vira gordura, independentemente da fonte.</p>
+    <p><strong>Escolher versões com muito açúcar adicionado.</strong> Alguns wheys saborizados concentram 10-15 g de açúcar por dose. Leia o rótulo: prefira versões com menos de 5 g de carboidrato por porção.</p>
+    <p><strong>Ignorar o líquido da mistura.</strong> Whey com leite integral dobra o total calórico do shake. Não é proibido — mas precisa entrar no cálculo do dia.</p>
+    <p><strong>Achar que o suplemento substitui o déficit calórico.</strong> Whey facilita a adesão à dieta, mas não cria déficit sozinho. Se você come além da necessidade e toma whey, engorda.</p>
+  </div>
 
-    <footer>
-        <p>&copy; 2026 SaúdeMundo. Todos os direitos reservados.</p>
-    </footer>
+  <div style="background-color: rgba(234, 179, 8, 0.05); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 12px; padding: 1.5rem; margin: 2rem 0; text-align: center;">
+    <p><strong>👉 WHEY PROTEIN RECOMENDADO PARA PROTOCOLOS DE EMAGRECIMENTO:</strong></p>
+    <a href="https://meli.la/2kBYBxc" target="_blank" style="display:inline-flex;align-items:center;gap:0.5rem;background-color:#eab308;color:#1e293b;text-decoration:none;padding:0.7rem 1.5rem;border-radius:8px;font-weight:600;margin-top:1rem;">
+      🛒 Conferir Produto na Loja
+    </a>
+  </div>
 
-    <script>
-        const themeToggle = document.getElementById('themeToggle');
-        const icon = themeToggle.querySelector('i');
+  <a href="../calculadora-macros.html" class="tool-card" style="margin-bottom:24px;">
+    <div class="tool-icon">🧮</div>
+    <div class="tool-name">Calculadora de Macronutrientes</div>
+    <div class="tool-desc">Descubra quanto de proteína, carboidrato e gordura você precisa por dia para emagrecer sem perder músculo — e encaixe o whey protein dentro desses números com precisão.</div>
+  </a>
 
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        updateIcon(savedTheme);
+  <div class="faq-section">
+    <div class="card-title">❓ Perguntas Frequentes</div>
+    <div class="faq-item">
+      <div class="faq-q">Whey protein engorda?</div>
+      <div class="faq-a">Não por si só. O ganho de gordura depende do balanço calórico total do dia. O whey é uma fonte proteica de alta qualidade e baixa caloria — dentro de um déficit calórico, não engorda.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Whey protein ajuda a emagrecer?</div>
+      <div class="faq-a">Sim, de forma indireta. Aumenta a saciedade, preserva massa muscular durante restrição calórica e tem efeito térmico elevado. Mas precisa estar dentro de uma dieta com déficit calórico para funcionar.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Posso substituir refeições por whey protein?</div>
+      <div class="faq-a">De forma crônica, não. Funciona bem para substituir lanches intermediários, mas não entrega os micronutrientes, fibras e saciedade prolongada de uma refeição sólida completa.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Qual o melhor horário para tomar whey no emagrecimento?</div>
+      <div class="faq-a">Lanche da tarde (para reduzir fome até o jantar) e pós-treino são os momentos mais estratégicos. Mas a consistência ao longo do dia importa mais do que o horário exato.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Whey com leite integral engorda mais do que com água?</div>
+      <div class="faq-a">O total calórico muda — com leite integral pode dobrar. O que importa é encaixar esse total dentro do seu limite calórico diário. A fonte do líquido não muda a fisiologia do emagrecimento.</div>
+    </div>
+  </div>
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateIcon(newTheme);
-        });
+  <div style="background:#f0faf4;border:1px solid #c0e0cc;border-radius:12px;padding:20px 24px;margin-top:28px;">
+    <p style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#007A3D;opacity:0.8;margin-bottom:14px;">📚 Fontes e Referências</p>
+    <ol style="color:#555;font-size:0.82rem;line-height:1.8;padding-left:18px;margin:0;">
+      <li style="margin-bottom:6px;">Leidy HJ et al. <em>The role of protein in weight loss and maintenance.</em> American Journal of Clinical Nutrition, 2015. <a href="https://doi.org/10.3945/ajcn.114.084038" target="_blank" rel="noopener" style="color:#007A3D;text-decoration:none;">doi.org</a></li>
+      <li style="margin-bottom:6px;">Wycherley TP et al. <em>Effects of energy-restricted high-protein, low-fat compared with standard-protein, low-fat diets: a meta-analysis of randomized controlled trials.</em> American Journal of Clinical Nutrition, 2012.</li>
+      <li style="margin-bottom:6px;">Paddon-Jones D et al. <em>Protein, weight management, and satiety.</em> American Journal of Clinical Nutrition, 2008.</li>
+      <li style="margin-bottom:6px;">Halton TL, Hu FB. <em>The effects of high protein diets on thermogenesis, satiety and weight loss: a critical review.</em> Journal of the American College of Nutrition, 2004.</li>
+    </ol>
+  </div>
 
-        function updateIcon(theme) {
-            if (theme === 'dark') {
-                icon.className = 'fa-solid fa-sun';
-            } else {
-                icon.className = 'fa-solid fa-moon';
-            }
-        }
-    </script>
+  <div id="sm-blog-placeholder"></div>
+
+</div>
+
+<script src="../shared.js"></script>
 </body>
 </html>
