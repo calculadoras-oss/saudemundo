@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https:/saudemundo.com.br/sitemap.xml
+Sitemap: https://saudemundo.com.br/sitemap.xml
