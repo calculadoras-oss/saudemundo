@@ -31,10 +31,10 @@ function smArtigoHref(file) { return SM_IN_ARTIGOS ? file : 'artigos/' + file; }
 
   const current = window.location.pathname.split('/').pop() || 'index.html';
 
-  const isBlogIndex = SM_IN_ARTIGOS && window.location.pathname.endsWith('/');
+  const isBlogIndex = SM_IN_ARTIGOS && (window.location.pathname.endsWith('/') || window.location.pathname.endsWith('/index.html'));
   const links = pages.map(p =>
     `<a href="${smRootHref(p.href)}"${current === p.href ? ' class="active"' : ''}>${p.label}</a>`
-  ).join('') + `<a href="${smRootHref('artigos/')}"${isBlogIndex ? ' class="active"' : ''}>Blog</a>`;
+  ).join('') + `<a href="${smRootHref('artigos/index.html')}"${isBlogIndex ? ' class="active"' : ''}>Blog</a>`;
 
   const navHTML = `
     <nav>
@@ -244,28 +244,27 @@ function smLoadUserData() {
   }
 }
 
-/* ---------- Corrige "atualizado recentemente" → data real ---------- */
-/* Cada página deve ter um atributo data-update="YYYY-MM-DD" no elemento
-   com class "sm-update-date" (ou qualquer elemento que contenha o texto
-   "atualizado recentemente"). Se não houver data-update, mantém o texto. */
-function smFixUpdateDate() {
-  document.querySelectorAll('[data-update]').forEach(el => {
-    const raw = el.getAttribute('data-update'); // ex: "2026-06-14"
-    if (!raw) return;
-    const [y, m, d] = raw.split('-').map(Number);
-    const meses = ['janeiro','fevereiro','março','abril','maio','junho',
-                   'julho','agosto','setembro','outubro','novembro','dezembro'];
-    const formatted = `${d} de ${meses[m - 1]} de ${y}`;
-    // substitui qualquer variação de "atualizado recentemente" ou "atualizado em …"
-    el.innerHTML = el.innerHTML.replace(
-      /atualizado\s+(?:recentemente|em\s+[^<]*)/gi,
-      `Atualizado em ${formatted}`
-    );
-  });
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   smLoadUserData();
   smRenderOtherTools();
-  smFixUpdateDate();
+
+  /* ---------- Corrige "atualizado recentemente" → data real ----------
+     Adicione data-date="YYYY-MM-DD" em qualquer elemento da página
+     (ex: no <article> ou na <div> que contém a autoria).
+     O script busca todos os elementos com esse atributo e substitui
+     qualquer texto "atualizado recentemente" pela data formatada. */
+  const MESES = ['janeiro','fevereiro','março','abril','maio','junho',
+                 'julho','agosto','setembro','outubro','novembro','dezembro'];
+
+  document.querySelectorAll('[data-date]').forEach(el => {
+    const raw = el.getAttribute('data-date'); // "YYYY-MM-DD"
+    if (!raw) return;
+    const [y, m, d] = raw.split('-').map(Number);
+    if (!y || !m || !d) return;
+    const formatted = `${d} de ${MESES[m - 1]} de ${y}`;
+    el.innerHTML = el.innerHTML.replace(
+      /atualizado\s+recentemente/gi,
+      `Atualizado em ${formatted}`
+    );
+  });
 });
