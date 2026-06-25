@@ -31,9 +31,10 @@ function smArtigoHref(file) { return SM_IN_ARTIGOS ? file : 'artigos/' + file; }
 
   const current = window.location.pathname.split('/').pop() || 'index.html';
 
+  const isBlogIndex = SM_IN_ARTIGOS && window.location.pathname.endsWith('/');
   const links = pages.map(p =>
     `<a href="${smRootHref(p.href)}"${current === p.href ? ' class="active"' : ''}>${p.label}</a>`
-  ).join('');
+  ).join('') + `<a href="${smRootHref('artigos/')}"${isBlogIndex ? ' class="active"' : ''}>Blog</a>`;
 
   const navHTML = `
     <nav>
@@ -243,7 +244,28 @@ function smLoadUserData() {
   }
 }
 
+/* ---------- Corrige "atualizado recentemente" → data real ---------- */
+/* Cada página deve ter um atributo data-update="YYYY-MM-DD" no elemento
+   com class "sm-update-date" (ou qualquer elemento que contenha o texto
+   "atualizado recentemente"). Se não houver data-update, mantém o texto. */
+function smFixUpdateDate() {
+  document.querySelectorAll('[data-update]').forEach(el => {
+    const raw = el.getAttribute('data-update'); // ex: "2026-06-14"
+    if (!raw) return;
+    const [y, m, d] = raw.split('-').map(Number);
+    const meses = ['janeiro','fevereiro','março','abril','maio','junho',
+                   'julho','agosto','setembro','outubro','novembro','dezembro'];
+    const formatted = `${d} de ${meses[m - 1]} de ${y}`;
+    // substitui qualquer variação de "atualizado recentemente" ou "atualizado em …"
+    el.innerHTML = el.innerHTML.replace(
+      /atualizado\s+(?:recentemente|em\s+[^<]*)/gi,
+      `Atualizado em ${formatted}`
+    );
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   smLoadUserData();
   smRenderOtherTools();
+  smFixUpdateDate();
 });
