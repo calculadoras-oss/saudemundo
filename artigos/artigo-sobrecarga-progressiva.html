@@ -1,378 +1,180 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobrecarga Progressiva: O Segredo para Nunca Parar de Crescer</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg-primary: #f8fafc;
-            --bg-card: #ffffff;
-            --text-primary: #1e293b;
-            --text-secondary: #64748b;
-            --primary: #10b981;
-            --primary-hover: #059669;
-            --border: #e2e8f0;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --accent: #eab308;
-            --accent-hover: #ca8a04;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sobrecarga Progressiva: O Segredo para Nunca Parar de Crescer | SaúdeMundo</title>
+<meta name="description" content="Entenda o que é sobrecarga progressiva, as 6 formas de aplicá-la no treino, por que as pessoas estagnam e como organizar a progressão na prática.">
+<link rel="canonical" href="https://saudemundo.com.br/artigos/artigo-sobrecarga-progressiva.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared.css">
 
-        [data-theme="dark"] {
-            --bg-primary: #0f172a;
-            --bg-card: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --border: #334155;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.5);
-        }
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Sobrecarga Progressiva: O Segredo Para Nunca Parar de Crescer",
+  "author": {"@type":"Person","name":"Lucas Andrade","url":"https://saudemundo.com.br/sobre.html"},
+  "reviewedBy": {"@type":"Person","name":"Carolina Velneri","url":"https://saudemundo.com.br/sobre.html"},
+  "datePublished": "2026-06-25",
+  "dateModified": "2026-06-25",
+  "publisher": {"@type":"Organization","name":"SaúdeMundo","url":"https://saudemundo.com.br"}
+}
+</script>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
-        }
-
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.7;
-        }
-
-        header {
-            background-color: var(--bg-card);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: var(--shadow);
-        }
-
-        .nav-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 1rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .btn-home {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .btn-home:hover { color: var(--primary); }
-
-        .theme-toggle {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.2rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 50%;
-        }
-
-        .theme-toggle:hover {
-            color: var(--primary);
-            background-color: var(--bg-primary);
-        }
-
-        .main-container {
-            max-width: 800px;
-            margin: 2.5rem auto;
-            padding: 0 1.5rem;
-        }
-
-        .article-header { margin-bottom: 2rem; }
-
-        .category-tag {
-            background-color: rgba(16, 185, 129, 0.1);
-            color: var(--primary);
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            line-height: 1.3;
-            margin-bottom: 1rem;
-        }
-
-        .post-meta {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            display: flex;
-            gap: 1rem;
-        }
-
-        .article-body {
-            background-color: var(--bg-card);
-            padding: 2.5rem;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-        }
-
-        .article-body p {
-            margin-bottom: 1.5rem;
-            font-size: 1.05rem;
-            color: var(--text-primary);
-        }
-
-        h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin: 2rem 0 1rem 0;
-            color: var(--primary);
-        }
-
-        ul {
-            margin-bottom: 1.5rem;
-            padding-left: 1.5rem;
-        }
-
-        li {
-            margin-bottom: 0.5rem;
-            font-size: 1.05rem;
-        }
-
-        .highlight-box {
-            background-color: rgba(16, 185, 129, 0.06);
-            border-left: 4px solid var(--primary);
-            border-radius: 0 10px 10px 0;
-            padding: 1.25rem 1.5rem;
-            margin: 1.5rem 0 2rem 0;
-        }
-
-        .highlight-box p {
-            margin-bottom: 0;
-            font-size: 1rem;
-            font-style: italic;
-            color: var(--text-primary);
-        }
-
-        .box-afiliado {
-            background-color: rgba(234, 179, 8, 0.05);
-            border: 1px solid rgba(234, 179, 8, 0.3);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .btn-afiliado {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background-color: var(--accent);
-            color: #1e293b;
-            text-decoration: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            margin-top: 1rem;
-            transition: background-color 0.2s, transform 0.2s;
-        }
-
-        .btn-afiliado:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-1px);
-        }
-
-        .card-cta {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
-            border: 2px dashed var(--primary);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-top: 3rem;
-            text-align: center;
-        }
-
-        .card-cta h3 {
-            margin-top: 0;
-            color: var(--primary);
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .card-cta p {
-            font-size: 0.95rem;
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-        }
-
-        .btn-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background-color: var(--primary);
-            color: white;
-            text-decoration: none;
-            padding: 0.8rem 1.8rem;
-            border-radius: 8px;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
-            transition: transform 0.2s, background-color 0.2s;
-        }
-
-        .btn-cta:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-2px);
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            border-top: 1px solid var(--border);
-            margin-top: 4rem;
-            background-color: var(--bg-card);
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 1.8rem; }
-            .article-body { padding: 1.5rem; }
-            .main-container { margin: 1.5rem auto; }
-        }
-    </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "O que é sobrecarga progressiva?",
+      "acceptedAnswer": { "@type": "Answer", "text": "É o princípio do treinamento de força que diz que, para continuar evoluindo, é preciso aumentar continuamente o estímulo ao qual o músculo é submetido, seja em carga, volume, frequência ou controle do movimento." }
+    },
+    {
+      "@type": "Question",
+      "name": "Quais são as formas de aplicar a sobrecarga progressiva além de aumentar o peso?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Além de aumentar a carga, é possível progredir aumentando o volume (séries ou repetições), reduzindo o tempo de descanso, melhorando a amplitude de movimento, aumentando a frequência semanal e controlando melhor o tempo sob tensão." }
+    },
+    {
+      "@type": "Question",
+      "name": "Por que estagnei e parei de ganhar músculo mesmo treinando com frequência?",
+      "acceptedAnswer": { "@type": "Answer", "text": "O platô geralmente ocorre por repetir sempre as mesmas séries sem incremento, não registrar o treino, trocar de exercícios com frequência excessiva ou negligenciar sono e alimentação." }
+    },
+    {
+      "@type": "Question",
+      "name": "O que é progressão dupla?",
+      "acceptedAnswer": { "@type": "Answer", "text": "É uma estratégia em que se define uma faixa de repetições (por exemplo, 8 a 12) e, ao conseguir executar todas as séries no limite superior com boa técnica, aumenta-se a carga na sessão seguinte." }
+    },
+    {
+      "@type": "Question",
+      "name": "Sobrecarga progressiva sozinha é suficiente para ganhar massa muscular?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Não. A progressão no treino precisa estar acompanhada de superávit calórico e ingestão proteica adequada; sem isso, a sobrecarga progressiva gera ganho de força, mas não massa muscular proporcional." }
+    }
+  ]
+}
+</script>
 </head>
 <body>
+<div class="bg-grid"></div>
 
-    <header>
-        <a href="../index.html" class="logo">
-                    ✦ SaúdeMundo
-                </a>
-            <div class="nav-actions">
-                <a href="../index.html" class="btn-home">
-                    <i class="fa-solid fa-house"></i> Início
-                </a>
-                <button class="theme-toggle" id="themeToggle" title="Alternar tema">
-                    <i class="fa-solid fa-moon"></i>
-                </button>
-            </div>
-        </div>
-    </header>
+<header>
+  <h1>Sobrecarga Progressiva: O Segredo Para Nunca Parar de Crescer</h1>
+  <p class="subtitle">Conheça as 6 formas de aplicar a sobrecarga progressiva, por que o platô acontece e como organizar a progressão de forma prática e sustentável.</p>
+</header>
 
-    <main class="main-container">
-        <article>
-            <div class="article-header">
-                <span class="category-tag">Treino</span>
-                <h1>Sobrecarga Progressiva: O Segredo Para Nunca Parar de Crescer</h1>
-                <div class="post-meta">
-                    <span><i class="fa-solid fa-calendar"></i> Atualizado Recentemente</span>
-                    <span><i class="fa-solid fa-clock"></i> 5 min de leitura</span>
-                </div>
-            </div>
+<div class="container" style="max-width:760px;">
 
-            <div class="article-body">
-                <p>Você treina há meses mas sente que seu corpo parou de mudar? Provavelmente está cometendo o erro mais comum da academia: fazer sempre o mesmo treino, com a mesma carga, pelo mesmo número de repetições. O músculo é um tecido inteligente — ele só cresce quando o desafio aumenta. E é exatamente isso que a <strong>sobrecarga progressiva</strong> representa.</p>
+  <div class="author-box">
+    <span>✍️ Por <a href="../sobre.html">Lucas Andrade</a></span>
+    <span>✅ Revisão técnica: <a href="../sobre.html">Carolina Velneri</a></span>
+    <span>📅 Atualizado em 25 de junho de 2026</span>
+  </div>
 
-                <h2>O Que é Sobrecarga Progressiva?</h2>
-                <p>Sobrecarga progressiva é o princípio fundamental do treinamento de força que diz: para continuar evoluindo, é preciso aumentar continuamente o estímulo ao qual o músculo é submetido. Quando você executa um exercício, o músculo sofre micro-lesões e se reconstrói maior e mais forte — mas apenas se perceber que o estímulo anterior foi difícil o suficiente para justificar essa adaptação.</p>
+  <div class="card">
+    <p>Você treina há meses mas sente que seu corpo parou de mudar? Provavelmente está cometendo o erro mais comum da academia: fazer sempre o mesmo treino, com a mesma carga, pelo mesmo número de repetições. O músculo é um tecido inteligente — ele só cresce quando o desafio aumenta. E é exatamente isso que a <strong>sobrecarga progressiva</strong> representa.</p>
+    <p>Esse princípio é, na prática, a espinha dorsal de qualquer programa de treino que funcione no médio e longo prazo. A divisão de treino escolhida — seja ela <a href="artigo-divisoes-de-treino.html">ABC, AB Upper/Lower ou ABCDE</a> — define como os grupos musculares são distribuídos na semana, mas é a sobrecarga progressiva que garante que cada uma dessas sessões continue gerando resultado mês após mês.</p>
+  </div>
 
-                <div class="highlight-box">
-                    <p>O corpo só adapta o que precisa. Se o treino de hoje é idêntico ao de seis meses atrás, o corpo já está completamente adaptado a ele — e não há razão biológica para crescer mais.</p>
-                </div>
+  <div class="section-title">📐 O Que é Sobrecarga Progressiva?</div>
+  <div class="card">
+    <p>Sobrecarga progressiva é o princípio fundamental do treinamento de força que diz: para continuar evoluindo, é preciso aumentar continuamente o estímulo ao qual o músculo é submetido. Quando você executa um exercício, o músculo sofre micro-lesões e se reconstrói maior e mais forte — mas apenas se perceber que o estímulo anterior foi difícil o suficiente para justificar essa adaptação.</p>
+    <p class="quote">O corpo só adapta o que precisa. Se o treino de hoje é idêntico ao de seis meses atrás, o corpo já está completamente adaptado a ele — e não há razão biológica para crescer mais.</p>
+    <p>Esse processo de adaptação tem um nome técnico: princípio do estresse mecânico progressivo. Na prática, ele explica por que um exercício que parecia impossível no primeiro mês de treino, meses depois, é executado com facilidade — o corpo se adaptou ao estímulo, e sem um novo desafio, não há motivo biológico para continuar mudando.</p>
+  </div>
 
-                <h2>As 6 Formas de Aplicar a Sobrecarga Progressiva</h2>
-                <p>A maioria das pessoas pensa que progredir significa apenas "colocar mais peso na barra". Isso é verdade, mas é só uma das formas. Veja todas as variáveis que podem ser manipuladas:</p>
-                <ul>
-                    <li><strong>Aumentar a carga (peso):</strong> A forma mais direta. Quando você consegue executar todas as séries e repetições planejadas com boa técnica, é hora de subir a carga.</li>
-                    <li><strong>Aumentar o volume (séries ou repetições):</strong> Se passar de 3x10 para 3x12, ou de 3 séries para 4 séries, você está progredindo mesmo sem mexer no peso.</li>
-                    <li><strong>Reduzir o tempo de descanso:</strong> Fazer o mesmo trabalho em menos tempo é uma forma de aumentar a densidade do treino — e um sinal claro de adaptação cardiovascular e muscular.</li>
-                    <li><strong>Melhorar a amplitude de movimento:</strong> Executar o exercício com maior ROM (Range of Motion), descendo mais no agachamento ou abrindo mais no voador, recruta mais fibras musculares.</li>
-                    <li><strong>Aumentar a frequência semanal:</strong> Treinar um músculo 2 vezes por semana em vez de 1 vez é uma forma de sobrecarga de volume ao longo da semana.</li>
-                    <li><strong>Melhorar o controle (tempo sob tensão):</strong> Executar o movimento de forma mais lenta e controlada — 3 segundos na fase excêntrica (descida), por exemplo — aumenta o estresse mecânico sem precisar subir o peso.</li>
-                </ul>
+  <div class="section-title">🔧 As 6 Formas de Aplicar a Sobrecarga Progressiva</div>
+  <div class="card">
+    <p>A maioria das pessoas pensa que progredir significa apenas "colocar mais peso na barra". Isso é verdade, mas é só uma das formas. Veja todas as variáveis que podem ser manipuladas:</p>
+    <p><strong>Aumentar a carga (peso):</strong> a forma mais direta. Quando você consegue executar todas as séries e repetições planejadas com boa técnica, é hora de subir a carga.</p>
+    <p><strong>Aumentar o volume (séries ou repetições):</strong> se passar de 3x10 para 3x12, ou de 3 séries para 4 séries, você está progredindo mesmo sem mexer no peso.</p>
+    <p><strong>Reduzir o tempo de descanso:</strong> fazer o mesmo trabalho em menos tempo é uma forma de aumentar a densidade do treino — e um sinal claro de adaptação cardiovascular e muscular.</p>
+    <p><strong>Melhorar a amplitude de movimento:</strong> executar o exercício com maior ROM (Range of Motion), descendo mais no agachamento ou abrindo mais no voador, recruta mais fibras musculares.</p>
+    <p><strong>Aumentar a frequência semanal:</strong> treinar um músculo 2 vezes por semana em vez de 1 vez é uma forma de sobrecarga de volume ao longo da semana.</p>
+    <p><strong>Melhorar o controle (tempo sob tensão):</strong> executar o movimento de forma mais lenta e controlada — 3 segundos na fase excêntrica (descida), por exemplo — aumenta o estresse mecânico sem precisar subir o peso.</p>
+  </div>
 
-                <h2>Por Que as Pessoas Param de Evoluir?</h2>
-                <p>O platô — aquele momento em que o corpo simplesmente para de mudar — quase sempre tem uma causa identificável. As mais comuns são: fazer sempre as mesmas séries e repetições sem incremento; não registrar o treino e, por isso, não saber se está progredindo; trocar de exercícios com muita frequência antes de dominar o movimento; e descuidar do sono e da alimentação, que são os pilares da recuperação muscular.</p>
-                <p>Registrar o treino — seja em um caderno, app ou planilha — é uma das ferramentas mais subestimadas por quem treina. Sem saber o que fez na sessão anterior, é impossível saber se está progredindo ou estagnado.</p>
+  <div class="section-title">📉 Por Que as Pessoas Param de Evoluir?</div>
+  <div class="card">
+    <p>O platô — aquele momento em que o corpo simplesmente para de mudar — quase sempre tem uma causa identificável. As mais comuns são: fazer sempre as mesmas séries e repetições sem incremento; não registrar o treino e, por isso, não saber se está progredindo; trocar de exercícios com muita frequência antes de dominar o movimento; e descuidar do sono e da alimentação, que são os pilares da recuperação muscular.</p>
+    <p>Registrar o treino — seja em um caderno, app ou planilha — é uma das ferramentas mais subestimadas por quem treina. Sem saber o que fez na sessão anterior, é impossível saber se está progredindo ou estagnado.</p>
+  </div>
 
-                <h2>Como Organizar a Progressão na Prática</h2>
-                <p>Para iniciantes e intermediários, a progressão mais simples e eficiente é a chamada <strong>progressão dupla</strong>: você define uma faixa de repetições (por exemplo, 8 a 12) e quando consegue executar todas as séries no limite superior (12 reps) com boa técnica, aumenta a carga na próxima sessão — geralmente 2,5kg a 5kg em exercícios compostos e 1kg a 2,5kg em exercícios isolados.</p>
-                <p>Para atletas mais avançados, onde a progressão sessão a sessão se torna impossível, entra a <strong>periodização</strong> — onde carga e volume são ondulados ao longo de semanas ou meses para continuar gerando adaptação sem levar ao overtraining.</p>
-                <div class="box-afiliado">
-                    <p><strong>💪 Pequenos detalhes fazem diferença na evolução do treino.</strong></p>
-                    <p>Selecionamos acessórios úteis para acompanhar sua progressão, manter a hidratação e organizar sua rotina fitness.</p>
-                    
-                    <a href="https://meli.la/12eqXsn" target="_blank" class="btn-afiliado">
-                        <i class="fa-solid fa-dumbbell"></i> Ver Itens de Apoio ao Treino
-                    </a>
-                </div>
+  <div class="section-title">📋 Como Organizar a Progressão na Prática</div>
+  <div class="card">
+    <p>Para iniciantes e intermediários, a progressão mais simples e eficiente é a chamada <strong>progressão dupla</strong>: você define uma faixa de repetições (por exemplo, 8 a 12) e quando consegue executar todas as séries no limite superior (12 reps) com boa técnica, aumenta a carga na próxima sessão — geralmente 2,5kg a 5kg em exercícios compostos e 1kg a 2,5kg em exercícios isolados.</p>
+    <p>Para atletas mais avançados, onde a progressão sessão a sessão se torna impossível, entra a <strong>periodização</strong> — onde carga e volume são ondulados ao longo de semanas ou meses para continuar gerando adaptação sem levar ao overtraining.</p>
+  </div>
 
-                <h2>A Progressão Precisa de Nutrição para Funcionar</h2>
-                <p>De nada adianta progredir no treino se a alimentação não suporta o crescimento. O corpo constrói músculo novo a partir de proteínas dietéticas e usa carboidratos como combustível para executar as séries com intensidade máxima. Sem superávit calórico e ingestão proteica adequada, a sobrecarga progressiva gera força, mas não massa muscular proporcional.</p>
-                
-                <div class="card-cta">
-                    <h3>Seu Treino Está Progredindo. Sua Dieta Também?</h3>
-                    <p>A sobrecarga progressiva no treino exige uma nutrição igualmente progressiva. Descubra quantas calorias e gramas de proteína você precisa consumir para sustentar seu crescimento muscular com nossa calculadora gratuita.</p>
-                    <a href="../index.html" class="btn-cta">
-                        <i class="fa-solid fa-calculator"></i> Calcular Meus Macros Personalizados
-                    </a>
-                </div>
-            </div>
-        </article>
-    </main>
+  <div class="section-title">⚠️ Erros Comuns ao Aplicar a Sobrecarga Progressiva</div>
+  <div class="card">
+    <p><strong>Subir a carga sacrificando a técnica</strong>, o que aumenta o risco de lesão sem gerar o estímulo mecânico desejado no músculo-alvo.</p>
+    <p><strong>Tentar progredir em todas as variáveis ao mesmo tempo</strong> (carga, volume e frequência simultaneamente), o que costuma levar à fadiga excessiva.</p>
+    <p><strong>Ignorar semanas de descarga (deload)</strong>, insistindo em progredir indefinidamente sem períodos de recuperação planejada.</p>
+    <p><strong>Achar que platô significa "genética ruim"</strong>, quando na maioria das vezes é apenas falta de registro e de variação nas formas de sobrecarga.</p>
+  </div>
 
-    <footer>
-        <p>&copy; 2026 SaúdeMundo. Todos os direitos reservados.</p>
-    </footer>
+  <div style="background-color: rgba(16,185,129,0.06); border-left: 4px solid #10b981; border-radius:0 10px 10px 0; padding:1.25rem 1.5rem; margin:1.5rem 0 2rem 0;">
+    <p style="margin-bottom:0; font-style:italic;">💪 Pequenos detalhes fazem diferença na evolução do treino. Selecionamos acessórios úteis para acompanhar sua progressão, manter a hidratação e organizar sua rotina fitness.</p>
+  </div>
 
-    <script>
-        const themeToggle = document.getElementById('themeToggle');
-        const icon = themeToggle.querySelector('i');
+  <div style="background-color: rgba(234,179,8,0.05); border: 1px solid rgba(234,179,8,0.3); border-radius:12px; padding:1.5rem; margin:2rem 0; text-align:center;">
+    <a href="https://meli.la/12eqXsn" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:0.5rem; background-color:#eab308; color:#1e293b; text-decoration:none; padding:0.7rem 1.5rem; border-radius:8px; font-weight:600;">🏋️ Ver Itens de Apoio ao Treino</a>
+  </div>
 
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        updateIcon(savedTheme);
+  <div class="section-title">🍗 A Progressão Precisa de Nutrição para Funcionar</div>
+  <div class="card">
+    <p>De nada adianta progredir no treino se a alimentação não suporta o crescimento. O corpo constrói músculo novo a partir de proteínas dietéticas e usa carboidratos como combustível para executar as séries com intensidade máxima. Sem superávit calórico e ingestão proteica adequada, a sobrecarga progressiva gera força, mas não massa muscular proporcional.</p>
+    <p>A boa notícia é que esse cálculo não precisa ser feito no escuro: dá para saber exatamente quantas calorias e gramas de proteína sustentam a sua progressão antes mesmo de começar a aumentar carga ou volume.</p>
+  </div>
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateIcon(newTheme);
-        });
+  <a href="../calculadora-macros.html" class="tool-card" style="margin-bottom:24px;">
+    <div class="tool-icon">🧮</div>
+    <div class="tool-name">Calculadora de Calorias e Macros</div>
+    <div class="tool-desc">A sobrecarga progressiva no treino exige uma nutrição igualmente progressiva. Descubra quantas calorias e proteínas você precisa para sustentar seu crescimento muscular.</div>
+  </a>
 
-        function updateIcon(theme) {
-            icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-        }
-    </script>
+  <div class="faq-section">
+    <div class="card-title">❓ Perguntas Frequentes</div>
+    <div class="faq-item">
+      <div class="faq-q">O que é sobrecarga progressiva?</div>
+      <div class="faq-a">É o princípio do treinamento de força que diz que, para continuar evoluindo, é preciso aumentar continuamente o estímulo ao qual o músculo é submetido.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Quais são as formas de aplicar a sobrecarga progressiva além de aumentar o peso?</div>
+      <div class="faq-a">Aumentar o volume, reduzir o descanso, melhorar a amplitude de movimento, aumentar a frequência semanal e melhorar o controle do tempo sob tensão.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Por que estagnei e parei de ganhar músculo mesmo treinando com frequência?</div>
+      <div class="faq-a">Geralmente por repetir as mesmas séries sem incremento, não registrar o treino, trocar de exercícios com frequência excessiva ou negligenciar sono e alimentação.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">O que é progressão dupla?</div>
+      <div class="faq-a">É definir uma faixa de repetições (ex: 8 a 12) e, ao atingir o limite superior com boa técnica, aumentar a carga na sessão seguinte.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Sobrecarga progressiva sozinha é suficiente para ganhar massa muscular?</div>
+      <div class="faq-a">Não. Precisa estar acompanhada de superávit calórico e ingestão proteica adequada; sem isso, gera força, mas não massa muscular proporcional.</div>
+    </div>
+  </div>
+
+  <div style="background:#f0faf4;border:1px solid #c0e0cc;border-radius:12px;padding:20px 24px;margin-top:28px;">
+    <p style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#007A3D;opacity:0.8;margin-bottom:14px;">📚 Fontes e Referências</p>
+    <ol style="color:#555;font-size:0.82rem;line-height:1.8;padding-left:18px;margin:0;">
+      <li style="margin-bottom:6px;">American College of Sports Medicine. <em>Progression Models in Resistance Training for Healthy Adults.</em> Medicine & Science in Sports & Exercise, 2009.</li>
+      <li style="margin-bottom:6px;">Schoenfeld BJ, et al. <em>Strength and Hypertrophy Adaptations Between Low- vs. High-Load Resistance Training.</em> Journal of Strength and Conditioning Research, 2017.</li>
+      <li style="margin-bottom:6px;">Plotkin D, et al. <em>Progressive overload without progressing load? The effects of load or repetition progression on muscular adaptations.</em> PeerJ, 2022. <a href="https://peerj.com" target="_blank" rel="noopener" style="color:#007A3D;text-decoration:none;">peerj.com</a></li>
+      <li style="margin-bottom:6px;">CONFEF — Conselho Federal de Educação Física. <em>Diretrizes para Prescrição de Treinamento Resistido.</em> <a href="https://www.confef.org.br" target="_blank" rel="noopener" style="color:#007A3D;text-decoration:none;">confef.org.br</a></li>
+    </ol>
+  </div>
+
+  <div id="sm-blog-placeholder"></div>
+
+</div>
+
+<script src="../shared.js"></script>
 </body>
 </html>
