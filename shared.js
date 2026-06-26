@@ -1,5 +1,3 @@
-javascript
-
 /* ============================================================
    shared.js — SaúdeMundo · Lógica compartilhada entre páginas
    Inclua no FINAL do <body> de TODAS as páginas
@@ -52,21 +50,21 @@ function smArtigoHref(file) { return SM_IN_ARTIGOS ? file : 'artigos/' + file; }
 
 /* ---------- Artigos do blog ---------- */
 const SM_ARTIGOS = [
-  { file: 'artigo-deficit-calorico.html',              icon: '📉', cat: 'Nutrição',                name: 'O que é Déficit Calórico? O Guia Definitivo para Começar',        desc: 'Entenda o conceito biológico mais importante por trás do emagrecimento saudável e como aplicá-lo.' },
-  { file: 'artigo-creatina.html',                       icon: '💊', cat: 'Suplementação',           name: 'Guia Prático sobre Creatina: Como Tomar, Horários e Mitos',        desc: 'O suplemento mais estudado do mundo. Saiba se vale a pena fazer saturação e se ela causa retenção.' },
-  { file: 'artigo-guia-whey-protein.html',              icon: '🥛', cat: 'Suplementação',           name: 'Whey Protein Concentrado, Isolado e Hidrolisado: As Diferenças',   desc: 'Não jogue dinheiro fora. Aprenda as reais distinções industriais e escolha o melhor custo-benefício.' },
-  { file: 'artigo-whey-protein-emagrece.html',          icon: '⚖️', cat: 'Emagrecimento',           name: 'Whey Protein Engorda ou Ajuda a Emagrecer? Descubra a Verdade',    desc: 'Entenda o grande mito e aprenda a usar o suplemento proteico como um forte aliado na saciedade.' },
-  { file: 'artigo-pre-treino.html',                     icon: '⚡', cat: 'Suplementação',           name: 'Suplementos Pré-Treino: Benefícios, Riscos e Como Escolher',       desc: 'Promessas de foco e explosão muscular. Analise o papel da cafeína e os cuidados com o coração.' },
-  { file: 'artigo-pre-pos-treino.html',                 icon: '🍽️', cat: 'Nutrição',                name: 'O que Comer no Pré e Pós-Treino para Maximizar a Hipertrofia',     desc: 'Abasteça suas células de glicogênio e aminoácidos nos horários corretos para acelerar seus ganhos.' },
-  { file: 'artigo-sono-e-massa-muscular.html',          icon: '😴', cat: 'Estilo de Vida',          name: 'Como a Falta de Sono Destrói Seus Ganhos de Massa Magra',          desc: 'Dormir pouco sabota seus níveis de testosterona, eleva o cortisol e aumenta sua fome por doces.' },
-  { file: 'artigo-divisoes-de-treino.html',             icon: '🏋️', cat: 'Treino',                  name: 'Como Montar Divisões de Treino de Musculação: Guia Prático',       desc: 'Aprenda a distribuir seus treinos na semana (ABC, AB, ABCDE) respeitando o descanso ideal.' },
-  { file: 'artigo-jejum-intermitente.html',             icon: '⏱️', cat: 'Nutrição',                name: 'Jejum Intermitente: Funciona para Emagrecer e Ganhar Massa?',      desc: 'Entenda o que acontece no seu corpo durante o jejum e como usar essa estratégia a seu favor.' },
-  { file: 'artigo-fontes-de-proteina.html',             icon: '🍗', cat: 'Nutrição',                name: 'Fontes de Proteína: O Guia Completo Além do Whey',                 desc: 'Tabela completa com as melhores fontes de proteína, custo-benefício e como distribuir ao longo do dia.' },
-  { file: 'artigo-sobrecarga-progressiva.html',         icon: '📈', cat: 'Treino',                  name: 'Sobrecarga Progressiva: O Segredo Para Nunca Parar de Crescer',    desc: 'Descubra as 6 formas de progredir no treino e por que fazer sempre o mesmo te mantém no platô.' },
-  { file: 'artigo-hipertrofia-feminina.html',           icon: '💪', cat: 'Treino',                  name: 'Hipertrofia Feminina: Mitos, Verdades e Treino de Superiores',     desc: 'Mulheres não ficam masculinizadas por treinar braços. Descubra como moldar a linha da cintura.' },
-  { file: 'artigo-ovos-diarios.html',                   icon: '🥚', cat: 'Nutrição',                name: 'Quantos Ovos Posso Comer por Dia? O Que a Ciência Diz',            desc: 'O mito do colesterol caiu. Entenda quantos ovos você pode comer com segurança todos os dias.' },
-  { file: 'artigo-desenvolvimento-motor-infantil.html', icon: '🧠', cat: 'Desenvolvimento Infantil', name: 'Desenvolvimento Motor Infantil: Guia Completo da Primeira Infância', desc: 'Marcos motores por idade e como escolher a primeira atividade física do seu filho.' },
-  { file: 'artigo-esporte-infantil.html',               icon: '🛹', cat: 'Desenvolvimento Infantil', name: 'Patinete e Skate na Primeira Infância: Relato de um Pai',          desc: 'A progressão real de duas crianças de 2 e 3 anos no patinete, etapa por etapa.' },
+  { file: 'artigo-deficit-calorico.html',             icon: '📉', cat: 'Nutrição',                name: 'O que é Déficit Calórico? O Guia Definitivo para Começar',        desc: 'Entenda o conceito biológico mais importante por trás do emagrecimento saudável e como aplicá-lo.' },
+  { file: 'artigo-creatina.html',                     icon: '💊', cat: 'Suplementação',           name: 'Guia Prático sobre Creatina: Como Tomar, Horários e Mitos',        desc: 'O suplemento mais estudado do mundo. Saiba se vale a pena fazer saturação e se ela causa retenção.' },
+  { file: 'artigo-guia-whey-protein.html',            icon: '🥛', cat: 'Suplementação',           name: 'Whey Protein Concentrado, Isolado e Hidrolisado: As Diferenças',   desc: 'Não jogue dinheiro fora. Aprenda as reais distinções industriais e escolha o melhor custo-benefício.' },
+  { file: 'artigo-whey-protein-emagrece.html',        icon: '⚖️', cat: 'Emagrecimento',           name: 'Whey Protein Engorda ou Ajuda a Emagrecer? Descubra a Verdade',    desc: 'Entenda o grande mito e aprenda a usar o suplemento proteico como um forte aliado na saciedade.' },
+  { file: 'artigo-pre-treino.html',                   icon: '⚡', cat: 'Suplementação',           name: 'Suplementos Pré-Treino: Benefícios, Riscos e Como Escolher',       desc: 'Promessas de foco e explosão muscular. Analise o papel da cafeína e os cuidados com o coração.' },
+  { file: 'artigo-pre-pos-treino.html',               icon: '🍽️', cat: 'Nutrição',                name: 'O que Comer no Pré e Pós-Treino para Maximizar a Hipertrofia',     desc: 'Abasteça suas células de glicogênio e aminoácidos nos horários corretos para acelerar seus ganhos.' },
+  { file: 'artigo-sono-e-massa-muscular.html',        icon: '😴', cat: 'Estilo de Vida',          name: 'Como a Falta de Sono Destrói Seus Ganhos de Massa Magra',          desc: 'Dormir pouco sabota seus níveis de testosterona, eleva o cortisol e aumenta sua fome por doces.' },
+  { file: 'artigo-divisoes-de-treino.html',           icon: '🏋️', cat: 'Treino',                  name: 'Como Montar Divisões de Treino de Musculação: Guia Prático',       desc: 'Aprenda a distribuir seus treinos na semana (ABC, AB, ABCDE) respeitando o descanso ideal.' },
+  { file: 'artigo-jejum-intermitente.html',           icon: '⏱️', cat: 'Nutrição',                name: 'Jejum Intermitente: Funciona para Emagrecer e Ganhar Massa?',      desc: 'Entenda o que acontece no seu corpo durante o jejum e como usar essa estratégia a seu favor.' },
+  { file: 'artigo-fontes-de-proteina.html',           icon: '🍗', cat: 'Nutrição',                name: 'Fontes de Proteína: O Guia Completo Além do Whey',                 desc: 'Tabela completa com as melhores fontes de proteína, custo-benefício e como distribuir ao longo do dia.' },
+  { file: 'artigo-sobrecarga-progressiva.html',       icon: '📈', cat: 'Treino',                  name: 'Sobrecarga Progressiva: O Segredo Para Nunca Parar de Crescer',    desc: 'Descubra as 6 formas de progredir no treino e por que fazer sempre o mesmo te mantém no platô.' },
+  { file: 'artigo-hipertrofia-feminina.html',         icon: '💪', cat: 'Treino',                  name: 'Hipertrofia Feminina: Mitos, Verdades e Treino de Superiores',     desc: 'Mulheres não ficam masculinizadas por treinar braços. Descubra como moldar a linha da cintura.' },
+  { file: 'artigo-ovos-diarios.html',                 icon: '🥚', cat: 'Nutrição',                name: 'Quantos Ovos Posso Comer por Dia? O Que a Ciência Diz',            desc: 'O mito do colesterol caiu. Entenda quantos ovos você pode comer com segurança todos os dias.' },
+  { file: 'artigo-desenvolvimento-motor-infantil.html',icon: '🧠', cat: 'Desenvolvimento Infantil',name: 'Desenvolvimento Motor Infantil: Guia Completo da Primeira Infância', desc: 'Marcos motores por idade e como escolher a primeira atividade física do seu filho.' },
+  { file: 'artigo-esporte-infantil.html',             icon: '🛹', cat: 'Desenvolvimento Infantil',name: 'Patinete e Skate na Primeira Infância: Relato de um Pai',          desc: 'A progressão real de duas crianças de 2 e 3 anos no patinete, etapa por etapa.' },
 ];
 
 /* ---------- Footer HTML + seção "Artigos do Blog" ---------- */
@@ -101,30 +99,6 @@ const SM_ARTIGOS = [
     } else if (container) {
       container.insertAdjacentHTML('beforeend', blogSection);
     }
-  }
-
-  /* --- Outras Calculadoras --- */
-  if (!isInstitucional) {
-    const filtered = SM_TOOLS ? SM_TOOLS.filter(t => t.href !== current) : [];
-
-    document.querySelectorAll('.tools-grid').forEach(c => {
-      c.innerHTML = filtered.map(t =>
-        `<a href="${t.href}" class="tool-card">
-          <div class="tool-icon">${t.icon}</div>
-          <div class="tool-name">${t.name}</div>
-          <div class="tool-desc">${t.desc}</div>
-        </a>`
-      ).join('');
-    });
-
-    document.querySelectorAll('.other-tools').forEach(c => {
-      c.innerHTML = filtered.map(t =>
-        `<a href="${t.href}" class="tool-link">
-          <div class="tool-link-name">${t.icon} ${t.name}</div>
-          <div class="tool-link-desc">${t.desc}</div>
-        </a>`
-      ).join('');
-    });
   }
 
   /* --- Footer --- */
@@ -205,6 +179,9 @@ const SM_TOOLS = [
 ];
 
 function smRenderOtherTools() {
+  const isInstitucional = document.body.getAttribute('data-page') === 'institucional';
+  if (isInstitucional) return;
+
   const current = window.location.pathname.split('/').pop() || 'index.html';
   const filtered = SM_TOOLS.filter(t => t.href !== current);
 
@@ -266,27 +243,6 @@ function smLoadUserData() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  smLoadUserData();
-  smRenderOtherTools();
-
-  /* ---------- Corrige "atualizado recentemente" → data real ---------- */
-  const MESES = ['janeiro','fevereiro','março','abril','maio','junho',
-                 'julho','agosto','setembro','outubro','novembro','dezembro'];
-
-  document.querySelectorAll('[data-date]').forEach(el => {
-    const raw = el.getAttribute('data-date');
-    if (!raw) return;
-    const [y, m, d] = raw.split('-').map(Number);
-    if (!y || !m || !d) return;
-    const formatted = `${d} de ${MESES[m - 1]} de ${y}`;
-    el.innerHTML = el.innerHTML.replace(
-      /atualizado\s+recentemente/gi,
-      `Atualizado em ${formatted}`
-    );
-  });
-});
-
 /* ---------- Byline automático nas calculadoras ---------- */
 function injectByline() {
   if (SM_IN_ARTIGOS) return;
@@ -309,5 +265,30 @@ function injectByline() {
 
   const byline = document.createElement('p');
   byline.className = 'article-byline';
-  byline.innerHTML = `✍️ Por <a href="${smRootHref('sobre.html')}">Lucas Andrade</a> &nbsp;📅 Atualizado em ${dataFormatada}`;
-  by
+  byline.innerHTML = `✍️ Por <a href="${smRootHref('sobre.html')}" style="color:var(--green);text-decoration:none;font-weight:600;">Lucas Andrade</a> &nbsp;📅 Atualizado em ${dataFormatada}`;
+  byline.style.cssText = 'font-size:.85rem;color:var(--text-muted);margin:8px 0 24px;';
+
+  h1.insertAdjacentElement('afterend', byline);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  smLoadUserData();
+  smRenderOtherTools();
+  injectByline();
+
+  /* ---------- Corrige "atualizado recentemente" → data real ---------- */
+  const MESES = ['janeiro','fevereiro','março','abril','maio','junho',
+                 'julho','agosto','setembro','outubro','novembro','dezembro'];
+
+  document.querySelectorAll('[data-date]').forEach(el => {
+    const raw = el.getAttribute('data-date');
+    if (!raw) return;
+    const [y, m, d] = raw.split('-').map(Number);
+    if (!y || !m || !d) return;
+    const formatted = `${d} de ${MESES[m - 1]} de ${y}`;
+    el.innerHTML = el.innerHTML.replace(
+      /atualizado\s+recentemente/gi,
+      `Atualizado em ${formatted}`
+    );
+  });
+});
