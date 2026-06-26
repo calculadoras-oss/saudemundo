@@ -35,7 +35,7 @@ body.dark .destaque{background:#12181A;}
 .destaque p{margin:0;color:var(--text);}
 </style>
 </head>
-<body>
+<body data-page="institucional">
 <nav>
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">✦ saudemundo</a>
@@ -122,5 +122,6 @@ body.dark .destaque{background:#12181A;}
 <script>
 function toggleTheme(){document.body.classList.toggle('dark');document.querySelector('.theme-btn').textContent=document.body.classList.contains('dark')?'☀️':'🌙';}
 </script>
+  <script src="shared-calc.js"></script>
 </body>
 </html>
