@@ -27,7 +27,8 @@ function smArtigoHref(file) { return SM_IN_ARTIGOS ? file : 'artigos/' + file; }
     { href: 'calculadora-bulking.html',          label: 'Bulking' },
     { href: 'calculadora-macros.html',           label: 'Macros' },
     { href: 'calorias-por-dia.html',             label: 'Cal/Dia' },
-    { href: "pode-nao-pode.html", emoji: "🚦", titulo: "Pode, Não Pode?", desc: "Registre cada refeição e veja na hora: semáforo verde, amarelo ou vermelho." },
+    { href: smRootHref("pode-nao-pode.html"), label: "Pode, Não Pode?" },
+
   ];
 
   const current = window.location.pathname.split('/').pop() || 'index.html';
@@ -177,6 +178,7 @@ const SM_TOOLS = [
   { href: 'calculadora-bulking.html',          icon: '💪', name: 'Bulking',           desc: 'Planejamento de bulking' },
   { href: 'calculadora-macros.html',           icon: '🥧', name: 'Macronutrientes',   desc: 'Distribuição de macros' },
   { href: 'calorias-por-dia.html',             icon: '📅', name: 'Calorias por Dia',  desc: 'Estimativa calórica diária' },
+   { href: "pode-nao-pode.html", emoji: "🚦", titulo: "Pode, Não Pode?", desc: "Registre cada refeição e veja na hora: semáforo verde, amarelo ou vermelho." },
 ];
 
 function smRenderOtherTools() {
