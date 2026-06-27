@@ -178,7 +178,7 @@ const SM_TOOLS = [
   { href: 'calculadora-bulking.html',          icon: '💪', name: 'Bulking',           desc: 'Planejamento de bulking' },
   { href: 'calculadora-macros.html',           icon: '🥧', name: 'Macronutrientes',   desc: 'Distribuição de macros' },
   { href: 'calorias-por-dia.html',             icon: '📅', name: 'Calorias por Dia',  desc: 'Estimativa calórica diária' },
-   { href: "pode-nao-pode.html", emoji: "🚦", titulo: "Pode, Não Pode?", desc: "Registre cada refeição e veja na hora: semáforo verde, amarelo ou vermelho." },
+  { href: 'pode-nao-pode.html', icon: '🚦', name: 'Pode, Não Pode?', desc: 'Registre cada refeição e veja: semáforo verde, amarelo ou vermelho.' },
 ];
 
 function smRenderOtherTools() {
