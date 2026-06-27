@@ -27,6 +27,7 @@ function smArtigoHref(file) { return SM_IN_ARTIGOS ? file : 'artigos/' + file; }
     { href: 'calculadora-bulking.html',          label: 'Bulking' },
     { href: 'calculadora-macros.html',           label: 'Macros' },
     { href: 'calorias-por-dia.html',             label: 'Cal/Dia' },
+    { href: "pode-nao-pode.html", emoji: "🚦", titulo: "Pode, Não Pode?", desc: "Registre cada refeição e veja na hora: semáforo verde, amarelo ou vermelho." },
   ];
 
   const current = window.location.pathname.split('/').pop() || 'index.html';
