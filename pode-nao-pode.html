@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pode, Não Pode? – Diário de Calorias | SaúdeMundo</title>
+  <meta name="description" content="Registre cada refeição do dia em medidas caseiras e descubra na hora: pode comer mais ou não pode? O semáforo calórico que calcula sua dieta sem mistério." />
+  <link rel="canonical" href="https://www.saudemundo.com.br/pode-nao-pode.html" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9EPL2XNX6H"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9EPL2XNX6H');
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- shared.css -->
+  <link rel="stylesheet" href="shared.css" />
+
+  <!-- JSON-LD WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Pode, Não Pode? – Diário de Calorias",
+    "url": "https://www.saudemundo.com.br/pode-nao-pode.html",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "description": "Registre alimentos em medidas caseiras ao longo do dia e descubra em tempo real se ainda pode comer mais ou se já estourou sua meta calórica. O semáforo calórico que calcula sua dieta sem mistério.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "BRL"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Lucas Andrade",
+      "url": "https://www.saudemundo.com.br/sobre.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "SaúdeMundo",
+      "url": "https://www.saudemundo.com.br"
+    }
+  }
+  </script>
+
+  <!-- JSON-LD FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "dateModified": "2026-06-26",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "O que significa o semáforo verde, amarelo e vermelho?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Verde (Pode!) significa que você ainda tem calorias disponíveis e está dentro da meta. Amarelo (Atenção!) indica que você consumiu mais de 80% da meta e está quase no limite. Vermelho (Não Pode!) significa que a meta calórica do dia foi ultrapassada."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Como usar o Pode, Não Pode?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Digite sua meta calórica diária (ou use a nossa Calculadora de Calorias e Macros), escolha o alimento, informe a quantidade e a medida caseira (colher, concha, unidade etc.) e clique em Adicionar. O semáforo atualiza na hora e mostra o saldo restante."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Quantas calorias tem uma concha de feijão?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Uma concha média de feijão cozido (aproximadamente 86 g) tem cerca de 77 kcal. Os valores variam conforme o tipo e o preparo; o Pode, Não Pode usa médias da Tabela TACO (UNICAMP), referência oficial do Ministério da Saúde."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Os dados ficam salvos se eu fechar o celular?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sim. O app salva automaticamente todos os registros do dia no armazenamento local do seu dispositivo (localStorage). Se você reabrir no mesmo navegador no mesmo dia, tudo estará lá. Ao virar a meia-noite os dados são zerados para o dia seguinte."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "O Pode, Não Pode substitui um nutricionista?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Não. A ferramenta é educacional e de acompanhamento pessoal. Para prescrição de dietas e metas calóricas individualizadas, consulte um nutricionista ou médico. Os valores calóricos são médias baseadas na Tabela TACO e podem variar conforme marca e preparo."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    /* ═══════════════════════════════════════════
+       TOKENS — Semáforo
+    ═══════════════════════════════════════════ */
+    :root {
+      --verde:     #16a34a;
+      --verde-bg:  #f0fdf4;
+      --verde-mid: #bbf7d0;
+      --amarelo:     #d97706;
+      --amarelo-bg:  #fffbeb;
+      --amarelo-mid: #fde68a;
+      --vermelho:     #dc2626;
+      --vermelho-bg:  #fef2f2;
+      --vermelho-mid: #fecaca;
+      --neutro-bg:  #f8fafc;
+      --neutro-brd: #e2e8f0;
+      --text:       var(--text-primary, #1a1a1a);
+      --muted:      var(--text-secondary, #64748b);
+      --radius:     14px;
+      --surface:    var(--card-bg, #ffffff);
+      /* estado ativo do semáforo (começa neutro) */
+      --sinal-cor:    #94a3b8;
+      --sinal-bg:     #f1f5f9;
+      --sinal-brd:    #e2e8f0;
+      --sinal-emoji:  "⚪";
+    }
+
+    /* ═══════════════════════════════════════════
+       HEADER
+    ═══════════════════════════════════════════ */
+    .pnp-header {
+      text-align: center;
+      padding: 2.5rem 1rem 0;
+    }
+    .pnp-logo-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: .72rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--green, #00A651);
+      background: #f0fdf4;
+      padding: .3rem .85rem;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+    }
+    /* Semáforo em miniatura no badge */
+    .mini-sinal {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .mini-sinal span {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      display: block;
+    }
+    .ms-r { background: #dc2626; }
+    .ms-y { background: #d97706; }
+    .ms-g { background: #16a34a; }
+
+    .pnp-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -.02em;
+      margin: 0 0 .35rem;
+      line-height: 1.05;
+    }
+    .pnp-header h1 em {
+      font-style: normal;
+      color: var(--verde);
+    }
+    .pnp-tagline {
+      font-size: .95rem;
+      color: var(--muted);
+      max-width: 420px;
+      margin: 0 auto 2rem;
+      line-height: 1.5;
+    }
+
+    /* ═══════════════════════════════════════════
+       SEMÁFORO PRINCIPAL
+    ═══════════════════════════════════════════ */
+    .sinal-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .sinal-box {
+      background: var(--sinal-bg);
+      border: 2px solid var(--sinal-brd);
+      border-radius: 20px;
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      transition: background .4s, border-color .4s;
+      min-width: 260px;
+      max-width: 360px;
+      width: 100%;
+    }
+    /* O poste do semáforo */
+    .sinal-luzes {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .luz {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      transition: background .4s, box-shadow .4s;
+    }
+    /* Estados ativos */
+    .sinal-box.verde   .luz-verde   { background: var(--verde);   box-shadow: 0 0 12px 3px #86efac; }
+    .sinal-box.amarelo .luz-amarelo { background: var(--amarelo); box-shadow: 0 0 12px 3px #fde68a; }
+    .sinal-box.vermelho .luz-vermelho { background: var(--vermelho); box-shadow: 0 0 12px 3px #fca5a5; }
+
+    .sinal-texto { flex: 1; }
+    .sinal-veredicto {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      line-height: 1.1;
+      color: var(--sinal-cor);
+      transition: color .4s;
+    }
+    .sinal-box.verde    .sinal-veredicto { color: var(--verde); }
+    .sinal-box.amarelo  .sinal-veredicto { color: var(--amarelo); }
+    .sinal-box.vermelho .sinal-veredicto { color: var(--vermelho); }
+
+    .sinal-detalhe {
+      font-size: .82rem;
+      color: var(--muted);
+      margin-top: .3rem;
+      line-height: 1.4;
+    }
+
+    /* ═══════════════════════════════════════════
+       CHIPS DE RESUMO
+    ═══════════════════════════════════════════ */
+    .chips-row {
+      display: flex;
+      gap: .6rem;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .chip {
+      flex: 1;
+      min-width: 85px;
+      background: var(--surface);
+      border: 1px solid var(--neutro-brd);
+      border-radius: 12px;
+      padding: .75rem .5rem;
+      text-align: center;
+    }
+    .chip-val {
+      display: block;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+    }
+    .chip-label {
+      display: block;
+      font-size: .68rem;
+      color: var(--muted);
+      margin-top: .25rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    /* Barra de progresso */
+    .bar-wrap { margin-bottom: 1.5rem; }
+    .bar-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: .78rem;
+      color: var(--muted);
+      margin-bottom: .4rem;
+    }
+    .bar-bg {
+      height: 10px;
+      background: var(--neutro-brd);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: var(--verde);
+      transition: width .4s ease, background .4s;
+      width: 0%;
+    }
+    .bar-fill.amarelo  { background: var(--amarelo); }
+    .bar-fill.vermelho { background: var(--vermelho); }
+
+    /* ═══════════════════════════════════════════
+       CARDS
+    ═══════════════════════════════════════════ */
+    .container { max-width: 680px; margin: 0 auto; padding: 0 1rem 3rem; }
+    .pnp-card {
+      background: var(--surface);
+      border: 1px solid var(--neutro-brd);
+      border-radius: var(--radius);
+      padding: 1.4rem;
+      margin-bottom: 1.1rem;
+    }
+    .pnp-card-title {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--green, #00A651);
+      margin-bottom: 1rem;
+    }
+
+    /* ═══════════════════════════════════════════
+       META
+    ═══════════════════════════════════════════ */
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      flex-wrap: wrap;
+    }
+    .meta-row label { font-size: .9rem; font-weight: 500; white-space: nowrap; }
+    .meta-row input[type="number"] {
+      width: 110px;
+      padding: .55rem .75rem;
+      border: 1.5px solid var(--neutro-brd);
+      border-radius: 8px;
+      font-size: 1rem;
+      background: transparent;
+      color: var(--text);
+    }
+    .meta-link {
+      font-size: .82rem;
+      color: var(--green, #00A651);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .meta-link:hover { text-decoration: underline; }
+
+    /* ═══════════════════════════════════════════
+       INPUT ALIMENTO
+    ═══════════════════════════════════════════ */
+    .input-grid {
+      display: grid;
+      grid-template-columns: 1fr 80px 1fr;
+      gap: .6rem;
+      align-items: end;
+    }
+    @media (max-width: 500px) {
+      .input-grid { grid-template-columns: 1fr 1fr; }
+      .input-grid .field-full { grid-column: span 2; }
+      .input-grid .btn-add    { grid-column: span 2; }
+    }
+    .field-wrap { display: flex; flex-direction: column; gap: .28rem; }
+    .field-full { grid-column: span 3; }
+    @media (max-width: 500px) { .field-full { grid-column: span 2; } }
+    .field-wrap label { font-size: .75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+    .field-wrap input,
+    .field-wrap select {
+      padding: .55rem .7rem;
+      border: 1.5px solid var(--neutro-brd);
+      border-radius: 8px;
+      font-size: .9rem;
+      background: transparent;
+      color: var(--text);
+      min-width: 0;
+    }
+    .field-wrap select { cursor: pointer; }
+    .btn-add {
+      padding: .65rem 1.2rem;
+      background: var(--green, #00A651);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: .9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+      white-space: nowrap;
+    }
+    .btn-add:hover  { background: #007A3D; }
+    .btn-add:active { transform: scale(.97); }
+    .preview-kcal {
+      margin-top: .6rem;
+      font-size: .83rem;
+      color: var(--muted);
+      min-height: 1.2em;
+      font-weight: 500;
+    }
+
+    /* ═══════════════════════════════════════════
+       LISTA DE REGISTROS
+    ═══════════════════════════════════════════ */
+    .reg-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: .8rem;
+    }
+    .btn-limpar {
+      font-size: .75rem;
+      color: var(--vermelho);
+      background: none;
+      border: 1px solid var(--vermelho);
+      border-radius: 6px;
+      padding: .25rem .6rem;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-limpar:hover { background: var(--vermelho-bg); }
+
+    .reg-item {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .6rem 0;
+      border-bottom: 1px solid var(--neutro-brd);
+      font-size: .87rem;
+    }
+    .reg-item:last-child { border-bottom: none; }
+    .reg-badge {
+      flex-shrink: 0;
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      padding: .18rem .4rem;
+      border-radius: 5px;
+    }
+    .b-cafe    { background:#fff3e0; color:#c2410c; }
+    .b-lanche1 { background:#f3e5f5; color:#7e22ce; }
+    .b-almoco  { background:#eff6ff; color:#1d4ed8; }
+    .b-lanche2 { background:#f3e5f5; color:#7e22ce; }
+    .b-jantar  { background:#eef2ff; color:#3730a3; }
+    .b-ceia    { background:#fdf2f8; color:#9d174d; }
+
+    .reg-nome { flex: 1; color: var(--text); }
+    .reg-sub  { font-size: .73rem; color: var(--muted); display: block; margin-top: .05rem; }
+    .reg-kcal { font-weight: 700; font-size: .9rem; white-space: nowrap; color: var(--text); }
+    .reg-del  { background: none; border: none; color: var(--muted); cursor: pointer; padding: .2rem .3rem; font-size: .95rem; line-height:1; }
+    .reg-del:hover { color: var(--vermelho); }
+
+    .empty-msg {
+      text-align: center;
+      color: var(--muted);
+      font-size: .87rem;
+      padding: 1.8rem 0;
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════════
+       EDITORIAL
+    ═══════════════════════════════════════════ */
+    .editorial { font-size: .92rem; line-height: 1.75; color: var(--text); }
+    .editorial h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      margin: 2.2rem 0 .7rem;
+    }
+    .editorial p { margin: 0 0 .9rem; }
+
+    /* ═══════════════════════════════════════════
+       FAQ
+    ═══════════════════════════════════════════ */
+    .faq-section { margin-top: .4rem; }
+    .card-title {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--green, #00A651);
+      margin-bottom: 1rem;
+    }
+    .faq-item { padding: .9rem 0; border-bottom: 1px solid var(--neutro-brd); }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q { font-weight: 600; font-size: .9rem; margin-bottom: .3rem; }
+    .faq-a { font-size: .86rem; color: var(--muted); line-height: 1.6; }
+
+    /* ═══════════════════════════════════════════
+       DARK MODE
+    ═══════════════════════════════════════════ */
+    [data-theme="dark"] {
+      --neutro-bg:  #1e1e1e;
+      --neutro-brd: #2d2d2d;
+      --verde-bg:   #052e16;
+      --amarelo-bg: #1c1100;
+      --vermelho-bg:#1c0000;
+    }
+    [data-theme="dark"] .pnp-logo-mark { background: #052e16; }
+    [data-theme="dark"] .chip { border-color: #2d2d2d; }
+    [data-theme="dark"] .b-cafe    { background:#3b1a00; color:#fb923c; }
+    [data-theme="dark"] .b-lanche1 { background:#2e0059; color:#d8b4fe; }
+    [data-theme="dark"] .b-almoco  { background:#0c1d3d; color:#93c5fd; }
+    [data-theme="dark"] .b-lanche2 { background:#2e0059; color:#d8b4fe; }
+    [data-theme="dark"] .b-jantar  { background:#0f0d2e; color:#a5b4fc; }
+    [data-theme="dark"] .b-ceia    { background:#2d0030; color:#f9a8d4; }
+    [data-theme="dark"] .sinal-box { border-color: #2d2d2d; }
+    [data-theme="dark"] .luz { background: #2d2d2d; }
+  </style>
+</head>
+<body>
+<!-- NAV injetado por shared.js -->
+
+<!-- ═══ HEADER ═══ -->
+<header class="pnp-header">
+  <div class="pnp-logo-mark">
+    <span class="mini-sinal">
+      <span class="ms-r"></span>
+      <span class="ms-y"></span>
+      <span class="ms-g"></span>
+    </span>
+    SaúdeMundo · Nutrição prática
+  </div>
+  <h1><em>Pode,</em> Não Pode?</h1>
+  <p class="pnp-tagline">O diário que calcula sua dieta sem mistério.<br>Registre cada refeição e veja na hora se ainda <strong>pode</strong> ou já <strong>não pode</strong>.</p>
+</header>
+
+<main class="container">
+
+  <!-- ═══ SEMÁFORO ═══ -->
+  <div class="sinal-wrapper">
+    <div class="sinal-box" id="sinal-box">
+      <div class="sinal-luzes">
+        <div class="luz luz-vermelho"></div>
+        <div class="luz luz-amarelo"></div>
+        <div class="luz luz-verde"></div>
+      </div>
+      <div class="sinal-texto">
+        <div class="sinal-veredicto" id="sinal-veredicto">Aguardando…</div>
+        <div class="sinal-detalhe" id="sinal-detalhe">Defina sua meta e comece a registrar.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ BARRA DE PROGRESSO ═══ -->
+  <div class="bar-wrap" id="bar-wrap" style="display:none;">
+    <div class="bar-labels">
+      <span id="bar-lbl-consumido">0 kcal consumidas</span>
+      <span id="bar-lbl-meta">Meta: 0 kcal</span>
+    </div>
+    <div class="bar-bg"><div class="bar-fill" id="bar-fill"></div></div>
+  </div>
+
+  <!-- ═══ CHIPS ═══ -->
+  <div class="chips-row">
+    <div class="chip">
+      <span class="chip-val" id="chip-consumido">0</span>
+      <span class="chip-label">kcal consumidas</span>
+    </div>
+    <div class="chip">
+      <span class="chip-val" id="chip-saldo">—</span>
+      <span class="chip-label">kcal disponíveis</span>
+    </div>
+    <div class="chip">
+      <span class="chip-val" id="chip-refeicoes">0</span>
+      <span class="chip-label">registros hoje</span>
+    </div>
+  </div>
+
+  <!-- ═══ CARD META ═══ -->
+  <div class="pnp-card">
+    <div class="pnp-card-title">🎯 Sua meta calórica do dia</div>
+    <div class="meta-row">
+      <label for="meta-input">Meta diária (kcal):</label>
+      <input type="number" id="meta-input" placeholder="ex: 2000" min="0" max="9999" />
+      <a href="https://www.saudemundo.com.br/index.html" class="meta-link">Não sabe? Calcule aqui →</a>
+    </div>
+  </div>
+
+  <!-- ═══ CARD ADICIONAR ═══ -->
+  <div class="pnp-card">
+    <div class="pnp-card-title">➕ Registrar alimento</div>
+    <div class="input-grid">
+
+      <div class="field-wrap field-full">
+        <label for="alimento-input">Alimento</label>
+        <input type="text" id="alimento-input"
+               placeholder="Digite para buscar (ex: feijão, frango, banana…)"
+               autocomplete="off" list="alimentos-list" />
+        <datalist id="alimentos-list"></datalist>
+      </div>
+
+      <div class="field-wrap">
+        <label for="qtd-input">Qtd.</label>
+        <input type="number" id="qtd-input" value="1" min="0.5" step="0.5" />
+      </div>
+
+      <div class="field-wrap">
+        <label for="medida-select">Medida</label>
+        <select id="medida-select"><option>—</option></select>
+      </div>
+
+      <div class="field-wrap">
+        <label for="refeicao-select">Refeição</label>
+        <select id="refeicao-select">
+          <option value="cafe">☀️ Café da manhã</option>
+          <option value="lanche1">🍎 Lanche manhã</option>
+          <option value="almoco" selected>🍽️ Almoço</option>
+          <option value="lanche2">🍌 Lanche tarde</option>
+          <option value="jantar">🌙 Jantar</option>
+          <option value="ceia">🌛 Ceia</option>
+        </select>
+      </div>
+
+      <button class="btn-add" onclick="adicionarAlimento()">Adicionar ➜</button>
+    </div>
+    <div class="preview-kcal" id="preview-kcal"></div>
+  </div>
+
+  <!-- ═══ CARD REGISTROS ═══ -->
+  <div class="pnp-card">
+    <div class="reg-header">
+      <div class="pnp-card-title" style="margin:0;">📋 Registros de hoje</div>
+      <button class="btn-limpar" onclick="limparDiario()">🗑 Limpar</button>
+    </div>
+    <div id="lista-registros">
+      <div class="empty-msg">Nenhum alimento registrado ainda.<br>Adicione sua primeira refeição acima e o semáforo acende! 🚦</div>
+    </div>
+  </div>
+
+  <!-- ═══ EDITORIAL ═══ -->
+  <div class="editorial">
+
+    <h2>🚦 Como funciona o semáforo calórico</h2>
+    <p>
+      A ideia é simples: você define a meta calórica do dia (use nossa
+      <a href="https://www.saudemundo.com.br/index.html">Calculadora de Calorias e Macros</a>
+      para calcular o valor exato) e vai registrando cada refeição. O semáforo responde na hora:
+    </p>
+    <p>
+      <strong style="color:var(--verde)">🟢 Pode!</strong> — você ainda tem calorias disponíveis. Aproveite com equilíbrio.<br>
+      <strong style="color:var(--amarelo)">🟡 Atenção!</strong> — você usou mais de 80% da meta. Hora de escolher com cuidado.<br>
+      <strong style="color:var(--vermelho)">🔴 Não pode!</strong> — a meta do dia foi ultrapassada. Considere uma caminhada. 😉
+    </p>
+    <p>
+      O banco de alimentos usa mais de 120 itens comuns da alimentação brasileira com medidas caseiras reais
+      (colher de sopa, concha, unidade, fatia, scoop), baseados na
+      <a href="https://www.cfn.org.br/wp-content/uploads/2017/03/taco_4_edicao_ampliada_e_revisada.pdf" target="_blank" rel="noopener">Tabela TACO (UNICAMP)</a>,
+      referência oficial do Ministério da Saúde. Assim você registra naturalmente, sem precisar pesar nada.
+    </p>
+    <p>
+      Exemplo de almoço típico: <strong>1 concha de feijão (77 kcal) + 2 colheres de arroz (51 kcal) + 1 bife médio (219 kcal) + salada de alface (4 kcal) = 351 kcal</strong>.
+      Se sua meta é 1.800 kcal, você sairia do almoço com 1.449 kcal disponíveis — semáforo verde.
+    </p>
+    <p>
+      Todos os registros ficam salvos localmente no seu dispositivo, sem conta e sem cadastro.
+      Feche o navegador, abra de novo no mesmo dia — os dados estarão lá.
+    </p>
+    <p style="font-size:.82rem;color:var(--muted);">
+      ⚠️ O Pode, Não Pode tem caráter educacional e de acompanhamento pessoal. Os valores são médias e podem variar conforme
+      o preparo. Para prescrição de dietas individualizadas, consulte um nutricionista ou médico.
+    </p>
+
+  </div>
+
+  <!-- ═══ FAQ ═══ -->
+  <div class="pnp-card faq-section">
+    <div class="card-title">❓ Perguntas Frequentes</div>
+
+    <div class="faq-item">
+      <div class="faq-q">O que significa o semáforo verde, amarelo e vermelho?</div>
+      <div class="faq-a">Verde (Pode!) significa que você ainda tem calorias disponíveis. Amarelo (Atenção!) indica que você consumiu mais de 80% da meta. Vermelho (Não pode!) significa que a meta calórica do dia foi ultrapassada.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Como usar o Pode, Não Pode?</div>
+      <div class="faq-a">Digite sua meta calórica diária, escolha o alimento, informe a quantidade e a medida caseira e clique em Adicionar. O semáforo atualiza na hora. Para calcular sua meta, use nossa Calculadora de Calorias e Macros.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Quantas calorias tem uma concha de feijão?</div>
+      <div class="faq-a">Uma concha média de feijão cozido (aproximadamente 86 g) tem cerca de 77 kcal. Os valores variam conforme o tipo e o preparo; usamos médias da Tabela TACO (UNICAMP), referência oficial do Ministério da Saúde.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Os dados ficam salvos se eu fechar o celular?</div>
+      <div class="faq-a">Sim. O app salva automaticamente no armazenamento local do seu dispositivo. Reabra no mesmo navegador no mesmo dia e tudo estará lá. Ao virar a meia-noite os registros são zerados para o dia seguinte.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">O Pode, Não Pode substitui um nutricionista?</div>
+      <div class="faq-a">Não. A ferramenta é educacional e de acompanhamento pessoal. Para prescrição de dietas e metas calóricas individualizadas, consulte sempre um nutricionista ou médico.</div>
+    </div>
+  </div>
+
+  <div id="sm-blog-placeholder"></div>
+
+</main>
+
+<!-- shared.js ANTES do script da página -->
+<script src="shared.js"></script>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   BANCO DE ALIMENTOS — base TACO + medidas caseiras
+   { nome, kcal (por 100g), medidas: [{l: label, g: gramas}] }
+═══════════════════════════════════════════════════════════ */
+const ALIMENTOS = [
+  // Cereais / tubérculos
+  { nome:"Arroz branco cozido",        kcal:128, medidas:[{l:"colher de sopa",g:20},{l:"porção (4 col.)",g:80},{l:"xícara de chá",g:160}]},
+  { nome:"Arroz integral cozido",      kcal:124, medidas:[{l:"colher de sopa",g:20},{l:"porção (4 col.)",g:80},{l:"xícara de chá",g:160}]},
+  { nome:"Macarrão cozido",            kcal:148, medidas:[{l:"colher de sopa",g:20},{l:"porção",g:120},{l:"prato fundo",g:250}]},
+  { nome:"Pão francês",                kcal:300, medidas:[{l:"unidade (50 g)",g:50},{l:"metade",g:25}]},
+  { nome:"Pão de forma integral",      kcal:253, medidas:[{l:"fatia",g:25},{l:"2 fatias",g:50}]},
+  { nome:"Batata inglesa cozida",      kcal:86,  medidas:[{l:"unidade média",g:100},{l:"colher de sopa",g:30},{l:"porção",g:150}]},
+  { nome:"Batata-doce cozida",         kcal:86,  medidas:[{l:"unidade média",g:130},{l:"fatia média",g:50},{l:"colher de sopa",g:30}]},
+  { nome:"Mandioca cozida",            kcal:125, medidas:[{l:"pedaço médio",g:80},{l:"colher de sopa",g:30}]},
+  { nome:"Aveia em flocos",            kcal:394, medidas:[{l:"colher de sopa",g:10},{l:"xícara de chá",g:60}]},
+  { nome:"Granola",                    kcal:471, medidas:[{l:"colher de sopa",g:15},{l:"porção",g:40}]},
+  { nome:"Tapioca (goma)",             kcal:346, medidas:[{l:"colher de sopa",g:10},{l:"tapioca pequena",g:50},{l:"tapioca grande",g:90}]},
+  // Leguminosas
+  { nome:"Feijão carioca cozido",      kcal:76,  medidas:[{l:"concha",g:86},{l:"colher de sopa",g:22},{l:"porção",g:170}]},
+  { nome:"Feijão preto cozido",        kcal:77,  medidas:[{l:"concha",g:86},{l:"colher de sopa",g:22},{l:"porção",g:170}]},
+  { nome:"Lentilha cozida",            kcal:93,  medidas:[{l:"concha",g:86},{l:"colher de sopa",g:22}]},
+  { nome:"Grão-de-bico cozido",        kcal:164, medidas:[{l:"colher de sopa",g:25},{l:"porção",g:80}]},
+  { nome:"Ervilha cozida",             kcal:67,  medidas:[{l:"colher de sopa",g:25},{l:"porção",g:80}]},
+  // Carnes
+  { nome:"Frango grelhado (peito)",    kcal:163, medidas:[{l:"filé pequeno",g:80},{l:"filé médio",g:120},{l:"filé grande",g:180}]},
+  { nome:"Frango cozido (coxa)",       kcal:215, medidas:[{l:"coxa",g:60},{l:"sobrecoxa",g:70},{l:"coxa+sobrecoxa",g:120}]},
+  { nome:"Bife bovino (patinho)",      kcal:219, medidas:[{l:"bife pequeno",g:70},{l:"bife médio",g:100},{l:"bife grande",g:150}]},
+  { nome:"Carne moída (patinho)",      kcal:219, medidas:[{l:"colher de sopa",g:25},{l:"porção",g:100}]},
+  { nome:"Lombo de porco",             kcal:199, medidas:[{l:"fatia média",g:80},{l:"porção",g:120}]},
+  { nome:"Tilápia grelhada",           kcal:112, medidas:[{l:"filé pequeno",g:80},{l:"filé médio",g:120}]},
+  { nome:"Atum em lata (água)",        kcal:131, medidas:[{l:"lata escorrida",g:120},{l:"colher de sopa",g:20}]},
+  { nome:"Sardinha em lata",           kcal:208, medidas:[{l:"unidade",g:25},{l:"lata pequena",g:60}]},
+  { nome:"Salsicha de frango",         kcal:218, medidas:[{l:"unidade",g:50}]},
+  { nome:"Linguiça calabresa",         kcal:360, medidas:[{l:"fatia",g:20},{l:"porção (3 fatias)",g:60}]},
+  // Ovos / laticínios
+  { nome:"Ovo cozido",                 kcal:143, medidas:[{l:"unidade pequena",g:42},{l:"unidade média",g:53},{l:"unidade grande",g:63}]},
+  { nome:"Ovo mexido",                 kcal:149, medidas:[{l:"1 ovo",g:60},{l:"2 ovos",g:120}]},
+  { nome:"Leite integral",             kcal:61,  medidas:[{l:"copo (200 ml)",g:200},{l:"xícara (240 ml)",g:240}]},
+  { nome:"Leite desnatado",            kcal:35,  medidas:[{l:"copo (200 ml)",g:200},{l:"xícara (240 ml)",g:240}]},
+  { nome:"Iogurte natural integral",   kcal:61,  medidas:[{l:"pote (170 g)",g:170},{l:"colher de sopa",g:20}]},
+  { nome:"Iogurte grego integral",     kcal:100, medidas:[{l:"pote (130 g)",g:130},{l:"colher de sopa",g:25}]},
+  { nome:"Queijo minas frescal",       kcal:264, medidas:[{l:"fatia",g:30},{l:"2 fatias",g:60}]},
+  { nome:"Queijo prato",               kcal:358, medidas:[{l:"fatia",g:25},{l:"2 fatias",g:50}]},
+  { nome:"Requeijão cremoso",          kcal:227, medidas:[{l:"colher de sopa",g:20}]},
+  { nome:"Manteiga",                   kcal:717, medidas:[{l:"colher de chá",g:5},{l:"colher de sopa",g:15}]},
+  // Frutas
+  { nome:"Banana prata",               kcal:98,  medidas:[{l:"unidade pequena",g:80},{l:"unidade média",g:100},{l:"unidade grande",g:130}]},
+  { nome:"Maçã",                       kcal:56,  medidas:[{l:"unidade pequena",g:130},{l:"unidade média",g:160},{l:"unidade grande",g:200}]},
+  { nome:"Laranja",                    kcal:47,  medidas:[{l:"unidade média",g:130},{l:"metade",g:65}]},
+  { nome:"Manga",                      kcal:64,  medidas:[{l:"fatia",g:70},{l:"porção (3 fatias)",g:210}]},
+  { nome:"Mamão papaia",               kcal:40,  medidas:[{l:"fatia média",g:150},{l:"colher de sopa",g:30}]},
+  { nome:"Abacate",                    kcal:96,  medidas:[{l:"colher de sopa",g:20},{l:"metade",g:100}]},
+  { nome:"Melancia",                   kcal:33,  medidas:[{l:"fatia média",g:200},{l:"cubo",g:30}]},
+  { nome:"Morango",                    kcal:30,  medidas:[{l:"unidade",g:15},{l:"porção (10 un.)",g:150}]},
+  { nome:"Uva",                        kcal:68,  medidas:[{l:"cacho (10 un.)",g:80},{l:"unidade",g:8}]},
+  { nome:"Abacaxi",                    kcal:48,  medidas:[{l:"fatia",g:80},{l:"pedaço",g:50}]},
+  // Vegetais
+  { nome:"Alface",                     kcal:11,  medidas:[{l:"folha",g:10},{l:"porção",g:40}]},
+  { nome:"Tomate",                     kcal:15,  medidas:[{l:"fatia",g:20},{l:"unidade média",g:100}]},
+  { nome:"Cenoura cozida",             kcal:31,  medidas:[{l:"colher de sopa",g:30},{l:"unidade média",g:80}]},
+  { nome:"Chuchu cozido",              kcal:18,  medidas:[{l:"colher de sopa",g:30},{l:"porção",g:100}]},
+  { nome:"Brócolis cozido",            kcal:26,  medidas:[{l:"ramo",g:30},{l:"porção",g:100}]},
+  { nome:"Abobrinha refogada",         kcal:26,  medidas:[{l:"colher de sopa",g:30},{l:"porção",g:100}]},
+  { nome:"Beterraba cozida",           kcal:43,  medidas:[{l:"fatia",g:25},{l:"unidade média",g:80}]},
+  { nome:"Espinafre cozido",           kcal:21,  medidas:[{l:"colher de sopa",g:30},{l:"porção",g:80}]},
+  { nome:"Pepino",                     kcal:14,  medidas:[{l:"fatia",g:15},{l:"metade",g:60}]},
+  // Gorduras / oleaginosas
+  { nome:"Azeite de oliva",            kcal:884, medidas:[{l:"colher de chá",g:5},{l:"colher de sopa",g:14}]},
+  { nome:"Óleo de soja",               kcal:884, medidas:[{l:"colher de chá",g:5},{l:"colher de sopa",g:14}]},
+  { nome:"Castanha-do-pará",           kcal:656, medidas:[{l:"unidade",g:5},{l:"porção (3 un.)",g:15}]},
+  { nome:"Amendoim torrado",           kcal:599, medidas:[{l:"colher de sopa",g:15},{l:"porção",g:30}]},
+  { nome:"Pasta de amendoim",          kcal:596, medidas:[{l:"colher de chá",g:10},{l:"colher de sopa",g:20}]},
+  // Bebidas
+  { nome:"Suco de laranja natural",    kcal:45,  medidas:[{l:"copo (200 ml)",g:200},{l:"copo grande (300 ml)",g:300}]},
+  { nome:"Café com leite integral",    kcal:19,  medidas:[{l:"xícara (100 ml)",g:100},{l:"caneca (200 ml)",g:200}]},
+  { nome:"Refrigerante cola",          kcal:37,  medidas:[{l:"lata (350 ml)",g:350},{l:"copo (200 ml)",g:200}]},
+  { nome:"Cerveja",                    kcal:45,  medidas:[{l:"lata (350 ml)",g:350}]},
+  { nome:"Água de coco",               kcal:19,  medidas:[{l:"copo (200 ml)",g:200}]},
+  // Snacks / extras
+  { nome:"Biscoito cream cracker",     kcal:413, medidas:[{l:"unidade",g:7},{l:"porção (3 un.)",g:21}]},
+  { nome:"Chocolate ao leite",         kcal:535, medidas:[{l:"quadrado",g:10},{l:"barra pequena (25 g)",g:25}]},
+  { nome:"Açúcar refinado",            kcal:387, medidas:[{l:"colher de chá",g:4},{l:"colher de sopa",g:12}]},
+  { nome:"Mel",                        kcal:309, medidas:[{l:"colher de chá",g:7},{l:"colher de sopa",g:21}]},
+  { nome:"Whey protein (pó)",          kcal:380, medidas:[{l:"scoop (30 g)",g:30}]},
+];
+
+/* ═══════════════════════════════════════════════════════════
+   ESTADO
+═══════════════════════════════════════════════════════════ */
+const STORAGE_KEY = "sm_pnp_" + new Date().toISOString().slice(0,10);
+let registros = carregarRegistros();
+let alimentoAtual = null;
+
+/* ═══════════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════════ */
+document.addEventListener("DOMContentLoaded", () => {
+  // Preencher datalist
+  const dl = document.getElementById("alimentos-list");
+  ALIMENTOS.forEach(a => {
+    const o = document.createElement("option"); o.value = a.nome; dl.appendChild(o);
+  });
+
+  // Tentar carregar meta salva
+  try {
+    const ud = smGetUserData ? smGetUserData() : null;
+    if (ud && ud.metaCalorica) document.getElementById("meta-input").value = ud.metaCalorica;
+  } catch(e) {}
+
+  document.getElementById("alimento-input").addEventListener("input",  onAlimentoChange);
+  document.getElementById("alimento-input").addEventListener("change", onAlimentoChange);
+  document.getElementById("qtd-input").addEventListener("input",       atualizarPreview);
+  document.getElementById("medida-select").addEventListener("change",  atualizarPreview);
+  document.getElementById("meta-input").addEventListener("input",      atualizarTudo);
+
+  renderLista();
+  atualizarTudo();
+});
+
+/* ═══════════════════════════════════════════════════════════
+   ALIMENTO
+═══════════════════════════════════════════════════════════ */
+function onAlimentoChange() {
+  const nome = document.getElementById("alimento-input").value.trim();
+  alimentoAtual = ALIMENTOS.find(a => a.nome.toLowerCase() === nome.toLowerCase()) || null;
+  const sel = document.getElementById("medida-select");
+  sel.innerHTML = "";
+  if (alimentoAtual) {
+    alimentoAtual.medidas.forEach((m, i) => {
+      const o = document.createElement("option"); o.value = i; o.textContent = m.l; sel.appendChild(o);
+    });
+  } else {
+    const o = document.createElement("option"); o.textContent = "—"; sel.appendChild(o);
+  }
+  atualizarPreview();
+}
+
+function atualizarPreview() {
+  const el = document.getElementById("preview-kcal");
+  if (!alimentoAtual) { el.textContent = ""; return; }
+  const qtd = parseFloat(document.getElementById("qtd-input").value) || 1;
+  const idx = parseInt(document.getElementById("medida-select").value) || 0;
+  const m = alimentoAtual.medidas[idx];
+  if (!m) { el.textContent = ""; return; }
+  const kcal = Math.round(alimentoAtual.kcal * m.g * qtd / 100);
+  el.textContent = `⚡ Isso equivale a aprox. ${kcal} kcal`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ADICIONAR
+═══════════════════════════════════════════════════════════ */
+function adicionarAlimento() {
+  if (!alimentoAtual) {
+    typeof showToast === "function" ? showToast("Selecione um alimento da lista.") : alert("Selecione um alimento da lista.");
+    return;
+  }
+  const qtd      = parseFloat(document.getElementById("qtd-input").value) || 1;
+  const idx      = parseInt(document.getElementById("medida-select").value) || 0;
+  const m        = alimentoAtual.medidas[idx];
+  const refeicao = document.getElementById("refeicao-select").value;
+  const kcal     = Math.round(alimentoAtual.kcal * m.g * qtd / 100);
+  const nomeAdd  = alimentoAtual.nome;
+
+  registros.push({ id: Date.now(), nome: nomeAdd, qtd, medida: m.l, refeicao, kcal });
+  salvarRegistros();
+  renderLista();
+  atualizarTudo();
+
+  // reset
+  document.getElementById("alimento-input").value = "";
+  document.getElementById("medida-select").innerHTML = "<option>—</option>";
+  document.getElementById("preview-kcal").textContent = "";
+  document.getElementById("qtd-input").value = 1;
+  alimentoAtual = null;
+
+  if (typeof showToast === "function") showToast(`✅ ${nomeAdd} adicionado!`);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REMOVER / LIMPAR
+═══════════════════════════════════════════════════════════ */
+function removerRegistro(id) {
+  registros = registros.filter(r => r.id !== id);
+  salvarRegistros(); renderLista(); atualizarTudo();
+}
+function limparDiario() {
+  if (!confirm("Limpar todos os registros de hoje?")) return;
+  registros = []; salvarRegistros(); renderLista(); atualizarTudo();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RENDER LISTA
+═══════════════════════════════════════════════════════════ */
+const REF_CFG = {
+  cafe:    { l:"Café da manhã", c:"b-cafe"    },
+  lanche1: { l:"Lanche manhã",  c:"b-lanche1" },
+  almoco:  { l:"Almoço",        c:"b-almoco"  },
+  lanche2: { l:"Lanche tarde",  c:"b-lanche2" },
+  jantar:  { l:"Jantar",        c:"b-jantar"  },
+  ceia:    { l:"Ceia",          c:"b-ceia"    },
+};
+
+function renderLista() {
+  const el = document.getElementById("lista-registros");
+  if (!registros.length) {
+    el.innerHTML = `<div class="empty-msg">Nenhum alimento registrado ainda.<br>Adicione sua primeira refeição acima e o semáforo acende! 🚦</div>`;
+    return;
+  }
+  el.innerHTML = registros.map(r => {
+    const rf = REF_CFG[r.refeicao] || { l: r.refeicao, c: "" };
+    return `<div class="reg-item">
+      <span class="reg-badge ${rf.c}">${rf.l}</span>
+      <span class="reg-nome">
+        ${r.nome}
+        <span class="reg-sub">${r.qtd} ${r.medida}</span>
+      </span>
+      <span class="reg-kcal">${r.kcal} kcal</span>
+      <button class="reg-del" onclick="removerRegistro(${r.id})" title="Remover">✕</button>
+    </div>`;
+  }).join("");
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SEMÁFORO + PROGRESSO
+═══════════════════════════════════════════════════════════ */
+function atualizarTudo() {
+  const total = registros.reduce((s, r) => s + r.kcal, 0);
+  const meta  = parseInt(document.getElementById("meta-input").value) || 0;
+
+  // Chips
+  document.getElementById("chip-consumido").textContent = total;
+  document.getElementById("chip-refeicoes").textContent = registros.length;
+  const chipSaldo = document.getElementById("chip-saldo");
+
+  // Barra
+  const barWrap = document.getElementById("bar-wrap");
+  if (meta > 0) {
+    barWrap.style.display = "block";
+    const pct  = Math.min((total / meta) * 100, 100);
+    const fill = document.getElementById("bar-fill");
+    fill.style.width = pct + "%";
+    document.getElementById("bar-lbl-consumido").textContent = total + " kcal consumidas";
+    document.getElementById("bar-lbl-meta").textContent      = "Meta: " + meta + " kcal";
+  } else {
+    barWrap.style.display = "none";
+  }
+
+  // Semáforo
+  const box       = document.getElementById("sinal-box");
+  const veredicto = document.getElementById("sinal-veredicto");
+  const detalhe   = document.getElementById("sinal-detalhe");
+  const fill      = document.getElementById("bar-fill");
+
+  box.className = "sinal-box";
+
+  if (!meta || !registros.length) {
+    veredicto.textContent = "Aguardando…";
+    detalhe.textContent   = meta ? "Adicione sua primeira refeição acima." : "Defina sua meta calórica acima.";
+    chipSaldo.textContent = "—";
+    return;
+  }
+
+  const pct   = (total / meta) * 100;
+  const saldo = meta - total;
+
+  if (pct <= 80) {
+    // VERDE
+    box.classList.add("verde");
+    fill.className = "bar-fill";
+    veredicto.textContent = "🟢 Pode!";
+    detalhe.textContent   = `Você ainda tem ${saldo} kcal disponíveis. Tá bem!`;
+    chipSaldo.textContent  = saldo;
+    chipSaldo.style.color  = "var(--verde)";
+  } else if (pct <= 100) {
+    // AMARELO
+    box.classList.add("amarelo");
+    fill.className = "bar-fill amarelo";
+    veredicto.textContent = "🟡 Atenção!";
+    detalhe.textContent   = `Restam apenas ${saldo} kcal. Escolha com cuidado.`;
+    chipSaldo.textContent  = saldo;
+    chipSaldo.style.color  = "var(--amarelo)";
+  } else {
+    // VERMELHO
+    box.classList.add("vermelho");
+    fill.className = "bar-fill vermelho";
+    veredicto.textContent = "🔴 Não pode!";
+    detalhe.textContent   = `Você passou ${Math.abs(saldo)} kcal acima da meta. Considere uma caminhada! 😉`;
+    chipSaldo.textContent  = `-${Math.abs(saldo)}`;
+    chipSaldo.style.color  = "var(--vermelho)";
+  }
+
+  // Salvar meta
+  if (meta > 0) {
+    try {
+      const ud = smGetUserData ? (smGetUserData() || {}) : {};
+      ud.metaCalorica = meta;
+      if (smSaveUserData) smSaveUserData(ud);
+    } catch(e) {}
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STORAGE
+═══════════════════════════════════════════════════════════ */
+function salvarRegistros() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(registros)); } catch(e) {}
+}
+function carregarRegistros() {
+  try { const r = localStorage.getItem(STORAGE_KEY); return r ? JSON.parse(r) : []; }
+  catch(e) { return []; }
+}
+</script>
+</body>
+</html>
