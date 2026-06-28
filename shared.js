@@ -67,6 +67,7 @@ const SM_ARTIGOS = [
   { file: 'artigo-ovos-diarios.html',                 icon: '🥚', cat: 'Nutrição',                name: 'Quantos Ovos Posso Comer por Dia? O Que a Ciência Diz',            desc: 'O mito do colesterol caiu. Entenda quantos ovos você pode comer com segurança todos os dias.' },
   { file: 'artigo-desenvolvimento-motor-infantil.html',icon: '🧠', cat: 'Desenvolvimento Infantil',name: 'Desenvolvimento Motor Infantil: Guia Completo da Primeira Infância', desc: 'Marcos motores por idade e como escolher a primeira atividade física do seu filho.' },
   { file: 'artigo-esporte-infantil.html',             icon: '🛹', cat: 'Desenvolvimento Infantil',name: 'Patinete e Skate na Primeira Infância: Relato de um Pai',          desc: 'A progressão real de duas crianças de 2 e 3 anos no patinete, etapa por etapa.' },
+  { file: 'artigo-recomposicao-corporal.html', icon: '💪', cat: 'Treino', name: 'Recomposição Corporal: Como Perder Gordura e Ganhar Músculo ao Mesmo Tempo', desc: 'Entenda a fisiologia da recomposição corporal, para quem funciona e como montar um protocolo prático de treino e alimentação.' },
 ];
 
 /* ---------- Footer HTML + seção "Artigos do Blog" ---------- */
