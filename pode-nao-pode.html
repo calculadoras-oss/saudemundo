@@ -44,12 +44,7 @@
       {
         "@type": "Question",
         "name": "Como funciona o semáforo por refeição?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Cada refeição tem um limite proporcional da meta diária: café da manhã 20%, almoço 35%, jantar 20%, lanches 10% cada e ceia 5%. O semáforo avalia se aquela refeição específica está dentro do esperado, e não o dia inteiro. Assim o alerta é útil desde o café da manhã." }
-      },
-      {
-        "@type": "Question",
-        "name": "Como funciona o Pode, Não Pode?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Escreva o que comeu em linguagem natural, por exemplo 'duas fatias de pizza e um copo de suco', e a IA calcula as calorias na hora. O semáforo mostra se aquela refeição está dentro do limite proporcional à sua meta diária." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Cada refeição tem um limite proporcional da meta diária: café da manhã 20%, almoço 35%, jantar 20%, lanches 10% cada e ceia 5%. O semáforo avalia se aquela refeição específica está dentro do esperado, e não o dia inteiro." }
       },
       {
         "@type": "Question",
@@ -59,12 +54,12 @@
       {
         "@type": "Question",
         "name": "Os dados ficam salvos se eu fechar o celular?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Sim. Tudo fica salvo localmente no dispositivo. Reabra no mesmo navegador no mesmo dia e os dados estarão lá. Ao virar a meia-noite os registros são zerados." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Sim. Tudo fica salvo localmente no dispositivo. Reabra no mesmo navegador no mesmo dia e os dados estarão lá." }
       },
       {
         "@type": "Question",
         "name": "O Pode, Não Pode substitui um nutricionista?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Não. É uma ferramenta educacional de acompanhamento. Para dietas individualizadas, consulte um nutricionista ou médico." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Não. É uma ferramenta educacional de acompanhamento." }
       }
     ]
   }
@@ -72,249 +67,116 @@
 
   <style>
     :root {
-      --verde:   #16a34a; --verde-bg: #f0fdf4; --verde-brd: #86efac;
-      --amarelo: #d97706; --amar-bg:  #fffbeb; --amar-brd:  #fde68a;
-      --verm:    #dc2626; --verm-bg:  #fef2f2; --verm-brd:  #fca5a5;
-      --brd:     var(--border-color,#e2e8f0);
-      --surface: var(--card-bg,#ffffff);
-      --text:    var(--text-primary,#1a1a1a);
-      --muted:   var(--text-secondary,#64748b);
-      --radius:  14px;
+      --verde:#16a34a; --verde-bg:#f0fdf4; --verde-brd:#86efac;
+      --amarelo:#d97706; --amar-bg:#fffbeb; --amar-brd:#fde68a;
+      --verm:#dc2626; --verm-bg:#fef2f2; --verm-brd:#fca5a5;
+      --brd:var(--border-color,#e2e8f0);
+      --surface:var(--card-bg,#ffffff);
+      --text:var(--text-primary,#1a1a1a);
+      --muted:var(--text-secondary,#64748b);
+      --radius:14px;
     }
-
-    /* ── Header ── */
-    .pnp-header { text-align:center; padding:2rem 1rem 0; }
-    .pnp-badge {
-      display:inline-flex; align-items:center; gap:.45rem;
-      font-size:.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
-      color:var(--verde); background:#f0fdf4; padding:.28rem .8rem;
-      border-radius:20px; margin-bottom:.8rem;
-    }
-    .mini-sinal { display:inline-flex; flex-direction:column; gap:2px; }
-    .mini-sinal span { width:6px;height:6px;border-radius:50%;display:block; }
-    .ms-r{background:#dc2626;} .ms-y{background:#d97706;} .ms-g{background:#16a34a;}
-    .pnp-header h1 {
-      font-family:'Playfair Display',serif; font-weight:900;
-      font-size:clamp(1.8rem,5vw,2.6rem); letter-spacing:-.02em;
-      margin:0 0 .3rem; line-height:1.05;
-    }
-    .pnp-header h1 em { font-style:normal; color:var(--verde); }
-    .pnp-tagline {
-      font-size:.88rem; color:var(--muted);
-      max-width:380px; margin:0 auto 1.5rem; line-height:1.5;
-    }
-
-    /* ── Container ── */
-    .container { max-width:660px; margin:0 auto; padding:0 1rem 3rem; }
-
-    /* ── Painel superior: semáforo compacto + chips ── */
-    .painel-topo {
-      display:flex; align-items:center; gap:.8rem;
-      background:var(--surface); border:1px solid var(--brd);
-      border-radius:var(--radius); padding:1rem 1.2rem;
-      margin-bottom:1rem;
-    }
-
-    /* Semáforo compacto */
-    .sinal-mini {
-      display:flex; flex-direction:column;
-      align-items:center; gap:4px; flex-shrink:0;
-    }
-    .luz-mini {
-      width:20px; height:20px; border-radius:50%;
-      background:#e2e8f0; transition:background .4s, box-shadow .4s;
-    }
-    .sinal-ativo-verde   .luz-mini-verde   { background:var(--verde);   box-shadow:0 0 8px 2px #86efac; }
-    .sinal-ativo-amarelo .luz-mini-amarelo { background:var(--amarelo); box-shadow:0 0 8px 2px #fde68a; }
-    .sinal-ativo-verm    .luz-mini-verm    { background:var(--verm);    box-shadow:0 0 8px 2px #fca5a5; }
-
-    .sinal-info { flex:1; min-width:0; }
-    .sinal-veredicto {
-      font-weight:700; font-size:1.1rem; color:#94a3b8;
-      transition:color .4s; line-height:1.1;
-    }
-    .sinal-ativo-verde   .sinal-veredicto { color:var(--verde); }
-    .sinal-ativo-amarelo .sinal-veredicto { color:var(--amarelo); }
-    .sinal-ativo-verm    .sinal-veredicto { color:var(--verm); }
-    .sinal-detalhe { font-size:.75rem; color:var(--muted); margin-top:.2rem; line-height:1.3; }
-
-    /* Chips compactos */
-    .chips-mini {
-      display:flex; flex-direction:column; gap:.3rem;
-      flex-shrink:0; text-align:right;
-    }
-    .chip-mini {
-      font-size:.7rem; color:var(--muted); white-space:nowrap;
-    }
-    .chip-mini strong { color:var(--text); font-size:.85rem; }
-
-    /* Barra fina */
-    .bar-wrap { margin-bottom:1rem; }
-    .bar-bg { height:6px; background:var(--brd); border-radius:99px; overflow:hidden; }
-    .bar-fill { height:100%; border-radius:99px; background:var(--verde); transition:width .4s,background .4s; width:0%; }
-    .bar-fill.amarelo { background:var(--amarelo); }
-    .bar-fill.vermelho { background:var(--verm); }
-    .bar-labels { display:flex; justify-content:space-between; font-size:.7rem; color:var(--muted); margin-bottom:.25rem; }
-
-    /* ── Card genérico ── */
-    .pnp-card {
-      background:var(--surface); border:1px solid var(--brd);
-      border-radius:var(--radius); padding:1.2rem; margin-bottom:.9rem;
-    }
-    .pnp-card-title {
-      font-size:.68rem; font-weight:700; letter-spacing:.08em;
-      text-transform:uppercase; color:var(--verde); margin-bottom:.85rem;
-    }
-
-    /* ── Meta colapsável ── */
-    .meta-toggle {
-      display:flex; align-items:center; justify-content:space-between;
-      cursor:pointer; user-select:none;
-    }
-    .meta-toggle-label {
-      font-size:.8rem; font-weight:600; color:var(--muted);
-    }
-    .meta-valor-atual {
-      font-size:.9rem; font-weight:700; color:var(--verde);
-    }
-    .meta-toggle-icon { font-size:.8rem; color:var(--muted); transition:transform .2s; }
-    .meta-toggle-icon.aberto { transform:rotate(180deg); }
-    .meta-corpo { margin-top:.8rem; display:none; }
-    .meta-corpo.aberto { display:block; }
-    .meta-row { display:flex; align-items:center; gap:.75rem; flex-wrap:wrap; }
-    .meta-row label { font-size:.88rem; font-weight:500; white-space:nowrap; }
-    .meta-row input[type="number"] {
-      width:110px; padding:.5rem .7rem; border:1.5px solid var(--brd);
-      border-radius:8px; font-size:1rem; background:transparent; color:var(--text);
-    }
-    .meta-link { font-size:.8rem; color:var(--verde); text-decoration:none; }
-    .meta-link:hover { text-decoration:underline; }
-    /* Primeira vez: meta aberta com destaque */
-    .meta-destaque {
-      background:var(--verde-bg); border-color:var(--verde-brd);
-    }
-    .meta-destaque .meta-toggle-label { color:var(--verde); }
-
-    /* ── CHAT ── */
-    .chat-refeicao-row {
-      display:flex; align-items:center; gap:.6rem;
-      margin-bottom:.7rem; flex-wrap:wrap;
-    }
-    .chat-refeicao-row label { font-size:.8rem; font-weight:600; color:var(--muted); white-space:nowrap; }
-    .chat-refeicao-row select {
-      flex:1; padding:.45rem .7rem; border:1.5px solid var(--brd); border-radius:8px;
-      font-size:.88rem; background:transparent; color:var(--text); cursor:pointer;
-    }
-
-    /* Limite da refeição */
-    .limite-refeicao {
-      font-size:.75rem; color:var(--muted); margin-bottom:.6rem;
-      background:#f8fafc; border-radius:8px; padding:.4rem .7rem;
-      border:1px solid var(--brd);
-    }
-    .limite-refeicao strong { color:var(--text); }
-
-    /* Exemplos */
-    .chat-exemplos { display:flex; flex-wrap:wrap; gap:.35rem; margin-bottom:.65rem; }
-    .chip-ex {
-      font-size:.72rem; background:#f0fdf4; color:var(--verde);
-      border:1px solid var(--verde-brd); border-radius:20px; padding:.18rem .6rem;
-      cursor:pointer; transition:background .15s;
-    }
-    .chip-ex:hover { background:#dcfce7; }
-
-    /* Janela chat */
-    .chat-mensagens {
-      min-height:160px; max-height:300px; overflow-y:auto;
-      border:1.5px solid var(--brd); border-radius:10px;
-      padding:.75rem; margin-bottom:.7rem;
-      display:flex; flex-direction:column; gap:.55rem;
-      background:#fafafa;
-      scroll-behavior:smooth;
-    }
-    .msg { max-width:90%; padding:.55rem .8rem; border-radius:12px; font-size:.87rem; line-height:1.5; }
-    .msg-ia   { background:var(--verde-bg); border:1px solid var(--verde-brd); color:var(--text); align-self:flex-start; border-radius:4px 12px 12px 12px; }
-    .msg-user { background:var(--verde); color:#fff; align-self:flex-end; border-radius:12px 4px 12px 12px; }
-    .msg-erro { background:var(--verm-bg); border:1px solid var(--verm-brd); color:var(--verm); align-self:flex-start; border-radius:4px 12px 12px 12px; }
-    .msg-digitando { background:#f1f5f9; color:var(--muted); align-self:flex-start; border-radius:4px 12px 12px 12px; font-style:italic; font-size:.8rem; padding:.45rem .8rem; }
-
-    .btn-lancar {
-      display:inline-block; margin-top:.45rem;
-      padding:.38rem .85rem; background:var(--verde); color:#fff;
-      border:none; border-radius:8px; font-size:.78rem; font-weight:700;
-      cursor:pointer; transition:background .2s;
-    }
-    .btn-lancar:hover { background:#15803d; }
-
-    /* Input chat */
-    .chat-input-row { display:flex; gap:.45rem; align-items:flex-end; }
-    .chat-input {
-      flex:1; padding:.7rem .9rem;
-      border:2px solid var(--verde); border-radius:10px;
-      font-size:.95rem; font-family:'DM Sans',sans-serif;
-      background:transparent; color:var(--text);
-      resize:none; min-height:46px; max-height:100px;
-      outline:none; line-height:1.4;
-    }
-    .chat-input:focus { border-color:#15803d; box-shadow:0 0 0 3px #bbf7d0; }
-    .chat-input::placeholder { color:#bbb; }
-    .btn-enviar {
-      padding:.7rem 1rem; background:var(--verde); color:#fff;
-      border:none; border-radius:10px; font-size:1.1rem;
-      cursor:pointer; transition:background .2s,transform .1s;
-      align-self:flex-end; line-height:1;
-    }
-    .btn-enviar:hover  { background:#15803d; }
-    .btn-enviar:active { transform:scale(.96); }
-    .btn-enviar:disabled { background:#94a3b8; cursor:not-allowed; }
-
-    /* ── Lista ── */
-    .reg-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:.75rem; }
-    .btn-limpar {
-      font-size:.72rem; color:var(--verm); background:none;
-      border:1px solid var(--verm); border-radius:6px; padding:.22rem .55rem; cursor:pointer;
-    }
-    .btn-limpar:hover { background:var(--verm-bg); }
-    .reg-item {
-      display:flex; align-items:flex-start; gap:.45rem; padding:.6rem 0;
-      border-bottom:1px solid var(--brd); font-size:.86rem;
-    }
-    .reg-item:last-child { border-bottom:none; }
-    .reg-badge {
-      flex-shrink:0; font-size:.6rem; font-weight:700; letter-spacing:.04em;
-      text-transform:uppercase; padding:.15rem .38rem; border-radius:5px; margin-top:.15rem;
-    }
-    .b-cafe{background:#fff3e0;color:#c2410c;} .b-lanche1{background:#f3e5f5;color:#7e22ce;}
-    .b-almoco{background:#eff6ff;color:#1d4ed8;} .b-lanche2{background:#f3e5f5;color:#7e22ce;}
-    .b-jantar{background:#eef2ff;color:#3730a3;} .b-ceia{background:#fdf2f8;color:#9d174d;}
-    .reg-info { flex:1; }
-    .reg-nome { font-weight:600; color:var(--text); font-size:.86rem; }
-    .reg-sub  { font-size:.72rem; color:var(--muted); margin-top:.04rem; }
-    .reg-kcal { font-weight:700; white-space:nowrap; color:var(--text); padding-top:.1rem; font-size:.86rem; }
-    .reg-del  { background:none;border:none;color:var(--muted);cursor:pointer;padding:.1rem .25rem;font-size:.9rem; }
-    .reg-del:hover { color:var(--verm); }
-    .empty-msg { text-align:center; color:var(--muted); font-size:.85rem; padding:1.5rem 0; line-height:1.7; }
-
-    /* ── Editorial / FAQ ── */
-    .editorial { font-size:.9rem; line-height:1.75; color:var(--text); }
-    .editorial h2 { font-family:'Playfair Display',serif; font-size:1.25rem; margin:2rem 0 .65rem; }
-    .editorial p  { margin:0 0 .85rem; }
-    .card-title { font-size:.68rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--verde); margin-bottom:.9rem; }
-    .faq-item { padding:.85rem 0; border-bottom:1px solid var(--brd); }
-    .faq-item:last-child { border-bottom:none; }
-    .faq-q { font-weight:600; font-size:.88rem; margin-bottom:.28rem; }
-    .faq-a { font-size:.84rem; color:var(--muted); line-height:1.6; }
-
-    /* ── Dark ── */
-    [data-theme="dark"] .pnp-badge { background:#052e16; }
-    [data-theme="dark"] .painel-topo { border-color:#2d2d2d; }
-    [data-theme="dark"] .luz-mini { background:#2d2d2d; }
-    [data-theme="dark"] .chat-mensagens { background:#111; border-color:#2d2d2d; }
-    [data-theme="dark"] .msg-ia { background:#052e16; border-color:#166534; }
-    [data-theme="dark"] .msg-digitando { background:#1e1e1e; }
-    [data-theme="dark"] .chip-ex { background:#052e16; border-color:#166534; }
-    [data-theme="dark"] .limite-refeicao { background:#1a1a1a; border-color:#2d2d2d; }
-    [data-theme="dark"] .meta-destaque { background:#052e16; border-color:#166534; }
+    .pnp-header{text-align:center;padding:2rem 1rem 0;}
+    .pnp-badge{display:inline-flex;align-items:center;gap:.45rem;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--verde);background:#f0fdf4;padding:.28rem .8rem;border-radius:20px;margin-bottom:.8rem;}
+    .mini-sinal{display:inline-flex;flex-direction:column;gap:2px;}
+    .mini-sinal span{width:6px;height:6px;border-radius:50%;display:block;}
+    .ms-r{background:#dc2626;}.ms-y{background:#d97706;}.ms-g{background:#16a34a;}
+    .pnp-header h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(1.8rem,5vw,2.6rem);letter-spacing:-.02em;margin:0 0 .3rem;line-height:1.05;}
+    .pnp-header h1 em{font-style:normal;color:var(--verde);}
+    .pnp-tagline{font-size:.88rem;color:var(--muted);max-width:380px;margin:0 auto 1.5rem;line-height:1.5;}
+    .container{max-width:660px;margin:0 auto;padding:0 1rem 3rem;}
+    .painel-topo{display:flex;align-items:center;gap:.8rem;background:var(--surface);border:1px solid var(--brd);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:1rem;}
+    .sinal-mini{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;}
+    .luz-mini{width:20px;height:20px;border-radius:50%;background:#e2e8f0;transition:background .4s,box-shadow .4s;}
+    .sinal-ativo-verde .luz-mini-verde{background:var(--verde);box-shadow:0 0 8px 2px #86efac;}
+    .sinal-ativo-amarelo .luz-mini-amarelo{background:var(--amarelo);box-shadow:0 0 8px 2px #fde68a;}
+    .sinal-ativo-verm .luz-mini-verm{background:var(--verm);box-shadow:0 0 8px 2px #fca5a5;}
+    .sinal-info{flex:1;min-width:0;}
+    .sinal-veredicto{font-weight:700;font-size:1.1rem;color:#94a3b8;transition:color .4s;line-height:1.1;}
+    .sinal-ativo-verde .sinal-veredicto{color:var(--verde);}
+    .sinal-ativo-amarelo .sinal-veredicto{color:var(--amarelo);}
+    .sinal-ativo-verm .sinal-veredicto{color:var(--verm);}
+    .sinal-detalhe{font-size:.75rem;color:var(--muted);margin-top:.2rem;line-height:1.3;}
+    .chips-mini{display:flex;flex-direction:column;gap:.3rem;flex-shrink:0;text-align:right;}
+    .chip-mini{font-size:.7rem;color:var(--muted);white-space:nowrap;}
+    .chip-mini strong{color:var(--text);font-size:.85rem;}
+    .bar-wrap{margin-bottom:1rem;}
+    .bar-bg{height:6px;background:var(--brd);border-radius:99px;overflow:hidden;}
+    .bar-fill{height:100%;border-radius:99px;background:var(--verde);transition:width .4s,background .4s;width:0%;}
+    .bar-fill.amarelo{background:var(--amarelo);}
+    .bar-fill.vermelho{background:var(--verm);}
+    .bar-labels{display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-bottom:.25rem;}
+    .pnp-card{background:var(--surface);border:1px solid var(--brd);border-radius:var(--radius);padding:1.2rem;margin-bottom:.9rem;}
+    .pnp-card-title{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--verde);margin-bottom:.85rem;}
+    .meta-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
+    .meta-toggle-label{font-size:.8rem;font-weight:600;color:var(--muted);}
+    .meta-toggle-icon{font-size:.8rem;color:var(--muted);transition:transform .2s;}
+    .meta-toggle-icon.aberto{transform:rotate(180deg);}
+    .meta-corpo{margin-top:.8rem;display:none;}
+    .meta-corpo.aberto{display:block;}
+    .meta-row{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;}
+    .meta-row label{font-size:.88rem;font-weight:500;white-space:nowrap;}
+    .meta-row input[type="number"]{width:110px;padding:.5rem .7rem;border:1.5px solid var(--brd);border-radius:8px;font-size:1rem;background:transparent;color:var(--text);}
+    .meta-link{font-size:.8rem;color:var(--verde);text-decoration:none;}
+    .meta-link:hover{text-decoration:underline;}
+    .meta-destaque{background:var(--verde-bg);border-color:var(--verde-brd);}
+    .meta-destaque .meta-toggle-label{color:var(--verde);}
+    .chat-refeicao-row{display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem;flex-wrap:wrap;}
+    .chat-refeicao-row label{font-size:.8rem;font-weight:600;color:var(--muted);white-space:nowrap;}
+    .chat-refeicao-row select{flex:1;padding:.45rem .7rem;border:1.5px solid var(--brd);border-radius:8px;font-size:.88rem;background:transparent;color:var(--text);cursor:pointer;}
+    .limite-refeicao{font-size:.75rem;color:var(--muted);margin-bottom:.6rem;background:#f8fafc;border-radius:8px;padding:.4rem .7rem;border:1px solid var(--brd);}
+    .limite-refeicao strong{color:var(--text);}
+    .chat-exemplos{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.65rem;}
+    .chip-ex{font-size:.72rem;background:#f0fdf4;color:var(--verde);border:1px solid var(--verde-brd);border-radius:20px;padding:.18rem .6rem;cursor:pointer;transition:background .15s;}
+    .chip-ex:hover{background:#dcfce7;}
+    .chat-mensagens{min-height:160px;max-height:300px;overflow-y:auto;border:1.5px solid var(--brd);border-radius:10px;padding:.75rem;margin-bottom:.7rem;display:flex;flex-direction:column;gap:.55rem;background:#fafafa;scroll-behavior:smooth;}
+    .msg{max-width:90%;padding:.55rem .8rem;border-radius:12px;font-size:.87rem;line-height:1.5;}
+    .msg-ia{background:var(--verde-bg);border:1px solid var(--verde-brd);color:var(--text);align-self:flex-start;border-radius:4px 12px 12px 12px;}
+    .msg-user{background:var(--verde);color:#fff;align-self:flex-end;border-radius:12px 4px 12px 12px;}
+    .msg-erro{background:var(--verm-bg);border:1px solid var(--verm-brd);color:var(--verm);align-self:flex-start;border-radius:4px 12px 12px 12px;}
+    .msg-digitando{background:#f1f5f9;color:var(--muted);align-self:flex-start;border-radius:4px 12px 12px 12px;font-style:italic;font-size:.8rem;padding:.45rem .8rem;}
+    .btn-lancar{display:inline-block;margin-top:.45rem;padding:.38rem .85rem;background:var(--verde);color:#fff;border:none;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;transition:background .2s;}
+    .btn-lancar:hover{background:#15803d;}
+    .chat-input-row{display:flex;gap:.45rem;align-items:flex-end;}
+    .chat-input{flex:1;padding:.7rem .9rem;border:2px solid var(--verde);border-radius:10px;font-size:.95rem;font-family:'DM Sans',sans-serif;background:transparent;color:var(--text);resize:none;min-height:46px;max-height:100px;outline:none;line-height:1.4;}
+    .chat-input:focus{border-color:#15803d;box-shadow:0 0 0 3px #bbf7d0;}
+    .chat-input::placeholder{color:#bbb;}
+    .btn-enviar{padding:.7rem 1rem;background:var(--verde);color:#fff;border:none;border-radius:10px;font-size:1.1rem;cursor:pointer;transition:background .2s,transform .1s;align-self:flex-end;line-height:1;}
+    .btn-enviar:hover{background:#15803d;}
+    .btn-enviar:active{transform:scale(.96);}
+    .btn-enviar:disabled{background:#94a3b8;cursor:not-allowed;}
+    .reg-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;}
+    .btn-limpar{font-size:.72rem;color:var(--verm);background:none;border:1px solid var(--verm);border-radius:6px;padding:.22rem .55rem;cursor:pointer;}
+    .btn-limpar:hover{background:var(--verm-bg);}
+    .reg-item{display:flex;align-items:flex-start;gap:.45rem;padding:.6rem 0;border-bottom:1px solid var(--brd);font-size:.86rem;}
+    .reg-item:last-child{border-bottom:none;}
+    .reg-badge{flex-shrink:0;font-size:.6rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:.15rem .38rem;border-radius:5px;margin-top:.15rem;}
+    .b-cafe{background:#fff3e0;color:#c2410c;}.b-lanche1{background:#f3e5f5;color:#7e22ce;}
+    .b-almoco{background:#eff6ff;color:#1d4ed8;}.b-lanche2{background:#f3e5f5;color:#7e22ce;}
+    .b-jantar{background:#eef2ff;color:#3730a3;}.b-ceia{background:#fdf2f8;color:#9d174d;}
+    .reg-info{flex:1;}
+    .reg-nome{font-weight:600;color:var(--text);font-size:.86rem;}
+    .reg-kcal{font-weight:700;white-space:nowrap;color:var(--text);padding-top:.1rem;font-size:.86rem;}
+    .reg-del{background:none;border:none;color:var(--muted);cursor:pointer;padding:.1rem .25rem;font-size:.9rem;}
+    .reg-del:hover{color:var(--verm);}
+    .empty-msg{text-align:center;color:var(--muted);font-size:.85rem;padding:1.5rem 0;line-height:1.7;}
+    .editorial{font-size:.9rem;line-height:1.75;color:var(--text);}
+    .editorial h2{font-family:'Playfair Display',serif;font-size:1.25rem;margin:2rem 0 .65rem;}
+    .editorial p{margin:0 0 .85rem;}
+    .card-title{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--verde);margin-bottom:.9rem;}
+    .faq-item{padding:.85rem 0;border-bottom:1px solid var(--brd);}
+    .faq-item:last-child{border-bottom:none;}
+    .faq-q{font-weight:600;font-size:.88rem;margin-bottom:.28rem;}
+    .faq-a{font-size:.84rem;color:var(--muted);line-height:1.6;}
+    [data-theme="dark"] .pnp-badge{background:#052e16;}
+    [data-theme="dark"] .painel-topo{border-color:#2d2d2d;}
+    [data-theme="dark"] .luz-mini{background:#2d2d2d;}
+    [data-theme="dark"] .chat-mensagens{background:#111;border-color:#2d2d2d;}
+    [data-theme="dark"] .msg-ia{background:#052e16;border-color:#166534;}
+    [data-theme="dark"] .msg-digitando{background:#1e1e1e;}
+    [data-theme="dark"] .chip-ex{background:#052e16;border-color:#166534;}
+    [data-theme="dark"] .limite-refeicao{background:#1a1a1a;border-color:#2d2d2d;}
+    [data-theme="dark"] .meta-destaque{background:#052e16;border-color:#166534;}
     [data-theme="dark"] .b-cafe{background:#3b1a00;color:#fb923c;}
     [data-theme="dark"] .b-lanche1,[data-theme="dark"] .b-lanche2{background:#2e0059;color:#d8b4fe;}
     [data-theme="dark"] .b-almoco{background:#0c1d3d;color:#93c5fd;}
@@ -323,8 +185,6 @@
   </style>
 </head>
 <body>
-
-<!-- NAV injetado por shared.js -->
 
 <header class="pnp-header">
   <div class="pnp-badge">
@@ -337,9 +197,8 @@
 
 <main class="container">
 
-  <!-- ── PAINEL TOPO: semáforo compacto ── -->
   <div class="painel-topo" id="painel-topo">
-    <div class="sinal-mini" id="sinal-mini">
+    <div class="sinal-mini">
       <div class="luz-mini luz-mini-verm"></div>
       <div class="luz-mini luz-mini-amarelo"></div>
       <div class="luz-mini luz-mini-verde"></div>
@@ -355,7 +214,6 @@
     </div>
   </div>
 
-  <!-- Barra do dia -->
   <div class="bar-wrap" id="bar-wrap" style="display:none;">
     <div class="bar-labels">
       <span id="bar-lbl-ref">Refeição atual: 0 kcal</span>
@@ -364,7 +222,6 @@
     <div class="bar-bg"><div class="bar-fill" id="bar-fill"></div></div>
   </div>
 
-  <!-- ── META colapsável ── -->
   <div class="pnp-card meta-destaque" id="meta-card">
     <div class="meta-toggle" onclick="toggleMeta()">
       <span class="meta-toggle-label" id="meta-toggle-label">🎯 Defina sua meta diária para ativar o semáforo</span>
@@ -379,11 +236,9 @@
     </div>
   </div>
 
-  <!-- ── CHAT ── -->
   <div class="pnp-card">
     <div class="pnp-card-title">🤖 Assistente nutricional — o que você comeu?</div>
 
-    <!-- Seletor de refeição + limite -->
     <div class="chat-refeicao-row">
       <label for="refeicao-select">Refeição:</label>
       <select id="refeicao-select" onchange="onRefeicaoChange()">
@@ -395,12 +250,11 @@
         <option value="ceia">🌛 Ceia</option>
       </select>
     </div>
-    <div class="limite-refeicao" id="limite-refeicao">
+    <div class="limite-refeicao">
       Limite desta refeição: <strong id="limite-valor">—</strong>
       &nbsp;·&nbsp; Já registrado nela: <strong id="limite-usado">0 kcal</strong>
     </div>
 
-    <!-- Exemplos -->
     <div class="chat-exemplos">
       <span class="chip-ex" onclick="preencherEx(this)">2 fatias de pizza de calabresa</span>
       <span class="chip-ex" onclick="preencherEx(this)">concha de feijão + 3 col. de arroz</span>
@@ -409,26 +263,18 @@
       <span class="chip-ex" onclick="preencherEx(this)">filé à parmegiana + batata frita</span>
     </div>
 
-    <!-- Janela chat -->
     <div class="chat-mensagens" id="chat-mensagens">
       <div class="msg msg-ia">
         👋 Olá! Me diga o que você comeu — com a quantidade — e eu calculo as calorias e digo se <strong>pode</strong> ou <strong>não pode</strong>!
       </div>
     </div>
 
-    <!-- Input -->
     <div class="chat-input-row">
-      <textarea
-        class="chat-input"
-        id="chat-input"
-        placeholder="Ex: comi duas fatias de pizza e uma lata de coca-cola…"
-        rows="2"
-      ></textarea>
+      <textarea class="chat-input" id="chat-input" placeholder="Ex: comi duas fatias de pizza e uma lata de coca-cola…" rows="2"></textarea>
       <button class="btn-enviar" id="btn-enviar" onclick="enviarMensagem()" title="Enviar">➤</button>
     </div>
   </div>
 
-  <!-- ── REGISTROS ── -->
   <div class="pnp-card">
     <div class="reg-header">
       <div class="pnp-card-title" style="margin:0;">📋 Registros de hoje</div>
@@ -439,32 +285,14 @@
     </div>
   </div>
 
-  <!-- ── EDITORIAL ── -->
   <div class="editorial">
     <h2>🚦 Semáforo inteligente por refeição</h2>
-    <p>
-      A maioria dos apps mostra o saldo do dia inteiro — e fica verde até o fim da tarde,
-      mesmo que o almoço tenha sido exagerado. O <strong>Pode, Não Pode?</strong> funciona diferente:
-      o semáforo avalia <em>cada refeição separadamente</em>, comparando com o limite proporcional da sua meta.
-    </p>
-    <p>
-      Com meta de 2.000 kcal, por exemplo: o almoço "pode" até 700 kcal (35%).
-      Comeu 900 kcal no almoço? Semáforo amarelo — mesmo que o dia ainda esteja dentro da meta.
-      Assim o alerta chega na hora certa, não só à noite.
-    </p>
-    <p>
-      Não precisa selecionar em lista nem saber o nome exato. Escreva
-      <em>"meia lasanha de berinjela"</em>, <em>"milk-shake grande"</em>,
-      <em>"barra de proteína de 60g"</em> — a IA entende tudo.
-      Use a <a href="https://www.saudemundo.com.br/index.html">Calculadora de Calorias e Macros</a>
-      para descobrir sua meta ideal.
-    </p>
-    <p style="font-size:.82rem;color:var(--muted);">
-      ⚠️ Ferramenta educacional. Valores são estimativas médias. Para dietas individualizadas, consulte um nutricionista ou médico.
-    </p>
+    <p>A maioria dos apps mostra o saldo do dia inteiro — e fica verde até o fim da tarde, mesmo que o almoço tenha sido exagerado. O <strong>Pode, Não Pode?</strong> funciona diferente: o semáforo avalia <em>cada refeição separadamente</em>, comparando com o limite proporcional da sua meta.</p>
+    <p>Com meta de 2.000 kcal, por exemplo: o almoço "pode" até 700 kcal (35%). Comeu 900 kcal no almoço? Semáforo amarelo — mesmo que o dia ainda esteja dentro da meta. Assim o alerta chega na hora certa, não só à noite.</p>
+    <p>Não precisa selecionar em lista nem saber o nome exato. Escreva <em>"meia lasanha de berinjela"</em>, <em>"milk-shake grande"</em>, <em>"barra de proteína de 60g"</em> — a IA entende tudo. Use a <a href="https://www.saudemundo.com.br/index.html">Calculadora de Calorias e Macros</a> para descobrir sua meta ideal.</p>
+    <p style="font-size:.82rem;color:var(--muted);">⚠️ Ferramenta educacional. Valores são estimativas médias. Para dietas individualizadas, consulte um nutricionista ou médico.</p>
   </div>
 
-  <!-- ── FAQ ── -->
   <div class="pnp-card">
     <div class="card-title">❓ Perguntas Frequentes</div>
     <div class="faq-item">
@@ -494,21 +322,17 @@
    CONFIG
 ═══════════════════════════ */
 const WORKER_URL  = "https://summer-hill-da28.philipdesousa.workers.dev";
+
+// FIX #2: chave própria para a meta — não depende mais do smGetUserData
+const META_KEY    = "sm_pnp_meta_kcal";
 const STORAGE_KEY = "sm_pnp_" + new Date().toISOString().slice(0,10);
 
-/* Peso proporcional por refeição */
 const PESO_REFEICAO = {
-  cafe:    0.20,
-  lanche1: 0.10,
-  almoco:  0.35,
-  lanche2: 0.10,
-  jantar:  0.20,
-  ceia:    0.05,
+  cafe:0.20, lanche1:0.10, almoco:0.35, lanche2:0.10, jantar:0.20, ceia:0.05,
 };
 const NOME_REFEICAO = {
   cafe:"Café da manhã", lanche1:"Lanche manhã",
-  almoco:"Almoço", lanche2:"Lanche tarde",
-  jantar:"Jantar", ceia:"Ceia",
+  almoco:"Almoço", lanche2:"Lanche tarde", jantar:"Jantar", ceia:"Ceia",
 };
 
 /* ═══════════════════════════
@@ -522,13 +346,26 @@ let metaAberta = true;
    INIT
 ═══════════════════════════ */
 document.addEventListener("DOMContentLoaded", () => {
-  try {
-    const ud = typeof smGetUserData === "function" ? smGetUserData() : null;
-    if (ud && ud.metaCalorica) {
-      document.getElementById("meta-input").value = ud.metaCalorica;
-      fecharMetaSePreenchida(ud.metaCalorica);
-    }
-  } catch(e) {}
+
+  // FIX #2: carrega meta do localStorage próprio primeiro (mais confiável)
+  const metaLocal = carregarMeta();
+  if (metaLocal > 0) {
+    document.getElementById("meta-input").value = metaLocal;
+    fecharMetaSePreenchida(metaLocal);
+  } else {
+    // fallback: tenta smGetUserData com múltiplas chaves possíveis
+    try {
+      const ud = typeof smGetUserData === "function" ? smGetUserData() : null;
+      if (ud) {
+        const m = parseInt(ud.metaCalorica || ud.meta || ud.calorias || ud.tdee || 0);
+        if (m > 0) {
+          document.getElementById("meta-input").value = m;
+          salvarMeta(m);
+          fecharMetaSePreenchida(m);
+        }
+      }
+    } catch(e) {}
+  }
 
   document.getElementById("chat-input").addEventListener("keydown", e => {
     if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); enviarMensagem(); }
@@ -539,29 +376,38 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ═══════════════════════════
-   META
+   META — persistência própria
 ═══════════════════════════ */
+function salvarMeta(v) {
+  try { localStorage.setItem(META_KEY, String(v)); } catch(e) {}
+}
+function carregarMeta() {
+  try { return parseInt(localStorage.getItem(META_KEY)) || 0; } catch(e) { return 0; }
+}
+
 function onMetaChange() {
   const meta = parseInt(document.getElementById("meta-input").value) || 0;
-  fecharMetaSePreenchida(meta);
-  atualizarTudo();
+
+  // FIX #2: salva sempre no localStorage próprio, sem depender do shared.js
   if (meta > 0) {
+    salvarMeta(meta);
     try {
-      const ud = typeof smGetUserData === "function" ? (smGetUserData()||{}) : {};
+      const ud = typeof smGetUserData === "function" ? (smGetUserData() || {}) : {};
       ud.metaCalorica = meta;
       if (typeof smSaveUserData === "function") smSaveUserData(ud);
     } catch(e) {}
   }
+
+  fecharMetaSePreenchida(meta);
+  atualizarTudo();
 }
 
 function fecharMetaSePreenchida(meta) {
   if (meta > 0 && metaAberta) {
-    const card = document.getElementById("meta-card");
-    card.classList.remove("meta-destaque");
+    document.getElementById("meta-card").classList.remove("meta-destaque");
     document.getElementById("meta-corpo").classList.remove("aberto");
     document.getElementById("meta-icon").classList.remove("aberto");
-    document.getElementById("meta-toggle-label").textContent =
-      `🎯 Meta: ${meta} kcal/dia`;
+    document.getElementById("meta-toggle-label").textContent = "🎯 Meta: " + meta + " kcal/dia";
     metaAberta = false;
   }
 }
@@ -611,8 +457,8 @@ async function enviarMensagem() {
   const btnEnv = document.getElementById("btn-enviar");
   if (!texto) { input.focus(); return; }
 
-  const meta = parseInt(document.getElementById("meta-input").value) || 0;
-  const ref  = document.getElementById("refeicao-select").value;
+  const meta      = parseInt(document.getElementById("meta-input").value) || 0;
+  const ref       = document.getElementById("refeicao-select").value;
   const limiteRef = meta > 0 ? Math.round(meta * PESO_REFEICAO[ref]) : null;
   const usadoRef  = kcalRefeicaoAtual();
 
@@ -623,9 +469,9 @@ async function enviarMensagem() {
 
   const dig = addMsg("⏳ Calculando…", "digitando");
 
-  // Contexto para a IA
   const contexto = meta > 0
-    ? `\n\n[CONTEXTO DO APP: meta diária = ${meta} kcal. Refeição atual = ${NOME_REFEICAO[ref]} (limite: ${limiteRef} kcal, já consumido nela: ${usadoRef} kcal).]`
+    ? "\n\n[CONTEXTO DO APP: meta diária = " + meta + " kcal. Refeição atual = "
+      + NOME_REFEICAO[ref] + " (limite: " + limiteRef + " kcal, já consumido nela: " + usadoRef + " kcal).]"
     : "";
 
   const mensagensEnvio = [
@@ -639,18 +485,50 @@ async function enviarMensagem() {
       headers:{ "Content-Type":"application/json" },
       body: JSON.stringify({ messages: mensagensEnvio }),
     });
+
+    if (!resp.ok) {
+      throw new Error("Servidor retornou HTTP " + resp.status);
+    }
+
     const data = await resp.json();
-    const resposta = data.resposta || "Não consegui calcular. Tente novamente.";
+
+    // FIX #1: tenta múltiplos campos que o Worker pode usar
+    let resposta =
+      data.resposta  ||
+      data.content   ||
+      data.reply     ||
+      data.message   ||
+      data.text      ||
+      data.output    ||
+      null;
+
+    // suporte a formato OpenAI (choices[])
+    if (!resposta && Array.isArray(data.choices) && data.choices[0]) {
+      resposta = (data.choices[0].message && data.choices[0].message.content)
+                 || data.choices[0].text || null;
+    }
+
+    // suporte a formato Anthropic nativo (content[])
+    if (!resposta && Array.isArray(data.content)) {
+      resposta = data.content.filter(b => b.type === "text").map(b => b.text).join("\n") || null;
+    }
+
+    if (!resposta) {
+      console.error("[PNP] Resposta inesperada do Worker:", JSON.stringify(data));
+      throw new Error("Formato de resposta desconhecido. Abra o console (F12 > Network) e inspecione a resposta do Worker.");
+    }
 
     dig.remove();
 
     const match = resposta.match(/\[KCAL:(\d+)\]/);
     const kcal  = match ? parseInt(match[1]) : null;
-    const limpo = resposta.replace(/\[KCAL:\d+\]/g,"").trim();
-    let html = limpo.replace(/\n/g,"<br>");
+    const limpo = resposta.replace(/\[KCAL:\d+\]/g, "").trim();
+    let html = limpo.replace(/\n/g, "<br>");
 
     if (kcal && kcal > 0) {
-      html += `<br><button class="btn-lancar" onclick="lancar(${kcal},'${encodeURIComponent(texto)}')">✅ Lançar ${kcal} kcal no diário</button>`;
+      html += "<br><button class=\"btn-lancar\" onclick=\"lancar("
+            + kcal + ",'" + encodeURIComponent(texto) + "')\">✅ Lançar "
+            + kcal + " kcal no diário</button>";
     }
 
     addMsg(html, "ia");
@@ -658,7 +536,9 @@ async function enviarMensagem() {
 
   } catch(err) {
     dig.remove();
-    addMsg("❌ Erro de conexão. Verifique sua internet e tente novamente.", "erro");
+    console.error("[PNP] Erro:", err);
+    addMsg("❌ Erro ao falar com o assistente.<br><small style='opacity:.7'>"
+           + err.message + "</small>", "erro");
   } finally {
     btnEnv.disabled = false;
   }
@@ -668,16 +548,16 @@ async function enviarMensagem() {
    LANÇAR
 ═══════════════════════════ */
 function lancar(kcal, descCod) {
-  const desc     = decodeURIComponent(descCod);
+  const desc    = decodeURIComponent(descCod);
   const refeicao = document.getElementById("refeicao-select").value;
-  const resumo   = desc.length > 55 ? desc.slice(0,52)+"…" : desc;
+  const resumo  = desc.length > 55 ? desc.slice(0,52) + "…" : desc;
 
   registros.push({ id:Date.now(), nome:resumo, refeicao, kcal });
   salvarRegistros();
   renderLista();
   atualizarTudo();
 
-  addMsg(`✅ <strong>${kcal} kcal</strong> lançadas no diário!`, "ia");
+  addMsg("✅ <strong>" + kcal + " kcal</strong> lançadas no diário!", "ia");
   if (typeof showToast === "function") showToast("✅ Lançado no diário!");
 }
 
@@ -685,28 +565,28 @@ function lancar(kcal, descCod) {
    LISTA
 ═══════════════════════════ */
 const REF_CFG = {
-  cafe:    {l:"Café da manhã",c:"b-cafe"},
-  lanche1: {l:"Lanche manhã", c:"b-lanche1"},
-  almoco:  {l:"Almoço",       c:"b-almoco"},
-  lanche2: {l:"Lanche tarde", c:"b-lanche2"},
-  jantar:  {l:"Jantar",       c:"b-jantar"},
-  ceia:    {l:"Ceia",         c:"b-ceia"},
+  cafe:   {l:"Café da manhã",c:"b-cafe"},
+  lanche1:{l:"Lanche manhã", c:"b-lanche1"},
+  almoco: {l:"Almoço",       c:"b-almoco"},
+  lanche2:{l:"Lanche tarde", c:"b-lanche2"},
+  jantar: {l:"Jantar",       c:"b-jantar"},
+  ceia:   {l:"Ceia",         c:"b-ceia"},
 };
 
 function renderLista() {
   const el = document.getElementById("lista-registros");
   if (!registros.length) {
-    el.innerHTML = `<div class="empty-msg">Nenhum registro ainda.<br>Converse com a IA acima! 🚦</div>`;
+    el.innerHTML = "<div class=\"empty-msg\">Nenhum registro ainda.<br>Converse com a IA acima! 🚦</div>";
     return;
   }
   el.innerHTML = registros.map(r => {
-    const rf = REF_CFG[r.refeicao]||{l:r.refeicao,c:""};
-    return `<div class="reg-item">
-      <span class="reg-badge ${rf.c}">${rf.l}</span>
-      <span class="reg-info"><span class="reg-nome">${r.nome}</span></span>
-      <span class="reg-kcal">${r.kcal} kcal</span>
-      <button class="reg-del" onclick="removerRegistro(${r.id})" title="Remover">✕</button>
-    </div>`;
+    const rf = REF_CFG[r.refeicao] || {l:r.refeicao, c:""};
+    return "<div class=\"reg-item\">"
+      + "<span class=\"reg-badge " + rf.c + "\">" + rf.l + "</span>"
+      + "<span class=\"reg-info\"><span class=\"reg-nome\">" + r.nome + "</span></span>"
+      + "<span class=\"reg-kcal\">" + r.kcal + " kcal</span>"
+      + "<button class=\"reg-del\" onclick=\"removerRegistro(" + r.id + ")\" title=\"Remover\">✕</button>"
+      + "</div>";
   }).join("");
 }
 
@@ -720,47 +600,39 @@ function limparDiario() {
 }
 
 /* ═══════════════════════════
-   SEMÁFORO POR REFEIÇÃO
+   SEMÁFORO
 ═══════════════════════════ */
 function atualizarTudo() {
-  const meta      = parseInt(document.getElementById("meta-input").value) || 0;
-  const ref       = document.getElementById("refeicao-select").value;
-  const totalDia  = registros.reduce((s,r) => s + r.kcal, 0);
-  const totalRef  = kcalRefeicaoAtual();
-  const limiteRef = meta > 0 ? Math.round(meta * PESO_REFEICAO[ref]) : 0;
-  const saldoDia  = meta > 0 ? meta - totalDia : 0;
+  const meta     = parseInt(document.getElementById("meta-input").value) || 0;
+  const ref      = document.getElementById("refeicao-select").value;
+  const totalDia = registros.reduce((s,r) => s + r.kcal, 0);
+  const totalRef = kcalRefeicaoAtual();
+  const limRef   = meta > 0 ? Math.round(meta * PESO_REFEICAO[ref]) : 0;
+  const saldo    = meta > 0 ? meta - totalDia : 0;
 
-  // Chips
   document.getElementById("chip-total").textContent = totalDia + " kcal";
   document.getElementById("chip-itens").textContent = registros.length;
   document.getElementById("chip-saldo").textContent = meta > 0
-    ? (saldoDia >= 0 ? saldoDia + " kcal" : "-" + Math.abs(saldoDia) + " kcal")
-    : "—";
+    ? (saldo >= 0 ? saldo + " kcal" : "-" + Math.abs(saldo) + " kcal") : "—";
 
-  // Limite da refeição
   document.getElementById("limite-valor").textContent = meta > 0
-    ? `${limiteRef} kcal (${Math.round(PESO_REFEICAO[ref]*100)}% de ${meta} kcal)`
+    ? limRef + " kcal (" + Math.round(PESO_REFEICAO[ref]*100) + "% de " + meta + " kcal)"
     : "— (defina sua meta)";
   document.getElementById("limite-usado").textContent = totalRef + " kcal";
 
-  // Barra do dia
   const barWrap = document.getElementById("bar-wrap");
   if (meta > 0) {
     barWrap.style.display = "block";
-    const pctDia = Math.min((totalDia/meta)*100, 100);
+    const pct = Math.min((totalDia/meta)*100, 100);
     const fill = document.getElementById("bar-fill");
-    fill.style.width = pctDia + "%";
-    document.getElementById("bar-lbl-ref").textContent =
-      `${NOME_REFEICAO[ref]}: ${totalRef} kcal`;
-    document.getElementById("bar-lbl-dia").textContent =
-      `Dia: ${totalDia} / ${meta} kcal`;
-    fill.className = "bar-fill" +
-      (pctDia > 100 ? " vermelho" : pctDia > 80 ? " amarelo" : "");
+    fill.style.width = pct + "%";
+    fill.className = "bar-fill" + (pct > 100 ? " vermelho" : pct > 80 ? " amarelo" : "");
+    document.getElementById("bar-lbl-ref").textContent = NOME_REFEICAO[ref] + ": " + totalRef + " kcal";
+    document.getElementById("bar-lbl-dia").textContent = "Dia: " + totalDia + " / " + meta + " kcal";
   } else {
     barWrap.style.display = "none";
   }
 
-  // Semáforo
   const painel = document.getElementById("painel-topo");
   const verd   = document.getElementById("sinal-veredicto");
   const det    = document.getElementById("sinal-detalhe");
@@ -771,27 +643,25 @@ function atualizarTudo() {
     det.textContent  = "Defina sua meta acima para ativar o semáforo.";
     return;
   }
-
   if (!registros.filter(r => r.refeicao === ref).length) {
-    verd.textContent = `${NOME_REFEICAO[ref]} — pronto!`;
-    det.textContent  = `Limite: ${limiteRef} kcal. Escreva o que comeu.`;
+    verd.textContent = NOME_REFEICAO[ref] + " — pronto!";
+    det.textContent  = "Limite: " + limRef + " kcal. Escreva o que comeu.";
     return;
   }
 
-  const pctRef = (totalRef / limiteRef) * 100;
-
+  const pctRef = (totalRef / limRef) * 100;
   if (pctRef <= 80) {
     painel.classList.add("sinal-ativo-verde");
     verd.textContent = "🟢 Pode!";
-    det.textContent  = `${NOME_REFEICAO[ref]}: ${totalRef} kcal de ${limiteRef} kcal. Ainda tem ${limiteRef - totalRef} kcal.`;
+    det.textContent  = NOME_REFEICAO[ref] + ": " + totalRef + " kcal de " + limRef + " kcal. Ainda tem " + (limRef - totalRef) + " kcal.";
   } else if (pctRef <= 100) {
     painel.classList.add("sinal-ativo-amarelo");
     verd.textContent = "🟡 Atenção!";
-    det.textContent  = `${NOME_REFEICAO[ref]}: restam apenas ${limiteRef - totalRef} kcal. Escolha com cuidado.`;
+    det.textContent  = NOME_REFEICAO[ref] + ": restam apenas " + (limRef - totalRef) + " kcal. Escolha com cuidado.";
   } else {
     painel.classList.add("sinal-ativo-verm");
     verd.textContent = "🔴 Não pode!";
-    det.textContent  = `${NOME_REFEICAO[ref]} passou ${totalRef - limiteRef} kcal acima do limite.`;
+    det.textContent  = NOME_REFEICAO[ref] + " passou " + (totalRef - limRef) + " kcal acima do limite.";
   }
 }
 
