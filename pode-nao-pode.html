@@ -6,7 +6,6 @@
   <title>Pode, Não Pode? – Diário de Calorias com IA | SaúdeMundo</title>
   <meta name="description" content="Escreva o que comeu em linguagem natural e a IA calcula as calorias na hora. Semáforo inteligente por refeição: verde, amarelo ou vermelho. Sem listas, sem mistério." />
   <link rel="canonical" href="https://www.saudemundo.com.br/pode-nao-pode.html" />
-
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9EPL2XNX6H"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -14,12 +13,10 @@
     gtag('js', new Date());
     gtag('config', 'G-9EPL2XNX6H');
   </script>
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="shared.css" />
-
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -34,7 +31,6 @@
     "publisher": { "@type": "Organization", "name": "SaúdeMundo", "url": "https://www.saudemundo.com.br" }
   }
   </script>
-
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -64,7 +60,6 @@
     ]
   }
   </script>
-
   <style>
     :root {
       --verde:#16a34a; --verde-bg:#f0fdf4; --verde-brd:#86efac;
@@ -75,128 +70,125 @@
       --text:var(--text-primary,#1a1a1a);
       --muted:var(--text-secondary,#64748b);
       --radius:14px;
-    }
-    .pnp-header{text-align:center;padding:2rem 1rem 0;}
-    .pnp-badge{display:inline-flex;align-items:center;gap:.45rem;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--verde);background:#f0fdf4;padding:.28rem .8rem;border-radius:20px;margin-bottom:.8rem;}
-    .mini-sinal{display:inline-flex;flex-direction:column;gap:2px;}
-    .mini-sinal span{width:6px;height:6px;border-radius:50%;display:block;}
-    .ms-r{background:#dc2626;}.ms-y{background:#d97706;}.ms-g{background:#16a34a;}
-    .pnp-header h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(1.8rem,5vw,2.6rem);letter-spacing:-.02em;margin:0 0 .3rem;line-height:1.05;}
-    .pnp-header h1 em{font-style:normal;color:var(--verde);}
-    .pnp-tagline{font-size:.88rem;color:var(--muted);max-width:380px;margin:0 auto 1.5rem;line-height:1.5;}
-    .container{max-width:660px;margin:0 auto;padding:0 1rem 3rem;}
-    .painel-topo{display:flex;align-items:center;gap:.8rem;background:var(--surface);border:1px solid var(--brd);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:1rem;}
-    .sinal-mini{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;}
-    .luz-mini{width:20px;height:20px;border-radius:50%;background:#e2e8f0;transition:background .4s,box-shadow .4s;}
-    .sinal-ativo-verde .luz-mini-verde{background:var(--verde);box-shadow:0 0 8px 2px #86efac;}
-    .sinal-ativo-amarelo .luz-mini-amarelo{background:var(--amarelo);box-shadow:0 0 8px 2px #fde68a;}
-    .sinal-ativo-verm .luz-mini-verm{background:var(--verm);box-shadow:0 0 8px 2px #fca5a5;}
-    .sinal-info{flex:1;min-width:0;}
-    .sinal-veredicto{font-weight:700;font-size:1.1rem;color:#94a3b8;transition:color .4s;line-height:1.1;}
-    .sinal-ativo-verde .sinal-veredicto{color:var(--verde);}
-    .sinal-ativo-amarelo .sinal-veredicto{color:var(--amarelo);}
-    .sinal-ativo-verm .sinal-veredicto{color:var(--verm);}
-    .sinal-detalhe{font-size:.75rem;color:var(--muted);margin-top:.2rem;line-height:1.3;}
-    .chips-mini{display:flex;flex-direction:column;gap:.3rem;flex-shrink:0;text-align:right;}
-    .chip-mini{font-size:.7rem;color:var(--muted);white-space:nowrap;}
-    .chip-mini strong{color:var(--text);font-size:.85rem;}
-    .bar-wrap{margin-bottom:1rem;}
-    .bar-bg{height:6px;background:var(--brd);border-radius:99px;overflow:hidden;}
-    .bar-fill{height:100%;border-radius:99px;background:var(--verde);transition:width .4s,background .4s;width:0%;}
-    .bar-fill.amarelo{background:var(--amarelo);}
-    .bar-fill.vermelho{background:var(--verm);}
-    .bar-labels{display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-bottom:.25rem;}
-    .pnp-card{background:var(--surface);border:1px solid var(--brd);border-radius:var(--radius);padding:1.2rem;margin-bottom:.9rem;}
-    .pnp-card-title{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--verde);margin-bottom:.85rem;}
-    .meta-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
-    .meta-toggle-label{font-size:.8rem;font-weight:600;color:var(--muted);}
-    .meta-toggle-icon{font-size:.8rem;color:var(--muted);transition:transform .2s;}
-    .meta-toggle-icon.aberto{transform:rotate(180deg);}
-    .meta-corpo{margin-top:.8rem;display:none;}
-    .meta-corpo.aberto{display:block;}
-    .meta-row{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;}
-    .meta-row label{font-size:.88rem;font-weight:500;white-space:nowrap;}
-    .meta-row input[type="number"]{width:110px;padding:.5rem .7rem;border:1.5px solid var(--brd);border-radius:8px;font-size:1rem;background:transparent;color:var(--text);}
-    .meta-link{font-size:.8rem;color:var(--verde);text-decoration:none;}
-    .meta-link:hover{text-decoration:underline;}
-    .meta-destaque{background:var(--verde-bg);border-color:var(--verde-brd);}
-    .meta-destaque .meta-toggle-label{color:var(--verde);}
-    .chat-refeicao-row{display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem;flex-wrap:wrap;}
-    .chat-refeicao-row label{font-size:.8rem;font-weight:600;color:var(--muted);white-space:nowrap;}
-    .chat-refeicao-row select{flex:1;padding:.45rem .7rem;border:1.5px solid var(--brd);border-radius:8px;font-size:.88rem;background:transparent;color:var(--text);cursor:pointer;}
-    .limite-refeicao{font-size:.75rem;color:var(--muted);margin-bottom:.6rem;background:#f8fafc;border-radius:8px;padding:.4rem .7rem;border:1px solid var(--brd);}
-    .limite-refeicao strong{color:var(--text);}
-    .chat-exemplos{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.65rem;}
-    .chip-ex{font-size:.72rem;background:#f0fdf4;color:var(--verde);border:1px solid var(--verde-brd);border-radius:20px;padding:.18rem .6rem;cursor:pointer;transition:background .15s;}
-    .chip-ex:hover{background:#dcfce7;}
-    .chat-mensagens{min-height:160px;max-height:300px;overflow-y:auto;border:1.5px solid var(--brd);border-radius:10px;padding:.75rem;margin-bottom:.7rem;display:flex;flex-direction:column;gap:.55rem;background:#fafafa;scroll-behavior:smooth;}
-    .msg{max-width:90%;padding:.55rem .8rem;border-radius:12px;font-size:.87rem;line-height:1.5;}
-    .msg-ia{background:var(--verde-bg);border:1px solid var(--verde-brd);color:var(--text);align-self:flex-start;border-radius:4px 12px 12px 12px;}
-    .msg-user{background:var(--verde);color:#fff;align-self:flex-end;border-radius:12px 4px 12px 12px;}
-    .msg-erro{background:var(--verm-bg);border:1px solid var(--verm-brd);color:var(--verm);align-self:flex-start;border-radius:4px 12px 12px 12px;}
-    .msg-digitando{background:#f1f5f9;color:var(--muted);align-self:flex-start;border-radius:4px 12px 12px 12px;font-style:italic;font-size:.8rem;padding:.45rem .8rem;}
-    .btn-lancar{display:inline-block;margin-top:.45rem;padding:.38rem .85rem;background:var(--verde);color:#fff;border:none;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;transition:background .2s;}
-    .btn-lancar:hover{background:#15803d;}
-    .chat-input-row{display:flex;gap:.45rem;align-items:flex-end;}
-    .chat-input{flex:1;padding:.7rem .9rem;border:2px solid var(--verde);border-radius:10px;font-size:.95rem;font-family:'DM Sans',sans-serif;background:transparent;color:var(--text);resize:none;min-height:46px;max-height:100px;outline:none;line-height:1.4;}
-    .chat-input:focus{border-color:#15803d;box-shadow:0 0 0 3px #bbf7d0;}
-    .chat-input::placeholder{color:#bbb;}
-    .btn-enviar{padding:.7rem 1rem;background:var(--verde);color:#fff;border:none;border-radius:10px;font-size:1.1rem;cursor:pointer;transition:background .2s,transform .1s;align-self:flex-end;line-height:1;}
-    .btn-enviar:hover{background:#15803d;}
-    .btn-enviar:active{transform:scale(.96);}
-    .btn-enviar:disabled{background:#94a3b8;cursor:not-allowed;}
-    .reg-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;}
-    .btn-limpar{font-size:.72rem;color:var(--verm);background:none;border:1px solid var(--verm);border-radius:6px;padding:.22rem .55rem;cursor:pointer;}
-    .btn-limpar:hover{background:var(--verm-bg);}
-    .reg-item{display:flex;align-items:flex-start;gap:.45rem;padding:.6rem 0;border-bottom:1px solid var(--brd);font-size:.86rem;}
-    .reg-item:last-child{border-bottom:none;}
-    .reg-badge{flex-shrink:0;font-size:.6rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:.15rem .38rem;border-radius:5px;margin-top:.15rem;}
-    .b-cafe{background:#fff3e0;color:#c2410c;}.b-lanche1{background:#f3e5f5;color:#7e22ce;}
-    .b-almoco{background:#eff6ff;color:#1d4ed8;}.b-lanche2{background:#f3e5f5;color:#7e22ce;}
-    .b-jantar{background:#eef2ff;color:#3730a3;}.b-ceia{background:#fdf2f8;color:#9d174d;}
-    .reg-info{flex:1;}
-    .reg-nome{font-weight:600;color:var(--text);font-size:.86rem;}
-    .reg-kcal{font-weight:700;white-space:nowrap;color:var(--text);padding-top:.1rem;font-size:.86rem;}
-    .reg-del{background:none;border:none;color:var(--muted);cursor:pointer;padding:.1rem .25rem;font-size:.9rem;}
-    .reg-del:hover{color:var(--verm);}
-    .empty-msg{text-align:center;color:var(--muted);font-size:.85rem;padding:1.5rem 0;line-height:1.7;}
-    .editorial{font-size:.9rem;line-height:1.75;color:var(--text);}
-    .editorial h2{font-family:'Playfair Display',serif;font-size:1.25rem;margin:2rem 0 .65rem;}
-    .editorial p{margin:0 0 .85rem;}
-    .card-title{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--verde);margin-bottom:.9rem;}
-    .faq-item{padding:.85rem 0;border-bottom:1px solid var(--brd);}
-    .faq-item:last-child{border-bottom:none;}
-    .faq-q{font-weight:600;font-size:.88rem;margin-bottom:.28rem;}
-    .faq-a{font-size:.84rem;color:var(--muted);line-height:1.6;}
-    [data-theme="dark"] .pnp-badge{background:#052e16;}
-    [data-theme="dark"] .painel-topo{border-color:#2d2d2d;}
-    [data-theme="dark"] .luz-mini{background:#2d2d2d;}
-    [data-theme="dark"] .chat-mensagens{background:#111;border-color:#2d2d2d;}
-    [data-theme="dark"] .msg-ia{background:#052e16;border-color:#166534;}
-    [data-theme="dark"] .msg-digitando{background:#1e1e1e;}
-    [data-theme="dark"] .chip-ex{background:#052e16;border-color:#166534;}
-    [data-theme="dark"] .limite-refeicao{background:#1a1a1a;border-color:#2d2d2d;}
-    [data-theme="dark"] .meta-destaque{background:#052e16;border-color:#166534;}
-    [data-theme="dark"] .b-cafe{background:#3b1a00;color:#fb923c;}
-    [data-theme="dark"] .b-lanche1,[data-theme="dark"] .b-lanche2{background:#2e0059;color:#d8b4fe;}
-    [data-theme="dark"] .b-almoco{background:#0c1d3d;color:#93c5fd;}
-    [data-theme="dark"] .b-jantar{background:#0f0d2e;color:#a5b4fc;}
-    [data-theme="dark"] .b-ceia{background:#2d0030;color:#f9a8d4;}
+}
+.pnp-header{text-align:center;padding:2rem 1rem 0;}
+.pnp-badge{display:inline-flex;align-items:center;gap:.45rem;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--verde);background:#f0fdf4;padding:.28rem .8rem;border-radius:20px;margin-bottom:.8rem;}
+.mini-sinal{display:inline-flex;flex-direction:column;gap:2px;}
+.mini-sinal span{width:6px;height:6px;border-radius:50%;display:block;}
+.ms-r{background:#dc2626;}.ms-y{background:#d97706;}.ms-g{background:#16a34a;}
+.pnp-header h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(1.8rem,5vw,2.6rem);letter-spacing:-.02em;margin:0 0 .3rem;line-height:1.05;}
+.pnp-header h1 em{font-style:normal;color:var(--verde);}
+.pnp-tagline{font-size:.88rem;color:var(--muted);max-width:380px;margin:0 auto 1.5rem;line-height:1.5;}
+.container{max-width:660px;margin:0 auto;padding:0 1rem 3rem;}
+.painel-topo{display:flex;align-items:center;gap:.8rem;background:var(--surface);border:1px solid var(--brd);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:1rem;}
+.sinal-mini{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;}
+.luz-mini{width:20px;height:20px;border-radius:50%;background:#e2e8f0;transition:background .4s,box-shadow .4s;}
+.sinal-ativo-verde .luz-mini-verde{background:var(--verde);box-shadow:0 0 8px 2px #86efac;}
+.sinal-ativo-amarelo .luz-mini-amarelo{background:var(--amarelo);box-shadow:0 0 8px 2px #fde68a;}
+.sinal-ativo-verm .luz-mini-verm{background:var(--verm);box-shadow:0 0 8px 2px #fca5a5;}
+.sinal-info{flex:1;min-width:0;}
+.sinal-veredicto{font-weight:700;font-size:1.1rem;color:#94a3b8;transition:color .4s;line-height:1.1;}
+.sinal-ativo-verde .sinal-veredicto{color:var(--verde);}
+.sinal-ativo-amarelo .sinal-veredicto{color:var(--amarelo);}
+.sinal-ativo-verm .sinal-veredicto{color:var(--verm);}
+.sinal-detalhe{font-size:.75rem;color:var(--muted);margin-top:.2rem;line-height:1.3;}
+.chips-mini{display:flex;flex-direction:column;gap:.3rem;flex-shrink:0;text-align:right;}
+.chip-mini{font-size:.7rem;color:var(--muted);white-space:nowrap;}
+.chip-mini strong{color:var(--text);font-size:.85rem;}
+.bar-wrap{margin-bottom:1rem;}
+.bar-bg{height:6px;background:var(--brd);border-radius:99px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:99px;background:var(--verde);transition:width .4s,background .4s;width:0%;}
+.bar-fill.amarelo{background:var(--amarelo);}
+.bar-fill.vermelho{background:var(--verm);}
+.bar-labels{display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-bottom:.25rem;}
+.pnp-card{background:var(--surface);border:1px solid var(--brd);border-radius:var(--radius);padding:1.2rem;margin-bottom:.9rem;}
+.pnp-card-title{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--verde);margin-bottom:.85rem;}
+.meta-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
+.meta-toggle-label{font-size:.8rem;font-weight:600;color:var(--muted);}
+.meta-toggle-icon{font-size:.8rem;color:var(--muted);transition:transform .2s;}
+.meta-toggle-icon.aberto{transform:rotate(180deg);}
+.meta-corpo{margin-top:.8rem;display:none;}
+.meta-corpo.aberto{display:block;}
+.meta-row{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;}
+.meta-row label{font-size:.88rem;font-weight:500;white-space:nowrap;}
+.meta-row input[type="number"]{width:110px;padding:.5rem .7rem;border:1.5px solid var(--brd);border-radius:8px;font-size:1rem;background:transparent;color:var(--text);}
+.meta-link{font-size:.8rem;color:var(--verde);text-decoration:none;}
+.meta-link:hover{text-decoration:underline;}
+.meta-destaque{background:var(--verde-bg);border-color:var(--verde-brd);}
+.meta-destaque .meta-toggle-label{color:var(--verde);}
+.chat-refeicao-row{display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem;flex-wrap:wrap;}
+.chat-refeicao-row label{font-size:.8rem;font-weight:600;color:var(--muted);white-space:nowrap;}
+.chat-refeicao-row select{flex:1;padding:.45rem .7rem;border:1.5px solid var(--brd);border-radius:8px;font-size:.88rem;background:transparent;color:var(--text);cursor:pointer;}
+.limite-refeicao{font-size:.75rem;color:var(--muted);margin-bottom:.6rem;background:#f8fafc;border-radius:8px;padding:.4rem .7rem;border:1px solid var(--brd);}
+.limite-refeicao strong{color:var(--text);}
+.chat-exemplos{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.65rem;}
+.chip-ex{font-size:.72rem;background:#f0fdf4;color:var(--verde);border:1px solid var(--verde-brd);border-radius:20px;padding:.18rem .6rem;cursor:pointer;transition:background .15s;}
+.chip-ex:hover{background:#dcfce7;}
+.chat-mensagens{min-height:160px;max-height:300px;overflow-y:auto;border:1.5px solid var(--brd);border-radius:10px;padding:.75rem;margin-bottom:.7rem;display:flex;flex-direction:column;gap:.55rem;background:#fafafa;scroll-behavior:smooth;}
+.msg{max-width:90%;padding:.55rem .8rem;border-radius:12px;font-size:.87rem;line-height:1.5;}
+.msg-ia{background:var(--verde-bg);border:1px solid var(--verde-brd);color:var(--text);align-self:flex-start;border-radius:4px 12px 12px 12px;}
+.msg-user{background:var(--verde);color:#fff;align-self:flex-end;border-radius:12px 4px 12px 12px;}
+.msg-erro{background:var(--verm-bg);border:1px solid var(--verm-brd);color:var(--verm);align-self:flex-start;border-radius:4px 12px 12px 12px;}
+.msg-digitando{background:#f1f5f9;color:var(--muted);align-self:flex-start;border-radius:4px 12px 12px 12px;font-style:italic;font-size:.8rem;padding:.45rem .8rem;}
+.btn-lancar{display:inline-block;margin-top:.45rem;padding:.38rem .85rem;background:var(--verde);color:#fff;border:none;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;transition:background .2s;}
+.btn-lancar:hover{background:#15803d;}
+.chat-input-row{display:flex;gap:.45rem;align-items:flex-end;}
+.chat-input{flex:1;padding:.7rem .9rem;border:2px solid var(--verde);border-radius:10px;font-size:.95rem;font-family:'DM Sans',sans-serif;background:transparent;color:var(--text);resize:none;min-height:46px;max-height:100px;outline:none;line-height:1.4;}
+.chat-input:focus{border-color:#15803d;box-shadow:0 0 0 3px #bbf7d0;}
+.chat-input::placeholder{color:#bbb;}
+.btn-enviar{padding:.7rem 1rem;background:var(--verde);color:#fff;border:none;border-radius:10px;font-size:1.1rem;cursor:pointer;transition:background .2s,transform .1s;align-self:flex-end;line-height:1;}
+.btn-enviar:hover{background:#15803d;}
+.btn-enviar:active{transform:scale(.96);}
+.btn-enviar:disabled{background:#94a3b8;cursor:not-allowed;}
+.reg-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;}
+.btn-limpar{font-size:.72rem;color:var(--verm);background:none;border:1px solid var(--verm);border-radius:6px;padding:.22rem .55rem;cursor:pointer;}
+.btn-limpar:hover{background:var(--verm-bg);}
+.reg-item{display:flex;align-items:flex-start;gap:.45rem;padding:.6rem 0;border-bottom:1px solid var(--brd);font-size:.86rem;}
+.reg-item:last-child{border-bottom:none;}
+.reg-badge{flex-shrink:0;font-size:.6rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:.15rem .38rem;border-radius:5px;margin-top:.15rem;}
+.b-cafe{background:#fff3e0;color:#c2410c;}.b-lanche1{background:#f3e5f5;color:#7e22ce;}
+.b-almoco{background:#eff6ff;color:#1d4ed8;}.b-lanche2{background:#f3e5f5;color:#7e22ce;}
+.b-jantar{background:#eef2ff;color:#3730a3;}.b-ceia{background:#fdf2f8;color:#9d174d;}
+.reg-info{flex:1;}
+.reg-nome{font-weight:600;color:var(--text);font-size:.86rem;}
+.reg-kcal{font-weight:700;white-space:nowrap;color:var(--text);padding-top:.1rem;font-size:.86rem;}
+.reg-del{background:none;border:none;color:var(--muted);cursor:pointer;padding:.1rem .25rem;font-size:.9rem;}
+.reg-del:hover{color:var(--verm);}
+.empty-msg{text-align:center;color:var(--muted);font-size:.85rem;padding:1.5rem 0;line-height:1.7;}
+.editorial{font-size:.9rem;line-height:1.75;color:var(--text);}
+.editorial h2{font-family:'Playfair Display',serif;font-size:1.25rem;margin:2rem 0 .65rem;}
+.editorial p{margin:0 0 .85rem;}
+.card-title{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--verde);margin-bottom:.9rem;}
+.faq-item{padding:.85rem 0;border-bottom:1px solid var(--brd);}
+.faq-item:last-child{border-bottom:none;}
+.faq-q{font-weight:600;font-size:.88rem;margin-bottom:.28rem;}
+.faq-a{font-size:.84rem;color:var(--muted);line-height:1.6;}
+[data-theme="dark"] .pnp-badge{background:#052e16;}
+[data-theme="dark"] .painel-topo{border-color:#2d2d2d;}
+[data-theme="dark"] .luz-mini{background:#2d2d2d;}
+[data-theme="dark"] .chat-mensagens{background:#111;border-color:#2d2d2d;}
+[data-theme="dark"] .msg-ia{background:#052e16;border-color:#166534;}
+[data-theme="dark"] .msg-digitando{background:#1e1e1e;}
+[data-theme="dark"] .chip-ex{background:#052e16;border-color:#166534;}
+[data-theme="dark"] .limite-refeicao{background:#1a1a1a;border-color:#2d2d2d;}
+[data-theme="dark"] .meta-destaque{background:#052e16;border-color:#166534;}
+[data-theme="dark"] .b-cafe{background:#3b1a00;color:#fb923c;}
+[data-theme="dark"] .b-lanche1,[data-theme="dark"] .b-lanche2{background:#2e0059;color:#d8b4fe;}
+[data-theme="dark"] .b-almoco{background:#0c1d3d;color:#93c5fd;}
+[data-theme="dark"] .b-jantar{background:#0f0d2e;color:#a5b4fc;}
+[data-theme="dark"] .b-ceia{background:#2d0030;color:#f9a8d4;}
   </style>
 </head>
 <body>
-
 <header class="pnp-header">
   <div class="pnp-badge">
     <span class="mini-sinal"><span class="ms-r"></span><span class="ms-y"></span><span class="ms-g"></span></span>
-    SaúdeMundo · Nutrição prática
+SaúdeMundo · Nutrição prática
   </div>
   <h1><em>Pode,</em> Não Pode?</h1>
   <p class="pnp-tagline">Escreva o que comeu — a IA calcula na hora.<br>Semáforo inteligente por refeição. 🚦</p>
 </header>
-
 <main class="container">
-
   <div class="painel-topo" id="painel-topo">
     <div class="sinal-mini">
       <div class="luz-mini luz-mini-verm"></div>
@@ -205,7 +197,7 @@
     </div>
     <div class="sinal-info">
       <div class="sinal-veredicto" id="sinal-veredicto">Aguardando…</div>
-      <div class="sinal-detalhe"  id="sinal-detalhe">Defina sua meta e registre a primeira refeição.</div>
+      <div class="sinal-detalhe" id="sinal-detalhe">Defina sua meta e registre a primeira refeição.</div>
     </div>
     <div class="chips-mini">
       <div class="chip-mini">Dia: <strong id="chip-total">0 kcal</strong></div>
@@ -213,7 +205,6 @@
       <div class="chip-mini">Itens: <strong id="chip-itens">0</strong></div>
     </div>
   </div>
-
   <div class="bar-wrap" id="bar-wrap" style="display:none;">
     <div class="bar-labels">
       <span id="bar-lbl-ref">Refeição atual: 0 kcal</span>
@@ -221,7 +212,6 @@
     </div>
     <div class="bar-bg"><div class="bar-fill" id="bar-fill"></div></div>
   </div>
-
   <div class="pnp-card meta-destaque" id="meta-card">
     <div class="meta-toggle" onclick="toggleMeta()">
       <span class="meta-toggle-label" id="meta-toggle-label">🎯 Defina sua meta diária para ativar o semáforo</span>
@@ -235,10 +225,8 @@
       </div>
     </div>
   </div>
-
   <div class="pnp-card">
     <div class="pnp-card-title">🤖 Assistente nutricional — o que você comeu?</div>
-
     <div class="chat-refeicao-row">
       <label for="refeicao-select">Refeição:</label>
       <select id="refeicao-select" onchange="onRefeicaoChange()">
@@ -251,10 +239,9 @@
       </select>
     </div>
     <div class="limite-refeicao">
-      Limite desta refeição: <strong id="limite-valor">—</strong>
-      &nbsp;·&nbsp; Já registrado nela: <strong id="limite-usado">0 kcal</strong>
+Limite desta refeição: <strong id="limite-valor">—</strong>
+&nbsp;·&nbsp; Já registrado nela: <strong id="limite-usado">0 kcal</strong>
     </div>
-
     <div class="chat-exemplos">
       <span class="chip-ex" onclick="preencherEx(this)">2 fatias de pizza de calabresa</span>
       <span class="chip-ex" onclick="preencherEx(this)">concha de feijão + 3 col. de arroz</span>
@@ -262,19 +249,16 @@
       <span class="chip-ex" onclick="preencherEx(this)">taco de carne com guacamole</span>
       <span class="chip-ex" onclick="preencherEx(this)">filé à parmegiana + batata frita</span>
     </div>
-
     <div class="chat-mensagens" id="chat-mensagens">
       <div class="msg msg-ia">
-        👋 Olá! Me diga o que você comeu — com a quantidade — e eu calculo as calorias e digo se <strong>pode</strong> ou <strong>não pode</strong>!
+👋 Olá! Me diga o que você comeu — com a quantidade — e eu calculo as calorias e digo se <strong>pode</strong> ou <strong>não pode</strong>!
       </div>
     </div>
-
     <div class="chat-input-row">
       <textarea class="chat-input" id="chat-input" placeholder="Ex: comi duas fatias de pizza e uma lata de coca-cola…" rows="2"></textarea>
       <button class="btn-enviar" id="btn-enviar" onclick="enviarMensagem()" title="Enviar">➤</button>
     </div>
   </div>
-
   <div class="pnp-card">
     <div class="reg-header">
       <div class="pnp-card-title" style="margin:0;">📋 Registros de hoje</div>
@@ -284,7 +268,6 @@
       <div class="empty-msg">Nenhum registro ainda.<br>Converse com a IA acima! 🚦</div>
     </div>
   </div>
-
   <div class="editorial">
     <h2>🚦 Semáforo inteligente por refeição</h2>
     <p>A maioria dos apps mostra o saldo do dia inteiro — e fica verde até o fim da tarde, mesmo que o almoço tenha sido exagerado. O <strong>Pode, Não Pode?</strong> funciona diferente: o semáforo avalia <em>cada refeição separadamente</em>, comparando com o limite proporcional da sua meta.</p>
@@ -292,7 +275,6 @@
     <p>Não precisa selecionar em lista nem saber o nome exato. Escreva <em>"meia lasanha de berinjela"</em>, <em>"milk-shake grande"</em>, <em>"barra de proteína de 60g"</em> — a IA entende tudo. Use a <a href="https://www.saudemundo.com.br/index.html">Calculadora de Calorias e Macros</a> para descobrir sua meta ideal.</p>
     <p style="font-size:.82rem;color:var(--muted);">⚠️ Ferramenta educacional. Valores são estimativas médias. Para dietas individualizadas, consulte um nutricionista ou médico.</p>
   </div>
-
   <div class="pnp-card">
     <div class="card-title">❓ Perguntas Frequentes</div>
     <div class="faq-item">
@@ -312,21 +294,16 @@
       <div class="faq-a">Não. Para dietas individualizadas, consulte um nutricionista ou médico.</div>
     </div>
   </div>
-
   <div id="sm-blog-placeholder"></div>
 </main>
-
 <script src="shared.js"></script>
 <script>
 /* ═══════════════════════════
-   CONFIG
+CONFIG
 ═══════════════════════════ */
-const WORKER_URL  = "https://summer-hill-da28.philipdesousa.workers.dev";
-
-// FIX #2: chave própria para a meta — não depende mais do smGetUserData
-const META_KEY    = "sm_pnp_meta_kcal";
+const WORKER_URL = "https://summer-hill-da28.philipdesousa.workers.dev";
+const META_KEY = "sm_pnp_meta_kcal";
 const STORAGE_KEY = "sm_pnp_" + new Date().toISOString().slice(0,10);
-
 const PESO_REFEICAO = {
   cafe:0.20, lanche1:0.10, almoco:0.35, lanche2:0.10, jantar:0.20, ceia:0.05,
 };
@@ -334,26 +311,21 @@ const NOME_REFEICAO = {
   cafe:"Café da manhã", lanche1:"Lanche manhã",
   almoco:"Almoço", lanche2:"Lanche tarde", jantar:"Jantar", ceia:"Ceia",
 };
-
 /* ═══════════════════════════
-   ESTADO
+ESTADO
 ═══════════════════════════ */
 let registros = carregarRegistros();
-let historico  = [];
+let historico = [];
 let metaAberta = true;
-
 /* ═══════════════════════════
-   INIT
+INIT
 ═══════════════════════════ */
 document.addEventListener("DOMContentLoaded", () => {
-
-  // FIX #2: carrega meta do localStorage próprio primeiro (mais confiável)
   const metaLocal = carregarMeta();
   if (metaLocal > 0) {
     document.getElementById("meta-input").value = metaLocal;
     fecharMetaSePreenchida(metaLocal);
   } else {
-    // fallback: tenta smGetUserData com múltiplas chaves possíveis
     try {
       const ud = typeof smGetUserData === "function" ? smGetUserData() : null;
       if (ud) {
@@ -366,17 +338,18 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } catch(e) {}
   }
-
   document.getElementById("chat-input").addEventListener("keydown", e => {
     if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); enviarMensagem(); }
   });
-
   renderLista();
   atualizarTudo();
 });
-
 /* ═══════════════════════════
-   META — persistência própria
+META — persistência própria
+FIX BUG A: o recolhimento automático do campo (fecharMetaSePreenchida)
+agora só acontece quando o usuário sai do campo (onMetaBlur), nunca
+mais a cada tecla digitada (oninput) — antes isso fazia o campo
+desaparecer no meio da digitação.
 ═══════════════════════════ */
 function salvarMeta(v) {
   try { localStorage.setItem(META_KEY, String(v)); } catch(e) {}
@@ -384,7 +357,6 @@ function salvarMeta(v) {
 function carregarMeta() {
   try { return parseInt(localStorage.getItem(META_KEY)) || 0; } catch(e) { return 0; }
 }
-
 function onMetaChange() {
   const meta = parseInt(document.getElementById("meta-input").value) || 0;
   if (meta > 0) {
@@ -397,12 +369,10 @@ function onMetaChange() {
   }
   atualizarTudo();
 }
-
 function onMetaBlur() {
   const meta = parseInt(document.getElementById("meta-input").value) || 0;
   fecharMetaSePreenchida(meta);
 }
-
 function fecharMetaSePreenchida(meta) {
   if (meta > 0 && metaAberta) {
     document.getElementById("meta-card").classList.remove("meta-destaque");
@@ -412,35 +382,30 @@ function fecharMetaSePreenchida(meta) {
     metaAberta = false;
   }
 }
-
 function toggleMeta() {
   const corpo = document.getElementById("meta-corpo");
-  const icon  = document.getElementById("meta-icon");
+  const icon = document.getElementById("meta-icon");
   const aberto = corpo.classList.toggle("aberto");
   icon.classList.toggle("aberto", aberto);
   metaAberta = aberto;
 }
-
 /* ═══════════════════════════
-   REFEIÇÃO
+REFEIÇÃO
 ═══════════════════════════ */
 function onRefeicaoChange() { atualizarTudo(); }
-
 function kcalRefeicaoAtual() {
   const ref = document.getElementById("refeicao-select").value;
   return registros.filter(r => r.refeicao === ref).reduce((s,r) => s + r.kcal, 0);
 }
-
 /* ═══════════════════════════
-   EXEMPLOS
+EXEMPLOS
 ═══════════════════════════ */
 function preencherEx(el) {
   document.getElementById("chat-input").value = el.textContent.trim();
   document.getElementById("chat-input").focus();
 }
-
 /* ═══════════════════════════
-   CHAT
+CHAT
 ═══════════════════════════ */
 function addMsg(html, tipo) {
   const box = document.getElementById("chat-mensagens");
@@ -451,90 +416,69 @@ function addMsg(html, tipo) {
   box.scrollTop = box.scrollHeight;
   return div;
 }
-
 async function enviarMensagem() {
-  const input  = document.getElementById("chat-input");
-  const texto  = input.value.trim();
+  const input = document.getElementById("chat-input");
+  const texto = input.value.trim();
   const btnEnv = document.getElementById("btn-enviar");
   if (!texto) { input.focus(); return; }
-
-  const meta      = parseInt(document.getElementById("meta-input").value) || 0;
-  const ref       = document.getElementById("refeicao-select").value;
+  const meta = parseInt(document.getElementById("meta-input").value) || 0;
+  const ref = document.getElementById("refeicao-select").value;
   const limiteRef = meta > 0 ? Math.round(meta * PESO_REFEICAO[ref]) : null;
-  const usadoRef  = kcalRefeicaoAtual();
-
+  const usadoRef = kcalRefeicaoAtual();
   addMsg(texto, "user");
   historico.push({ role:"user", content: texto });
   input.value = "";
   btnEnv.disabled = true;
-
   const dig = addMsg("⏳ Calculando…", "digitando");
-
   const contexto = meta > 0
-    ? "\n\n[CONTEXTO DO APP: meta diária = " + meta + " kcal. Refeição atual = "
+? "\n\n[CONTEXTO DO APP: meta diária = " + meta + " kcal. Refeição atual = "
       + NOME_REFEICAO[ref] + " (limite: " + limiteRef + " kcal, já consumido nela: " + usadoRef + " kcal).]"
-    : "";
-
+: "";
   const mensagensEnvio = [
-    ...historico.slice(0, -1),
+...historico.slice(0, -1),
     { role:"user", content: texto + contexto }
   ];
-
   try {
     const resp = await fetch(WORKER_URL, {
       method:"POST",
       headers:{ "Content-Type":"application/json" },
       body: JSON.stringify({ messages: mensagensEnvio }),
     });
-
     if (!resp.ok) {
       throw new Error("Servidor retornou HTTP " + resp.status);
     }
-
     const data = await resp.json();
-
-    // FIX #1: tenta múltiplos campos que o Worker pode usar
     let resposta =
-      data.resposta  ||
-      data.content   ||
-      data.reply     ||
-      data.message   ||
-      data.text      ||
-      data.output    ||
+      data.resposta ||
+      data.content ||
+      data.reply ||
+      data.message ||
+      data.text ||
+      data.output ||
       null;
-
-    // suporte a formato OpenAI (choices[])
     if (!resposta && Array.isArray(data.choices) && data.choices[0]) {
       resposta = (data.choices[0].message && data.choices[0].message.content)
                  || data.choices[0].text || null;
     }
-
-    // suporte a formato Anthropic nativo (content[])
     if (!resposta && Array.isArray(data.content)) {
       resposta = data.content.filter(b => b.type === "text").map(b => b.text).join("\n") || null;
     }
-
     if (!resposta) {
       console.error("[PNP] Resposta inesperada do Worker:", JSON.stringify(data));
-      throw new Error("Formato de resposta desconhecido. Abra o console (F12 > Network) e inspecione a resposta do Worker.");
+      throw new Error("Formato de resposta desconhecido. Abra o console e inspecione a resposta do Worker.");
     }
-
     dig.remove();
-
     const match = resposta.match(/\[KCAL:(\d+)\]/);
-    const kcal  = match ? parseInt(match[1]) : null;
+    const kcal = match ? parseInt(match[1]) : null;
     const limpo = resposta.replace(/\[KCAL:\d+\]/g, "").trim();
     let html = limpo.replace(/\n/g, "<br>");
-
     if (kcal && kcal > 0) {
       html += "<br><button class=\"btn-lancar\" onclick=\"lancar("
             + kcal + ",'" + encodeURIComponent(texto) + "')\">✅ Lançar "
             + kcal + " kcal no diário</button>";
     }
-
     addMsg(html, "ia");
     historico.push({ role:"assistant", content: resposta });
-
   } catch(err) {
     dig.remove();
     console.error("[PNP] Erro:", err);
@@ -544,36 +488,31 @@ async function enviarMensagem() {
     btnEnv.disabled = false;
   }
 }
-
 /* ═══════════════════════════
-   LANÇAR
+LANÇAR
 ═══════════════════════════ */
 function lancar(kcal, descCod) {
-  const desc    = decodeURIComponent(descCod);
+  const desc = decodeURIComponent(descCod);
   const refeicao = document.getElementById("refeicao-select").value;
-  const resumo  = desc.length > 55 ? desc.slice(0,52) + "…" : desc;
-
+  const resumo = desc.length > 55 ? desc.slice(0,52) + "…" : desc;
   registros.push({ id:Date.now(), nome:resumo, refeicao, kcal });
   salvarRegistros();
   renderLista();
   atualizarTudo();
-
   addMsg("✅ <strong>" + kcal + " kcal</strong> lançadas no diário!", "ia");
   if (typeof showToast === "function") showToast("✅ Lançado no diário!");
 }
-
 /* ═══════════════════════════
-   LISTA
+LISTA
 ═══════════════════════════ */
 const REF_CFG = {
-  cafe:   {l:"Café da manhã",c:"b-cafe"},
+  cafe: {l:"Café da manhã",c:"b-cafe"},
   lanche1:{l:"Lanche manhã", c:"b-lanche1"},
-  almoco: {l:"Almoço",       c:"b-almoco"},
+  almoco: {l:"Almoço", c:"b-almoco"},
   lanche2:{l:"Lanche tarde", c:"b-lanche2"},
-  jantar: {l:"Jantar",       c:"b-jantar"},
-  ceia:   {l:"Ceia",         c:"b-ceia"},
+  jantar: {l:"Jantar", c:"b-jantar"},
+  ceia: {l:"Ceia", c:"b-ceia"},
 };
-
 function renderLista() {
   const el = document.getElementById("lista-registros");
   if (!registros.length) {
@@ -590,7 +529,6 @@ function renderLista() {
       + "</div>";
   }).join("");
 }
-
 function removerRegistro(id) {
   registros = registros.filter(r => r.id !== id);
   salvarRegistros(); renderLista(); atualizarTudo();
@@ -599,28 +537,24 @@ function limparDiario() {
   if (!confirm("Limpar todos os registros de hoje?")) return;
   registros = []; salvarRegistros(); renderLista(); atualizarTudo();
 }
-
 /* ═══════════════════════════
-   SEMÁFORO
+SEMÁFORO
 ═══════════════════════════ */
 function atualizarTudo() {
-  const meta     = parseInt(document.getElementById("meta-input").value) || 0;
-  const ref      = document.getElementById("refeicao-select").value;
+  const meta = parseInt(document.getElementById("meta-input").value) || 0;
+  const ref = document.getElementById("refeicao-select").value;
   const totalDia = registros.reduce((s,r) => s + r.kcal, 0);
   const totalRef = kcalRefeicaoAtual();
-  const limRef   = meta > 0 ? Math.round(meta * PESO_REFEICAO[ref]) : 0;
-  const saldo    = meta > 0 ? meta - totalDia : 0;
-
+  const limRef = meta > 0 ? Math.round(meta * PESO_REFEICAO[ref]) : 0;
+  const saldo = meta > 0 ? meta - totalDia : 0;
   document.getElementById("chip-total").textContent = totalDia + " kcal";
   document.getElementById("chip-itens").textContent = registros.length;
   document.getElementById("chip-saldo").textContent = meta > 0
-    ? (saldo >= 0 ? saldo + " kcal" : "-" + Math.abs(saldo) + " kcal") : "—";
-
+? (saldo >= 0 ? saldo + " kcal" : "-" + Math.abs(saldo) + " kcal") : "—";
   document.getElementById("limite-valor").textContent = meta > 0
-    ? limRef + " kcal (" + Math.round(PESO_REFEICAO[ref]*100) + "% de " + meta + " kcal)"
-    : "— (defina sua meta)";
+? limRef + " kcal (" + Math.round(PESO_REFEICAO[ref]*100) + "% de " + meta + " kcal)"
+: "— (defina sua meta)";
   document.getElementById("limite-usado").textContent = totalRef + " kcal";
-
   const barWrap = document.getElementById("bar-wrap");
   if (meta > 0) {
     barWrap.style.display = "block";
@@ -633,41 +567,37 @@ function atualizarTudo() {
   } else {
     barWrap.style.display = "none";
   }
-
   const painel = document.getElementById("painel-topo");
-  const verd   = document.getElementById("sinal-veredicto");
-  const det    = document.getElementById("sinal-detalhe");
+  const verd = document.getElementById("sinal-veredicto");
+  const det = document.getElementById("sinal-detalhe");
   painel.className = "painel-topo";
-
   if (!meta) {
     verd.textContent = "Aguardando…";
-    det.textContent  = "Defina sua meta acima para ativar o semáforo.";
+    det.textContent = "Defina sua meta acima para ativar o semáforo.";
     return;
   }
   if (!registros.filter(r => r.refeicao === ref).length) {
     verd.textContent = NOME_REFEICAO[ref] + " — pronto!";
-    det.textContent  = "Limite: " + limRef + " kcal. Escreva o que comeu.";
+    det.textContent = "Limite: " + limRef + " kcal. Escreva o que comeu.";
     return;
   }
-
   const pctRef = (totalRef / limRef) * 100;
   if (pctRef <= 80) {
     painel.classList.add("sinal-ativo-verde");
     verd.textContent = "🟢 Pode!";
-    det.textContent  = NOME_REFEICAO[ref] + ": " + totalRef + " kcal de " + limRef + " kcal. Ainda tem " + (limRef - totalRef) + " kcal.";
+    det.textContent = NOME_REFEICAO[ref] + ": " + totalRef + " kcal de " + limRef + " kcal. Ainda tem " + (limRef - totalRef) + " kcal.";
   } else if (pctRef <= 100) {
     painel.classList.add("sinal-ativo-amarelo");
     verd.textContent = "🟡 Atenção!";
-    det.textContent  = NOME_REFEICAO[ref] + ": restam apenas " + (limRef - totalRef) + " kcal. Escolha com cuidado.";
+    det.textContent = NOME_REFEICAO[ref] + ": restam apenas " + (limRef - totalRef) + " kcal. Escolha com cuidado.";
   } else {
     painel.classList.add("sinal-ativo-verm");
     verd.textContent = "🔴 Não pode!";
-    det.textContent  = NOME_REFEICAO[ref] + " passou " + (totalRef - limRef) + " kcal acima do limite.";
+    det.textContent = NOME_REFEICAO[ref] + " passou " + (totalRef - limRef) + " kcal acima do limite.";
   }
 }
-
 /* ═══════════════════════════
-   STORAGE
+STORAGE
 ═══════════════════════════ */
 function salvarRegistros() {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(registros)); } catch(e) {}
