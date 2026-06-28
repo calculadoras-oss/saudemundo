@@ -387,8 +387,6 @@ function carregarMeta() {
 
 function onMetaChange() {
   const meta = parseInt(document.getElementById("meta-input").value) || 0;
-
-  // FIX #2: salva sempre no localStorage próprio, sem depender do shared.js
   if (meta > 0) {
     salvarMeta(meta);
     try {
@@ -397,9 +395,12 @@ function onMetaChange() {
       if (typeof smSaveUserData === "function") smSaveUserData(ud);
     } catch(e) {}
   }
-
-  fecharMetaSePreenchida(meta);
   atualizarTudo();
+}
+
+function onMetaBlur() {
+  const meta = parseInt(document.getElementById("meta-input").value) || 0;
+  fecharMetaSePreenchida(meta);
 }
 
 function fecharMetaSePreenchida(meta) {
