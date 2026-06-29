@@ -661,7 +661,7 @@ async function enviarMensagem() {
   const texto   = input.value.trim();
   const btnEnv  = document.getElementById("btn-enviar");
   if (!texto) { input.focus(); return; }
-
+  document.getElementById("chat-exemplos").style.display = "none";
   const meta     = parseInt(document.getElementById("meta-input").value) || 0;
   const ref      = document.getElementById("refeicao-select").value;
   const limRef   = meta > 0 ? Math.round(meta * PESO_REFEICAO[ref]) : null;
