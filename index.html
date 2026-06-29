@@ -367,9 +367,7 @@ function setSexo(s, btn) {
   sexo = s;
      // Salva a meta calculada para o "Pode, Não Pode?" conseguir usar
   try { localStorage.setItem('sm_pnp_meta_kcal', String(meta)); } catch(e) {}
-  document.getElementById('sexo-group').querySelectorAll('button').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-}
+  }
 function setObjetivo(o, btn) {
   objetivo = o;
   document.getElementById('objetivo-group').querySelectorAll('button').forEach(b => b.classList.remove('active'));
