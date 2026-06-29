@@ -517,6 +517,20 @@ const STORAGE_KEY = "sm_pnp_" + new Date().toISOString().slice(0,10);
 const PESO_REFEICAO = { cafe:0.20, lanche1:0.10, almoco:0.35, lanche2:0.10, jantar:0.20, ceia:0.05 };
 const NOME_REFEICAO = { cafe:"Café da manhã", lanche1:"Lanche manhã", almoco:"Almoço", lanche2:"Lanche tarde", jantar:"Jantar", ceia:"Ceia" };
 
+const NOME_REFEICAO = { cafe:"Café da manhã", lanche1:"Lanche manhã", almoco:"Almoço", lanche2:"Lanche tarde", jantar:"Jantar", ceia:"Ceia" };
+
+function selecionarRefeicaoPorHorario() {
+  const h = new Date().getHours();
+  let ref;
+  if      (h >= 6  && h < 10) ref = "cafe";
+  else if (h >= 10 && h < 12) ref = "lanche1";
+  else if (h >= 12 && h < 15) ref = "almoco";
+  else if (h >= 15 && h < 18) ref = "lanche2";
+  else if (h >= 18 && h < 21) ref = "jantar";
+  else                         ref = "ceia";
+  document.getElementById("refeicao-select").value = ref;
+}
+
 // Exemplos por modo
 const EXEMPLOS_DECISAO = [
   { texto:"qual o melhor prato no rodízio japonês?", label:"🧠 Decisão" },
