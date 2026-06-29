@@ -106,24 +106,21 @@
 
     /* ── Semáforo compacto ── */
     .painel-topo {
-      display:flex; align-items:center; gap:.8rem;
+      display:flex; align-items:center; gap:.6rem;
       background:var(--surface); border:1px solid var(--brd);
-      border-radius:var(--radius); padding:1rem 1.2rem; margin-bottom:1rem;
+      border-radius:var(--radius); padding:.5rem .8rem; margin-bottom:.5rem;
     }
-    .sinal-mini { display:flex; flex-direction:column; align-items:center; gap:4px; flex-shrink:0; }
-    .luz-mini { width:20px;height:20px;border-radius:50%;background:#e2e8f0;transition:background .4s,box-shadow .4s; }
+    .sinal-mini { display:flex; flex-direction:row; gap:4px; flex-shrink:0; }
+    .luz-mini { width:10px; height:10px; border-radius:50%; background:#e2e8f0; transition:background .4s,box-shadow .4s; }
     .sinal-ativo-verde   .luz-mini-verde   { background:var(--verde);   box-shadow:0 0 8px 2px #86efac; }
     .sinal-ativo-amarelo .luz-mini-amarelo { background:var(--amarelo); box-shadow:0 0 8px 2px #fde68a; }
     .sinal-ativo-verm    .luz-mini-verm    { background:var(--verm);    box-shadow:0 0 8px 2px #fca5a5; }
     .sinal-info { flex:1; min-width:0; }
-    .sinal-veredicto { font-weight:700; font-size:1.1rem; color:#94a3b8; transition:color .4s; line-height:1.1; }
+    .sinal-veredicto { font-weight:700; font-size:.9rem; color:#94a3b8; transition:color .4s; line-height:1.1; }
     .sinal-ativo-verde   .sinal-veredicto { color:var(--verde); }
     .sinal-ativo-amarelo .sinal-veredicto { color:var(--amarelo); }
     .sinal-ativo-verm    .sinal-veredicto { color:var(--verm); }
-    .sinal-detalhe { font-size:.75rem; color:var(--muted); margin-top:.2rem; line-height:1.3; }
-    .chips-mini { display:flex; flex-direction:column; gap:.3rem; flex-shrink:0; text-align:right; }
-    .chip-mini { font-size:.7rem; color:var(--muted); white-space:nowrap; }
-    .chip-mini strong { color:var(--text); font-size:.85rem; }
+    .sinal-detalhe { display:none; }
 
     /* ── Barra ── */
     .bar-wrap { margin-bottom:1rem; }
@@ -132,6 +129,8 @@
     .bar-fill.amarelo { background:var(--amarelo); }
     .bar-fill.vermelho { background:var(--verm); }
     .bar-labels { display:flex; justify-content:space-between; font-size:.7rem; color:var(--muted); margin-bottom:.25rem; }
+    .bar-chips { display:flex; gap:1rem; margin-top:.35rem; flex-wrap:wrap; }
+    .bar-chips .chip-mini { font-size:.7rem; }
 
     /* ── Cards ── */
     .pnp-card { background:var(--surface); border:1px solid var(--brd); border-radius:var(--radius); padding:1.2rem; margin-bottom:.9rem; }
@@ -167,12 +166,8 @@
       transition:all .2s; color:var(--muted); background:transparent;
       line-height:1.2;
     }
-    .modo-pill.ativo-decisao {
-      background:var(--azul-bg); border-color:var(--azul-brd); color:var(--azul);
-    }
-    .modo-pill.ativo-registro {
-      background:var(--verde-bg); border-color:var(--verde-brd); color:var(--verde);
-    }
+    .modo-pill.ativo-decisao { background:var(--azul-bg); border-color:var(--azul-brd); color:var(--azul); }
+    .modo-pill.ativo-registro { background:var(--verde-bg); border-color:var(--verde-brd); color:var(--verde); }
     .modo-hint {
       font-size:.72rem; color:var(--muted); margin-bottom:.6rem;
       padding:.35rem .7rem; border-radius:8px;
@@ -243,6 +238,13 @@
     .btn-enviar:hover  { background:#15803d; }
     .btn-enviar:active { transform:scale(.96); }
     .btn-enviar:disabled { background:#94a3b8; cursor:not-allowed; }
+    .btn-foto {
+      padding:.7rem .8rem; background:var(--surface); border:1px solid var(--brd);
+      border-radius:10px; font-size:1.1rem; cursor:pointer;
+      transition:background .2s; align-self:flex-end; line-height:1; flex-shrink:0;
+    }
+    .btn-foto:hover { background:var(--brd); }
+    .btn-foto:disabled { opacity:.5; cursor:not-allowed; }
 
     /* ── Registros ── */
     .reg-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:.75rem; }
@@ -294,6 +296,7 @@
     [data-theme="dark"] .b-jantar{background:#0f0d2e;color:#a5b4fc;}
     [data-theme="dark"] .b-ceia{background:#2d0030;color:#f9a8d4;}
     [data-theme="dark"] .modo-hint { background:#1a1a1a; border-color:#2d2d2d; }
+    [data-theme="dark"] .btn-foto { border-color:#2d2d2d; }
   </style>
 </head>
 <body>
@@ -311,31 +314,30 @@
 
   <!-- Semáforo compacto -->
   <div class="painel-topo" id="painel-topo">
-  <div class="sinal-mini">
-    <div class="luz-mini luz-mini-verm"></div>
-    <div class="luz-mini luz-mini-amarelo"></div>
-    <div class="luz-mini luz-mini-verde"></div>
+    <div class="sinal-mini">
+      <div class="luz-mini luz-mini-verm"></div>
+      <div class="luz-mini luz-mini-amarelo"></div>
+      <div class="luz-mini luz-mini-verde"></div>
+    </div>
+    <div class="sinal-info">
+      <div class="sinal-veredicto" id="sinal-veredicto">Aguardando…</div>
+      <div class="sinal-detalhe" id="sinal-detalhe"></div>
+    </div>
   </div>
-  <div class="sinal-info">
-    <div class="sinal-veredicto" id="sinal-veredicto">Aguardando…</div>
-    <div class="sinal-detalhe" id="sinal-detalhe"></div>
-  </div>
-</div>
 
   <!-- Barra do dia -->
   <div class="bar-wrap" id="bar-wrap" style="display:none;">
-  <div class="bar-labels">
-    <span id="bar-lbl-ref">Refeição atual: 0 kcal</span>
-    <span id="bar-lbl-dia">Dia: 0 / 0 kcal</span>
+    <div class="bar-labels">
+      <span id="bar-lbl-ref">Refeição atual: 0 kcal</span>
+      <span id="bar-lbl-dia">Dia: 0 / 0 kcal</span>
+    </div>
+    <div class="bar-bg"><div class="bar-fill" id="bar-fill"></div></div>
+    <div class="bar-chips">
+      <span class="chip-mini">Dia: <strong id="chip-total">0 kcal</strong></span>
+      <span class="chip-mini">Saldo: <strong id="chip-saldo">—</strong></span>
+      <span class="chip-mini">Itens: <strong id="chip-itens">0</strong></span>
+    </div>
   </div>
-  <div class="bar-bg"><div class="bar-fill" id="bar-fill"></div></div>
-  <div class="bar-chips">
-    <span class="chip-mini">Dia: <strong id="chip-total">0 kcal</strong></span>
-    <span class="chip-mini">Saldo: <strong id="chip-saldo">—</strong></span>
-    <span class="chip-mini">Itens: <strong id="chip-itens">0</strong></span>
-  </div>
-</div>
-
 
   <!-- Meta colapsável -->
   <div class="pnp-card meta-destaque" id="meta-card">
@@ -410,6 +412,10 @@
         placeholder="Ex: vale mais pedir o frango ou o hambúrguer?"
         rows="2"
       ></textarea>
+      <input type="file" id="foto-input" accept="image/*" capture="environment"
+             style="display:none" onchange="onFotoSelecionada(this)">
+      <button class="btn-foto" id="btn-foto" onclick="document.getElementById('foto-input').click()"
+              title="Enviar foto da refeição">📸</button>
       <button class="btn-enviar" id="btn-enviar" onclick="enviarMensagem()" title="Enviar">➤</button>
     </div>
   </div>
@@ -484,7 +490,19 @@ const STORAGE_KEY = "sm_pnp_" + new Date().toISOString().slice(0,10);
 const PESO_REFEICAO = { cafe:0.20, lanche1:0.10, almoco:0.35, lanche2:0.10, jantar:0.20, ceia:0.05 };
 const NOME_REFEICAO = { cafe:"Café da manhã", lanche1:"Lanche manhã", almoco:"Almoço", lanche2:"Lanche tarde", jantar:"Jantar", ceia:"Ceia" };
 
-const NOME_REFEICAO = { cafe:"Café da manhã", lanche1:"Lanche manhã", almoco:"Almoço", lanche2:"Lanche tarde", jantar:"Jantar", ceia:"Ceia" };
+const EXEMPLOS_DECISAO = [
+  { texto:"qual o melhor prato no rodízio japonês?", label:"🧠 Decisão" },
+  { texto:"suco natural ou refrigerante zero?", label:"🧠 Decisão" },
+];
+const EXEMPLOS_REGISTRO = [
+  { texto:"comi peito de frango grelhado 120g com salada", label:"📊 Registro" },
+  { texto:"scoop de whey com 200ml de leite desnatado", label:"📊 Registro" },
+];
+
+let registros  = carregarRegistros();
+let historico  = [];
+let metaAberta = true;
+let modoAtual  = "auto";
 
 function selecionarRefeicaoPorHorario() {
   const h = new Date().getHours();
@@ -497,21 +515,6 @@ function selecionarRefeicaoPorHorario() {
   else                         ref = "ceia";
   document.getElementById("refeicao-select").value = ref;
 }
-
-// Exemplos por modo
-const EXEMPLOS_DECISAO = [
-  { texto:"qual o melhor prato no rodízio japonês?", label:"🧠 Decisão" },
-  { texto:"suco natural ou refrigerante zero?", label:"🧠 Decisão" },
-];
-const EXEMPLOS_REGISTRO = [
-  { texto:"comi peito de frango grelhado 120g com salada", label:"📊 Registro" },
-  { texto:"scoop de whey com 200ml de leite desnatado", label:"📊 Registro" },
-];
-
-let registros   = carregarRegistros();
-let historico   = [];
-let metaAberta  = true;
-let modoAtual   = "auto"; // "auto" | "decisao" | "registro"
 
 document.addEventListener("DOMContentLoaded", () => {
   const metaLocal = carregarMeta();
@@ -586,13 +589,12 @@ function setModo(modo) {
 }
 
 function atualizarVisuaisModo() {
-  const input   = document.getElementById("chat-input");
-  const btnEnv  = document.getElementById("btn-enviar");
-  const hint    = document.getElementById("modo-hint");
-  const pillD   = document.getElementById("pill-decisao");
-  const pillR   = document.getElementById("pill-registro");
+  const input  = document.getElementById("chat-input");
+  const btnEnv = document.getElementById("btn-enviar");
+  const hint   = document.getElementById("modo-hint");
+  const pillD  = document.getElementById("pill-decisao");
+  const pillR  = document.getElementById("pill-registro");
 
-  // Reset pills
   pillD.className = "modo-pill";
   pillR.className = "modo-pill";
 
@@ -622,21 +624,18 @@ function atualizarVisuaisModo() {
 function renderExemplos() {
   const box = document.getElementById("chat-exemplos");
   let html = "";
-
   if (modoAtual === "decisao" || modoAtual === "auto") {
     if (modoAtual === "auto") html += "<span class='chips-titulo'>Exemplos — decidir antes de comer:</span>";
     EXEMPLOS_DECISAO.forEach(e => {
       html += `<span class="chip-ex chip-ex-decisao" onclick="preencherEx(this)">${e.texto}</span>`;
     });
   }
-
   if (modoAtual === "registro" || modoAtual === "auto") {
     if (modoAtual === "auto") html += "<span class='chips-titulo'>Exemplos — registrar o que comeu:</span>";
     EXEMPLOS_REGISTRO.forEach(e => {
       html += `<span class="chip-ex chip-ex-registro" onclick="preencherEx(this)">${e.texto}</span>`;
     });
   }
-
   box.innerHTML = html;
 }
 
@@ -673,11 +672,12 @@ function kcalRefeicaoAtual() {
 }
 
 async function enviarMensagem() {
-  const input   = document.getElementById("chat-input");
-  const texto   = input.value.trim();
-  const btnEnv  = document.getElementById("btn-enviar");
+  const input  = document.getElementById("chat-input");
+  const texto  = input.value.trim();
+  const btnEnv = document.getElementById("btn-enviar");
   if (!texto) { input.focus(); return; }
   document.getElementById("chat-exemplos").style.display = "none";
+
   const meta     = parseInt(document.getElementById("meta-input").value) || 0;
   const ref      = document.getElementById("refeicao-select").value;
   const limRef   = meta > 0 ? Math.round(meta * PESO_REFEICAO[ref]) : null;
@@ -693,14 +693,12 @@ async function enviarMensagem() {
       (modoAtual === "decisao" && registroRegex.test(texto) && !decisaoRegex.test(texto)) ||
       (modoAtual === "registro" && decisaoRegex.test(texto) && !registroRegex.test(texto));
     if (conflito) {
-      const modoOposto = modoAtual === "decisao" ? "registro" : "decisao";
-      const labelOposto = modoAtual === "decisao"
-        ? "📊 registrar em vez de comparar?"
-        : "🧠 comparar em vez de registrar?";
+      const modoOposto  = modoAtual === "decisao" ? "registro" : "decisao";
+      const labelOposto = modoAtual === "decisao" ? "📊 registrar em vez de comparar?" : "🧠 comparar em vez de registrar?";
       const avisoId = "aviso-conflito-" + Date.now();
       const avisoHtml = `<div id="${avisoId}" style="font-size:.8rem;color:var(--muted);margin-bottom:.4rem;padding:.4rem .6rem;background:var(--surface);border:1px solid var(--brd);border-radius:6px;">
-        ⚠️ Parece que o texto não combina com o modo selecionado. 
-        <button onclick="setModo('${modoOposto}');document.getElementById('${avisoId}').remove()" 
+        ⚠️ Parece que o texto não combina com o modo selecionado.
+        <button onclick="setModo('${modoOposto}');document.getElementById('${avisoId}').remove()"
           style="background:none;border:none;color:var(--azul);cursor:pointer;font-size:.8rem;text-decoration:underline;padding:0">
           Quer ${labelOposto}
         </button>
@@ -765,6 +763,79 @@ async function enviarMensagem() {
     addMsg("❌ Erro ao falar com o assistente.<br><small style='opacity:.7'>" + err.message + "</small>", "erro", false);
   } finally {
     btnEnv.disabled = false;
+  }
+}
+
+// ── Foto ──
+function onFotoSelecionada(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    const base64   = reader.result.split(",")[1];
+    const mimeType = file.type || "image/jpeg";
+    enviarComFoto(base64, mimeType);
+  };
+  reader.readAsDataURL(file);
+  input.value = "";
+}
+
+async function enviarComFoto(base64, mimeType) {
+  const btnEnv  = document.getElementById("btn-enviar");
+  const btnFoto = document.getElementById("btn-foto");
+  const meta     = parseInt(document.getElementById("meta-input").value) || 0;
+  const ref      = document.getElementById("refeicao-select").value;
+  const limRef   = meta > 0 ? Math.round(meta * PESO_REFEICAO[ref]) : null;
+  const usadoRef = kcalRefeicaoAtual();
+
+  document.getElementById("chat-exemplos").style.display = "none";
+
+  const textoContexto = meta > 0
+    ? "[CONTEXTO DO APP: meta diária = " + meta + " kcal. Refeição atual = "
+      + NOME_REFEICAO[ref] + " (limite: " + limRef + " kcal, já consumido: " + usadoRef + " kcal)."
+      + " O usuário enviou uma FOTO — estime as calorias visualmente e use [KCAL:X].]"
+    : "[CONTEXTO: O usuário enviou uma FOTO de refeição — estime as calorias visualmente e use [KCAL:X].]";
+
+  addMsg("📸 <em>Foto enviada para análise…</em>", "user", false);
+  historico.push({ role:"user", content: textoContexto });
+
+  btnEnv.disabled  = true;
+  btnFoto.disabled = true;
+
+  const dig = addMsg("📸 Analisando sua foto…", "digitando", false);
+
+  try {
+    const resp = await fetch(WORKER_URL, {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ messages: historico, imagem: { mimeType, data: base64 } }),
+    });
+    if (!resp.ok) throw new Error("Servidor retornou HTTP " + resp.status);
+
+    const data = await resp.json();
+    let resposta = data.resposta || null;
+    if (!resposta) throw new Error("Formato de resposta desconhecido.");
+
+    dig.remove();
+    const match = resposta.match(/\[KCAL:(\d+)\]/);
+    const kcal  = match ? parseInt(match[1]) : null;
+    const limpo = resposta.replace(/\[KCAL:\d+\]/g,"").trim();
+    let html = limpo.replace(/\n/g,"<br>");
+    if (kcal && kcal > 0) {
+      html += "<br><button class=\"btn-lancar\" onclick=\"lancar("
+            + kcal + ",'" + encodeURIComponent("📸 foto da refeição") + "')\">✅ Lançar "
+            + kcal + " kcal no diário</button>";
+    }
+    addMsg(html, "ia", false);
+    historico.push({ role:"assistant", content: resposta });
+
+  } catch(err) {
+    dig.remove();
+    console.error("[PNP] Erro foto:", err);
+    addMsg("❌ Não consegui analisar a foto.<br><small style='opacity:.7'>" + err.message + "</small>", "erro", false);
+  } finally {
+    btnEnv.disabled  = false;
+    btnFoto.disabled = false;
   }
 }
 
@@ -843,23 +914,23 @@ function atualizarTudo() {
     barWrap.style.display = "none";
   }
 
- const painel = document.getElementById("painel-topo");
-const verd   = document.getElementById("sinal-veredicto");
-const det    = document.getElementById("sinal-detalhe");
-painel.className = "painel-topo";
+  const painel = document.getElementById("painel-topo");
+  const verd   = document.getElementById("sinal-veredicto");
+  const det    = document.getElementById("sinal-detalhe");
+  painel.className = "painel-topo";
 
-// Onboarding: esconde semáforo até ter registros
-if (registros.length === 0) {
-  painel.style.display = "none";
-  return;
-}
-painel.style.display = "";
+  if (registros.length === 0) {
+    painel.style.display = "none";
+    return;
+  }
+  painel.style.display = "";
 
-if (!meta) {
-  verd.textContent = "Aguardando…";
-  det.textContent  = "Defina sua meta acima para ativar o semáforo.";
-  return;
-}
+  if (!meta) {
+    verd.textContent = "Aguardando…";
+    det.textContent  = "Defina sua meta acima para ativar o semáforo.";
+    return;
+  }
+
   if (!registros.filter(r => r.refeicao === ref).length) {
     verd.textContent = NOME_REFEICAO[ref] + " — pronto!";
     det.textContent  = "Limite: " + limRef + " kcal. Escreva o que vai comer ou comeu.";
