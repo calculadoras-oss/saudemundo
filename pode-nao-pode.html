@@ -715,8 +715,33 @@ async function enviarMensagem() {
   const ref      = document.getElementById("refeicao-select").value;
   const limRef   = meta > 0 ? Math.round(meta * PESO_REFEICAO[ref]) : null;
   const usadoRef = kcalRefeicaoAtual();
-  const modoMsg  = detectarModoMensagem(texto);
+  const modoMsg   = detectarModoMensagem(texto);
   const isDecisao = modoMsg === "decisao";
+
+  // Etapa 5 — aviso de conflito entre modo manual e conteúdo digitado
+  if (modoAtual !== "auto") {
+    const decisaoRegex = /\b(posso|vale|devo|melhor|pedir|escolher|ou|comparar|delivery|restaurante|pede|comprar|qual|quero comer|o que comer|sugere|recomenda)\b/i;
+    const registroRegex = /\b(comi|tomei|almocei|jantei|caf[eé]|bebi|comi hoje|acabei de comer|tive|jantar foi|almo[cç]o foi)\b/i;
+    const conflito =
+      (modoAtual === "decisao" && registroRegex.test(texto) && !decisaoRegex.test(texto)) ||
+      (modoAtual === "registro" && decisaoRegex.test(texto) && !registroRegex.test(texto));
+    if (conflito) {
+      const modoOposto = modoAtual === "decisao" ? "registro" : "decisao";
+      const labelOposto = modoAtual === "decisao"
+        ? "📊 registrar em vez de comparar?"
+        : "🧠 comparar em vez de registrar?";
+      const avisoId = "aviso-conflito-" + Date.now();
+      const avisoHtml = `<div id="${avisoId}" style="font-size:.8rem;color:var(--muted);margin-bottom:.4rem;padding:.4rem .6rem;background:var(--surface);border:1px solid var(--brd);border-radius:6px;">
+        ⚠️ Parece que o texto não combina com o modo selecionado. 
+        <button onclick="setModo('${modoOposto}');document.getElementById('${avisoId}').remove()" 
+          style="background:none;border:none;color:var(--azul);cursor:pointer;font-size:.8rem;text-decoration:underline;padding:0">
+          Quer ${labelOposto}
+        </button>
+      </div>`;
+      document.getElementById("chat-mensagens").insertAdjacentHTML("beforeend", avisoHtml);
+      document.getElementById("chat-mensagens").scrollTop = 999999;
+    }
+  }
 
   addMsg(texto, "user", isDecisao);
   historico.push({ role:"user", content: texto });
