@@ -336,39 +336,6 @@
   </div>
 </div>
 
-3. Adicione este CSS (onde estão os outros estilos da página):
-css/* ── Painel compacto ── */
-.painel-topo {
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  background: var(--surface);
-  border: 1px solid var(--brd);
-  border-radius: var(--radius);
-  padding: .5rem .8rem;
-  margin-bottom: .5rem;
-}
-.sinal-mini {
-  display: flex;
-  flex-direction: row;
-  gap: 4px;
-  flex-shrink: 0;
-}
-.luz-mini { width: 10px; height: 10px; }
-.sinal-veredicto { font-size: .9rem; }
-.sinal-detalhe { display: none; }
-
-/* ── Chips dentro da barra ── */
-.bar-chips {
-  display: flex;
-  gap: 1rem;
-  margin-top: .35rem;
-  flex-wrap: wrap;
-}
-.bar-chips .chip-mini { font-size: .7rem; }
-
-Três coisas acontecem: o semáforo vira uma linha fina horizontal (luzes lado a lado, veredicto curto), o detalhe some (não fazia falta na faixa fina), e os chips ficam logo abaixo da barra, que é onde fazem mais sentido visualmente.
-Feito isso, me confirma e vamos para a Etapa 4.
 
   <!-- Meta colapsável -->
   <div class="pnp-card meta-destaque" id="meta-card">
