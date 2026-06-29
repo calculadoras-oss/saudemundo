@@ -802,16 +802,23 @@ function atualizarTudo() {
     barWrap.style.display = "none";
   }
 
-  const painel = document.getElementById("painel-topo");
-  const verd   = document.getElementById("sinal-veredicto");
-  const det    = document.getElementById("sinal-detalhe");
-  painel.className = "painel-topo";
+ const painel = document.getElementById("painel-topo");
+const verd   = document.getElementById("sinal-veredicto");
+const det    = document.getElementById("sinal-detalhe");
+painel.className = "painel-topo";
 
-  if (!meta) {
-    verd.textContent = "Aguardando…";
-    det.textContent  = "Defina sua meta acima para ativar o semáforo.";
-    return;
-  }
+// Onboarding: esconde semáforo até ter registros
+if (registros.length === 0) {
+  painel.style.display = "none";
+  return;
+}
+painel.style.display = "";
+
+if (!meta) {
+  verd.textContent = "Aguardando…";
+  det.textContent  = "Defina sua meta acima para ativar o semáforo.";
+  return;
+}
   if (!registros.filter(r => r.refeicao === ref).length) {
     verd.textContent = NOME_REFEICAO[ref] + " — pronto!";
     det.textContent  = "Limite: " + limRef + " kcal. Escreva o que vai comer ou comeu.";
