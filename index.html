@@ -393,6 +393,9 @@ function calcular() {
   if (objetivo === 'emagrecer') meta = tdee - 500;
   if (objetivo === 'ganhar')    meta = tdee + 300;
   meta = Math.round(meta);
+     
+     // Salva a meta calculada para o "Pode, Não Pode?" conseguir usar
+     try { localStorage.setItem('sm_pnp_meta_kcal', String(meta)); } catch(e) {}
 
   let protPct, carbPct, fatPct;
   if (objetivo === 'emagrecer')     { protPct = 0.40; carbPct = 0.30; fatPct = 0.30; }
