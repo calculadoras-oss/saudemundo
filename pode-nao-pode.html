@@ -549,6 +549,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("chat-input").addEventListener("keydown", e => {
     if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); enviarMensagem(); }
   });
+  selecionarRefeicaoPorHorario();
   renderLista();
   atualizarTudo();
   renderExemplos();
