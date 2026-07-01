@@ -165,6 +165,9 @@ pintrk('page');
 .btn-copy { background: var(--dark3); color: var(--text); border: 1px solid var(--border); }
 .btn-pnp { background: #16a34a; color: white; }
 .btn-pnp:hover { background: #15803d; }
+/* ALTERAÇÃO (mudança 5a): botão irmão para convidar o usuário a registrar o treino primeiro */
+.btn-queima { background: #ea580c; color: white; }
+.btn-queima:hover { background: #c2410c; }
 
 .ai-card { background: var(--dark2); border: 1px solid rgba(46,204,113,0.2); border-radius: var(--radius); padding: 28px; margin-bottom: 24px; display: none; }
 .ai-card.show { display: block; }
@@ -301,6 +304,8 @@ body.dark .aff-benefit { color: var(--green); }
           <div class="share-btns">
             <button class="share-btn btn-whatsapp" onclick="shareWhatsApp()">📱 WhatsApp</button>
             <button class="share-btn btn-copy" onclick="copyLink()">📋 Copiar link</button>
+            <!-- ALTERAÇÃO (mudança 5a): convida o usuário a passar pela calculadora de queima antes do Pode, Não Pode -->
+            <button class="share-btn btn-queima" onclick="window.location.href='calculadora-queima-calorica.html'">🔥 Registrar treino de hoje</button>
             <button class="share-btn btn-pnp" onclick="enviarParaPodeNaoPode()">🚦 Usar no Pode, Não Pode?</button>
           </div>
         </div>

@@ -15,8 +15,17 @@ function smArtigoHref(file) { return SM_IN_ARTIGOS ? file : 'artigos/' + file; }
 
 /* ---------- Nav HTML ---------- */
 (function injectNav() {
+  // ALTERAÇÃO: Queima Calórica e Pode-Não-Pode reposicionadas logo após "Calorias",
+  // pois formam com ela o fluxo conectado (Meta → Treino → Refeições) — antes ficavam
+  // no fim da lista, junto das calculadoras standalone, o que escondia essa relação.
+  // Também corrigido: o item "Pode, Não Pode?" usava smRootHref("pode-nao-pode.html")
+  // aqui E o .map() abaixo aplicava smRootHref(p.href) de novo — dentro de /artigos/
+  // isso duplicava o "../" (gerava "../../pode-nao-pode.html", link quebrado, e
+  // impedia o estado "active" de bater). Agora usa o mesmo padrão dos outros itens.
   const pages = [
     { href: 'index.html',                        label: 'Calorias' },
+    { href: 'calculadora-queima-calorica.html',  label: 'Queima Calórica' },
+    { href: 'pode-nao-pode.html',                 label: 'Pode, Não Pode?' },
     { href: 'calculadora-imc.html',              label: 'IMC' },
     { href: 'calculadora-tmb.html',              label: 'TMB' },
     { href: 'calculadora-agua.html',             label: 'Água' },
@@ -27,9 +36,6 @@ function smArtigoHref(file) { return SM_IN_ARTIGOS ? file : 'artigos/' + file; }
     { href: 'calculadora-bulking.html',          label: 'Bulking' },
     { href: 'calculadora-macros.html',           label: 'Macros' },
     { href: 'calorias-por-dia.html',             label: 'Cal/Dia' },
-    { href: 'calculadora-queima-calorica.html', label: 'Queima Calórica' },
-    { href: smRootHref("pode-nao-pode.html"), label: "Pode, Não Pode?" },
-
   ];
 
   const current = window.location.pathname.split('/').pop() || 'index.html';
@@ -180,8 +186,10 @@ const SM_TOOLS = [
   { href: 'calculadora-bulking.html',          icon: '💪', name: 'Bulking',           desc: 'Planejamento de bulking' },
   { href: 'calculadora-macros.html',           icon: '🥧', name: 'Macronutrientes',   desc: 'Distribuição de macros' },
   { href: 'calorias-por-dia.html',             icon: '📅', name: 'Calorias por Dia',  desc: 'Estimativa calórica diária' },
-  { href: 'calculadora-queima-calorica.html', icon: '🔥', name: 'Queima Calórica', desc: 'Calcule calorias gastas no treino' },
-  { href: 'pode-nao-pode.html', icon: '🚦', name: 'Pode, Não Pode?', desc: 'Registre cada refeição e veja: semáforo verde, amarelo ou vermelho.' },
+  /* ALTERAÇÃO (mudança 5b): grupo:'conectado' marca as ferramentas que formam o
+     fluxo integrado (Meta → Treino → Refeições), para exibir o selo 🔗 no card. */
+  { href: 'calculadora-queima-calorica.html', icon: '🔥', name: 'Queima Calórica', desc: 'Calcule calorias gastas no treino', grupo: 'conectado' },
+  { href: 'pode-nao-pode.html', icon: '🚦', name: 'Pode, Não Pode?', desc: 'Registre cada refeição e veja: semáforo verde, amarelo ou vermelho.', grupo: 'conectado' },
 ];
 
 function smRenderOtherTools() {
@@ -191,9 +199,14 @@ function smRenderOtherTools() {
   const current = window.location.pathname.split('/').pop() || 'index.html';
   const filtered = SM_TOOLS.filter(t => t.href !== current);
 
+  // ALTERAÇÃO (mudança 5b): selo 🔗 nos cards de Queima Calórica e Pode-Não-Pode,
+  // via estilo inline (não alteramos shared.css para não sair do escopo).
+  const smSeloConectado = `<span title="Faz parte do sistema conectado: Meta → Treino → Refeições" style="position:absolute;top:8px;right:8px;font-size:11px;line-height:1;background:#eef2ff;color:#4338ca;border:1px solid #c7d2fe;border-radius:20px;padding:3px 6px;">🔗</span>`;
+
   document.querySelectorAll('.tools-grid').forEach(container => {
     container.innerHTML = filtered.map(t =>
-      `<a href="${t.href}" class="tool-card">
+      `<a href="${t.href}" class="tool-card" style="position:relative;">
+        ${t.grupo === 'conectado' ? smSeloConectado : ''}
         <div class="tool-icon">${t.icon}</div>
         <div class="tool-name">${t.name}</div>
         <div class="tool-desc">${t.desc}</div>
@@ -203,12 +216,76 @@ function smRenderOtherTools() {
 
   document.querySelectorAll('.other-tools').forEach(container => {
     container.innerHTML = filtered.map(t =>
-      `<a href="${t.href}" class="tool-link">
+      `<a href="${t.href}" class="tool-link" style="position:relative;">
+        ${t.grupo === 'conectado' ? smSeloConectado : ''}
         <div class="tool-link-name">${t.icon} ${t.name}</div>
         <div class="tool-link-desc">${t.desc}</div>
       </a>`
     ).join('');
   });
+}
+
+/* ============================================================
+   ALTERAÇÃO (mudança 4) — Stepper "sistema conectado"
+   Componente reutilizável inserido logo abaixo do <header> em index.html,
+   calculadora-queima-calorica.html e pode-nao-pode.html. Fica centralizado
+   aqui (em vez de duplicar o markup nos 3 arquivos) para manter uma única
+   fonte de verdade e uma paleta consistente entre as páginas.
+   ============================================================ */
+const SM_STEPPER_ETAPAS = [
+  { href: 'index.html',                        icon: '🎯', label: 'Meta' },
+  { href: 'calculadora-queima-calorica.html',  icon: '🔥', label: 'Treino' },
+  { href: 'pode-nao-pode.html',                 icon: '🚦', label: 'Refeições' },
+];
+
+function smInjectStepperStyles() {
+  if (document.getElementById('sm-stepper-style')) return;
+  const style = document.createElement('style');
+  style.id = 'sm-stepper-style';
+  style.textContent = `
+    .sm-stepper-wrap { max-width:660px; margin:.9rem auto 0; padding:0 1rem; }
+    .sm-stepper { display:flex; align-items:center; justify-content:center; gap:.4rem;
+      background:#eef2ff; border:1px solid #c7d2fe; border-radius:14px;
+      padding:.6rem .8rem; flex-wrap:wrap; }
+    .sm-step { display:inline-flex; align-items:center; gap:.3rem; font-size:.78rem;
+      font-weight:700; text-decoration:none; padding:.28rem .65rem; border-radius:20px;
+      border:1.5px solid transparent; color:#4338ca; transition:background .2s; }
+    .sm-step:hover { background:#e0e7ff; }
+    .sm-step.sm-step-ativo { background:#4338ca; border-color:#4338ca; color:#fff; }
+    .sm-step-arrow { color:#a5b4fc; font-size:.8rem; }
+    .sm-stepper-texto { text-align:center; font-size:.72rem; color:var(--text-muted,#64748b);
+      margin:.4rem auto 0; max-width:520px; line-height:1.5; }
+    body.dark .sm-stepper { background:#0c1230; border-color:#312e81; }
+    body.dark .sm-step { color:#a5b4fc; }
+    body.dark .sm-step:hover { background:#1e1b4b; }
+    body.dark .sm-step.sm-step-ativo { background:#4f46e5; border-color:#4f46e5; color:#fff; }
+  `;
+  document.head.appendChild(style);
+}
+
+function smInjectStepper() {
+  const current = window.location.pathname.split('/').pop() || 'index.html';
+  const faixaAtual = SM_STEPPER_ETAPAS.some(e => e.href === current);
+  if (!faixaAtual || SM_IN_ARTIGOS) return; // só nas 3 páginas do fluxo, nunca no blog
+
+  const header = document.querySelector('header');
+  if (!header) return;
+
+  smInjectStepperStyles();
+
+  const etapasHtml = SM_STEPPER_ETAPAS.map((e, i) => {
+    const ativa = e.href === current;
+    return (i > 0 ? '<span class="sm-step-arrow">→</span>' : '')
+      + `<a href="${smRootHref(e.href)}" class="sm-step${ativa ? ' sm-step-ativo' : ''}">${e.icon} ${e.label}</a>`;
+  }).join('');
+
+  const stepperHtml = `
+    <div class="sm-stepper-wrap">
+      <div class="sm-stepper">${etapasHtml}</div>
+      <div class="sm-stepper-texto">Essas 3 ferramentas trabalham juntas: sua meta calórica ajusta o semáforo de refeições, e o treino registrado aqui vira crédito extra no seu dia.</div>
+    </div>`;
+
+  header.insertAdjacentHTML('afterend', stepperHtml);
 }
 
 /* ============================================================
@@ -281,6 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
   smLoadUserData();
   smRenderOtherTools();
   injectByline();
+  smInjectStepper(); // ALTERAÇÃO (mudança 4)
 
   /* ---------- Corrige "atualizado recentemente" → data real ---------- */
   const MESES = ['janeiro','fevereiro','março','abril','maio','junho',
