@@ -27,6 +27,7 @@ function smArtigoHref(file) { return SM_IN_ARTIGOS ? file : 'artigos/' + file; }
     { href: 'calculadora-bulking.html',          label: 'Bulking' },
     { href: 'calculadora-macros.html',           label: 'Macros' },
     { href: 'calorias-por-dia.html',             label: 'Cal/Dia' },
+    { href: 'calculadora-queima-calorica.html', label: 'Queima Calórica' },
     { href: smRootHref("pode-nao-pode.html"), label: "Pode, Não Pode?" },
 
   ];
