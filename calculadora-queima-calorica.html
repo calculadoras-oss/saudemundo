@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Queima Calórica – Quantas Calorias Você Gasta no Treino | SaúdeMundo</title>
+  <meta name="description" content="Calcule quantas calorias você queima em musculação, corrida, spinning, yoga e outras atividades. Compare duas opções de treino e veja qual fecha melhor sua conta calórica do dia." />
+  <link rel="canonical" href="https://www.saudemundo.com.br/calculadora-queima-calorica.html" />
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9EPL2XNX6H"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9EPL2XNX6H');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora de Queima Calórica",
+    "url": "https://www.saudemundo.com.br/calculadora-queima-calorica.html",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "description": "Calcule quantas calorias você gasta em musculação, corrida, ciclismo, spinning, yoga e outras atividades físicas, com base no seu peso e na duração do treino.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" },
+    "author": { "@type": "Person", "name": "Lucas Andrade", "url": "https://www.saudemundo.com.br/sobre.html" },
+    "publisher": { "@type": "Organization", "name": "SaúdeMundo", "url": "https://www.saudemundo.com.br" }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "dateModified": "2026-07-01",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Como é calculado o gasto calórico do treino?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Usamos a fórmula científica MET: calorias = MET x peso (kg) x tempo (horas). O MET é um número padronizado que representa a intensidade de cada atividade. Por exemplo, uma pessoa de 70kg pedalando 30 minutos em ritmo moderado (MET 6,8) queima aproximadamente 6,8 x 70 x 0,5 = 238 kcal." }
+      },
+      {
+        "@type": "Question",
+        "name": "O ritmo da corrida (pace) muda o total de calorias?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Menos do que parece. O gasto calórico da corrida depende principalmente da distância percorrida, não da velocidade. Por isso, na corrida usamos a distância como base do cálculo, e o pace serve só para estimar quanto tempo o treino levou." }
+      },
+      {
+        "@type": "Question",
+        "name": "Por que a musculação tem duas opções de intensidade?",
+        "acceptedAnswer": { "@type": "Answer", "text": "O gasto de um treino de força varia bastante conforme o volume e o tempo de descanso entre séries. Musculação moderada (MET 3,5) representa treinos com descansos mais longos; musculação intensa (MET 6,0) representa treinos com pouco descanso e ritmo elevado, como circuitos." }
+      },
+      {
+        "@type": "Question",
+        "name": "Como funciona a comparação entre duas atividades?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A calculadora lê sua meta diária e o quanto você já registrou no Pode, Não Pode. A partir disso, calcula seu saldo calórico atual e mostra qual das duas opções de treino deixa esse saldo mais próximo ou dentro da meta." }
+      },
+      {
+        "@type": "Question",
+        "name": "Essa calculadora substitui a orientação de um educador físico?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Não. Os valores são estimativas baseadas em tabelas científicas de referência (MET) e servem como apoio educacional. Para um plano de treino individualizado, consulte um educador físico ou profissional de saúde." }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --qc-verde:   var(--green, #16a34a);
+      --qc-verde-bg:#f0fdf4; --qc-verde-brd:#86efac;
+      --qc-laranja: #ea580c; --qc-laranja-bg:#fff7ed; --qc-laranja-brd:#fed7aa;
+      --qc-azul:    #2563eb; --qc-azul-bg:#eff6ff; --qc-azul-brd:#bfdbfe;
+      --qc-brd:     var(--border-color,#e2e8f0);
+      --qc-surface: var(--card-bg,#ffffff);
+      --qc-text:    var(--text-primary,#1a1a1a);
+      --qc-muted:   var(--text-secondary,#64748b);
+      --qc-radius:  14px;
+    }
+
+    .qc-header { text-align:center; padding:2rem 1rem 0; }
+    .qc-badge {
+      display:inline-flex; align-items:center; gap:.45rem;
+      font-size:.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+      color:var(--qc-laranja); background:var(--qc-laranja-bg); padding:.28rem .8rem;
+      border-radius:20px; margin-bottom:.8rem;
+    }
+    .qc-header h1 {
+      font-family:'Playfair Display',serif; font-weight:900;
+      font-size:clamp(1.8rem,5vw,2.6rem); letter-spacing:-.02em;
+      margin:0 0 .3rem; line-height:1.05;
+    }
+    .qc-header h1 em { font-style:normal; color:var(--qc-laranja); }
+    .qc-tagline { font-size:.88rem; color:var(--qc-muted); max-width:440px; margin:0 auto 1.5rem; line-height:1.5; }
+
+    .container { max-width:660px; margin:0 auto; padding:0 1rem 3rem; }
+
+    .qc-card { background:var(--qc-surface); border:1px solid var(--qc-brd); border-radius:var(--qc-radius); padding:1.2rem; margin-bottom:.9rem; }
+    .qc-card-title { font-size:.68rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--qc-laranja); margin-bottom:.85rem; }
+
+    .qc-row { display:flex; align-items:center; gap:.6rem; flex-wrap:wrap; margin-bottom:.7rem; }
+    .qc-row label { font-size:.8rem; font-weight:600; color:var(--qc-muted); white-space:nowrap; min-width:110px; }
+    .qc-row select, .qc-row input[type="number"] {
+      flex:1; min-width:120px; padding:.55rem .7rem; border:1.5px solid var(--qc-brd); border-radius:8px;
+      font-size:.9rem; background:transparent; color:var(--qc-text);
+    }
+    .qc-peso-link { font-size:.75rem; color:var(--qc-laranja); text-decoration:none; white-space:nowrap; }
+    .qc-peso-link:hover { text-decoration:underline; }
+
+    .qc-pills { display:flex; gap:.5rem; margin-bottom:.9rem; background:var(--qc-surface); border:1px solid var(--qc-brd); border-radius:var(--qc-radius); padding:.6rem .8rem; }
+    .qc-pill {
+      flex:1; text-align:center; padding:.5rem .5rem; border-radius:8px; border:1.5px solid var(--qc-brd);
+      font-size:.82rem; font-weight:600; cursor:pointer; transition:all .2s; color:var(--qc-muted); background:transparent; line-height:1.25;
+    }
+    .qc-pill.ativo { background:var(--qc-laranja-bg); border-color:var(--qc-laranja-brd); color:var(--qc-laranja); }
+
+    .qc-corrida-extra { display:none; }
+    .qc-corrida-extra.show { display:flex; }
+
+    .qc-resultado {
+      display:none; text-align:center; padding:1.1rem; border-radius:var(--qc-radius);
+      background:var(--qc-laranja-bg); border:1px solid var(--qc-laranja-brd); margin-bottom:.8rem;
+    }
+    .qc-resultado.show { display:block; }
+    .qc-resultado .qc-kcal { font-size:2rem; font-weight:900; color:var(--qc-laranja); font-family:'Playfair Display',serif; line-height:1; }
+    .qc-resultado .qc-kcal-label { font-size:.78rem; color:var(--qc-muted); margin-top:.2rem; }
+    .qc-resultado .qc-formula { font-size:.72rem; color:var(--qc-muted); margin-top:.5rem; }
+
+    .btn-qc {
+      display:inline-block; padding:.6rem 1.1rem; background:var(--qc-laranja); color:#fff; border:none;
+      border-radius:10px; font-size:.85rem; font-weight:700; cursor:pointer; transition:background .2s;
+    }
+    .btn-qc:hover { background:#c2410c; }
+    .btn-qc:disabled { background:#94a3b8; cursor:not-allowed; }
+    .btn-qc-outline {
+      display:inline-block; padding:.6rem 1.1rem; background:transparent; color:var(--qc-laranja);
+      border:1.5px solid var(--qc-laranja-brd); border-radius:10px; font-size:.85rem; font-weight:700; cursor:pointer;
+    }
+
+    /* Lista do dia */
+    .qc-lista-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:.75rem; }
+    .qc-item { display:flex; align-items:center; gap:.5rem; padding:.55rem 0; border-bottom:1px solid var(--qc-brd); font-size:.86rem; }
+    .qc-item:last-child { border-bottom:none; }
+    .qc-item-nome { flex:1; font-weight:600; color:var(--qc-text); }
+    .qc-item-kcal { font-weight:700; color:var(--qc-laranja); white-space:nowrap; }
+    .qc-item-del { background:none; border:none; color:var(--qc-muted); cursor:pointer; font-size:.9rem; padding:.1rem .25rem; }
+    .qc-item-del:hover { color:#dc2626; }
+    .qc-empty { text-align:center; color:var(--qc-muted); font-size:.85rem; padding:1.2rem 0; }
+    .qc-total-dia { text-align:right; font-size:.85rem; font-weight:700; color:var(--qc-laranja); margin-top:.4rem; }
+
+    /* Comparação */
+    .qc-compare-grid { display:grid; grid-template-columns:1fr 1fr; gap:.8rem; margin-bottom:.8rem; }
+    @media (max-width:520px) { .qc-compare-grid { grid-template-columns:1fr; } }
+    .qc-opcao { border:1.5px solid var(--qc-brd); border-radius:10px; padding:.8rem; }
+    .qc-opcao-titulo { font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--qc-muted); margin-bottom:.6rem; }
+    .qc-opcao select, .qc-opcao input { width:100%; margin-bottom:.5rem; padding:.5rem .6rem; border:1.5px solid var(--qc-brd); border-radius:8px; font-size:.85rem; background:transparent; color:var(--qc-text); }
+
+    .qc-saldo-box {
+      font-size:.82rem; color:var(--qc-muted); background:#f8fafc; border:1px solid var(--qc-brd);
+      border-radius:10px; padding:.6rem .8rem; margin-bottom:.8rem; line-height:1.6;
+    }
+    .qc-saldo-box strong { color:var(--qc-text); }
+
+    .qc-compare-result { display:none; }
+    .qc-compare-result.show { display:block; }
+    .qc-compare-linha { display:flex; justify-content:space-between; padding:.5rem 0; border-bottom:1px dashed var(--qc-brd); font-size:.86rem; }
+    .qc-compare-linha:last-child { border-bottom:none; }
+    .qc-vencedora { background:var(--qc-verde-bg); border:1px solid var(--qc-verde-brd); border-radius:10px; padding:.7rem .9rem; margin-top:.6rem; font-size:.86rem; color:#15803d; font-weight:600; }
+
+    /* Editorial / FAQ (fallback caso shared.css não cubra) */
+    .editorial { font-size:.9rem; line-height:1.75; color:var(--qc-text); }
+    .editorial h2 { font-family:'Playfair Display',serif; font-size:1.25rem; margin:2rem 0 .65rem; }
+    .editorial p { margin:0 0 .85rem; }
+    .card-title { font-size:.68rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--qc-laranja); margin-bottom:.9rem; }
+    .faq-item { padding:.85rem 0; border-bottom:1px solid var(--qc-brd); }
+    .faq-item:last-child { border-bottom:none; }
+    .faq-q { font-weight:600; font-size:.88rem; margin-bottom:.28rem; }
+    .faq-a { font-size:.84rem; color:var(--qc-muted); line-height:1.6; }
+
+    [data-theme="dark"] .qc-badge { background:#3b1a00; }
+    [data-theme="dark"] .qc-resultado { background:#3b1a00; border-color:#7c2d12; }
+    [data-theme="dark"] .qc-saldo-box { background:#1a1a1a; border-color:#2d2d2d; }
+    [data-theme="dark"] .qc-vencedora { background:#052e16; border-color:#166534; }
+  </style>
+</head>
+<body>
+
+<header class="qc-header">
+  <div class="qc-badge">🔥 SaúdeMundo · Gasto calórico</div>
+  <h1>Calculadora de <em>Queima</em> Calórica</h1>
+  <p class="qc-tagline">Descubra quantas calorias você gasta no treino — e compare duas opções para saber qual fecha melhor a conta do seu dia.</p>
+</header>
+
+<main class="container">
+
+  <!-- Peso -->
+  <div class="qc-card">
+    <div class="qc-card-title">⚖️ Seu peso</div>
+    <div class="qc-row" style="margin-bottom:0;">
+      <label for="peso">Peso (kg):</label>
+      <input type="number" id="peso" placeholder="ex: 70" min="20" max="300" oninput="onPesoChange()" />
+      <a href="index.html" class="qc-peso-link">Não sabe sua meta? Calcule aqui →</a>
+    </div>
+  </div>
+
+  <!-- Seletor de modo -->
+  <div class="qc-pills">
+    <button class="qc-pill" id="pill-registrar" onclick="setModoQC('registrar')">📊 Registrar atividade</button>
+    <button class="qc-pill" id="pill-comparar" onclick="setModoQC('comparar')">⚖️ Comparar duas opções</button>
+  </div>
+
+  <!-- ===================== MODO REGISTRAR ===================== -->
+  <div id="bloco-registrar">
+    <div class="qc-card">
+      <div class="qc-card-title">📊 Qual atividade você fez?</div>
+
+      <div class="qc-row">
+        <label for="ativ-select">Atividade:</label>
+        <select id="ativ-select" onchange="onAtividadeChange('ativ')"></select>
+      </div>
+
+      <div class="qc-row" id="ativ-duracao-row">
+        <label for="ativ-duracao">Duração (min):</label>
+        <input type="number" id="ativ-duracao" min="1" max="600" placeholder="ex: 45" />
+      </div>
+
+      <div class="qc-row qc-corrida-extra" id="ativ-corrida-extra">
+        <label for="ativ-distancia">Distância (km):</label>
+        <input type="number" id="ativ-distancia" min="0.5" max="100" step="0.1" placeholder="ex: 10" />
+      </div>
+      <div class="qc-row qc-corrida-extra" id="ativ-pace-extra">
+        <label for="ativ-pace">Pace (min/km):</label>
+        <input type="number" id="ativ-pace" min="2" max="15" step="0.1" placeholder="ex: 5.5" />
+      </div>
+
+      <button class="btn-qc" onclick="calcularAtividade()">🔥 Calcular</button>
+
+      <div class="qc-resultado" id="ativ-resultado">
+        <div class="qc-kcal" id="ativ-kcal-valor">0 kcal</div>
+        <div class="qc-kcal-label" id="ativ-kcal-detalhe"></div>
+        <div class="qc-formula" id="ativ-formula"></div>
+        <div style="margin-top:.9rem;">
+          <button class="btn-qc" onclick="adicionarAoDia()">✅ Adicionar ao dia</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista do dia -->
+    <div class="qc-card">
+      <div class="qc-lista-header">
+        <div class="qc-card-title" style="margin:0;">📋 Atividades de hoje</div>
+        <button class="qc-item-del" style="border:1px solid var(--qc-brd);border-radius:6px;padding:.2rem .5rem;font-size:.72rem;" onclick="limparAtividadesDia()">🗑 Limpar</button>
+      </div>
+      <div id="lista-atividades"></div>
+      <div class="qc-total-dia" id="total-atividades-dia"></div>
+      <p style="font-size:.78rem;color:var(--qc-muted);margin-top:.7rem;">
+        Essas calorias entram automaticamente como crédito extra no
+        <a href="pode-nao-pode.html" style="color:var(--qc-laranja);">Pode, Não Pode?</a> de hoje.
+      </p>
+    </div>
+  </div>
+
+  <!-- ===================== MODO COMPARAR ===================== -->
+  <div id="bloco-comparar" style="display:none;">
+    <div class="qc-card">
+      <div class="qc-card-title">⚖️ O que treinar hoje?</div>
+      <div class="qc-saldo-box" id="qc-saldo-info">Calculando seu saldo do dia…</div>
+
+      <div class="qc-compare-grid">
+        <div class="qc-opcao">
+          <div class="qc-opcao-titulo">Opção A</div>
+          <select id="op-a-select" onchange="onAtividadeChange('op-a')"></select>
+          <input type="number" id="op-a-duracao" placeholder="Duração (min)" min="1" max="600">
+          <input type="number" id="op-a-distancia" class="qc-corrida-extra" placeholder="Distância (km)" min="0.5" step="0.1">
+          <input type="number" id="op-a-pace" class="qc-corrida-extra" placeholder="Pace (min/km)" min="2" step="0.1">
+        </div>
+        <div class="qc-opcao">
+          <div class="qc-opcao-titulo">Opção B</div>
+          <select id="op-b-select" onchange="onAtividadeChange('op-b')"></select>
+          <input type="number" id="op-b-duracao" placeholder="Duração (min)" min="1" max="600">
+          <input type="number" id="op-b-distancia" class="qc-corrida-extra" placeholder="Distância (km)" min="0.5" step="0.1">
+          <input type="number" id="op-b-pace" class="qc-corrida-extra" placeholder="Pace (min/km)" min="2" step="0.1">
+        </div>
+      </div>
+
+      <button class="btn-qc" onclick="compararOpcoes()">⚖️ Comparar</button>
+
+      <div class="qc-compare-result" id="qc-compare-result">
+        <div class="qc-compare-linha"><span>Opção A</span><strong id="cmp-a-txt">—</strong></div>
+        <div class="qc-compare-linha"><span>Opção B</span><strong id="cmp-b-txt">—</strong></div>
+        <div class="qc-vencedora" id="qc-vencedora"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Editorial -->
+  <div class="editorial">
+    <h2>🔥 Como funciona o cálculo</h2>
+    <p>
+      Usamos a fórmula do <strong>MET</strong> (Equivalente Metabólico), uma medida padronizada e usada
+      cientificamente para estimar o gasto de qualquer atividade: <em>calorias = MET × peso (kg) × tempo (horas)</em>.
+      Uma pessoa de 70kg pedalando 30 minutos em ritmo moderado (MET 6,8) queima aproximadamente
+      6,8 × 70 × 0,5 = <strong>238 kcal</strong>.
+    </p>
+    <p>
+      Para a <strong>corrida</strong> usamos uma lógica um pouco diferente: em vez de depender do ritmo (pace),
+      o gasto calórico acompanha principalmente a <strong>distância</strong> percorrida — correr 10km gasta
+      praticamente o mesmo total de calorias em qualquer ritmo razoável, porque o corpo percorre a mesma
+      distância. Por isso pedimos a distância, e usamos o pace apenas para estimar a duração do treino.
+    </p>
+    <p>
+      Depois de calcular, você pode somar as calorias direto na sua conta do dia no
+      <a href="pode-nao-pode.html">Pode, Não Pode?</a> — assim o semáforo considera o que você comeu
+      <em>e</em> o que você já queimou. Se ainda não calculou sua meta diária, comece pela
+      <a href="index.html">Calculadora de Calorias e Macros</a>.
+    </p>
+    <p style="font-size:.82rem;color:var(--qc-muted);">
+      ⚠️ Ferramenta educacional. Valores são estimativas baseadas em tabelas MET de referência.
+      Para um plano de treino individualizado, consulte um educador físico ou médico.
+    </p>
+  </div>
+
+  <!-- FAQ -->
+  <div class="qc-card">
+    <div class="card-title">❓ Perguntas Frequentes</div>
+    <div class="faq-section">
+      <div class="faq-item">
+        <div class="faq-q">Como é calculado o gasto calórico do treino?</div>
+        <div class="faq-a">Usamos a fórmula MET: calorias = MET × peso (kg) × tempo (horas). Uma pessoa de 70kg pedalando 30 minutos em ritmo moderado (MET 6,8) queima aproximadamente 238 kcal.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">O ritmo da corrida (pace) muda o total de calorias?</div>
+        <div class="faq-a">Menos do que parece. O gasto depende principalmente da distância percorrida, não da velocidade. O pace é usado só para estimar a duração do treino.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Por que a musculação tem duas opções de intensidade?</div>
+        <div class="faq-a">O gasto varia com o volume e o descanso entre séries. Moderada (MET 3,5) representa descansos mais longos; intensa (MET 6,0) representa treinos com pouco descanso, como circuitos.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Como funciona a comparação entre duas atividades?</div>
+        <div class="faq-a">A calculadora lê sua meta diária e o que você já registrou no Pode, Não Pode, calcula seu saldo atual e mostra qual opção de treino deixa esse saldo mais próximo ou dentro da meta.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Essa calculadora substitui a orientação de um educador físico?</div>
+        <div class="faq-a">Não. Os valores são estimativas baseadas em tabelas científicas de referência (MET). Para um plano individualizado, consulte um educador físico ou profissional de saúde.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="sm-blog-placeholder"></div>
+</main>
+
+<script src="shared.js"></script>
+<script>
+const HOJE = new Date().toISOString().slice(0,10);
+const ATIV_KEY = "sm_pnp_ativ_" + HOJE;      // lido futuramente pelo Pode, Não Pode
+const DIARIO_KEY = "sm_pnp_" + HOJE;          // registros de comida do Pode, Não Pode
+const META_KEY = "sm_pnp_meta_kcal";
+
+// Tabela MET (Compendium of Physical Activities, valores aproximados)
+const ATIVIDADES = {
+  musc_mod:   { label: "🏋️ Musculação (moderada)",        met: 3.5 },
+  musc_int:   { label: "🏋️ Musculação (intensa/circuito)", met: 6.0 },
+  corrida:    { label: "🏃 Corrida (por distância)",        met: null }, // especial
+  caminh_len: { label: "🚶 Caminhada lenta (~3km/h)",       met: 2.8 },
+  caminh_rap: { label: "🚶 Caminhada rápida (~6km/h)",      met: 4.3 },
+  ciclismo_l: { label: "🚴 Ciclismo leve (<16km/h)",        met: 4.0 },
+  ciclismo_m: { label: "🚴 Ciclismo moderado (16–19km/h)",  met: 6.8 },
+  spinning:   { label: "🚴 Spinning / bike indoor",         met: 8.5 },
+  yoga:       { label: "🧘 Yoga",                           met: 2.5 },
+  pilates:    { label: "🧘 Pilates",                        met: 3.0 },
+  natacao:    { label: "🏊 Natação (moderada)",             met: 6.0 },
+  danca:      { label: "💃 Dança",                          met: 4.8 },
+  futebol:    { label: "⚽ Futebol recreativo",             met: 7.0 },
+  hiit:       { label: "⚡ HIIT / treino funcional intenso", met: 8.0 },
+};
+
+let modoQC = "registrar";
+let ultimoCalculo = null; // { nome, kcal }
+
+document.addEventListener("DOMContentLoaded", () => {
+  preencherSelects();
+  atualizarVisuaisModo();
+  renderListaAtividades();
+
+  const ud = smGetUserData();
+  if (ud && ud.peso) document.getElementById("peso").value = ud.peso;
+});
+
+function onPesoChange() {
+  const v = parseFloat(document.getElementById("peso").value) || 0;
+  if (v > 0) smSaveUserData({ peso: v });
+}
+
+function preencherSelects() {
+  const opts = Object.entries(ATIVIDADES).map(([k,v]) => `<option value="${k}">${v.label}</option>`).join("");
+  ["ativ-select","op-a-select","op-b-select"].forEach(id => {
+    document.getElementById(id).innerHTML = opts;
+  });
+  onAtividadeChange("ativ");
+  onAtividadeChange("op-a");
+  onAtividadeChange("op-b");
+}
+
+function onAtividadeChange(prefix) {
+  const select = document.getElementById(prefix === "ativ" ? "ativ-select" : prefix + "-select");
+  const key = select.value;
+  const isCorrida = key === "corrida";
+
+  if (prefix === "ativ") {
+    document.getElementById("ativ-duracao-row").style.display = isCorrida ? "none" : "flex";
+    document.getElementById("ativ-corrida-extra").classList.toggle("show", isCorrida);
+    document.getElementById("ativ-pace-extra").classList.toggle("show", isCorrida);
+  } else {
+    document.getElementById(prefix + "-duracao").style.display = isCorrida ? "none" : "block";
+    document.getElementById(prefix + "-distancia").classList.toggle("show", isCorrida);
+    document.getElementById(prefix + "-pace").classList.toggle("show", isCorrida);
+  }
+}
+
+function getPeso() {
+  return parseFloat(document.getElementById("peso").value) || 0;
+}
+
+// Calcula kcal para uma atividade dada (usado no registro simples e na comparação)
+function calcularKcal(chave, duracaoMin, distanciaKm, paceMinKm, peso) {
+  if (!peso || peso <= 0) return null;
+
+  if (chave === "corrida") {
+    if (!distanciaKm || distanciaKm <= 0) return null;
+    const kcal = Math.round(1.036 * peso * distanciaKm);
+    const duracaoEstimada = paceMinKm > 0 ? Math.round(distanciaKm * paceMinKm) : null;
+    return { kcal, duracaoMin: duracaoEstimada, formula: `1,036 × ${peso}kg × ${distanciaKm}km` };
+  }
+
+  const met = ATIVIDADES[chave] ? ATIVIDADES[chave].met : null;
+  if (!met || !duracaoMin || duracaoMin <= 0) return null;
+  const horas = duracaoMin / 60;
+  const kcal = Math.round(met * peso * horas);
+  return { kcal, duracaoMin, formula: `${met} MET × ${peso}kg × ${horas.toFixed(2)}h` };
+}
+
+function calcularAtividade() {
+  const peso = getPeso();
+  const chave = document.getElementById("ativ-select").value;
+  const duracao = parseFloat(document.getElementById("ativ-duracao").value) || 0;
+  const distancia = parseFloat(document.getElementById("ativ-distancia").value) || 0;
+  const pace = parseFloat(document.getElementById("ativ-pace").value) || 0;
+
+  if (!peso) { alert("Informe seu peso primeiro."); return; }
+
+  const r = calcularKcal(chave, duracao, distancia, pace, peso);
+  if (!r) { alert("Preencha os campos da atividade selecionada."); return; }
+
+  const nomeAtividade = ATIVIDADES[chave].label.replace(/^\S+\s/, ""); // remove emoji do nome salvo
+  ultimoCalculo = { nome: nomeAtividade, kcal: r.kcal };
+
+  document.getElementById("ativ-kcal-valor").textContent = r.kcal + " kcal";
+  document.getElementById("ativ-kcal-detalhe").textContent = r.duracaoMin
+    ? "≈ " + r.duracaoMin + " min de " + nomeAtividade
+    : nomeAtividade;
+  document.getElementById("ativ-formula").textContent = "Cálculo: " + r.formula;
+  document.getElementById("ativ-resultado").classList.add("show");
+}
+
+function adicionarAoDia() {
+  if (!ultimoCalculo) return;
+  const atividades = carregarAtividades();
+  atividades.push({ id: Date.now(), nome: ultimoCalculo.nome, kcal: ultimoCalculo.kcal });
+  salvarAtividades(atividades);
+  renderListaAtividades();
+  document.getElementById("ativ-resultado").classList.remove("show");
+  if (typeof showToast === "function") showToast("✅ " + ultimoCalculo.kcal + " kcal adicionadas ao dia!");
+  ultimoCalculo = null;
+}
+
+function carregarAtividades() {
+  try { const r = localStorage.getItem(ATIV_KEY); return r ? JSON.parse(r) : []; }
+  catch(e) { return []; }
+}
+function salvarAtividades(arr) {
+  try { localStorage.setItem(ATIV_KEY, JSON.stringify(arr)); } catch(e) {}
+}
+
+function renderListaAtividades() {
+  const atividades = carregarAtividades();
+  const el = document.getElementById("lista-atividades");
+  if (!atividades.length) {
+    el.innerHTML = '<div class="qc-empty">Nenhuma atividade registrada hoje.</div>';
+    document.getElementById("total-atividades-dia").textContent = "";
+    return;
+  }
+  el.innerHTML = atividades.map(a =>
+    `<div class="qc-item">
+      <span class="qc-item-nome">${a.nome}</span>
+      <span class="qc-item-kcal">-${a.kcal} kcal</span>
+      <button class="qc-item-del" onclick="removerAtividade(${a.id})" title="Remover">✕</button>
+    </div>`
+  ).join("");
+  const total = atividades.reduce((s,a) => s + a.kcal, 0);
+  document.getElementById("total-atividades-dia").textContent = "Total queimado hoje: " + total + " kcal";
+}
+
+function removerAtividade(id) {
+  const atividades = carregarAtividades().filter(a => a.id !== id);
+  salvarAtividades(atividades);
+  renderListaAtividades();
+}
+
+function limparAtividadesDia() {
+  if (!confirm("Limpar todas as atividades de hoje?")) return;
+  salvarAtividades([]);
+  renderListaAtividades();
+}
+
+// ── Modo ──
+function setModoQC(modo) {
+  modoQC = modo;
+  atualizarVisuaisModo();
+  if (modo === "comparar") atualizarSaldoInfo();
+}
+
+function atualizarVisuaisModo() {
+  document.getElementById("pill-registrar").className = "qc-pill" + (modoQC === "registrar" ? " ativo" : "");
+  document.getElementById("pill-comparar").className  = "qc-pill" + (modoQC === "comparar" ? " ativo" : "");
+  document.getElementById("bloco-registrar").style.display = modoQC === "registrar" ? "block" : "none";
+  document.getElementById("bloco-comparar").style.display  = modoQC === "comparar"  ? "block" : "none";
+}
+
+// ── Comparar ──
+function totalConsumidoHoje() {
+  try {
+    const r = localStorage.getItem(DIARIO_KEY);
+    const registros = r ? JSON.parse(r) : [];
+    return registros.reduce((s,x) => s + (x.kcal||0), 0);
+  } catch(e) { return 0; }
+}
+function getMeta() {
+  try { return parseInt(localStorage.getItem(META_KEY)) || 0; } catch(e) { return 0; }
+}
+function totalQueimadoHoje() {
+  return carregarAtividades().reduce((s,a) => s + (a.kcal||0), 0);
+}
+
+function atualizarSaldoInfo() {
+  const meta = getMeta();
+  const consumido = totalConsumidoHoje();
+  const queimado = totalQueimadoHoje();
+  const box = document.getElementById("qc-saldo-info");
+
+  if (!meta) {
+    box.innerHTML = "Você ainda não definiu sua meta diária no <a href='pode-nao-pode.html' style='color:var(--qc-laranja);'>Pode, Não Pode</a>. Sem meta, comparamos só o gasto calórico bruto de cada opção.";
+    return;
+  }
+  const saldo = meta - consumido + queimado;
+  box.innerHTML = "Meta: <strong>" + meta + " kcal</strong> · Consumido hoje: <strong>" + consumido + " kcal</strong>"
+    + (queimado > 0 ? " · Já queimado hoje: <strong>" + queimado + " kcal</strong>" : "")
+    + "<br>Saldo atual: <strong>" + (saldo >= 0 ? saldo + " kcal disponíveis" : Math.abs(saldo) + " kcal acima da meta") + "</strong>";
+}
+
+function lerOpcao(prefix) {
+  const chave = document.getElementById(prefix + "-select").value;
+  const duracao = parseFloat(document.getElementById(prefix + "-duracao").value) || 0;
+  const distancia = parseFloat(document.getElementById(prefix + "-distancia").value) || 0;
+  const pace = parseFloat(document.getElementById(prefix + "-pace").value) || 0;
+  return { chave, duracao, distancia, pace };
+}
+
+function compararOpcoes() {
+  const peso = getPeso();
+  if (!peso) { alert("Informe seu peso primeiro."); return; }
+
+  const a = lerOpcao("op-a");
+  const b = lerOpcao("op-b");
+  const ra = calcularKcal(a.chave, a.duracao, a.distancia, a.pace, peso);
+  const rb = calcularKcal(b.chave, b.duracao, b.distancia, b.pace, peso);
+
+  if (!ra || !rb) { alert("Preencha os campos das duas opções."); return; }
+
+  const nomeA = ATIVIDADES[a.chave].label;
+  const nomeB = ATIVIDADES[b.chave].label;
+
+  document.getElementById("cmp-a-txt").textContent = nomeA + ": " + ra.kcal + " kcal";
+  document.getElementById("cmp-b-txt").textContent = nomeB + ": " + rb.kcal + " kcal";
+
+  const meta = getMeta();
+  let veredicto;
+  if (meta) {
+    const consumido = totalConsumidoHoje();
+    const queimadoJa = totalQueimadoHoje();
+    const saldoAtual = meta - consumido + queimadoJa;
+    const saldoA = saldoAtual + ra.kcal;
+    const saldoB = saldoAtual + rb.kcal;
+    const melhor = saldoA >= saldoB ? "A" : "B";
+    const nomeMelhor = melhor === "A" ? nomeA : nomeB;
+    const saldoMelhor = melhor === "A" ? saldoA : saldoB;
+    veredicto = "✅ " + nomeMelhor + " fecha melhor sua conta hoje: seu saldo vai para "
+      + (saldoMelhor >= 0 ? saldoMelhor + " kcal disponíveis." : Math.abs(saldoMelhor) + " kcal acima da meta, mesmo assim.");
+  } else {
+    const melhor = ra.kcal >= rb.kcal ? "A" : "B";
+    const nomeMelhor = melhor === "A" ? nomeA : nomeB;
+    veredicto = "🔥 " + nomeMelhor + " queima mais calorias no total (defina sua meta para uma comparação considerando o que você já comeu).";
+  }
+
+  document.getElementById("qc-vencedora").textContent = veredicto;
+  document.getElementById("qc-compare-result").classList.add("show");
+  atualizarSaldoInfo();
+}
+</script>
+</body>
+</html>
