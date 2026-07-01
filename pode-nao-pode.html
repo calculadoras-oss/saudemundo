@@ -76,10 +76,15 @@
       --amarelo: #d97706; --amar-bg:  #fffbeb; --amar-brd:  #fde68a;
       --verm:    #dc2626; --verm-bg:  #fef2f2; --verm-brd:  #fca5a5;
       --azul:    #2563eb; --azul-bg:  #eff6ff; --azul-brd:  #bfdbfe;
-      --brd:     var(--border-color,#e2e8f0);
-      --surface: var(--card-bg,#ffffff);
-      --text:    var(--text-primary,#1a1a1a);
-      --muted:   var(--text-secondary,#64748b);
+      /* ALTERAÇÃO: --brd/--surface/--muted agora apontam para os tokens reais do shared.css.
+         --text foi removido daqui de propósito: essa página reusava o MESMO nome --text da
+         variável global do shared.css, e como --text-primary não existe em lugar nenhum, essa
+         redeclaração local SEMPRE vencia a cascata e travava o texto em #1a1a1a (claro),
+         mesmo com body.dark ativo. Removendo a redeclaração, var(--text) volta a resolver
+         corretamente para o token global (que já tem valores certos em :root e em body.dark). */
+      --brd:     var(--border, #e2e8f0);
+      --surface: var(--dark2, #ffffff);
+      --muted:   var(--text-muted, #64748b);
       --radius:  14px;
     }
 
@@ -121,17 +126,6 @@
     .sinal-ativo-amarelo .sinal-veredicto { color:var(--amarelo); }
     .sinal-ativo-verm    .sinal-veredicto { color:var(--verm); }
     .sinal-detalhe { display:none; }
-
-    /* ── ALTERAÇÃO (mudança 2): chip de crédito de calorias queimadas ── */
-    .credito-chip {
-      display:none; align-items:center; gap:.35rem;
-      background:var(--qc-laranja-bg,#fff7ed); border:1px solid var(--qc-laranja-brd,#fed7aa);
-      color:#ea580c; font-size:.78rem; font-weight:700; padding:.4rem .8rem;
-      border-radius:20px; text-decoration:none; margin-bottom:.5rem; width:fit-content;
-      transition:background .2s;
-    }
-    .credito-chip:hover { background:#ffedd5; }
-    [data-theme="dark"] .credito-chip { background:#3b1a00; border-color:#7c2d12; color:#fb923c; }
 
     /* ── Barra ── */
     .bar-wrap { margin-bottom:1rem; }
@@ -275,16 +269,6 @@
     .reg-del:hover { color:var(--verm); }
     .empty-msg { text-align:center; color:var(--muted); font-size:.85rem; padding:1.5rem 0; line-height:1.7; }
 
-    /* ── ALTERAÇÃO (mudança 1): treinos dentro do diário unificado ── */
-    .reg-subtitle { font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:.7rem 0 .2rem; }
-    .reg-subtitle:first-child { margin-top:0; }
-    .reg-subtitle-treino { color:#ea580c; }
-    .b-treino { background:#fff7ed; color:#c2410c; }
-    [data-theme="dark"] .b-treino { background:#3b1a00; color:#fb923c; }
-    .reg-kcal-credito { color:#ea580c; }
-    .reg-edit-link { font-size:.72rem; color:var(--muted); text-decoration:none; white-space:nowrap; }
-    .reg-edit-link:hover { text-decoration:underline; color:#ea580c; }
-
     /* ── Editorial ── */
     .editorial { font-size:.9rem; line-height:1.75; color:var(--text); }
     .editorial h2 { font-family:'Playfair Display',serif; font-size:1.25rem; margin:2rem 0 .65rem; }
@@ -333,31 +317,34 @@
       text-align: left;
     }
 
-    /* ── Dark mode ── */
-    [data-theme="dark"] .pnp-badge { background:#052e16; }
-    [data-theme="dark"] .painel-topo { border-color:#2d2d2d; }
-    [data-theme="dark"] .luz-mini { background:#2d2d2d; }
-    [data-theme="dark"] .chat-mensagens { background:#111; border-color:#2d2d2d; }
-    [data-theme="dark"] .msg-ia { background:#052e16; border-color:#166534; }
-    [data-theme="dark"] .msg-ia.decisao { background:#0c1d3d; border-color:#1e40af; }
-    [data-theme="dark"] .msg-digitando { background:#1e1e1e; }
-    [data-theme="dark"] .chip-ex-registro { background:#052e16; border-color:#166534; }
-    [data-theme="dark"] .chip-ex-decisao { background:#0c1d3d; border-color:#1e40af; }
-    [data-theme="dark"] .limite-refeicao { background:#1a1a1a; border-color:#2d2d2d; }
-    [data-theme="dark"] .meta-destaque { background:#052e16; border-color:#166534; }
-    [data-theme="dark"] .modo-hint.hint-decisao { background:#0c1d3d; color:#93c5fd; border-color:#1e40af; }
-    [data-theme="dark"] .modo-hint.hint-registro { background:#052e16; color:#86efac; border-color:#166534; }
-    [data-theme="dark"] .modo-pills { border-color:#2d2d2d; }
-    [data-theme="dark"] .modo-pill.ativo-decisao { background:#0c1d3d; border-color:#1e40af; color:#93c5fd; }
-    [data-theme="dark"] .modo-pill.ativo-registro { background:#052e16; border-color:#166534; color:#86efac; }
-    [data-theme="dark"] .b-cafe{background:#3b1a00;color:#fb923c;}
-    [data-theme="dark"] .b-lanche1,[data-theme="dark"] .b-lanche2{background:#2e0059;color:#d8b4fe;}
-    [data-theme="dark"] .b-almoco{background:#0c1d3d;color:#93c5fd;}
-    [data-theme="dark"] .b-jantar{background:#0f0d2e;color:#a5b4fc;}
-    [data-theme="dark"] .b-ceia{background:#2d0030;color:#f9a8d4;}
-    [data-theme="dark"] .modo-hint { background:#1a1a1a; border-color:#2d2d2d; }
-    [data-theme="dark"] .btn-foto { border-color:#2d2d2d; }
-    [data-theme="dark"] .conceito-caixa { background:#0c1d3d; }
+    /* ── Dark mode ──
+       ALTERAÇÃO: seletor corrigido de [data-theme="dark"] (atributo que nunca é escrito no HTML —
+       o shared.js alterna o tema via document.body.classList.toggle('dark'), não via atributo —
+       então este bloco inteiro nunca disparava) para body.dark. */
+    body.dark .pnp-badge { background:#052e16; }
+    body.dark .painel-topo { border-color:#2d2d2d; }
+    body.dark .luz-mini { background:#2d2d2d; }
+    body.dark .chat-mensagens { background:#111; border-color:#2d2d2d; }
+    body.dark .msg-ia { background:#052e16; border-color:#166534; }
+    body.dark .msg-ia.decisao { background:#0c1d3d; border-color:#1e40af; }
+    body.dark .msg-digitando { background:#1e1e1e; }
+    body.dark .chip-ex-registro { background:#052e16; border-color:#166534; }
+    body.dark .chip-ex-decisao { background:#0c1d3d; border-color:#1e40af; }
+    body.dark .limite-refeicao { background:#1a1a1a; border-color:#2d2d2d; }
+    body.dark .meta-destaque { background:#052e16; border-color:#166534; }
+    body.dark .modo-hint.hint-decisao { background:#0c1d3d; color:#93c5fd; border-color:#1e40af; }
+    body.dark .modo-hint.hint-registro { background:#052e16; color:#86efac; border-color:#166534; }
+    body.dark .modo-pills { border-color:#2d2d2d; }
+    body.dark .modo-pill.ativo-decisao { background:#0c1d3d; border-color:#1e40af; color:#93c5fd; }
+    body.dark .modo-pill.ativo-registro { background:#052e16; border-color:#166534; color:#86efac; }
+    body.dark .b-cafe{background:#3b1a00;color:#fb923c;}
+    body.dark .b-lanche1,body.dark .b-lanche2{background:#2e0059;color:#d8b4fe;}
+    body.dark .b-almoco{background:#0c1d3d;color:#93c5fd;}
+    body.dark .b-jantar{background:#0f0d2e;color:#a5b4fc;}
+    body.dark .b-ceia{background:#2d0030;color:#f9a8d4;}
+    body.dark .modo-hint { background:#1a1a1a; border-color:#2d2d2d; }
+    body.dark .btn-foto { border-color:#2d2d2d; }
+    body.dark .conceito-caixa { background:#0c1d3d; }
   </style>
 </head>
 <body>
@@ -389,11 +376,6 @@
       <div class="sinal-detalhe" id="sinal-detalhe"></div>
     </div>
   </div>
-
-  <!-- ALTERAÇÃO (mudança 2): crédito de calorias queimadas, agora destacado (antes era um texto cinza .7rem escondido na barra) -->
-  <a href="calculadora-queima-calorica.html" class="credito-chip" id="credito-chip" title="Ver/editar treino na calculadora de queima">
-    🔥 <span id="credito-chip-valor">0</span> kcal de treino creditados hoje →
-  </a>
 
   <!-- Barra do dia -->
   <div class="bar-wrap" id="bar-wrap" style="display:none;">
@@ -497,7 +479,7 @@
       <button class="btn-limpar" onclick="limparDiario()">🗑 Limpar</button>
     </div>
     <div id="lista-registros">
-      <div class="empty-msg">Nenhum registro ainda.<br>Use o modo <strong>📊 Vou comer isso</strong> para registrar refeições, ou registre um treino na <a href="calculadora-queima-calorica.html">calculadora de queima</a>! 🚦</div>
+      <div class="empty-msg">Nenhum registro ainda.<br>Use o modo <strong>📊 Vou comer isso</strong> para registrar! 🚦</div>
     </div>
   </div>
 
@@ -794,11 +776,6 @@ async function enviarMensagem() {
   const contexto = meta > 0
     ? "\n\n[CONTEXTO DO APP: meta diária = " + meta + " kcal. Refeição atual = "
       + NOME_REFEICAO[ref] + " (limite: " + limRef + " kcal, já consumido nela: " + usadoRef + " kcal)."
-      // ALTERAÇÃO (tarefa 6): a IA não sabia quanto o usuário já tinha queimado em
-      // treino hoje — respondia só com base na meta original, o que podia soar mais
-      // restritivo do que o saldo real (a matemática do semáforo já somava certo em
-      // atualizarTudo(), só o texto do chat que ficava desatualizado).
-      + (totalQueimadoHoje() > 0 ? " Já queimou " + totalQueimadoHoje() + " kcal em treino hoje (crédito extra somado à meta)." : "")
       + (isDecisao ? " O usuário está DECIDINDO o que comer — NÃO use [KCAL:X]." : " O usuário está REGISTRANDO o que comeu — use [KCAL:X].")
       + "]"
     : (isDecisao ? "\n\n[CONTEXTO: O usuário está DECIDINDO o que comer — NÃO use [KCAL:X].]"
@@ -939,48 +916,21 @@ const REF_CFG = {
   jantar:{l:"Jantar",c:"b-jantar"},   ceia:{l:"Ceia",c:"b-ceia"},
 };
 
-// ALTERAÇÃO (mudança 1): agora exibe, dentro do mesmo card "📋 Registros de hoje",
-// tanto as refeições (registros) quanto os treinos (carregarAtividadesQC()) — em
-// duas seções, para manter a leitura limpa sem fragmentar em cards separados.
 function renderLista() {
   const el = document.getElementById("lista-registros");
-  const atividades = carregarAtividadesQC();
-
-  if (!registros.length && !atividades.length) {
-    el.innerHTML = "<div class=\"empty-msg\">Nenhum registro ainda.<br>Use o modo <strong>📊 Vou comer isso</strong> para registrar refeições, ou registre um treino na <a href=\"calculadora-queima-calorica.html\">calculadora de queima</a>! 🚦</div>";
+  if (!registros.length) {
+    el.innerHTML = "<div class=\"empty-msg\">Nenhum registro ainda.<br>Use o modo <strong>📊 Vou comer isso</strong> para registrar! 🚦</div>";
     return;
   }
-
-  let html = "";
-
-  if (registros.length) {
-    html += "<div class=\"reg-subtitle\">🍽️ Refeições</div>";
-    html += registros.map(r => {
-      const rf = REF_CFG[r.refeicao]||{l:r.refeicao,c:""};
-      return "<div class=\"reg-item\">"
-        + "<span class=\"reg-badge " + rf.c + "\">" + rf.l + "</span>"
-        + "<span class=\"reg-info\"><span class=\"reg-nome\">" + r.nome + "</span></span>"
-        + "<span class=\"reg-kcal\">" + r.kcal + " kcal</span>"
-        + "<button class=\"reg-del\" onclick=\"removerRegistro(" + r.id + ")\" title=\"Remover\">✕</button>"
-        + "</div>";
-    }).join("");
-  }
-
-  if (atividades.length) {
-    // Treinos não são editáveis/deletáveis aqui (evita dessincronizar com a
-    // calculadora de queima) — em vez do botão ✕, um link para editar lá.
-    html += "<div class=\"reg-subtitle reg-subtitle-treino\">🔥 Treinos</div>";
-    html += atividades.map(a =>
-      "<div class=\"reg-item\">"
-      + "<span class=\"reg-badge b-treino\">🔥 Queima</span>"
-      + "<span class=\"reg-info\"><span class=\"reg-nome\">" + a.nome + "</span></span>"
-      + "<span class=\"reg-kcal reg-kcal-credito\">+" + a.kcal + " kcal</span>"
-      + "<a class=\"reg-edit-link\" href=\"calculadora-queima-calorica.html\">editar →</a>"
-      + "</div>"
-    ).join("");
-  }
-
-  el.innerHTML = html;
+  el.innerHTML = registros.map(r => {
+    const rf = REF_CFG[r.refeicao]||{l:r.refeicao,c:""};
+    return "<div class=\"reg-item\">"
+      + "<span class=\"reg-badge " + rf.c + "\">" + rf.l + "</span>"
+      + "<span class=\"reg-info\"><span class=\"reg-nome\">" + r.nome + "</span></span>"
+      + "<span class=\"reg-kcal\">" + r.kcal + " kcal</span>"
+      + "<button class=\"reg-del\" onclick=\"removerRegistro(" + r.id + ")\" title=\"Remover\">✕</button>"
+      + "</div>";
+  }).join("");
 }
 
 function removerRegistro(id) {
@@ -1021,20 +971,10 @@ function atualizarTudo() {
     fill.style.width = pct + "%";
     fill.className = "bar-fill" + (pct > 100 ? " vermelho" : pct > 80 ? " amarelo" : "");
     document.getElementById("bar-lbl-ref").textContent = NOME_REFEICAO[ref] + ": " + totalRef + " kcal";
-    // ALTERAÇÃO (mudança 2): o crédito de calorias queimadas não fica mais escondido
-    // aqui dentro de um texto pequeno — agora tem o chip próprio abaixo (#credito-chip).
-    document.getElementById("bar-lbl-dia").textContent = "Dia: " + totalDia + " / " + metaEfetiva + " kcal";
+    document.getElementById("bar-lbl-dia").textContent = "Dia: " + totalDia + " / " + metaEfetiva + " kcal"
+      + (queimado > 0 ? " (+" + queimado + " queimadas)" : "");
   } else {
     barWrap.style.display = "none";
-  }
-
-  // ALTERAÇÃO (mudança 2): chip de destaque do crédito de treino, clicável.
-  const creditoChip = document.getElementById("credito-chip");
-  if (queimado > 0) {
-    creditoChip.style.display = "inline-flex";
-    document.getElementById("credito-chip-valor").textContent = queimado;
-  } else {
-    creditoChip.style.display = "none";
   }
 
   const painel = document.getElementById("painel-topo");
@@ -1082,21 +1022,7 @@ function carregarRegistros() {
   catch(e) { return []; }
 }
 window.addEventListener("storage", (e) => {
-  // ALTERAÇÃO: renderLista() também é chamada aqui, pois o diário agora inclui
-  // os treinos (mudança 1) — antes só a matemática (atualizarTudo) era atualizada.
   if (e.key === ATIV_KEY || e.key === META_KEY || e.key === STORAGE_KEY) {
-    renderLista();
-    atualizarTudo();
-  }
-});
-
-// ALTERAÇÃO (mudança 3): o evento "storage" só dispara entre abas diferentes.
-// O caso mais comum na prática é o usuário sair desta aba, ir para a calculadora
-// de queima (mesma aba ou aba nova), registrar o treino, e voltar — sem esse
-// listener, isso exigia refresh manual para o crédito aparecer.
-document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "visible") {
-    renderLista();
     atualizarTudo();
   }
 });
