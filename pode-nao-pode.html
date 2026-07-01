@@ -76,15 +76,15 @@
       --amarelo: #d97706; --amar-bg:  #fffbeb; --amar-brd:  #fde68a;
       --verm:    #dc2626; --verm-bg:  #fef2f2; --verm-brd:  #fca5a5;
       --azul:    #2563eb; --azul-bg:  #eff6ff; --azul-brd:  #bfdbfe;
-      /* ALTERAÇÃO: --brd/--surface/--muted agora apontam para os tokens reais do shared.css.
-         --text foi removido daqui de propósito: essa página reusava o MESMO nome --text da
-         variável global do shared.css, e como --text-primary não existe em lugar nenhum, essa
-         redeclaração local SEMPRE vencia a cascata e travava o texto em #1a1a1a (claro),
-         mesmo com body.dark ativo. Removendo a redeclaração, var(--text) volta a resolver
-         corretamente para o token global (que já tem valores certos em :root e em body.dark). */
-      --brd:     var(--border, #e2e8f0);
-      --surface: var(--dark2, #ffffff);
-      --muted:   var(--text-muted, #64748b);
+      /* ALTERAÇÃO: os aliases --brd/--surface/--muted foram removidos. Eles eram declarados
+         aqui no :root (nível do <html>), mas body.dark sobrescreve os tokens reais
+         (--dark2, --border, --text-muted) no elemento <body>, não no <html>. Como var() é
+         substituído no elemento onde a custom property é declarada, o alias "congelava" no
+         valor claro e nunca via a sobrescrita do dark mode — por isso diário, contas e FAQ
+         ficavam presos no branco. Agora cada uso abaixo aponta direto para o token do
+         shared.css, resolvido no próprio elemento (descendente de body.dark), então o dark
+         mode funciona corretamente. --text também já resolve direto para o token global,
+         sem redeclaração local. */
       --radius:  14px;
     }
 
@@ -105,14 +105,14 @@
       margin:0 0 .3rem; line-height:1.05;
     }
     .pnp-header h1 em { font-style:normal; color:var(--verde); }
-    .pnp-tagline { font-size:.88rem; color:var(--muted); max-width:400px; margin:0 auto 1.5rem; line-height:1.5; }
+    .pnp-tagline { font-size:.88rem; color:var(--text-muted, #64748b); max-width:400px; margin:0 auto 1.5rem; line-height:1.5; }
 
     .container { max-width:660px; margin:0 auto; padding:0 1rem 3rem; }
 
     /* ── Semáforo compacto ── */
     .painel-topo {
       display:flex; align-items:center; gap:.6rem;
-      background:var(--surface); border:1px solid var(--brd);
+      background:var(--dark2, #ffffff); border:1px solid var(--border, #e2e8f0);
       border-radius:var(--radius); padding:.5rem .8rem; margin-bottom:.5rem;
     }
     .sinal-mini { display:flex; flex-direction:row; gap:4px; flex-shrink:0; }
@@ -129,28 +129,28 @@
 
     /* ── Barra ── */
     .bar-wrap { margin-bottom:1rem; }
-    .bar-bg { height:6px; background:var(--brd); border-radius:99px; overflow:hidden; }
+    .bar-bg { height:6px; background:var(--border, #e2e8f0); border-radius:99px; overflow:hidden; }
     .bar-fill { height:100%; border-radius:99px; background:var(--verde); transition:width .4s,background .4s; width:0%; }
     .bar-fill.amarelo { background:var(--amarelo); }
     .bar-fill.vermelho { background:var(--verm); }
-    .bar-labels { display:flex; justify-content:space-between; font-size:.7rem; color:var(--muted); margin-bottom:.25rem; }
+    .bar-labels { display:flex; justify-content:space-between; font-size:.7rem; color:var(--text-muted, #64748b); margin-bottom:.25rem; }
     .bar-chips { display:flex; gap:1rem; margin-top:.35rem; flex-wrap:wrap; }
     .bar-chips .chip-mini { font-size:.7rem; }
 
     /* ── Cards ── */
-    .pnp-card { background:var(--surface); border:1px solid var(--brd); border-radius:var(--radius); padding:1.2rem; margin-bottom:.9rem; }
+    .pnp-card { background:var(--dark2, #ffffff); border:1px solid var(--border, #e2e8f0); border-radius:var(--radius); padding:1.2rem; margin-bottom:.9rem; }
     .pnp-card-title { font-size:.68rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--verde); margin-bottom:.85rem; }
 
     /* ── Meta ── */
     .meta-toggle { display:flex; align-items:center; justify-content:space-between; cursor:pointer; user-select:none; }
-    .meta-toggle-label { font-size:.8rem; font-weight:600; color:var(--muted); }
-    .meta-toggle-icon { font-size:.8rem; color:var(--muted); transition:transform .2s; }
+    .meta-toggle-label { font-size:.8rem; font-weight:600; color:var(--text-muted, #64748b); }
+    .meta-toggle-icon { font-size:.8rem; color:var(--text-muted, #64748b); transition:transform .2s; }
     .meta-toggle-icon.aberto { transform:rotate(180deg); }
     .meta-corpo { margin-top:.8rem; display:none; }
     .meta-corpo.aberto { display:block; }
     .meta-row { display:flex; align-items:center; gap:.75rem; flex-wrap:wrap; }
     .meta-row label { font-size:.88rem; font-weight:500; white-space:nowrap; }
-    .meta-row input[type="number"] { width:110px; padding:.5rem .7rem; border:1.5px solid var(--brd); border-radius:8px; font-size:1rem; background:transparent; color:var(--text); }
+    .meta-row input[type="number"] { width:110px; padding:.5rem .7rem; border:1.5px solid var(--border, #e2e8f0); border-radius:8px; font-size:1rem; background:transparent; color:var(--text); }
     .meta-link { font-size:.8rem; color:var(--verde); text-decoration:none; }
     .meta-link:hover { text-decoration:underline; }
     .meta-destaque { background:var(--verde-bg); border-color:var(--verde-brd); }
@@ -159,24 +159,24 @@
     /* ── Modo pills ── */
     .modo-pills {
       display:flex; gap:.5rem; margin-bottom:.9rem;
-      background:var(--surface); border:1px solid var(--brd);
+      background:var(--dark2, #ffffff); border:1px solid var(--border, #e2e8f0);
       border-radius:var(--radius); padding:.6rem .8rem;
       align-items:center;
     }
-    .modo-label { font-size:.72rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-right:.2rem; white-space:nowrap; }
+    .modo-label { font-size:.72rem; font-weight:700; color:var(--text-muted, #64748b); text-transform:uppercase; letter-spacing:.06em; margin-right:.2rem; white-space:nowrap; }
     .modo-pill {
       flex:1; text-align:center; padding:.45rem .5rem;
-      border-radius:8px; border:1.5px solid var(--brd);
+      border-radius:8px; border:1.5px solid var(--border, #e2e8f0);
       font-size:.8rem; font-weight:600; cursor:pointer;
-      transition:all .2s; color:var(--muted); background:transparent;
+      transition:all .2s; color:var(--text-muted, #64748b); background:transparent;
       line-height:1.2;
     }
     .modo-pill.ativo-decisao { background:var(--azul-bg); border-color:var(--azul-brd); color:var(--azul); }
     .modo-pill.ativo-registro { background:var(--verde-bg); border-color:var(--verde-brd); color:var(--verde); }
     .modo-hint {
-      font-size:.72rem; color:var(--muted); margin-bottom:.6rem;
+      font-size:.72rem; color:var(--text-muted, #64748b); margin-bottom:.6rem;
       padding:.35rem .7rem; border-radius:8px;
-      border:1px dashed var(--brd); background:#fafafa;
+      border:1px dashed var(--border, #e2e8f0); background:#fafafa;
       line-height:1.4;
     }
     .modo-hint.hint-decisao { background:var(--azul-bg); border-color:var(--azul-brd); color:#1d4ed8; }
@@ -184,10 +184,10 @@
 
     /* ── Seletor refeição ── */
     .chat-refeicao-row { display:flex; align-items:center; gap:.6rem; margin-bottom:.7rem; flex-wrap:wrap; }
-    .chat-refeicao-row label { font-size:.8rem; font-weight:600; color:var(--muted); white-space:nowrap; }
-    .chat-refeicao-row select { flex:1; padding:.45rem .7rem; border:1.5px solid var(--brd); border-radius:8px; font-size:.88rem; background:transparent; color:var(--text); cursor:pointer; }
+    .chat-refeicao-row label { font-size:.8rem; font-weight:600; color:var(--text-muted, #64748b); white-space:nowrap; }
+    .chat-refeicao-row select { flex:1; padding:.45rem .7rem; border:1.5px solid var(--border, #e2e8f0); border-radius:8px; font-size:.88rem; background:transparent; color:var(--text); cursor:pointer; }
 
-    .limite-refeicao { font-size:.75rem; color:var(--muted); margin-bottom:.6rem; background:#f8fafc; border-radius:8px; padding:.4rem .7rem; border:1px solid var(--brd); }
+    .limite-refeicao { font-size:.75rem; color:var(--text-muted, #64748b); margin-bottom:.6rem; background:#f8fafc; border-radius:8px; padding:.4rem .7rem; border:1px solid var(--border, #e2e8f0); }
     .limite-refeicao strong { color:var(--text); }
 
     /* ── Exemplos chips ── */
@@ -200,12 +200,12 @@
     .chip-ex-decisao:hover { background:#dbeafe; }
     .chip-ex-registro { background:#f0fdf4; color:var(--verde); border-color:var(--verde-brd); }
     .chip-ex-registro:hover { background:#dcfce7; }
-    .chips-titulo { font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); width:100%; margin-top:.35rem; margin-bottom:.1rem; }
+    .chips-titulo { font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--text-muted, #64748b); width:100%; margin-top:.35rem; margin-bottom:.1rem; }
 
     /* ── Chat ── */
     .chat-mensagens {
       min-height:160px; max-height:320px; overflow-y:auto;
-      border:1.5px solid var(--brd); border-radius:10px;
+      border:1.5px solid var(--border, #e2e8f0); border-radius:10px;
       padding:.75rem; margin-bottom:.7rem;
       display:flex; flex-direction:column; gap:.55rem;
       background:#fafafa; scroll-behavior:smooth;
@@ -216,7 +216,7 @@
     .msg-user    { background:var(--verde); color:#fff; align-self:flex-end; border-radius:12px 4px 12px 12px; }
     .msg-user.decisao { background:var(--azul); }
     .msg-erro    { background:var(--verm-bg); border:1px solid var(--verm-brd); color:var(--verm); align-self:flex-start; border-radius:4px 12px 12px 12px; }
-    .msg-digitando { background:#f1f5f9; color:var(--muted); align-self:flex-start; border-radius:4px 12px 12px 12px; font-style:italic; font-size:.8rem; padding:.45rem .8rem; }
+    .msg-digitando { background:#f1f5f9; color:var(--text-muted, #64748b); align-self:flex-start; border-radius:4px 12px 12px 12px; font-style:italic; font-size:.8rem; padding:.45rem .8rem; }
 
     .btn-lancar { display:inline-block; margin-top:.45rem; padding:.38rem .85rem; background:var(--verde); color:#fff; border:none; border-radius:8px; font-size:.78rem; font-weight:700; cursor:pointer; transition:background .2s; }
     .btn-lancar:hover { background:#15803d; }
@@ -244,19 +244,19 @@
     .btn-enviar:active { transform:scale(.96); }
     .btn-enviar:disabled { background:#94a3b8; cursor:not-allowed; }
     .btn-foto {
-      padding:.7rem .8rem; background:var(--surface); border:1px solid var(--brd);
+      padding:.7rem .8rem; background:var(--dark2, #ffffff); border:1px solid var(--border, #e2e8f0);
       border-radius:10px; font-size:1.1rem; cursor:pointer;
       transition:background .2s; align-self:flex-end; line-height:1; flex-shrink:0;
     }
-    .btn-foto:hover { background:var(--brd); }
+    .btn-foto:hover { background:var(--border, #e2e8f0); }
     .btn-foto:disabled { opacity:.5; cursor:not-allowed; }
-    .btn-foto-label { font-size:.65rem; display:block; line-height:1; color:var(--muted); }
+    .btn-foto-label { font-size:.65rem; display:block; line-height:1; color:var(--text-muted, #64748b); }
 
     /* ── Registros ── */
     .reg-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:.75rem; }
     .btn-limpar { font-size:.72rem; color:var(--verm); background:none; border:1px solid var(--verm); border-radius:6px; padding:.22rem .55rem; cursor:pointer; }
     .btn-limpar:hover { background:var(--verm-bg); }
-    .reg-item { display:flex; align-items:flex-start; gap:.45rem; padding:.6rem 0; border-bottom:1px solid var(--brd); font-size:.86rem; }
+    .reg-item { display:flex; align-items:flex-start; gap:.45rem; padding:.6rem 0; border-bottom:1px solid var(--border, #e2e8f0); font-size:.86rem; }
     .reg-item:last-child { border-bottom:none; }
     .reg-badge { flex-shrink:0; font-size:.6rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:.15rem .38rem; border-radius:5px; margin-top:.15rem; }
     .b-cafe{background:#fff3e0;color:#c2410c;} .b-lanche1{background:#f3e5f5;color:#7e22ce;}
@@ -265,25 +265,25 @@
     .reg-info { flex:1; }
     .reg-nome { font-weight:600; color:var(--text); font-size:.86rem; }
     .reg-kcal { font-weight:700; white-space:nowrap; color:var(--text); padding-top:.1rem; font-size:.86rem; }
-    .reg-del  { background:none; border:none; color:var(--muted); cursor:pointer; padding:.1rem .25rem; font-size:.9rem; }
+    .reg-del  { background:none; border:none; color:var(--text-muted, #64748b); cursor:pointer; padding:.1rem .25rem; font-size:.9rem; }
     .reg-del:hover { color:var(--verm); }
-    .empty-msg { text-align:center; color:var(--muted); font-size:.85rem; padding:1.5rem 0; line-height:1.7; }
+    .empty-msg { text-align:center; color:var(--text-muted, #64748b); font-size:.85rem; padding:1.5rem 0; line-height:1.7; }
 
     /* ── Editorial ── */
     .editorial { font-size:.9rem; line-height:1.75; color:var(--text); }
     .editorial h2 { font-family:'Playfair Display',serif; font-size:1.25rem; margin:2rem 0 .65rem; }
     .editorial p  { margin:0 0 .85rem; }
     .card-title { font-size:.68rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--verde); margin-bottom:.9rem; }
-    .faq-item { padding:.85rem 0; border-bottom:1px solid var(--brd); }
+    .faq-item { padding:.85rem 0; border-bottom:1px solid var(--border, #e2e8f0); }
     .faq-item:last-child { border-bottom:none; }
     .faq-q { font-weight:600; font-size:.88rem; margin-bottom:.28rem; }
-    .faq-a { font-size:.84rem; color:var(--muted); line-height:1.6; }
+    .faq-a { font-size:.84rem; color:var(--text-muted, #64748b); line-height:1.6; }
 
     /* ── Conceito (analogia do extrato bancário) ── */
     .pnp-intro {
       text-align: center;
       font-size: .92rem;
-      color: var(--muted);
+      color: var(--text-muted, #64748b);
       max-width: 480px;
       margin: .5rem auto 1.2rem;
       line-height: 1.6;
@@ -292,15 +292,15 @@
     .conceito-caixa {
       margin: 12px auto 16px;
       padding: 12px 16px;
-      border: 1px solid var(--azul, #3b82f6);
+      border: 1px solid var(--verde, #16a34a);
       border-radius: 10px;
-      background: #eff6ff;
+      background: #f0fdf4;
       max-width: 480px;
     }
     .conceito-caixa summary {
       cursor: pointer;
       font-weight: 600;
-      color: var(--azul, #3b82f6);
+      color: var(--verde, #16a34a);
       list-style: none;
     }
     .conceito-caixa summary::-webkit-details-marker {
@@ -344,7 +344,7 @@
     body.dark .b-ceia{background:#2d0030;color:#f9a8d4;}
     body.dark .modo-hint { background:#1a1a1a; border-color:#2d2d2d; }
     body.dark .btn-foto { border-color:#2d2d2d; }
-    body.dark .conceito-caixa { background:#0c1d3d; }
+    body.dark .conceito-caixa { background:#052e16; }
   </style>
 </head>
 <body>
@@ -500,7 +500,7 @@
       A IA entende o contexto e responde diferente para cada situação.
       Use a <a href="https://www.saudemundo.com.br/index.html">Calculadora de Calorias e Macros</a> para descobrir sua meta ideal.
     </p>
-    <p style="font-size:.82rem;color:var(--muted);">
+    <p style="font-size:.82rem;color:var(--text-muted, #64748b);">
       ⚠️ Ferramenta educacional. Valores são estimativas médias. Para dietas individualizadas, consulte um nutricionista ou médico.
     </p>
   </div>
@@ -756,7 +756,7 @@ async function enviarMensagem() {
       const modoOposto  = modoAtual === "decisao" ? "registro" : "decisao";
       const labelOposto = modoAtual === "decisao" ? "📊 registrar em vez de comparar?" : "🧠 comparar em vez de registrar?";
       const avisoId = "aviso-conflito-" + Date.now();
-      const avisoHtml = `<div id="${avisoId}" style="font-size:.8rem;color:var(--muted);margin-bottom:.4rem;padding:.4rem .6rem;background:var(--surface);border:1px solid var(--brd);border-radius:6px;">
+      const avisoHtml = `<div id="${avisoId}" style="font-size:.8rem;color:var(--text-muted, #64748b);margin-bottom:.4rem;padding:.4rem .6rem;background:var(--dark2, #ffffff);border:1px solid var(--border, #e2e8f0);border-radius:6px;">
         ⚠️ Parece que o texto não combina com o modo selecionado.
         <button onclick="setModo('${modoOposto}');document.getElementById('${avisoId}').remove()"
           style="background:none;border:none;color:var(--azul);cursor:pointer;font-size:.8rem;text-decoration:underline;padding:0">

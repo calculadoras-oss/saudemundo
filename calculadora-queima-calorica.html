@@ -76,12 +76,13 @@
       --qc-verde-bg:#f0fdf4; --qc-verde-brd:#86efac;
       --qc-laranja: #ea580c; --qc-laranja-bg:#fff7ed; --qc-laranja-brd:#fed7aa;
       --qc-azul:    #2563eb; --qc-azul-bg:#eff6ff; --qc-azul-brd:#bfdbfe;
-      /* ALTERAÇÃO: apontado para os tokens reais do shared.css (--border-color, --card-bg etc.
-         não existem em lugar nenhum, então esses valores ficavam sempre travados no fallback claro) */
-      --qc-brd:     var(--border, #e2e8f0);
-      --qc-surface: var(--dark2, #ffffff);
-      --qc-text:    var(--text, #1a1a1a);
-      --qc-muted:   var(--text-muted, #64748b);
+      /* ALTERAÇÃO: os aliases --qc-brd/--qc-surface/--qc-text/--qc-muted foram removidos.
+         Eles eram declarados aqui no :root (nível do <html>), mas body.dark sobrescreve os
+         tokens reais (--dark2, --border, --text, --text-muted) no elemento <body>, não no
+         <html>. Como var() é substituído no elemento onde a custom property é declarada, o
+         alias "congelava" no valor claro e nunca via a sobrescrita do dark mode. Agora cada
+         uso abaixo aponta direto para o token do shared.css, resolvido no próprio elemento
+         (descendente de body.dark), então o dark mode funciona corretamente. */
       --qc-radius:  14px;
     }
 
@@ -98,26 +99,26 @@
       margin:0 0 .3rem; line-height:1.05;
     }
     .qc-header h1 em { font-style:normal; color:var(--qc-laranja); }
-    .qc-tagline { font-size:.88rem; color:var(--qc-muted); max-width:440px; margin:0 auto 1.5rem; line-height:1.5; }
+    .qc-tagline { font-size:.88rem; color:var(--text-muted, #64748b); max-width:440px; margin:0 auto 1.5rem; line-height:1.5; }
 
     .container { max-width:660px; margin:0 auto; padding:0 1rem 3rem; }
 
-    .qc-card { background:var(--qc-surface); border:1px solid var(--qc-brd); border-radius:var(--qc-radius); padding:1.2rem; margin-bottom:.9rem; }
+    .qc-card { background:var(--dark2, #ffffff); border:1px solid var(--border, #e2e8f0); border-radius:var(--qc-radius); padding:1.2rem; margin-bottom:.9rem; }
     .qc-card-title { font-size:.68rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--qc-laranja); margin-bottom:.85rem; }
 
     .qc-row { display:flex; align-items:center; gap:.6rem; flex-wrap:wrap; margin-bottom:.7rem; }
-    .qc-row label { font-size:.8rem; font-weight:600; color:var(--qc-muted); white-space:nowrap; min-width:110px; }
+    .qc-row label { font-size:.8rem; font-weight:600; color:var(--text-muted, #64748b); white-space:nowrap; min-width:110px; }
     .qc-row select, .qc-row input[type="number"] {
-      flex:1; min-width:120px; padding:.55rem .7rem; border:1.5px solid var(--qc-brd); border-radius:8px;
-      font-size:.9rem; background:transparent; color:var(--qc-text);
+      flex:1; min-width:120px; padding:.55rem .7rem; border:1.5px solid var(--border, #e2e8f0); border-radius:8px;
+      font-size:.9rem; background:transparent; color:var(--text, #1a1a1a);
     }
     .qc-peso-link { font-size:.75rem; color:var(--qc-laranja); text-decoration:none; white-space:nowrap; }
     .qc-peso-link:hover { text-decoration:underline; }
 
-    .qc-pills { display:flex; gap:.5rem; margin-bottom:.9rem; background:var(--qc-surface); border:1px solid var(--qc-brd); border-radius:var(--qc-radius); padding:.6rem .8rem; }
+    .qc-pills { display:flex; gap:.5rem; margin-bottom:.9rem; background:var(--dark2, #ffffff); border:1px solid var(--border, #e2e8f0); border-radius:var(--qc-radius); padding:.6rem .8rem; }
     .qc-pill {
-      flex:1; text-align:center; padding:.5rem .5rem; border-radius:8px; border:1.5px solid var(--qc-brd);
-      font-size:.82rem; font-weight:600; cursor:pointer; transition:all .2s; color:var(--qc-muted); background:transparent; line-height:1.25;
+      flex:1; text-align:center; padding:.5rem .5rem; border-radius:8px; border:1.5px solid var(--border, #e2e8f0);
+      font-size:.82rem; font-weight:600; cursor:pointer; transition:all .2s; color:var(--text-muted, #64748b); background:transparent; line-height:1.25;
     }
     .qc-pill.ativo { background:var(--qc-laranja-bg); border-color:var(--qc-laranja-brd); color:var(--qc-laranja); }
 
@@ -130,8 +131,8 @@
     }
     .qc-resultado.show { display:block; }
     .qc-resultado .qc-kcal { font-size:2rem; font-weight:900; color:var(--qc-laranja); font-family:'Playfair Display',serif; line-height:1; }
-    .qc-resultado .qc-kcal-label { font-size:.78rem; color:var(--qc-muted); margin-top:.2rem; }
-    .qc-resultado .qc-formula { font-size:.72rem; color:var(--qc-muted); margin-top:.5rem; }
+    .qc-resultado .qc-kcal-label { font-size:.78rem; color:var(--text-muted, #64748b); margin-top:.2rem; }
+    .qc-resultado .qc-formula { font-size:.72rem; color:var(--text-muted, #64748b); margin-top:.5rem; }
 
     .btn-qc {
       display:inline-block; padding:.6rem 1.1rem; background:var(--qc-laranja); color:#fff; border:none;
@@ -146,43 +147,43 @@
 
     /* Lista do dia */
     .qc-lista-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:.75rem; }
-    .qc-item { display:flex; align-items:center; gap:.5rem; padding:.55rem 0; border-bottom:1px solid var(--qc-brd); font-size:.86rem; }
+    .qc-item { display:flex; align-items:center; gap:.5rem; padding:.55rem 0; border-bottom:1px solid var(--border, #e2e8f0); font-size:.86rem; }
     .qc-item:last-child { border-bottom:none; }
-    .qc-item-nome { flex:1; font-weight:600; color:var(--qc-text); }
+    .qc-item-nome { flex:1; font-weight:600; color:var(--text, #1a1a1a); }
     .qc-item-kcal { font-weight:700; color:var(--qc-laranja); white-space:nowrap; }
-    .qc-item-del { background:none; border:none; color:var(--qc-muted); cursor:pointer; font-size:.9rem; padding:.1rem .25rem; }
+    .qc-item-del { background:none; border:none; color:var(--text-muted, #64748b); cursor:pointer; font-size:.9rem; padding:.1rem .25rem; }
     .qc-item-del:hover { color:#dc2626; }
-    .qc-empty { text-align:center; color:var(--qc-muted); font-size:.85rem; padding:1.2rem 0; }
+    .qc-empty { text-align:center; color:var(--text-muted, #64748b); font-size:.85rem; padding:1.2rem 0; }
     .qc-total-dia { text-align:right; font-size:.85rem; font-weight:700; color:var(--qc-laranja); margin-top:.4rem; }
 
     /* Comparação */
     .qc-compare-grid { display:grid; grid-template-columns:1fr 1fr; gap:.8rem; margin-bottom:.8rem; }
     @media (max-width:520px) { .qc-compare-grid { grid-template-columns:1fr; } }
-    .qc-opcao { border:1.5px solid var(--qc-brd); border-radius:10px; padding:.8rem; }
-    .qc-opcao-titulo { font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--qc-muted); margin-bottom:.6rem; }
-    .qc-opcao select, .qc-opcao input { width:100%; margin-bottom:.5rem; padding:.5rem .6rem; border:1.5px solid var(--qc-brd); border-radius:8px; font-size:.85rem; background:transparent; color:var(--qc-text); }
+    .qc-opcao { border:1.5px solid var(--border, #e2e8f0); border-radius:10px; padding:.8rem; }
+    .qc-opcao-titulo { font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted, #64748b); margin-bottom:.6rem; }
+    .qc-opcao select, .qc-opcao input { width:100%; margin-bottom:.5rem; padding:.5rem .6rem; border:1.5px solid var(--border, #e2e8f0); border-radius:8px; font-size:.85rem; background:transparent; color:var(--text, #1a1a1a); }
 
     .qc-saldo-box {
-      font-size:.82rem; color:var(--qc-muted); background:#f8fafc; border:1px solid var(--qc-brd);
+      font-size:.82rem; color:var(--text-muted, #64748b); background:#f8fafc; border:1px solid var(--border, #e2e8f0);
       border-radius:10px; padding:.6rem .8rem; margin-bottom:.8rem; line-height:1.6;
     }
-    .qc-saldo-box strong { color:var(--qc-text); }
+    .qc-saldo-box strong { color:var(--text, #1a1a1a); }
 
     .qc-compare-result { display:none; }
     .qc-compare-result.show { display:block; }
-    .qc-compare-linha { display:flex; justify-content:space-between; padding:.5rem 0; border-bottom:1px dashed var(--qc-brd); font-size:.86rem; }
+    .qc-compare-linha { display:flex; justify-content:space-between; padding:.5rem 0; border-bottom:1px dashed var(--border, #e2e8f0); font-size:.86rem; }
     .qc-compare-linha:last-child { border-bottom:none; }
     .qc-vencedora { background:var(--qc-verde-bg); border:1px solid var(--qc-verde-brd); border-radius:10px; padding:.7rem .9rem; margin-top:.6rem; font-size:.86rem; color:#15803d; font-weight:600; }
 
     /* Editorial / FAQ (fallback caso shared.css não cubra) */
-    .editorial { font-size:.9rem; line-height:1.75; color:var(--qc-text); }
+    .editorial { font-size:.9rem; line-height:1.75; color:var(--text, #1a1a1a); }
     .editorial h2 { font-family:'Playfair Display',serif; font-size:1.25rem; margin:2rem 0 .65rem; }
     .editorial p { margin:0 0 .85rem; }
     .card-title { font-size:.68rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--qc-laranja); margin-bottom:.9rem; }
-    .faq-item { padding:.85rem 0; border-bottom:1px solid var(--qc-brd); }
+    .faq-item { padding:.85rem 0; border-bottom:1px solid var(--border, #e2e8f0); }
     .faq-item:last-child { border-bottom:none; }
     .faq-q { font-weight:600; font-size:.88rem; margin-bottom:.28rem; }
-    .faq-a { font-size:.84rem; color:var(--qc-muted); line-height:1.6; }
+    .faq-a { font-size:.84rem; color:var(--text-muted, #64748b); line-height:1.6; }
 
     /* ALTERAÇÃO: seletor corrigido de [data-theme="dark"] (atributo que nunca é escrito no HTML,
        então este bloco inteiro nunca disparava) para body.dark, que é o mecanismo real usado pelo
@@ -259,11 +260,11 @@
     <div class="qc-card">
       <div class="qc-lista-header">
         <div class="qc-card-title" style="margin:0;">📋 Atividades de hoje</div>
-        <button class="qc-item-del" style="border:1px solid var(--qc-brd);border-radius:6px;padding:.2rem .5rem;font-size:.72rem;" onclick="limparAtividadesDia()">🗑 Limpar</button>
+        <button class="qc-item-del" style="border:1px solid var(--border, #e2e8f0);border-radius:6px;padding:.2rem .5rem;font-size:.72rem;" onclick="limparAtividadesDia()">🗑 Limpar</button>
       </div>
       <div id="lista-atividades"></div>
       <div class="qc-total-dia" id="total-atividades-dia"></div>
-      <p style="font-size:.78rem;color:var(--qc-muted);margin-top:.7rem;">
+      <p style="font-size:.78rem;color:var(--text-muted, #64748b);margin-top:.7rem;">
         Essas calorias entram automaticamente como crédito extra no seu semáforo de hoje.
       </p>
       <div style="text-align:center;margin-top:1rem;">
@@ -326,7 +327,7 @@
       <em>e</em> o que você já queimou. Se ainda não calculou sua meta diária, comece pela
       <a href="index.html">Calculadora de Calorias e Macros</a>.
     </p>
-    <p style="font-size:.82rem;color:var(--qc-muted);">
+    <p style="font-size:.82rem;color:var(--text-muted, #64748b);">
       ⚠️ Ferramenta educacional. Valores são estimativas baseadas em tabelas MET de referência.
       Para um plano de treino individualizado, consulte um educador físico ou médico.
     </p>
