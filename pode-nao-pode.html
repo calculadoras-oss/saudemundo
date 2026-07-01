@@ -530,6 +530,14 @@
 const WORKER_URL  = "https://summer-hill-da28.philipdesousa.workers.dev";
 const META_KEY    = "sm_pnp_meta_kcal";
 const STORAGE_KEY = "sm_pnp_" + new Date().toISOString().slice(0,10);
+const ATIV_KEY = "sm_pnp_ativ_" + new Date().toISOString().slice(0,10);
+function carregarAtividadesQC() {
+  try { const r = localStorage.getItem(ATIV_KEY); return r ? JSON.parse(r) : []; }
+  catch(e) { return []; }
+}
+function totalQueimadoHoje() {
+  return carregarAtividadesQC().reduce((s,a) => s + (a.kcal||0), 0);
+}
 
 const PESO_REFEICAO = { cafe:0.20, lanche1:0.10, almoco:0.35, lanche2:0.10, jantar:0.20, ceia:0.05 };
 const NOME_REFEICAO = { cafe:"Café da manhã", lanche1:"Lanche manhã", almoco:"Almoço", lanche2:"Lanche tarde", jantar:"Jantar", ceia:"Ceia" };
@@ -930,30 +938,33 @@ function limparDiario() {
 // ── Semáforo ──
 function atualizarTudo() {
   const meta     = parseInt(document.getElementById("meta-input").value) || 0;
+  const queimado    = totalQueimadoHoje();
+  const metaEfetiva = meta > 0 ? meta + queimado : 0;
   const ref      = document.getElementById("refeicao-select").value;
   const totalDia = registros.reduce((s,r) => s + r.kcal, 0);
   const totalRef = kcalRefeicaoAtual();
-  const limRef   = meta > 0 ? Math.round(meta * PESO_REFEICAO[ref]) : 0;
-  const saldo    = meta > 0 ? meta - totalDia : 0;
+  const limRef   = metaEfetiva > 0 ? Math.round(metaEfetiva * PESO_REFEICAO[ref]) : 0;
+  const saldo    = metaEfetiva > 0 ? metaEfetiva - totalDia : 0;
 
   document.getElementById("chip-total").textContent = totalDia + " kcal";
   document.getElementById("chip-itens").textContent = registros.length;
-  document.getElementById("chip-saldo").textContent = meta > 0
+  document.getElementById("chip-saldo").textContent = metaEfetiva > 0
     ? (saldo >= 0 ? saldo + " kcal" : "-" + Math.abs(saldo) + " kcal") : "—";
-  document.getElementById("limite-valor").textContent = meta > 0
-    ? limRef + " kcal (" + Math.round(PESO_REFEICAO[ref]*100) + "% de " + meta + " kcal)"
+  document.getElementById("limite-valor").textContent = metaEfetiva > 0
+    ? limRef + " kcal (" + Math.round(PESO_REFEICAO[ref]*100) + "% de " + metaEfetiva + " kcal)"
     : "— (defina sua meta)";
   document.getElementById("limite-usado").textContent = totalRef + " kcal";
 
   const barWrap = document.getElementById("bar-wrap");
-  if (meta > 0) {
+  if (metaEfetiva > 0) {
     barWrap.style.display = "block";
-    const pct  = Math.min((totalDia/meta)*100, 100);
+    const pct  = Math.min((totalDia/metaEfetiva)*100, 100);
     const fill = document.getElementById("bar-fill");
     fill.style.width = pct + "%";
     fill.className = "bar-fill" + (pct > 100 ? " vermelho" : pct > 80 ? " amarelo" : "");
     document.getElementById("bar-lbl-ref").textContent = NOME_REFEICAO[ref] + ": " + totalRef + " kcal";
-    document.getElementById("bar-lbl-dia").textContent = "Dia: " + totalDia + " / " + meta + " kcal";
+    document.getElementById("bar-lbl-dia").textContent = "Dia: " + totalDia + " / " + metaEfetiva + " kcal"
+      + (queimado > 0 ? " (+" + queimado + " queimadas)" : "");
   } else {
     barWrap.style.display = "none";
   }
@@ -969,7 +980,7 @@ function atualizarTudo() {
   }
   painel.style.display = "";
 
-  if (!meta) {
+  if (!metaEfetiva) {
     verd.textContent = "Aguardando…";
     det.textContent  = "Defina sua meta acima para ativar o semáforo.";
     return;
