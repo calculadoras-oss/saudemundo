@@ -1013,6 +1013,11 @@ function carregarRegistros() {
   try { const r = localStorage.getItem(STORAGE_KEY); return r ? JSON.parse(r) : []; }
   catch(e) { return []; }
 }
+window.addEventListener("storage", (e) => {
+  if (e.key === ATIV_KEY || e.key === META_KEY || e.key === STORAGE_KEY) {
+    atualizarTudo();
+  }
+});
 </script>
 </body>
 </html>
