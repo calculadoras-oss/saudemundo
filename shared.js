@@ -243,22 +243,20 @@ function smInjectStepperStyles() {
   const style = document.createElement('style');
   style.id = 'sm-stepper-style';
   style.textContent = `
-    .sm-stepper-wrap { max-width:660px; margin:.9rem auto 0; padding:0 1rem; }
-    .sm-stepper { display:flex; align-items:center; justify-content:center; gap:.4rem;
-      background:#eef2ff; border:1px solid #c7d2fe; border-radius:14px;
-      padding:.6rem .8rem; flex-wrap:wrap; }
-    .sm-step { display:inline-flex; align-items:center; gap:.3rem; font-size:.78rem;
-      font-weight:700; text-decoration:none; padding:.28rem .65rem; border-radius:20px;
-      border:1.5px solid transparent; color:#4338ca; transition:background .2s; }
-    .sm-step:hover { background:#e0e7ff; }
-    .sm-step.sm-step-ativo { background:#4338ca; border-color:#4338ca; color:#fff; }
-    .sm-step-arrow { color:#a5b4fc; font-size:.8rem; }
-    .sm-stepper-texto { text-align:center; font-size:.72rem; color:var(--text-muted,#64748b);
-      margin:.4rem auto 0; max-width:520px; line-height:1.5; }
-    body.dark .sm-stepper { background:#0c1230; border-color:#312e81; }
-    body.dark .sm-step { color:#a5b4fc; }
-    body.dark .sm-step:hover { background:#1e1b4b; }
-    body.dark .sm-step.sm-step-ativo { background:#4f46e5; border-color:#4f46e5; color:#fff; }
+    .sm-stepper-wrap { max-width:660px; margin:.6rem auto 0; padding:0 1rem; text-align:center; }
+    .sm-stepper { display:inline-flex; align-items:center; gap:.3rem;
+      background:rgba(46,204,113,0.12); border:1px solid rgba(46,204,113,0.35);
+      border-radius:100px; padding:.35rem .9rem; flex-wrap:wrap; justify-content:center; }
+    .sm-step { display:inline-flex; align-items:center; gap:.3rem; font-size:.72rem;
+      font-weight:700; text-decoration:none; padding:.2rem .55rem; border-radius:100px;
+      color:var(--green-dark,#007A3D); transition:background .2s; }
+    .sm-step:hover { background:rgba(46,204,113,0.15); }
+    .sm-step.sm-step-ativo { background:var(--green,#00A651); color:#fff; }
+    .sm-step-arrow { color:#9CA88F; font-size:.72rem; }
+    body.dark .sm-stepper { background:rgba(76,217,138,0.08); border-color:rgba(76,217,138,0.3); }
+    body.dark .sm-step { color:var(--green,#4CD98A); }
+    body.dark .sm-step:hover { background:rgba(76,217,138,0.12); }
+    body.dark .sm-step.sm-step-ativo { background:var(--green,#00A651); color:#fff; }
   `;
   document.head.appendChild(style);
 }
