@@ -277,11 +277,7 @@ function smInjectStepper() {
       + `<a href="${smRootHref(e.href)}" class="sm-step${ativa ? ' sm-step-ativo' : ''}">${e.icon} ${e.label}</a>`;
   }).join('');
 
-  const stepperHtml = `
-    <div class="sm-stepper-wrap">
-      <div class="sm-stepper">${etapasHtml}</div>
-      <div class="sm-stepper-texto">Essas 3 ferramentas trabalham juntas: sua meta calórica ajusta o semáforo de refeições, e o treino registrado aqui vira crédito extra no seu dia.</div>
-    </div>`;
+  const stepperHtml = `<div class="sm-stepper-wrap"><div class="sm-stepper">${etapasHtml}</div></div>`;
 
   header.insertAdjacentHTML('afterend', stepperHtml);
 }
