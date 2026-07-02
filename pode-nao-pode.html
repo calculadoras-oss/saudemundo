@@ -296,19 +296,6 @@
     .reg-del:hover { color:var(--verm); }
     .empty-msg { text-align:center; color:var(--text-muted, #64748b); font-size:.85rem; padding:1.5rem 0; line-height:1.7; }
 
-    /* ── Botão "Entenda" + popover (substitui a antiga .conceito-caixa) ── */
-    .btn-entenda {
-      font-size:.65rem; font-weight:700; vertical-align:middle;
-      background:var(--verde-bg); color:var(--verde); border:1px solid var(--verde-brd);
-      border-radius:20px; padding:.15rem .55rem; cursor:pointer; margin-left:.4rem;
-    }
-    .conceito-popover {
-      display:none; max-width:420px; margin:.5rem auto 0; font-size:.82rem;
-      color:var(--text-muted, #64748b); line-height:1.5; padding:0 1rem;
-    }
-    .conceito-popover.aberto { display:block; }
-    body.dark .btn-entenda { background:#052e16; border-color:#166534; }
-
     /* ── Editorial ── */
     .editorial { font-size:.9rem; line-height:1.75; color:var(--text); }
     .editorial h2 { font-family:'Playfair Display',serif; font-size:1.25rem; margin:2rem 0 .65rem; }
@@ -328,8 +315,6 @@
       line-height: 1.6;
       padding: 0 1rem;
     }
-    /* .conceito-caixa mantida no CSS por segurança (elemento não existe mais no HTML,
-       regra órfã e inofensiva — ver combinado na sessão). */
     .conceito-caixa {
       margin: 12px auto 16px;
       padding: 12px 16px;
@@ -387,56 +372,21 @@
 </head>
 <body>
 
+<!-- ALTERAÇÃO: header revertido para posição e conteúdo originais -->
+<header class="pnp-header">
+  <div class="pnp-badge">
+    <span class="mini-sinal"><span class="ms-r"></span><span class="ms-y"></span><span class="ms-g"></span></span>
+    SaúdeMundo · Decisão alimentar
+  </div>
+  <h1><em>Pode,</em> Não Pode?</h1>
+  <p class="pnp-tagline">Assistente de decisão alimentar com IA</p>
+   <details class="conceito-caixa">
+    <summary>💡 Entenda o conceito</summary>
+    <p>Pense nas calorias como dinheiro. Cada refeição é um depósito. Cada gasto de energia — do coração batendo ao treino na academia — é um saque. No fim do dia, o corpo fecha as contas: depositou mais do que gastou, o saldo vira reserva (gordura). Gastou mais do que depositou, o corpo usa as reservas guardadas (você emagrece). O <strong>Pode, Não Pode?</strong> é o seu extrato em tempo real: antes de fazer o próximo "gasto", você já sabe se o saldo do dia aguenta.</p>
+  </details>
+</header>
+<p class="pnp-intro">Me diga o que vai pedir ou o que já comeu — eu calculo as calorias e mostro se está dentro da sua meta 🚦</p>
 <main class="container">
-
-  <!-- Semáforo compacto -->
-  <div class="painel-topo" id="painel-topo">
-    <div class="sinal-mini">
-      <div class="luz-mini luz-mini-verm"></div>
-      <div class="luz-mini luz-mini-amarelo"></div>
-      <div class="luz-mini luz-mini-verde"></div>
-    </div>
-    <div class="sinal-info">
-      <div class="sinal-veredicto" id="sinal-veredicto">Aguardando…</div>
-      <div class="sinal-detalhe" id="sinal-detalhe"></div>
-    </div>
-  </div>
-
-  <!-- Chip de crédito de calorias queimadas -->
-  <a href="calculadora-queima-calorica.html" class="credito-chip" id="credito-chip" title="Ver/editar treino na calculadora de queima">
-    🔥 <span id="credito-chip-valor">0</span> kcal de treino creditados hoje →
-  </a>
-
-  <!-- Barra do dia -->
-  <div class="bar-wrap" id="bar-wrap" style="display:none;">
-    <div class="bar-labels">
-      <span id="bar-lbl-ref">Refeição atual: 0 kcal</span>
-      <span id="bar-lbl-dia">Dia: 0 / 0 kcal</span>
-    </div>
-    <div class="bar-bg"><div class="bar-fill" id="bar-fill"></div></div>
-  </div>
-
-  <!-- ALTERAÇÃO (Passo 2): header movido para depois do semáforo/barra, para que
-       o resultado (semáforo + saldo) apareça antes de qualquer texto explicativo. -->
-  <header class="pnp-header">
-    <div class="pnp-badge">
-      <span class="mini-sinal"><span class="ms-r"></span><span class="ms-y"></span><span class="ms-g"></span></span>
-      SaúdeMundo · Decisão alimentar
-    </div>
-    <h1>
-      <em>Pode,</em> Não Pode?
-      <button class="btn-entenda" onclick="document.getElementById('conceito-popover').classList.toggle('aberto')" title="Entenda o conceito">💡 Entenda</button>
-    </h1>
-    <p class="pnp-tagline">Assistente de decisão alimentar com IA</p>
-    <p class="conceito-popover" id="conceito-popover">
-      Pense nas calorias como dinheiro: cada refeição é um depósito, cada gasto de energia é um saque. Este é o seu extrato em tempo real.
-    </p>
-  </header>
-  <!-- ALTERAÇÃO: caixa verde grande "Entenda o conceito" removida; virou botão pequeno
-       ao lado do título, com popover curto (texto condensado p/ não repetir o pnp-intro) -->
-
-  <p class="pnp-intro">Calculou sua meta? Agora me diga o que vai pedir, o que já comeu ou o que treinou — eu calculo tudo e mostro seu saldo em tempo real 🚦</p>
-  <!-- ALTERAÇÃO: texto reescrito para dar sequência lógica ao stepper Meta→Treino→Refeições -->
 
   <!-- Meta colapsável -->
   <div class="pnp-card meta-destaque" id="meta-card">
@@ -528,6 +478,32 @@
     <div id="lista-registros">
       <div class="empty-msg">Nenhum registro ainda.<br>Use o modo <strong>📊 Vou comer isso</strong> para registrar! 🚦</div>
     </div>
+  </div>
+
+  <!-- ALTERAÇÃO (revisão do Passo 2): semáforo + saldo movidos para depois do diário,
+       antes do editorial — evita caixa densa de números logo no topo da página. -->
+  <div class="painel-topo" id="painel-topo">
+    <div class="sinal-mini">
+      <div class="luz-mini luz-mini-verm"></div>
+      <div class="luz-mini luz-mini-amarelo"></div>
+      <div class="luz-mini luz-mini-verde"></div>
+    </div>
+    <div class="sinal-info">
+      <div class="sinal-veredicto" id="sinal-veredicto">Aguardando…</div>
+      <div class="sinal-detalhe" id="sinal-detalhe"></div>
+    </div>
+  </div>
+
+  <a href="calculadora-queima-calorica.html" class="credito-chip" id="credito-chip" title="Ver/editar treino na calculadora de queima">
+    🔥 <span id="credito-chip-valor">0</span> kcal de treino creditados hoje →
+  </a>
+
+  <div class="bar-wrap" id="bar-wrap" style="display:none;">
+    <div class="bar-labels">
+      <span id="bar-lbl-ref">Refeição atual: 0 kcal</span>
+      <span id="bar-lbl-dia">Dia: 0 / 0 kcal</span>
+    </div>
+    <div class="bar-bg"><div class="bar-fill" id="bar-fill"></div></div>
   </div>
 
   <!-- Editorial -->
