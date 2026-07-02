@@ -125,7 +125,16 @@
     .sinal-ativo-verde   .sinal-veredicto { color:var(--verde); }
     .sinal-ativo-amarelo .sinal-veredicto { color:var(--amarelo); }
     .sinal-ativo-verm    .sinal-veredicto { color:var(--verm); }
-    .sinal-detalhe { display:none; }
+    /* ALTERAÇÃO: .sinal-detalhe deixa de ficar oculto — agora é a linha de saldo
+   numérico (refeição + dia), unificada com o que antes estava fragmentado
+   em .bar-chips (removido abaixo). */
+.sinal-detalhe {
+  font-size:.78rem;
+  color: var(--text-muted, #64748b);
+  margin-top:.2rem;
+  line-height:1.45;
+}
+.sinal-detalhe strong { color: var(--text); }
 
     /* ── Chip de crédito de calorias queimadas (recuperado da versão anterior) ── */
     .credito-chip {
