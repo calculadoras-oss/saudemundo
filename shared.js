@@ -243,7 +243,7 @@ function smInjectStepperStyles() {
   const style = document.createElement('style');
   style.id = 'sm-stepper-style';
   style.textContent = `
-    .sm-stepper-wrap { max-width:660px; margin:.6rem auto 0; padding:0 1rem; text-align:center; }
+    .sm-stepper-wrap { max-width:660px; margin:.6rem auto 0; padding:0 1rem; text-align:center; display:flex; justify-content:center; }
     .sm-stepper { display:inline-flex; align-items:center; gap:.3rem;
       background:rgba(46,204,113,0.12); border:1px solid rgba(46,204,113,0.35);
       border-radius:100px; padding:.35rem .9rem; flex-wrap:wrap; justify-content:center; }
