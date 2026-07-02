@@ -99,6 +99,7 @@
     .mini-sinal { display:inline-flex; flex-direction:column; gap:2px; }
     .mini-sinal span { width:6px;height:6px;border-radius:50%;display:block; }
     .ms-r{background:#dc2626;} .ms-y{background:#d97706;} .ms-g{background:#16a34a;}
+    .pnp-star { font-size:.75rem; line-height:1; }
     .pnp-header h1 {
       font-family:'Playfair Display',serif; font-weight:900;
       font-size:clamp(1.8rem,5vw,2.6rem); letter-spacing:-.02em;
@@ -125,9 +126,19 @@
     .sinal-ativo-verde   .sinal-veredicto { color:var(--verde); }
     .sinal-ativo-amarelo .sinal-veredicto { color:var(--amarelo); }
     .sinal-ativo-verm    .sinal-veredicto { color:var(--verm); }
-    .sinal-detalhe { display:none; }
 
-    /* ── Chip de crédito de calorias queimadas (recuperado da versão anterior) ── */
+    /* ALTERAÇÃO: .sinal-detalhe deixa de ficar oculto — agora é a linha de saldo
+   numérico (refeição + dia), unificada com o que antes estava fragmentado
+   em .bar-chips (removido). */
+    .sinal-detalhe {
+      font-size:.78rem;
+      color: var(--text-muted, #64748b);
+      margin-top:.2rem;
+      line-height:1.45;
+    }
+    .sinal-detalhe strong { color: var(--text); }
+
+    /* ── Chip de crédito de calorias queimadas ── */
     .credito-chip {
       display:none; align-items:center; gap:.35rem;
       background:#fff7ed; border:1px solid #fed7aa;
@@ -140,13 +151,11 @@
 
     /* ── Barra ── */
     .bar-wrap { margin-bottom:1rem; }
-    .bar-bg { height:6px; background:var(--border, #e2e8f0); border-radius:99px; overflow:hidden; }
+    .bar-bg { height:12px; background:var(--border, #e2e8f0); border-radius:99px; overflow:hidden; }
     .bar-fill { height:100%; border-radius:99px; background:var(--verde); transition:width .4s,background .4s; width:0%; }
     .bar-fill.amarelo { background:var(--amarelo); }
     .bar-fill.vermelho { background:var(--verm); }
     .bar-labels { display:flex; justify-content:space-between; font-size:.7rem; color:var(--text-muted, #64748b); margin-bottom:.25rem; }
-    .bar-chips { display:flex; gap:1rem; margin-top:.35rem; flex-wrap:wrap; }
-    .bar-chips .chip-mini { font-size:.7rem; }
 
     /* ── Cards ── */
     .pnp-card { background:var(--dark2, #ffffff); border:1px solid var(--border, #e2e8f0); border-radius:var(--radius); padding:1.2rem; margin-bottom:.9rem; }
@@ -184,6 +193,12 @@
     }
     .modo-pill.ativo-decisao { background:var(--azul-bg); border-color:var(--azul-brd); color:var(--azul); }
     .modo-pill.ativo-registro { background:var(--verde-bg); border-color:var(--verde-brd); color:var(--verde); }
+    /* ALTERAÇÃO: pills passam a exibir a cor do seu modo sempre (não só quando ativos);
+       o estado "ativo" ganha um contorno extra para indicar seleção. */
+    #pill-decisao { background:var(--azul-bg); border-color:var(--azul-brd); color:var(--azul); }
+    #pill-registro { background:var(--verde-bg); border-color:var(--verde-brd); color:var(--verde); }
+    #pill-decisao.ativo-decisao { box-shadow:0 0 0 2px var(--azul) inset; }
+    #pill-registro.ativo-registro { box-shadow:0 0 0 2px var(--verde) inset; }
     .modo-hint {
       font-size:.72rem; color:var(--text-muted, #64748b); margin-bottom:.6rem;
       padding:.35rem .7rem; border-radius:8px;
@@ -298,7 +313,6 @@
     .faq-q { font-weight:600; font-size:.88rem; margin-bottom:.28rem; }
     .faq-a { font-size:.84rem; color:var(--text-muted, #64748b); line-height:1.6; }
 
-    /* ── Conceito (analogia do extrato bancário) ── */
     .pnp-intro {
       text-align: center;
       font-size: .92rem;
@@ -308,18 +322,21 @@
       line-height: 1.6;
       padding: 0 1rem;
     }
+    /* ALTERAÇÃO: verde alinhado ao mesmo tom usado no stepper "Meta → Treino → Refeições"
+       (injetado pelo shared.js), que é o verde padrão do site — diferente do --verde
+       local (#16a34a) usado no resto desta página. */
     .conceito-caixa {
       margin: 12px auto 16px;
       padding: 12px 16px;
-      border: 1px solid var(--verde, #16a34a);
+      border: 1px solid var(--green, #00A651);
       border-radius: 10px;
-      background: #f0fdf4;
+      background: rgba(46,204,113,0.12);
       max-width: 480px;
     }
     .conceito-caixa summary {
       cursor: pointer;
       font-weight: 600;
-      color: var(--verde, #16a34a);
+      color: var(--green-dark, #007A3D);
       list-style: none;
     }
     .conceito-caixa summary::-webkit-details-marker {
@@ -336,10 +353,7 @@
       text-align: left;
     }
 
-    /* ── Dark mode ──
-       ALTERAÇÃO: seletor corrigido de [data-theme="dark"] (atributo que nunca é escrito no HTML —
-       o shared.js alterna o tema via document.body.classList.toggle('dark'), não via atributo —
-       então este bloco inteiro nunca disparava) para body.dark. */
+    /* ── Dark mode ── */
     body.dark .pnp-badge { background:#052e16; }
     body.dark .painel-topo { border-color:#2d2d2d; }
     body.dark .luz-mini { background:#2d2d2d; }
@@ -356,6 +370,8 @@
     body.dark .modo-pills { border-color:#2d2d2d; }
     body.dark .modo-pill.ativo-decisao { background:#0c1d3d; border-color:#1e40af; color:#93c5fd; }
     body.dark .modo-pill.ativo-registro { background:#052e16; border-color:#166534; color:#86efac; }
+    body.dark #pill-decisao { background:#0c1d3d; border-color:#1e40af; color:#93c5fd; }
+    body.dark #pill-registro { background:#052e16; border-color:#166534; color:#86efac; }
     body.dark .b-cafe{background:#3b1a00;color:#fb923c;}
     body.dark .b-lanche1,body.dark .b-lanche2{background:#2e0059;color:#d8b4fe;}
     body.dark .b-almoco{background:#0c1d3d;color:#93c5fd;}
@@ -363,57 +379,42 @@
     body.dark .b-ceia{background:#2d0030;color:#f9a8d4;}
     body.dark .modo-hint { background:#1a1a1a; border-color:#2d2d2d; }
     body.dark .btn-foto { border-color:#2d2d2d; }
-    body.dark .conceito-caixa { background:#052e16; }
+    body.dark .conceito-caixa { background:rgba(76,217,138,0.08); border-color:rgba(76,217,138,0.3); }
+    body.dark .conceito-caixa summary { color: var(--green, #4CD98A); }
   </style>
 </head>
 <body>
 
+<!-- ALTERAÇÃO: header revertido para posição e conteúdo originais -->
 <header class="pnp-header">
   <div class="pnp-badge">
-    <span class="mini-sinal"><span class="ms-r"></span><span class="ms-y"></span><span class="ms-g"></span></span>
-    SaúdeMundo · Decisão alimentar
+    <span class="pnp-star">✦</span>
+    SaúdeMundo · Decisão alimentar com IA
   </div>
   <h1><em>Pode,</em> Não Pode?</h1>
-  <p class="pnp-tagline">Assistente de decisão alimentar com IA</p>
    <details class="conceito-caixa">
     <summary>💡 Entenda o conceito</summary>
     <p>Pense nas calorias como dinheiro. Cada refeição é um depósito. Cada gasto de energia — do coração batendo ao treino na academia — é um saque. No fim do dia, o corpo fecha as contas: depositou mais do que gastou, o saldo vira reserva (gordura). Gastou mais do que depositou, o corpo usa as reservas guardadas (você emagrece). O <strong>Pode, Não Pode?</strong> é o seu extrato em tempo real: antes de fazer o próximo "gasto", você já sabe se o saldo do dia aguenta.</p>
   </details>
 </header>
-<p class="pnp-intro">Me diga o que vai pedir ou o que já comeu — eu calculo as calorias e mostro se está dentro da sua meta 🚦</p>
+<!-- ALTERAÇÃO: badge usa estrela ✦ (padrão do site) em vez do mini-semáforo; texto
+     "Assistente de decisão alimentar com IA" incorporado ao badge; tagline separada removida.
+     pnp-intro movido para depois do meta-card (ver mais abaixo). -->
 <main class="container">
 
-  <!-- Semáforo compacto -->
-  <div class="painel-topo" id="painel-topo">
-    <div class="sinal-mini">
-      <div class="luz-mini luz-mini-verm"></div>
-      <div class="luz-mini luz-mini-amarelo"></div>
-      <div class="luz-mini luz-mini-verde"></div>
-    </div>
-    <div class="sinal-info">
-      <div class="sinal-veredicto" id="sinal-veredicto">Aguardando…</div>
-      <div class="sinal-detalhe" id="sinal-detalhe"></div>
-    </div>
-  </div>
-
-  <!-- Chip de crédito de calorias queimadas (recuperado da versão anterior) -->
-  <a href="calculadora-queima-calorica.html" class="credito-chip" id="credito-chip" title="Ver/editar treino na calculadora de queima">
-    🔥 <span id="credito-chip-valor">0</span> kcal de treino creditados hoje →
-  </a>
-
-  <!-- Barra do dia -->
+  <!-- ALTERAÇÃO: barra (agora mais espessa) e chip de treino ficam no topo; só o
+       card do semáforo desce para depois do diário (ver mais abaixo). -->
   <div class="bar-wrap" id="bar-wrap" style="display:none;">
     <div class="bar-labels">
       <span id="bar-lbl-ref">Refeição atual: 0 kcal</span>
       <span id="bar-lbl-dia">Dia: 0 / 0 kcal</span>
     </div>
     <div class="bar-bg"><div class="bar-fill" id="bar-fill"></div></div>
-    <div class="bar-chips">
-      <span class="chip-mini">Dia: <strong id="chip-total">0 kcal</strong></span>
-      <span class="chip-mini">Saldo: <strong id="chip-saldo">—</strong></span>
-      <span class="chip-mini">Itens: <strong id="chip-itens">0</strong></span>
-    </div>
   </div>
+
+  <a href="calculadora-queima-calorica.html" class="credito-chip" id="credito-chip" title="Ver/editar treino na calculadora de queima">
+    🔥 <span id="credito-chip-valor">0</span> kcal de treino creditados hoje →
+  </a>
 
   <!-- Meta colapsável -->
   <div class="pnp-card meta-destaque" id="meta-card">
@@ -431,11 +432,30 @@
     </div>
   </div>
 
+  <!-- ALTERAÇÃO: texto reposicionado para depois do meta-card (só faz sentido perguntar
+       "calculou sua meta?" depois do card de meta) — vírgula após "Agora" e emoji de
+       semáforo no final, como no texto original. -->
+  <p class="pnp-intro">Calculou sua meta? Agora, me mande uma foto do que vai comer ou diga o que comeu e me mande seu treino de hoje - eu calculo tudo e mostro seu saldo em tempo real.</p>
+
+  <!-- ALTERAÇÃO: card do semáforo reposicionado para imediatamente acima do seletor de
+       modo, já que ele indica que a pessoa deve escrever o que vai comer/comeu. -->
+  <div class="painel-topo" id="painel-topo">
+    <div class="sinal-mini">
+      <div class="luz-mini luz-mini-verm"></div>
+      <div class="luz-mini luz-mini-amarelo"></div>
+      <div class="luz-mini luz-mini-verde"></div>
+    </div>
+    <div class="sinal-info">
+      <div class="sinal-veredicto" id="sinal-veredicto">Aguardando…</div>
+      <div class="sinal-detalhe" id="sinal-detalhe"></div>
+    </div>
+  </div>
+
   <!-- Seletor de modo -->
   <div class="modo-pills">
     <span class="modo-label">Modo:</span>
     <button class="modo-pill" id="pill-decisao" onclick="setModo('decisao')">
-      🧠 O que vou pedir?
+      ⚖️ O que vou comer?
     </button>
     <button class="modo-pill" id="pill-registro" onclick="setModo('registro')">
       📊 Vou comer isso
@@ -993,21 +1013,58 @@ function limparDiario() {
   registros = []; salvarRegistros(); renderLista(); atualizarTudo();
 }
 
+// ALTERAÇÃO: função central de status do dia. Hoje alimenta o semáforo e a
+// barra; no futuro alimenta gamificação (streak/score) sem duplicar lógica.
+function calcularStatusDia() {
+  const meta        = parseInt(document.getElementById("meta-input").value) || 0;
+  const queimado     = totalQueimadoHoje();
+  const metaEfetiva  = meta > 0 ? meta + queimado : 0;
+  const ref          = document.getElementById("refeicao-select").value;
+  const totalDia     = registros.reduce((s,r) => s + r.kcal, 0);
+  const totalRef     = kcalRefeicaoAtual();
+  const limRef       = metaEfetiva > 0 ? Math.round(metaEfetiva * PESO_REFEICAO[ref]) : 0;
+  const saldoDia     = metaEfetiva > 0 ? metaEfetiva - totalDia : 0;
+  const saldoRef     = metaEfetiva > 0 ? limRef - totalRef : 0;
+  const pctRef       = limRef > 0 ? (totalRef / limRef) * 100 : 0;
+  const temRegistroNaRef = registros.some(r => r.refeicao === ref);
+
+  let classificacao = "sem-meta";
+  if (metaEfetiva > 0) {
+    if (!temRegistroNaRef)       classificacao = "vazio";
+    else if (pctRef <= 80)       classificacao = "verde";
+    else if (pctRef <= 100)      classificacao = "amarelo";
+    else                          classificacao = "vermelho";
+  }
+
+  return {
+    data: STORAGE_KEY.replace("sm_pnp_", ""),
+    meta, queimado, metaEfetiva,
+    totalDia, itens: registros.length, saldoDia,
+    refeicaoAtual: ref, totalRef, limRef, saldoRef,
+    pctRef: Math.round(pctRef), classificacao,
+  };
+}
+
+// ALTERAÇÃO: snapshot diário — base para histórico/streak/gamificação futura.
+// Sobrescreve 1x por dia (última leitura do dia), já com campo de versão
+// para permitir migração de schema sem quebrar dados antigos.
+function salvarSnapshotDia(status) {
+  try {
+    const key = "sm_pnp_status_" + status.data;
+    const payload = { versao: 1, atualizadoEm: new Date().toISOString(), ...status };
+    localStorage.setItem(key, JSON.stringify(payload));
+  } catch(e) {}
+}
+
 // ── Semáforo ──
 function atualizarTudo() {
-  const meta     = parseInt(document.getElementById("meta-input").value) || 0;
-  const queimado    = totalQueimadoHoje();
-  const metaEfetiva = meta > 0 ? meta + queimado : 0;
-  const ref      = document.getElementById("refeicao-select").value;
-  const totalDia = registros.reduce((s,r) => s + r.kcal, 0);
-  const totalRef = kcalRefeicaoAtual();
-  const limRef   = metaEfetiva > 0 ? Math.round(metaEfetiva * PESO_REFEICAO[ref]) : 0;
-  const saldo    = metaEfetiva > 0 ? metaEfetiva - totalDia : 0;
+  const status = calcularStatusDia();
+  const {
+    meta, queimado, metaEfetiva, totalDia, itens,
+    refeicaoAtual: ref, totalRef, limRef, saldoRef, saldoDia,
+    pctRef, classificacao,
+  } = status;
 
-  document.getElementById("chip-total").textContent = totalDia + " kcal";
-  document.getElementById("chip-itens").textContent = registros.length;
-  document.getElementById("chip-saldo").textContent = metaEfetiva > 0
-    ? (saldo >= 0 ? saldo + " kcal" : "-" + Math.abs(saldo) + " kcal") : "—";
   document.getElementById("limite-valor").textContent = metaEfetiva > 0
     ? limRef + " kcal (" + Math.round(PESO_REFEICAO[ref]*100) + "% de " + metaEfetiva + " kcal)"
     : "— (defina sua meta)";
@@ -1021,14 +1078,11 @@ function atualizarTudo() {
     fill.style.width = pct + "%";
     fill.className = "bar-fill" + (pct > 100 ? " vermelho" : pct > 80 ? " amarelo" : "");
     document.getElementById("bar-lbl-ref").textContent = NOME_REFEICAO[ref] + ": " + totalRef + " kcal";
-    // O crédito de calorias queimadas não fica mais escondido aqui dentro de um texto
-    // pequeno — agora tem o chip próprio abaixo (#credito-chip).
     document.getElementById("bar-lbl-dia").textContent = "Dia: " + totalDia + " / " + metaEfetiva + " kcal";
   } else {
     barWrap.style.display = "none";
   }
 
-  // Chip de destaque do crédito de treino, clicável.
   const creditoChip = document.getElementById("credito-chip");
   if (queimado > 0) {
     creditoChip.style.display = "inline-flex";
@@ -1042,38 +1096,38 @@ function atualizarTudo() {
   const det    = document.getElementById("sinal-detalhe");
   painel.className = "painel-topo";
 
-  if (registros.length === 0) {
+  if (itens === 0 && queimado === 0) {
     painel.style.display = "none";
+    salvarSnapshotDia(status);
     return;
   }
   painel.style.display = "";
 
-  if (!metaEfetiva) {
+  const saldoDiaTxt = metaEfetiva > 0
+    ? "Dia: <strong>" + totalDia + "/" + metaEfetiva + " kcal</strong> (saldo " + (saldoDia >= 0 ? "+" : "") + saldoDia + " kcal)"
+    : "";
+
+  if (classificacao === "sem-meta") {
     verd.textContent = "Aguardando…";
     det.textContent  = "Defina sua meta acima para ativar o semáforo.";
-    return;
-  }
-
-  if (!registros.filter(r => r.refeicao === ref).length) {
+  } else if (classificacao === "vazio") {
     verd.textContent = NOME_REFEICAO[ref] + " — pronto!";
-    det.textContent  = "Limite: " + limRef + " kcal. Escreva o que vai comer ou comeu.";
-    return;
-  }
-
-  const pctRef = (totalRef / limRef) * 100;
-  if (pctRef <= 80) {
+    det.innerHTML = "Limite: <strong>" + limRef + " kcal</strong>. Escreva o que vai comer ou comeu.<br>" + saldoDiaTxt;
+  } else if (classificacao === "verde") {
     painel.classList.add("sinal-ativo-verde");
     verd.textContent = "🟢 Boa escolha!";
-    det.textContent  = NOME_REFEICAO[ref] + ": " + totalRef + " de " + limRef + " kcal. Ainda tem " + (limRef-totalRef) + " kcal.";
-  } else if (pctRef <= 100) {
+    det.innerHTML = NOME_REFEICAO[ref] + ": <strong>" + totalRef + "/" + limRef + " kcal</strong> · restam " + saldoRef + " kcal<br>" + saldoDiaTxt;
+  } else if (classificacao === "amarelo") {
     painel.classList.add("sinal-ativo-amarelo");
     verd.textContent = "🟡 Atenção!";
-    det.textContent  = NOME_REFEICAO[ref] + ": restam apenas " + (limRef-totalRef) + " kcal. Escolha com cuidado.";
+    det.innerHTML = NOME_REFEICAO[ref] + ": restam apenas <strong>" + saldoRef + " kcal</strong>. Escolha com cuidado.<br>" + saldoDiaTxt;
   } else {
     painel.classList.add("sinal-ativo-verm");
     verd.textContent = "🔴 Passou do limite!";
-    det.textContent  = NOME_REFEICAO[ref] + " passou " + (totalRef-limRef) + " kcal acima. Compense na próxima.";
+    det.innerHTML = NOME_REFEICAO[ref] + " passou <strong>" + Math.abs(saldoRef) + " kcal</strong> acima. Compense na próxima.<br>" + saldoDiaTxt;
   }
+
+  salvarSnapshotDia(status);
 }
 
 function salvarRegistros() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(registros)); } catch(e) {} }
@@ -1085,6 +1139,11 @@ window.addEventListener("storage", (e) => {
   if (e.key === ATIV_KEY || e.key === META_KEY || e.key === STORAGE_KEY) {
     atualizarTudo();
   }
+});
+// ALTERAÇÃO: listener restaurado — havia sumido nas últimas edições. Faz o painel
+// atualizar (ex: crédito de treino) quando o usuário volta de outra aba/página.
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") atualizarTudo();
 });
 </script>
 </body>
