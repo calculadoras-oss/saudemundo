@@ -296,6 +296,18 @@
     .reg-del:hover { color:var(--verm); }
     .empty-msg { text-align:center; color:var(--text-muted, #64748b); font-size:.85rem; padding:1.5rem 0; line-height:1.7; }
 
+    /* ADICIONAR, remover .conceito-caixa (não usada mais): */
+.btn-entenda {
+  font-size:.65rem; font-weight:700; vertical-align:middle;
+  background:var(--verde-bg); color:var(--verde); border:1px solid var(--verde-brd);
+  border-radius:20px; padding:.15rem .55rem; cursor:pointer; margin-left:.4rem;
+}
+.conceito-popover {
+  display:none; max-width:420px; margin:.5rem auto 0; font-size:.82rem;
+  color:var(--text-muted, #64748b); line-height:1.5; padding:0 1rem;
+}
+.conceito-popover.aberto { display:block; }
+body.dark .btn-entenda { background:#052e16; border-color:#166534; }
     /* ── Editorial ── */
     .editorial { font-size:.9rem; line-height:1.75; color:var(--text); }
     .editorial h2 { font-family:'Playfair Display',serif; font-size:1.25rem; margin:2rem 0 .65rem; }
