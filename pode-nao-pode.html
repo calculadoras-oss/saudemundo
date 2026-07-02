@@ -125,19 +125,19 @@
     .sinal-ativo-verde   .sinal-veredicto { color:var(--verde); }
     .sinal-ativo-amarelo .sinal-veredicto { color:var(--amarelo); }
     .sinal-ativo-verm    .sinal-veredicto { color:var(--verm); }
-    
+
     /* ALTERAÇÃO: .sinal-detalhe deixa de ficar oculto — agora é a linha de saldo
    numérico (refeição + dia), unificada com o que antes estava fragmentado
-   em .bar-chips (removido abaixo). */
-.sinal-detalhe {
-  font-size:.78rem;
-  color: var(--text-muted, #64748b);
-  margin-top:.2rem;
-  line-height:1.45;
-}
-.sinal-detalhe strong { color: var(--text); }
+   em .bar-chips (removido). */
+    .sinal-detalhe {
+      font-size:.78rem;
+      color: var(--text-muted, #64748b);
+      margin-top:.2rem;
+      line-height:1.45;
+    }
+    .sinal-detalhe strong { color: var(--text); }
 
-    /* ── Chip de crédito de calorias queimadas (recuperado da versão anterior) ── */
+    /* ── Chip de crédito de calorias queimadas ── */
     .credito-chip {
       display:none; align-items:center; gap:.35rem;
       background:#fff7ed; border:1px solid #fed7aa;
@@ -155,7 +155,7 @@
     .bar-fill.amarelo { background:var(--amarelo); }
     .bar-fill.vermelho { background:var(--verm); }
     .bar-labels { display:flex; justify-content:space-between; font-size:.7rem; color:var(--text-muted, #64748b); margin-bottom:.25rem; }
-    
+
     /* ── Cards ── */
     .pnp-card { background:var(--dark2, #ffffff); border:1px solid var(--border, #e2e8f0); border-radius:var(--radius); padding:1.2rem; margin-bottom:.9rem; }
     .pnp-card-title { font-size:.68rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--verde); margin-bottom:.85rem; }
@@ -296,18 +296,19 @@
     .reg-del:hover { color:var(--verm); }
     .empty-msg { text-align:center; color:var(--text-muted, #64748b); font-size:.85rem; padding:1.5rem 0; line-height:1.7; }
 
-    /* ADICIONAR, remover .conceito-caixa (não usada mais): */
-.btn-entenda {
-  font-size:.65rem; font-weight:700; vertical-align:middle;
-  background:var(--verde-bg); color:var(--verde); border:1px solid var(--verde-brd);
-  border-radius:20px; padding:.15rem .55rem; cursor:pointer; margin-left:.4rem;
-}
-.conceito-popover {
-  display:none; max-width:420px; margin:.5rem auto 0; font-size:.82rem;
-  color:var(--text-muted, #64748b); line-height:1.5; padding:0 1rem;
-}
-.conceito-popover.aberto { display:block; }
-body.dark .btn-entenda { background:#052e16; border-color:#166534; }
+    /* ── Botão "Entenda" + popover (substitui a antiga .conceito-caixa) ── */
+    .btn-entenda {
+      font-size:.65rem; font-weight:700; vertical-align:middle;
+      background:var(--verde-bg); color:var(--verde); border:1px solid var(--verde-brd);
+      border-radius:20px; padding:.15rem .55rem; cursor:pointer; margin-left:.4rem;
+    }
+    .conceito-popover {
+      display:none; max-width:420px; margin:.5rem auto 0; font-size:.82rem;
+      color:var(--text-muted, #64748b); line-height:1.5; padding:0 1rem;
+    }
+    .conceito-popover.aberto { display:block; }
+    body.dark .btn-entenda { background:#052e16; border-color:#166534; }
+
     /* ── Editorial ── */
     .editorial { font-size:.9rem; line-height:1.75; color:var(--text); }
     .editorial h2 { font-family:'Playfair Display',serif; font-size:1.25rem; margin:2rem 0 .65rem; }
@@ -318,7 +319,6 @@ body.dark .btn-entenda { background:#052e16; border-color:#166534; }
     .faq-q { font-weight:600; font-size:.88rem; margin-bottom:.28rem; }
     .faq-a { font-size:.84rem; color:var(--text-muted, #64748b); line-height:1.6; }
 
-    /* ── Conceito (analogia do extrato bancário) ── */
     .pnp-intro {
       text-align: center;
       font-size: .92rem;
@@ -328,6 +328,8 @@ body.dark .btn-entenda { background:#052e16; border-color:#166534; }
       line-height: 1.6;
       padding: 0 1rem;
     }
+    /* .conceito-caixa mantida no CSS por segurança (elemento não existe mais no HTML,
+       regra órfã e inofensiva — ver combinado na sessão). */
     .conceito-caixa {
       margin: 12px auto 16px;
       padding: 12px 16px;
@@ -356,10 +358,7 @@ body.dark .btn-entenda { background:#052e16; border-color:#166534; }
       text-align: left;
     }
 
-    /* ── Dark mode ──
-       ALTERAÇÃO: seletor corrigido de [data-theme="dark"] (atributo que nunca é escrito no HTML —
-       o shared.js alterna o tema via document.body.classList.toggle('dark'), não via atributo —
-       então este bloco inteiro nunca disparava) para body.dark. */
+    /* ── Dark mode ── */
     body.dark .pnp-badge { background:#052e16; }
     body.dark .painel-topo { border-color:#2d2d2d; }
     body.dark .luz-mini { background:#2d2d2d; }
@@ -388,27 +387,6 @@ body.dark .btn-entenda { background:#052e16; border-color:#166534; }
 </head>
 <body>
 
-<!-- SUBSTITUIR o <header> inteiro por: -->
-<header class="pnp-header">
-  <div class="pnp-badge">
-    <span class="mini-sinal"><span class="ms-r"></span><span class="ms-y"></span><span class="ms-g"></span></span>
-    SaúdeMundo · Decisão alimentar
-  </div>
-  <h1>
-    <em>Pode,</em> Não Pode?
-    <button class="btn-entenda" onclick="document.getElementById('conceito-popover').classList.toggle('aberto')" title="Entenda o conceito">💡 Entenda</button>
-  </h1>
-  <p class="pnp-tagline">Assistente de decisão alimentar com IA</p>
-  <p class="conceito-popover" id="conceito-popover">
-    Pense nas calorias como dinheiro: cada refeição é um depósito, cada gasto de energia é um saque. Este é o seu extrato em tempo real.
-  </p>
-</header>
-<!-- ALTERAÇÃO: caixa verde grande "Entenda o conceito" removida; virou botão pequeno
-     ao lado do título, com popover curto (texto condensado p/ não repetir o novo pnp-intro) -->
-
-<p class="pnp-intro">Calculou sua meta? Agora me diga o que vai pedir, o que já comeu ou o que treinou — eu calculo tudo e mostro seu saldo em tempo real 🚦</p>
-<!-- ALTERAÇÃO: texto reescrito para dar sequência lógica ao stepper Meta→Treino→Refeições -->
-
 <main class="container">
 
   <!-- Semáforo compacto -->
@@ -424,7 +402,7 @@ body.dark .btn-entenda { background:#052e16; border-color:#166534; }
     </div>
   </div>
 
-  <!-- Chip de crédito de calorias queimadas (recuperado da versão anterior) -->
+  <!-- Chip de crédito de calorias queimadas -->
   <a href="calculadora-queima-calorica.html" class="credito-chip" id="credito-chip" title="Ver/editar treino na calculadora de queima">
     🔥 <span id="credito-chip-valor">0</span> kcal de treino creditados hoje →
   </a>
@@ -436,8 +414,29 @@ body.dark .btn-entenda { background:#052e16; border-color:#166534; }
       <span id="bar-lbl-dia">Dia: 0 / 0 kcal</span>
     </div>
     <div class="bar-bg"><div class="bar-fill" id="bar-fill"></div></div>
-    
   </div>
+
+  <!-- ALTERAÇÃO (Passo 2): header movido para depois do semáforo/barra, para que
+       o resultado (semáforo + saldo) apareça antes de qualquer texto explicativo. -->
+  <header class="pnp-header">
+    <div class="pnp-badge">
+      <span class="mini-sinal"><span class="ms-r"></span><span class="ms-y"></span><span class="ms-g"></span></span>
+      SaúdeMundo · Decisão alimentar
+    </div>
+    <h1>
+      <em>Pode,</em> Não Pode?
+      <button class="btn-entenda" onclick="document.getElementById('conceito-popover').classList.toggle('aberto')" title="Entenda o conceito">💡 Entenda</button>
+    </h1>
+    <p class="pnp-tagline">Assistente de decisão alimentar com IA</p>
+    <p class="conceito-popover" id="conceito-popover">
+      Pense nas calorias como dinheiro: cada refeição é um depósito, cada gasto de energia é um saque. Este é o seu extrato em tempo real.
+    </p>
+  </header>
+  <!-- ALTERAÇÃO: caixa verde grande "Entenda o conceito" removida; virou botão pequeno
+       ao lado do título, com popover curto (texto condensado p/ não repetir o pnp-intro) -->
+
+  <p class="pnp-intro">Calculou sua meta? Agora me diga o que vai pedir, o que já comeu ou o que treinou — eu calculo tudo e mostro seu saldo em tempo real 🚦</p>
+  <!-- ALTERAÇÃO: texto reescrito para dar sequência lógica ao stepper Meta→Treino→Refeições -->
 
   <!-- Meta colapsável -->
   <div class="pnp-card meta-destaque" id="meta-card">
@@ -1059,9 +1058,8 @@ function salvarSnapshotDia(status) {
     localStorage.setItem(key, JSON.stringify(payload));
   } catch(e) {}
 }
-// ── Semáforo ──
-// SUBSTITUIR a função atualizarTudo() inteira por:
 
+// ── Semáforo ──
 function atualizarTudo() {
   const status = calcularStatusDia();
   const {
@@ -1144,6 +1142,11 @@ window.addEventListener("storage", (e) => {
   if (e.key === ATIV_KEY || e.key === META_KEY || e.key === STORAGE_KEY) {
     atualizarTudo();
   }
+});
+// ALTERAÇÃO: listener restaurado — havia sumido nas últimas edições. Faz o painel
+// atualizar (ex: crédito de treino) quando o usuário volta de outra aba/página.
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") atualizarTudo();
 });
 </script>
 </body>
