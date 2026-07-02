@@ -997,6 +997,48 @@ function limparDiario() {
   registros = []; salvarRegistros(); renderLista(); atualizarTudo();
 }
 
+// ALTERAÇÃO: função central de status do dia. Hoje alimenta o semáforo e a
+// barra; no futuro alimenta gamificação (streak/score) sem duplicar lógica.
+function calcularStatusDia() {
+  const meta        = parseInt(document.getElementById("meta-input").value) || 0;
+  const queimado     = totalQueimadoHoje();
+  const metaEfetiva  = meta > 0 ? meta + queimado : 0;
+  const ref          = document.getElementById("refeicao-select").value;
+  const totalDia     = registros.reduce((s,r) => s + r.kcal, 0);
+  const totalRef     = kcalRefeicaoAtual();
+  const limRef       = metaEfetiva > 0 ? Math.round(metaEfetiva * PESO_REFEICAO[ref]) : 0;
+  const saldoDia     = metaEfetiva > 0 ? metaEfetiva - totalDia : 0;
+  const saldoRef     = metaEfetiva > 0 ? limRef - totalRef : 0;
+  const pctRef       = limRef > 0 ? (totalRef / limRef) * 100 : 0;
+  const temRegistroNaRef = registros.some(r => r.refeicao === ref);
+
+  let classificacao = "sem-meta";
+  if (metaEfetiva > 0) {
+    if (!temRegistroNaRef)       classificacao = "vazio";
+    else if (pctRef <= 80)       classificacao = "verde";
+    else if (pctRef <= 100)      classificacao = "amarelo";
+    else                          classificacao = "vermelho";
+  }
+
+  return {
+    data: STORAGE_KEY.replace("sm_pnp_", ""),
+    meta, queimado, metaEfetiva,
+    totalDia, itens: registros.length, saldoDia,
+    refeicaoAtual: ref, totalRef, limRef, saldoRef,
+    pctRef: Math.round(pctRef), classificacao,
+  };
+}
+
+// ALTERAÇÃO: snapshot diário — base para histórico/streak/gamificação futura.
+// Sobrescreve 1x por dia (última leitura do dia), já com campo de versão
+// para permitir migração de schema sem quebrar dados antigos.
+function salvarSnapshotDia(status) {
+  try {
+    const key = "sm_pnp_status_" + status.data;
+    const payload = { versao: 1, atualizadoEm: new Date().toISOString(), ...status };
+    localStorage.setItem(key, JSON.stringify(payload));
+  } catch(e) {}
+}
 // ── Semáforo ──
 function atualizarTudo() {
   const meta     = parseInt(document.getElementById("meta-input").value) || 0;
