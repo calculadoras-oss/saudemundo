@@ -385,9 +385,9 @@
     <p>Pense nas calorias como dinheiro. Cada refeição é um depósito. Cada gasto de energia — do coração batendo ao treino na academia — é um saque. No fim do dia, o corpo fecha as contas: depositou mais do que gastou, o saldo vira reserva (gordura). Gastou mais do que depositou, o corpo usa as reservas guardadas (você emagrece). O <strong>Pode, Não Pode?</strong> é o seu extrato em tempo real: antes de fazer o próximo "gasto", você já sabe se o saldo do dia aguenta.</p>
   </details>
 </header>
-<!-- ALTERAÇÃO: badge passa a usar a estrela ✦ (padrão do site) em vez do mini-semáforo;
-     texto "Assistente de decisão alimentar com IA" incorporado ao badge; tagline separada removida. -->
-<p class="pnp-intro">Calculou sua meta? Agora me mande uma foto do que vai comer ou diga o que comeu e me mande seu treino de hoje - eu calculo tudo e mostro seu saldo em tempo real.</p>
+<!-- ALTERAÇÃO: badge usa estrela ✦ (padrão do site) em vez do mini-semáforo; texto
+     "Assistente de decisão alimentar com IA" incorporado ao badge; tagline separada removida.
+     pnp-intro movido para depois do meta-card (ver mais abaixo). -->
 <main class="container">
 
   <!-- ALTERAÇÃO: barra (agora mais espessa) e chip de treino ficam no topo; só o
@@ -417,6 +417,25 @@
                oninput="onMetaChange()" onblur="onMetaBlur()" />
         <a href="https://www.saudemundo.com.br/index.html" class="meta-link">Calcule aqui →</a>
       </div>
+    </div>
+  </div>
+
+  <!-- ALTERAÇÃO: texto reposicionado para depois do meta-card (só faz sentido perguntar
+       "calculou sua meta?" depois do card de meta) — vírgula após "Agora" e emoji de
+       semáforo no final, como no texto original. -->
+  <p class="pnp-intro">Calculou sua meta? Agora, me mande uma foto do que vai comer ou diga o que comeu e me mande seu treino de hoje - eu calculo tudo e mostro seu saldo em tempo real 🚦</p>
+
+  <!-- ALTERAÇÃO: card do semáforo reposicionado para imediatamente acima do seletor de
+       modo, já que ele indica que a pessoa deve escrever o que vai comer/comeu. -->
+  <div class="painel-topo" id="painel-topo">
+    <div class="sinal-mini">
+      <div class="luz-mini luz-mini-verm"></div>
+      <div class="luz-mini luz-mini-amarelo"></div>
+      <div class="luz-mini luz-mini-verde"></div>
+    </div>
+    <div class="sinal-info">
+      <div class="sinal-veredicto" id="sinal-veredicto">Aguardando…</div>
+      <div class="sinal-detalhe" id="sinal-detalhe"></div>
     </div>
   </div>
 
@@ -493,20 +512,6 @@
     </div>
     <div id="lista-registros">
       <div class="empty-msg">Nenhum registro ainda.<br>Use o modo <strong>📊 Vou comer isso</strong> para registrar! 🚦</div>
-    </div>
-  </div>
-
-  <!-- ALTERAÇÃO: apenas o card do semáforo desce, para depois do diário e antes do
-       editorial — barra e chip de treino permanecem no topo (ver acima). -->
-  <div class="painel-topo" id="painel-topo">
-    <div class="sinal-mini">
-      <div class="luz-mini luz-mini-verm"></div>
-      <div class="luz-mini luz-mini-amarelo"></div>
-      <div class="luz-mini luz-mini-verde"></div>
-    </div>
-    <div class="sinal-info">
-      <div class="sinal-veredicto" id="sinal-veredicto">Aguardando…</div>
-      <div class="sinal-detalhe" id="sinal-detalhe"></div>
     </div>
   </div>
 
