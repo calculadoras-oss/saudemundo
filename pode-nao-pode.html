@@ -1040,20 +1040,16 @@ function salvarSnapshotDia(status) {
   } catch(e) {}
 }
 // ── Semáforo ──
-function atualizarTudo() {
-  const meta     = parseInt(document.getElementById("meta-input").value) || 0;
-  const queimado    = totalQueimadoHoje();
-  const metaEfetiva = meta > 0 ? meta + queimado : 0;
-  const ref      = document.getElementById("refeicao-select").value;
-  const totalDia = registros.reduce((s,r) => s + r.kcal, 0);
-  const totalRef = kcalRefeicaoAtual();
-  const limRef   = metaEfetiva > 0 ? Math.round(metaEfetiva * PESO_REFEICAO[ref]) : 0;
-  const saldo    = metaEfetiva > 0 ? metaEfetiva - totalDia : 0;
+// SUBSTITUIR a função atualizarTudo() inteira por:
 
-  document.getElementById("chip-total").textContent = totalDia + " kcal";
-  document.getElementById("chip-itens").textContent = registros.length;
-  document.getElementById("chip-saldo").textContent = metaEfetiva > 0
-    ? (saldo >= 0 ? saldo + " kcal" : "-" + Math.abs(saldo) + " kcal") : "—";
+function atualizarTudo() {
+  const status = calcularStatusDia();
+  const {
+    meta, queimado, metaEfetiva, totalDia, itens,
+    refeicaoAtual: ref, totalRef, limRef, saldoRef, saldoDia,
+    pctRef, classificacao,
+  } = status;
+
   document.getElementById("limite-valor").textContent = metaEfetiva > 0
     ? limRef + " kcal (" + Math.round(PESO_REFEICAO[ref]*100) + "% de " + metaEfetiva + " kcal)"
     : "— (defina sua meta)";
@@ -1067,14 +1063,11 @@ function atualizarTudo() {
     fill.style.width = pct + "%";
     fill.className = "bar-fill" + (pct > 100 ? " vermelho" : pct > 80 ? " amarelo" : "");
     document.getElementById("bar-lbl-ref").textContent = NOME_REFEICAO[ref] + ": " + totalRef + " kcal";
-    // O crédito de calorias queimadas não fica mais escondido aqui dentro de um texto
-    // pequeno — agora tem o chip próprio abaixo (#credito-chip).
     document.getElementById("bar-lbl-dia").textContent = "Dia: " + totalDia + " / " + metaEfetiva + " kcal";
   } else {
     barWrap.style.display = "none";
   }
 
-  // Chip de destaque do crédito de treino, clicável.
   const creditoChip = document.getElementById("credito-chip");
   if (queimado > 0) {
     creditoChip.style.display = "inline-flex";
@@ -1088,38 +1081,38 @@ function atualizarTudo() {
   const det    = document.getElementById("sinal-detalhe");
   painel.className = "painel-topo";
 
-  if (registros.length === 0) {
+  if (itens === 0 && queimado === 0) {
     painel.style.display = "none";
+    salvarSnapshotDia(status);
     return;
   }
   painel.style.display = "";
 
-  if (!metaEfetiva) {
+  const saldoDiaTxt = metaEfetiva > 0
+    ? "Dia: <strong>" + totalDia + "/" + metaEfetiva + " kcal</strong> (saldo " + (saldoDia >= 0 ? "+" : "") + saldoDia + " kcal)"
+    : "";
+
+  if (classificacao === "sem-meta") {
     verd.textContent = "Aguardando…";
     det.textContent  = "Defina sua meta acima para ativar o semáforo.";
-    return;
-  }
-
-  if (!registros.filter(r => r.refeicao === ref).length) {
+  } else if (classificacao === "vazio") {
     verd.textContent = NOME_REFEICAO[ref] + " — pronto!";
-    det.textContent  = "Limite: " + limRef + " kcal. Escreva o que vai comer ou comeu.";
-    return;
-  }
-
-  const pctRef = (totalRef / limRef) * 100;
-  if (pctRef <= 80) {
+    det.innerHTML = "Limite: <strong>" + limRef + " kcal</strong>. Escreva o que vai comer ou comeu.<br>" + saldoDiaTxt;
+  } else if (classificacao === "verde") {
     painel.classList.add("sinal-ativo-verde");
     verd.textContent = "🟢 Boa escolha!";
-    det.textContent  = NOME_REFEICAO[ref] + ": " + totalRef + " de " + limRef + " kcal. Ainda tem " + (limRef-totalRef) + " kcal.";
-  } else if (pctRef <= 100) {
+    det.innerHTML = NOME_REFEICAO[ref] + ": <strong>" + totalRef + "/" + limRef + " kcal</strong> · restam " + saldoRef + " kcal<br>" + saldoDiaTxt;
+  } else if (classificacao === "amarelo") {
     painel.classList.add("sinal-ativo-amarelo");
     verd.textContent = "🟡 Atenção!";
-    det.textContent  = NOME_REFEICAO[ref] + ": restam apenas " + (limRef-totalRef) + " kcal. Escolha com cuidado.";
+    det.innerHTML = NOME_REFEICAO[ref] + ": restam apenas <strong>" + saldoRef + " kcal</strong>. Escolha com cuidado.<br>" + saldoDiaTxt;
   } else {
     painel.classList.add("sinal-ativo-verm");
     verd.textContent = "🔴 Passou do limite!";
-    det.textContent  = NOME_REFEICAO[ref] + " passou " + (totalRef-limRef) + " kcal acima. Compense na próxima.";
+    det.innerHTML = NOME_REFEICAO[ref] + " passou <strong>" + Math.abs(saldoRef) + " kcal</strong> acima. Compense na próxima.<br>" + saldoDiaTxt;
   }
+
+  salvarSnapshotDia(status);
 }
 
 function salvarRegistros() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(registros)); } catch(e) {} }
