@@ -176,6 +176,8 @@ function copyLink() {
 /* ---------- Outras Calculadoras ---------- */
 const SM_TOOLS = [
   { href: 'index.html',                        icon: '🥗', name: 'Calorias e Macros', desc: 'Meta calórica e macronutrientes' },
+  { href: 'calculadora-queima-calorica.html', icon: '🔥', name: 'Queima Calórica', desc: 'Calcule calorias gastas no treino', grupo: 'conectado' },
+  { href: 'pode-nao-pode.html', icon: '🚦', name: 'Pode, Não Pode?', desc: 'Registre cada refeição e veja: semáforo verde, amarelo ou vermelho.', grupo: 'conectado' },
   { href: 'calculadora-imc.html',              icon: '⚖️', name: 'IMC',               desc: 'Índice de Massa Corporal' },
   { href: 'calculadora-tmb.html',              icon: '🔥', name: 'TMB e TDEE',        desc: 'Quantas calorias você queima' },
   { href: 'calculadora-proteina.html',         icon: '💪', name: 'Proteína',          desc: 'Ingestão ideal de proteínas' },
@@ -188,9 +190,7 @@ const SM_TOOLS = [
   { href: 'calorias-por-dia.html',             icon: '📅', name: 'Calorias por Dia',  desc: 'Estimativa calórica diária' },
   /* ALTERAÇÃO (mudança 5b): grupo:'conectado' marca as ferramentas que formam o
      fluxo integrado (Meta → Treino → Refeições), para exibir o selo 🔗 no card. */
-  { href: 'calculadora-queima-calorica.html', icon: '🔥', name: 'Queima Calórica', desc: 'Calcule calorias gastas no treino', grupo: 'conectado' },
-  { href: 'pode-nao-pode.html', icon: '🚦', name: 'Pode, Não Pode?', desc: 'Registre cada refeição e veja: semáforo verde, amarelo ou vermelho.', grupo: 'conectado' },
-];
+  ];
 
 function smRenderOtherTools() {
   const isInstitucional = document.body.getAttribute('data-page') === 'institucional';
