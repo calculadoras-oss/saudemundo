@@ -1,0 +1,1198 @@
+# Contexto de handoff — SaúdeMundo (fluxo Meta / Queima / Pode-Não-Pode)
+
+> **Leia isto primeiro, integralmente, antes de responder ou pedir arquivos.**
+> Este documento substitui qualquer prompt/contexto anterior (`CONTEXTO-pode-nao-pode.md` e `prompt-integracao-saudemundo.md` no GitHub estão desatualizados — não os use como fonte de verdade).
+
+## Quem eu sou nessa conversa
+
+Sou o dono do site **saudemundo.com.br**, um site estático de calculadoras de saúde (HTML/CSS/JS puro, sem build system, sem framework). Já trabalhei em sessões anteriores com Claude implementando um conjunto de "5 melhorias de integração" entre 3 ferramentas conectadas do site. Essa etapa está **concluída** (5.2 do roadmap). Agora quero seguir para a próxima etapa, que já decidimos juntos nesta sessão (ver "Plano acordado" abaixo).
+
+**Regra de ouro de custo:** não me peça para colar arquivos inteiros de cara. Este .md já contém o que você precisa para entender o projeto e propor os primeiros passos. Se precisar ver trechos específicos de código que não estão aqui, me diga exatamente qual arquivo e qual função/seção — vou colar só isso.
+
+---
+
+## 1. Arquitetura do site
+
+- Site estático: HTML/CSS/JS puro. Sem backend próprio, **exceto** um Cloudflare Worker usado só para o chat de IA da página Pode-Não-Pode.
+- Todas as páginas incluem `shared.css` e `shared.js` no final do `<body>`. `shared.js` injeta dinamicamente: navegação, rodapé, tema claro/escuro, seção "Outras Calculadoras" (`SM_TOOLS` + `smRenderOtherTools()`), e gerencia dados do usuário via `localStorage` (`smGetUserData`/`smSaveUserData`).
+- 13 ferramentas no total: 10 calculadoras standalone (IMC, TMB, Água, Proteína, TDEE, Déficit Calórico, Cutting, Bulking, Macronutrientes, Calorias por Dia — **não tocar nessas**) + **3 ferramentas conectadas** (o foco de todo trabalho recente):
+
+| Página | Função |
+|---|---|
+| `index.html` | Calculadora de Calorias e Macros (home). Calcula a meta calórica diária. |
+| `calculadora-queima-calorica.html` | Calculadora de Queima Calórica (fórmula MET). Registra treinos num "diário de atividades do dia". |
+| `pode-nao-pode.html` | Assistente de decisão alimentar com IA (chat). Semáforo verde/amarelo/vermelho por refeição, baseado em % da meta diária. |
+
+### Como as 3 páginas se conectam via `localStorage`
+
+| Chave | Formato | Quem escreve | Quem lê |
+|---|---|---|---|
+| `sm-user-data` | `{peso, altura, idade, sexo, atividade, ...}` | `index.html` (`calcular()` → `smSaveUserData()`) | `calculadora-queima-calorica.html` (pré-preenche peso) |
+| `sm_pnp_meta_kcal` | número (string) | `index.html` e também editável dentro do `pode-nao-pode.html` | `pode-nao-pode.html` e `calculadora-queima-calorica.html` (modo comparar) |
+| `sm_pnp_YYYY-MM-DD` | array de `{id, nome, refeicao, kcal}` | `pode-nao-pode.html` | `pode-nao-pode.html` e `calculadora-queima-calorica.html` |
+| `sm_pnp_ativ_YYYY-MM-DD` | array de `{id, nome, kcal}` | `calculadora-queima-calorica.html` | `pode-nao-pode.html` (soma à meta do dia) e a própria calculadora |
+
+Fluxo ideal de uso: usuário calcula meta na home → (opcional) registra treino na calculadora de queima, aumentando o orçamento calórico do dia → registra/decide refeições no Pode-Não-Pode, cujo semáforo já considera esse crédito extra.
+
+---
+
+## 2. Status do trabalho: o que já foi feito
+
+As "5 melhorias de integração" entre as 3 páginas foram implementadas em sessão anterior:
+1. Treinos aparecem como itens (seção "🔥 Treinos") dentro do card "📋 Registros de hoje" do Pode-Não-Pode.
+2. Crédito de calorias queimadas ganhou destaque visual próprio (chip clicável `#credito-chip`, antes era um texto cinza escondido).
+3. Sincronização mais robusta: listener de `visibilitychange` além do `storage`.
+4. *(Stepper "sistema conectado" nas 3 páginas — parte desta melhoria, confirmar se foi implementada nos outros arquivos, ver seção 4 abaixo)*.
+5. CTA duplo na home + selo de "sistema conectado" nos cards de `SM_TOOLS` (`calculadora-queima-calorica.html` e `pode-nao-pode.html`).
+
+Além disso, nesta última sessão, foram corrigidos dois bugs de dark mode no `pode-nao-pode.html`:
+- Aliases de cor (`--brd`, `--surface`, `--muted`) declarados no `:root` (nível `<html>`) nunca resolviam a sobrescrita de dark mode feita em `body.dark` — corrigido apontando direto para os tokens do `shared.css` (`--border`, `--dark2`, `--text-muted`) em cada uso.
+- O bloco inteiro de dark mode usava seletor `[data-theme="dark"]`, que **nunca é escrito no HTML** (o `shared.js` alterna tema via `document.body.classList.toggle('dark')`) — corrigido para `body.dark`.
+
+## 3. Arquivo confirmado como atual: `pode-nao-pode.html`
+
+Este é o único arquivo cujo conteúdo foi colado nesta sessão e está **100% confirmado como o estado atual em produção/staging**. Está completo abaixo — use-o como base, não invente estrutura.
+
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pode, Não Pode? – Assistente de Decisão Alimentar | SaúdeMundo</title>
+  <meta name="description" content="Antes de comer: compare opções e tome a melhor decisão. Depois de comer: registre e acompanhe. IA que te ajuda a escolher, não só a contar calorias." />
+  <link rel="canonical" href="https://www.saudemundo.com.br/pode-nao-pode.html" />
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9EPL2XNX6H"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9EPL2XNX6H');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Pode, Não Pode? – Assistente de Decisão Alimentar",
+    "url": "https://www.saudemundo.com.br/pode-nao-pode.html",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "description": "IA que ajuda você a decidir o que vale a pena comer — antes e depois de comer. Semáforo inteligente por refeição.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" },
+    "author": { "@type": "Person", "name": "Lucas Andrade", "url": "https://www.saudemundo.com.br/sobre.html" },
+    "publisher": { "@type": "Organization", "name": "SaúdeMundo", "url": "https://www.saudemundo.com.br" }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "dateModified": "2026-06-29",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Posso usar antes de comer para decidir o pedido?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Sim, esse é o uso principal. Pergunte 'vale a pena pedir o X ou o Y?' e a IA compara o impacto de cada opção na sua meta e recomenda a melhor escolha." }
+      },
+      {
+        "@type": "Question",
+        "name": "Como funciona o semáforo por refeição?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Cada refeição tem um limite proporcional da meta diária: café da manhã 20%, almoço 35%, jantar 20%, lanches 10% cada e ceia 5%. O semáforo avalia se aquela refeição específica está dentro do esperado." }
+      },
+      {
+        "@type": "Question",
+        "name": "Preciso selecionar alimentos em uma lista?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Não. Escreva como quiser: 'vale mais o frango ou o hambúrguer?', 'comi uma concha de feijão com arroz'. A IA entende e responde na hora." }
+      },
+      {
+        "@type": "Question",
+        "name": "Os dados ficam salvos se eu fechar o celular?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Sim. Tudo fica salvo localmente no dispositivo. Reabra no mesmo navegador no mesmo dia e os dados estarão lá. Ao virar a meia-noite os registros são zerados." }
+      },
+      {
+        "@type": "Question",
+        "name": "O Pode, Não Pode substitui um nutricionista?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Não. É uma ferramenta educacional de acompanhamento. Para dietas individualizadas, consulte um nutricionista ou médico." }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --verde:   #16a34a; --verde-bg: #f0fdf4; --verde-brd: #86efac;
+      --amarelo: #d97706; --amar-bg:  #fffbeb; --amar-brd:  #fde68a;
+      --verm:    #dc2626; --verm-bg:  #fef2f2; --verm-brd:  #fca5a5;
+      --azul:    #2563eb; --azul-bg:  #eff6ff; --azul-brd:  #bfdbfe;
+      /* ALTERAÇÃO: os aliases --brd/--surface/--muted foram removidos. Eles eram declarados
+         aqui no :root (nível do <html>), mas body.dark sobrescreve os tokens reais
+         (--dark2, --border, --text-muted) no elemento <body>, não no <html>. Como var() é
+         substituído no elemento onde a custom property é declarada, o alias "congelava" no
+         valor claro e nunca via a sobrescrita do dark mode — por isso diário, contas e FAQ
+         ficavam presos no branco. Agora cada uso abaixo aponta direto para o token do
+         shared.css, resolvido no próprio elemento (descendente de body.dark), então o dark
+         mode funciona corretamente. --text também já resolve direto para o token global,
+         sem redeclaração local. */
+      --radius:  14px;
+    }
+
+    /* ── Header ── */
+    .pnp-header { text-align:center; padding:2rem 1rem 0; }
+    .pnp-badge {
+      display:inline-flex; align-items:center; gap:.45rem;
+      font-size:.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+      color:var(--verde); background:#f0fdf4; padding:.28rem .8rem;
+      border-radius:20px; margin-bottom:.8rem;
+    }
+    .mini-sinal { display:inline-flex; flex-direction:column; gap:2px; }
+    .mini-sinal span { width:6px;height:6px;border-radius:50%;display:block; }
+    .ms-r{background:#dc2626;} .ms-y{background:#d97706;} .ms-g{background:#16a34a;}
+    .pnp-header h1 {
+      font-family:'Playfair Display',serif; font-weight:900;
+      font-size:clamp(1.8rem,5vw,2.6rem); letter-spacing:-.02em;
+      margin:0 0 .3rem; line-height:1.05;
+    }
+    .pnp-header h1 em { font-style:normal; color:var(--verde); }
+    .pnp-tagline { font-size:.88rem; color:var(--text-muted, #64748b); max-width:400px; margin:0 auto 1.5rem; line-height:1.5; }
+
+    .container { max-width:660px; margin:0 auto; padding:0 1rem 3rem; }
+
+    /* ── Semáforo compacto ── */
+    .painel-topo {
+      display:flex; align-items:center; gap:.6rem;
+      background:var(--dark2, #ffffff); border:1px solid var(--border, #e2e8f0);
+      border-radius:var(--radius); padding:.5rem .8rem; margin-bottom:.5rem;
+    }
+    .sinal-mini { display:flex; flex-direction:row; gap:4px; flex-shrink:0; }
+    .luz-mini { width:10px; height:10px; border-radius:50%; background:#e2e8f0; transition:background .4s,box-shadow .4s; }
+    .sinal-ativo-verde   .luz-mini-verde   { background:var(--verde);   box-shadow:0 0 8px 2px #86efac; }
+    .sinal-ativo-amarelo .luz-mini-amarelo { background:var(--amarelo); box-shadow:0 0 8px 2px #fde68a; }
+    .sinal-ativo-verm    .luz-mini-verm    { background:var(--verm);    box-shadow:0 0 8px 2px #fca5a5; }
+    .sinal-info { flex:1; min-width:0; }
+    .sinal-veredicto { font-weight:700; font-size:.9rem; color:#94a3b8; transition:color .4s; line-height:1.1; }
+    .sinal-ativo-verde   .sinal-veredicto { color:var(--verde); }
+    .sinal-ativo-amarelo .sinal-veredicto { color:var(--amarelo); }
+    .sinal-ativo-verm    .sinal-veredicto { color:var(--verm); }
+    .sinal-detalhe { display:none; } /* <-- BUG CONHECIDO, ver seção "Plano acordado" */
+
+    /* ── Chip de crédito de calorias queimadas ── */
+    .credito-chip {
+      display:none; align-items:center; gap:.35rem;
+      background:#fff7ed; border:1px solid #fed7aa;
+      color:#ea580c; font-size:.78rem; font-weight:700; padding:.4rem .8rem;
+      border-radius:20px; text-decoration:none; margin-bottom:.5rem; width:fit-content;
+      transition:background .2s;
+    }
+    .credito-chip:hover { background:#ffedd5; }
+    body.dark .credito-chip { background:#3b1a00; border-color:#7c2d12; color:#fb923c; }
+
+    /* ── Barra ── */
+    .bar-wrap { margin-bottom:1rem; }
+    .bar-bg { height:6px; background:var(--border, #e2e8f0); border-radius:99px; overflow:hidden; }
+    .bar-fill { height:100%; border-radius:99px; background:var(--verde); transition:width .4s,background .4s; width:0%; }
+    .bar-fill.amarelo { background:var(--amarelo); }
+    .bar-fill.vermelho { background:var(--verm); }
+    .bar-labels { display:flex; justify-content:space-between; font-size:.7rem; color:var(--text-muted, #64748b); margin-bottom:.25rem; }
+    .bar-chips { display:flex; gap:1rem; margin-top:.35rem; flex-wrap:wrap; }
+    .bar-chips .chip-mini { font-size:.7rem; }
+
+    /* ── Cards ── */
+    .pnp-card { background:var(--dark2, #ffffff); border:1px solid var(--border, #e2e8f0); border-radius:var(--radius); padding:1.2rem; margin-bottom:.9rem; }
+    .pnp-card-title { font-size:.68rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--verde); margin-bottom:.85rem; }
+
+    /* ── Meta ── */
+    .meta-toggle { display:flex; align-items:center; justify-content:space-between; cursor:pointer; user-select:none; }
+    .meta-toggle-label { font-size:.8rem; font-weight:600; color:var(--text-muted, #64748b); }
+    .meta-toggle-icon { font-size:.8rem; color:var(--text-muted, #64748b); transition:transform .2s; }
+    .meta-toggle-icon.aberto { transform:rotate(180deg); }
+    .meta-corpo { margin-top:.8rem; display:none; }
+    .meta-corpo.aberto { display:block; }
+    .meta-row { display:flex; align-items:center; gap:.75rem; flex-wrap:wrap; }
+    .meta-row label { font-size:.88rem; font-weight:500; white-space:nowrap; }
+    .meta-row input[type="number"] { width:110px; padding:.5rem .7rem; border:1.5px solid var(--border, #e2e8f0); border-radius:8px; font-size:1rem; background:transparent; color:var(--text); }
+    .meta-link { font-size:.8rem; color:var(--verde); text-decoration:none; }
+    .meta-link:hover { text-decoration:underline; }
+    .meta-destaque { background:var(--verde-bg); border-color:var(--verde-brd); }
+    .meta-destaque .meta-toggle-label { color:var(--verde); }
+
+    /* ── Modo pills ── */
+    .modo-pills {
+      display:flex; gap:.5rem; margin-bottom:.9rem;
+      background:var(--dark2, #ffffff); border:1px solid var(--border, #e2e8f0);
+      border-radius:var(--radius); padding:.6rem .8rem;
+      align-items:center;
+    }
+    .modo-label { font-size:.72rem; font-weight:700; color:var(--text-muted, #64748b); text-transform:uppercase; letter-spacing:.06em; margin-right:.2rem; white-space:nowrap; }
+    .modo-pill {
+      flex:1; text-align:center; padding:.45rem .5rem;
+      border-radius:8px; border:1.5px solid var(--border, #e2e8f0);
+      font-size:.8rem; font-weight:600; cursor:pointer;
+      transition:all .2s; color:var(--text-muted, #64748b); background:transparent;
+      line-height:1.2;
+    }
+    .modo-pill.ativo-decisao { background:var(--azul-bg); border-color:var(--azul-brd); color:var(--azul); }
+    .modo-pill.ativo-registro { background:var(--verde-bg); border-color:var(--verde-brd); color:var(--verde); }
+    .modo-hint {
+      font-size:.72rem; color:var(--text-muted, #64748b); margin-bottom:.6rem;
+      padding:.35rem .7rem; border-radius:8px;
+      border:1px dashed var(--border, #e2e8f0); background:#fafafa;
+      line-height:1.4;
+    }
+    .modo-hint.hint-decisao { background:var(--azul-bg); border-color:var(--azul-brd); color:#1d4ed8; }
+    .modo-hint.hint-registro { background:var(--verde-bg); border-color:var(--verde-brd); color:#15803d; }
+
+    /* ── Seletor refeição ── */
+    .chat-refeicao-row { display:flex; align-items:center; gap:.6rem; margin-bottom:.7rem; flex-wrap:wrap; }
+    .chat-refeicao-row label { font-size:.8rem; font-weight:600; color:var(--text-muted, #64748b); white-space:nowrap; }
+    .chat-refeicao-row select { flex:1; padding:.45rem .7rem; border:1.5px solid var(--border, #e2e8f0); border-radius:8px; font-size:.88rem; background:transparent; color:var(--text); cursor:pointer; }
+
+    .limite-refeicao { font-size:.75rem; color:var(--text-muted, #64748b); margin-bottom:.6rem; background:#f8fafc; border-radius:8px; padding:.4rem .7rem; border:1px solid var(--border, #e2e8f0); }
+    .limite-refeicao strong { color:var(--text); }
+
+    /* ── Exemplos chips ── */
+    .chat-exemplos { display:flex; flex-wrap:wrap; gap:.35rem; margin-bottom:.65rem; }
+    .chip-ex {
+      font-size:.72rem; border-radius:20px; padding:.18rem .6rem; cursor:pointer; transition:background .15s;
+      border:1px solid; line-height:1.4;
+    }
+    .chip-ex-decisao { background:var(--azul-bg); color:var(--azul); border-color:var(--azul-brd); }
+    .chip-ex-decisao:hover { background:#dbeafe; }
+    .chip-ex-registro { background:#f0fdf4; color:var(--verde); border-color:var(--verde-brd); }
+    .chip-ex-registro:hover { background:#dcfce7; }
+    .chips-titulo { font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--text-muted, #64748b); width:100%; margin-top:.35rem; margin-bottom:.1rem; }
+
+    /* ── Chat ── */
+    .chat-mensagens {
+      min-height:160px; max-height:320px; overflow-y:auto;
+      border:1.5px solid var(--border, #e2e8f0); border-radius:10px;
+      padding:.75rem; margin-bottom:.7rem;
+      display:flex; flex-direction:column; gap:.55rem;
+      background:#fafafa; scroll-behavior:smooth;
+    }
+    .msg { max-width:92%; padding:.55rem .8rem; border-radius:12px; font-size:.87rem; line-height:1.5; }
+    .msg-ia      { background:var(--verde-bg); border:1px solid var(--verde-brd); color:var(--text); align-self:flex-start; border-radius:4px 12px 12px 12px; }
+    .msg-ia.decisao { background:var(--azul-bg); border-color:var(--azul-brd); }
+    .msg-user    { background:var(--verde); color:#fff; align-self:flex-end; border-radius:12px 4px 12px 12px; }
+    .msg-user.decisao { background:var(--azul); }
+    .msg-erro    { background:var(--verm-bg); border:1px solid var(--verm-brd); color:var(--verm); align-self:flex-start; border-radius:4px 12px 12px 12px; }
+    .msg-digitando { background:#f1f5f9; color:var(--text-muted, #64748b); align-self:flex-start; border-radius:4px 12px 12px 12px; font-style:italic; font-size:.8rem; padding:.45rem .8rem; }
+
+    .btn-lancar { display:inline-block; margin-top:.45rem; padding:.38rem .85rem; background:var(--verde); color:#fff; border:none; border-radius:8px; font-size:.78rem; font-weight:700; cursor:pointer; transition:background .2s; }
+    .btn-lancar:hover { background:#15803d; }
+
+    /* ── Input ── */
+    .chat-input-row { display:flex; gap:.45rem; align-items:flex-end; }
+    .chat-input {
+      flex:1; padding:.7rem .9rem; border:2px solid var(--verde); border-radius:10px;
+      font-size:.95rem; font-family:'DM Sans',sans-serif;
+      background:transparent; color:var(--text);
+      resize:none; min-height:46px; max-height:100px; outline:none; line-height:1.4;
+      transition:border-color .2s, box-shadow .2s;
+    }
+    .chat-input.modo-decisao { border-color:var(--azul); }
+    .chat-input.modo-decisao:focus { border-color:#1d4ed8; box-shadow:0 0 0 3px #bfdbfe; }
+    .chat-input:focus { border-color:#15803d; box-shadow:0 0 0 3px #bbf7d0; }
+    .chat-input::placeholder { color:#bbb; }
+    .btn-enviar {
+      padding:.7rem 1rem; background:var(--verde); color:#fff; border:none; border-radius:10px;
+      font-size:1.1rem; cursor:pointer; transition:background .2s,transform .1s; align-self:flex-end; line-height:1;
+    }
+    .btn-enviar.modo-decisao { background:var(--azul); }
+    .btn-enviar.modo-decisao:hover { background:#1d4ed8; }
+    .btn-enviar:hover  { background:#15803d; }
+    .btn-enviar:active { transform:scale(.96); }
+    .btn-enviar:disabled { background:#94a3b8; cursor:not-allowed; }
+    .btn-foto {
+      padding:.7rem .8rem; background:var(--dark2, #ffffff); border:1px solid var(--border, #e2e8f0);
+      border-radius:10px; font-size:1.1rem; cursor:pointer;
+      transition:background .2s; align-self:flex-end; line-height:1; flex-shrink:0;
+    }
+    .btn-foto:hover { background:var(--border, #e2e8f0); }
+    .btn-foto:disabled { opacity:.5; cursor:not-allowed; }
+    .btn-foto-label { font-size:.65rem; display:block; line-height:1; color:var(--text-muted, #64748b); }
+
+    /* ── Registros ── */
+    .reg-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:.75rem; }
+    .btn-limpar { font-size:.72rem; color:var(--verm); background:none; border:1px solid var(--verm); border-radius:6px; padding:.22rem .55rem; cursor:pointer; }
+    .btn-limpar:hover { background:var(--verm-bg); }
+    .reg-item { display:flex; align-items:flex-start; gap:.45rem; padding:.6rem 0; border-bottom:1px solid var(--border, #e2e8f0); font-size:.86rem; }
+    .reg-item:last-child { border-bottom:none; }
+    .reg-badge { flex-shrink:0; font-size:.6rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:.15rem .38rem; border-radius:5px; margin-top:.15rem; }
+    .b-cafe{background:#fff3e0;color:#c2410c;} .b-lanche1{background:#f3e5f5;color:#7e22ce;}
+    .b-almoco{background:#eff6ff;color:#1d4ed8;} .b-lanche2{background:#f3e5f5;color:#7e22ce;}
+    .b-jantar{background:#eef2ff;color:#3730a3;} .b-ceia{background:#fdf2f8;color:#9d174d;}
+    .reg-subtitle { font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted, #64748b); margin:.7rem 0 .2rem; }
+    .reg-subtitle:first-child { margin-top:0; }
+    .reg-subtitle-treino { color:#ea580c; }
+    .b-treino { background:#fff7ed; color:#c2410c; }
+    body.dark .b-treino { background:#3b1a00; color:#fb923c; }
+    .reg-kcal-credito { color:#ea580c; }
+    .reg-edit-link { font-size:.72rem; color:var(--text-muted, #64748b); text-decoration:none; white-space:nowrap; }
+    .reg-edit-link:hover { text-decoration:underline; color:#ea580c; }
+    .reg-info { flex:1; }
+    .reg-nome { font-weight:600; color:var(--text); font-size:.86rem; }
+    .reg-kcal { font-weight:700; white-space:nowrap; color:var(--text); padding-top:.1rem; font-size:.86rem; }
+    .reg-del  { background:none; border:none; color:var(--text-muted, #64748b); cursor:pointer; padding:.1rem .25rem; font-size:.9rem; }
+    .reg-del:hover { color:var(--verm); }
+    .empty-msg { text-align:center; color:var(--text-muted, #64748b); font-size:.85rem; padding:1.5rem 0; line-height:1.7; }
+
+    /* ── Editorial ── */
+    .editorial { font-size:.9rem; line-height:1.75; color:var(--text); }
+    .editorial h2 { font-family:'Playfair Display',serif; font-size:1.25rem; margin:2rem 0 .65rem; }
+    .editorial p  { margin:0 0 .85rem; }
+    .card-title { font-size:.68rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--verde); margin-bottom:.9rem; }
+    .faq-item { padding:.85rem 0; border-bottom:1px solid var(--border, #e2e8f0); }
+    .faq-item:last-child { border-bottom:none; }
+    .faq-q { font-weight:600; font-size:.88rem; margin-bottom:.28rem; }
+    .faq-a { font-size:.84rem; color:var(--text-muted, #64748b); line-height:1.6; }
+
+    /* ── Conceito (analogia do extrato bancário) ── */
+    .pnp-intro {
+      text-align: center;
+      font-size: .92rem;
+      color: var(--text-muted, #64748b);
+      max-width: 480px;
+      margin: .5rem auto 1.2rem;
+      line-height: 1.6;
+      padding: 0 1rem;
+    }
+    .conceito-caixa {
+      margin: 12px auto 16px;
+      padding: 12px 16px;
+      border: 1px solid var(--verde, #16a34a);
+      border-radius: 10px;
+      background: #f0fdf4;
+      max-width: 480px;
+    }
+    .conceito-caixa summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--verde, #16a34a);
+      list-style: none;
+    }
+    .conceito-caixa summary::-webkit-details-marker {
+      display: none;
+    }
+    .conceito-caixa[open] summary {
+      margin-bottom: 8px;
+    }
+    .conceito-caixa p {
+      margin: 0;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      color: var(--text);
+      text-align: left;
+    }
+
+    /* ── Dark mode ──
+       ALTERAÇÃO: seletor corrigido de [data-theme="dark"] (atributo que nunca é escrito no HTML —
+       o shared.js alterna o tema via document.body.classList.toggle('dark'), não via atributo —
+       então este bloco inteiro nunca disparava) para body.dark. */
+    body.dark .pnp-badge { background:#052e16; }
+    body.dark .painel-topo { border-color:#2d2d2d; }
+    body.dark .luz-mini { background:#2d2d2d; }
+    body.dark .chat-mensagens { background:#111; border-color:#2d2d2d; }
+    body.dark .msg-ia { background:#052e16; border-color:#166534; }
+    body.dark .msg-ia.decisao { background:#0c1d3d; border-color:#1e40af; }
+    body.dark .msg-digitando { background:#1e1e1e; }
+    body.dark .chip-ex-registro { background:#052e16; border-color:#166534; }
+    body.dark .chip-ex-decisao { background:#0c1d3d; border-color:#1e40af; }
+    body.dark .limite-refeicao { background:#1a1a1a; border-color:#2d2d2d; }
+    body.dark .meta-destaque { background:#052e16; border-color:#166534; }
+    body.dark .modo-hint.hint-decisao { background:#0c1d3d; color:#93c5fd; border-color:#1e40af; }
+    body.dark .modo-hint.hint-registro { background:#052e16; color:#86efac; border-color:#166534; }
+    body.dark .modo-pills { border-color:#2d2d2d; }
+    body.dark .modo-pill.ativo-decisao { background:#0c1d3d; border-color:#1e40af; color:#93c5fd; }
+    body.dark .modo-pill.ativo-registro { background:#052e16; border-color:#166534; color:#86efac; }
+    body.dark .b-cafe{background:#3b1a00;color:#fb923c;}
+    body.dark .b-lanche1,body.dark .b-lanche2{background:#2e0059;color:#d8b4fe;}
+    body.dark .b-almoco{background:#0c1d3d;color:#93c5fd;}
+    body.dark .b-jantar{background:#0f0d2e;color:#a5b4fc;}
+    body.dark .b-ceia{background:#2d0030;color:#f9a8d4;}
+    body.dark .modo-hint { background:#1a1a1a; border-color:#2d2d2d; }
+    body.dark .btn-foto { border-color:#2d2d2d; }
+    body.dark .conceito-caixa { background:#052e16; }
+  </style>
+</head>
+<body>
+
+<header class="pnp-header">
+  <div class="pnp-badge">
+    <span class="mini-sinal"><span class="ms-r"></span><span class="ms-y"></span><span class="ms-g"></span></span>
+    SaúdeMundo · Decisão alimentar
+  </div>
+  <h1><em>Pode,</em> Não Pode?</h1>
+  <p class="pnp-tagline">Assistente de decisão alimentar com IA</p>
+   <details class="conceito-caixa">
+    <summary>💡 Entenda o conceito</summary>
+    <p>Pense nas calorias como dinheiro. Cada refeição é um depósito. Cada gasto de energia — do coração batendo ao treino na academia — é um saque. No fim do dia, o corpo fecha as contas: depositou mais do que gastou, o saldo vira reserva (gordura). Gastou mais do que depositou, o corpo usa as reservas guardadas (você emagrece). O <strong>Pode, Não Pode?</strong> é o seu extrato em tempo real: antes de fazer o próximo "gasto", você já sabe se o saldo do dia aguenta.</p>
+  </details>
+</header>
+<p class="pnp-intro">Me diga o que vai pedir ou o que já comeu — eu calculo as calorias e mostro se está dentro da sua meta 🚦</p>
+<main class="container">
+
+  <!-- Semáforo compacto -->
+  <div class="painel-topo" id="painel-topo">
+    <div class="sinal-mini">
+      <div class="luz-mini luz-mini-verm"></div>
+      <div class="luz-mini luz-mini-amarelo"></div>
+      <div class="luz-mini luz-mini-verde"></div>
+    </div>
+    <div class="sinal-info">
+      <div class="sinal-veredicto" id="sinal-veredicto">Aguardando…</div>
+      <div class="sinal-detalhe" id="sinal-detalhe"></div>
+    </div>
+  </div>
+
+  <!-- Chip de crédito de calorias queimadas -->
+  <a href="calculadora-queima-calorica.html" class="credito-chip" id="credito-chip" title="Ver/editar treino na calculadora de queima">
+    🔥 <span id="credito-chip-valor">0</span> kcal de treino creditados hoje →
+  </a>
+
+  <!-- Barra do dia -->
+  <div class="bar-wrap" id="bar-wrap" style="display:none;">
+    <div class="bar-labels">
+      <span id="bar-lbl-ref">Refeição atual: 0 kcal</span>
+      <span id="bar-lbl-dia">Dia: 0 / 0 kcal</span>
+    </div>
+    <div class="bar-bg"><div class="bar-fill" id="bar-fill"></div></div>
+    <div class="bar-chips">
+      <span class="chip-mini">Dia: <strong id="chip-total">0 kcal</strong></span>
+      <span class="chip-mini">Saldo: <strong id="chip-saldo">—</strong></span>
+      <span class="chip-mini">Itens: <strong id="chip-itens">0</strong></span>
+    </div>
+  </div>
+
+  <!-- Meta colapsável -->
+  <div class="pnp-card meta-destaque" id="meta-card">
+    <div class="meta-toggle" onclick="toggleMeta()">
+      <span class="meta-toggle-label" id="meta-toggle-label">🎯 Defina sua meta diária para ativar o semáforo</span>
+      <span class="meta-toggle-icon" id="meta-icon">▼</span>
+    </div>
+    <div class="meta-corpo aberto" id="meta-corpo">
+      <div class="meta-row" style="margin-top:.8rem;">
+        <label for="meta-input">Meta diária (kcal):</label>
+        <input type="number" id="meta-input" placeholder="ex: 2000" min="0" max="9999"
+               oninput="onMetaChange()" onblur="onMetaBlur()" />
+        <a href="https://www.saudemundo.com.br/index.html" class="meta-link">Calcule aqui →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seletor de modo -->
+  <div class="modo-pills">
+    <span class="modo-label">Modo:</span>
+    <button class="modo-pill" id="pill-decisao" onclick="setModo('decisao')">
+      🧠 O que vou pedir?
+    </button>
+    <button class="modo-pill" id="pill-registro" onclick="setModo('registro')">
+      📊 Vou comer isso
+    </button>
+  </div>
+
+  <!-- Chat IA -->
+  <div class="pnp-card">
+    <div class="pnp-card-title" id="chat-card-title">🤖 Assistente alimentar</div>
+
+    <!-- Hint de modo -->
+    <div class="modo-hint" id="modo-hint">
+      A IA detecta automaticamente se você quer <strong>decidir</strong> ou <strong>registrar</strong> — ou use os botões acima para deixar explícito.
+    </div>
+
+    <div class="chat-refeicao-row">
+      <label for="refeicao-select">Refeição:</label>
+      <select id="refeicao-select" onchange="onRefeicaoChange()">
+        <option value="cafe">☀️ Café da manhã</option>
+        <option value="lanche1">🍎 Lanche manhã</option>
+        <option value="almoco" selected>🍽️ Almoço</option>
+        <option value="lanche2">🍌 Lanche tarde</option>
+        <option value="jantar">🌙 Jantar</option>
+        <option value="ceia">🌛 Ceia</option>
+      </select>
+    </div>
+
+    <div class="limite-refeicao">
+      Limite desta refeição: <strong id="limite-valor">—</strong>
+      &nbsp;·&nbsp; Já registrado: <strong id="limite-usado">0 kcal</strong>
+    </div>
+
+    <!-- Exemplos por modo -->
+    <div class="chat-exemplos" id="chat-exemplos">
+      <!-- preenchido via JS -->
+    </div>
+
+    <!-- Janela chat -->
+    <div class="chat-mensagens" id="chat-mensagens">
+      <div class="msg msg-ia">
+        👋 Olá! Me diga o que vai pedir <em>antes de comer</em> e eu comparo as opções — ou me conte o que comeu para registrar no diário. Faça os dois na mesma conversa!
+      </div>
+    </div>
+
+    <!-- Input -->
+    <div class="chat-input-row">
+      <textarea
+        class="chat-input"
+        id="chat-input"
+        placeholder="Ex: vale mais pedir o frango ou o hambúrguer?"
+        rows="2"
+      ></textarea>
+      <input type="file" id="foto-input" accept="image/*" capture="environment"
+             style="display:none" onchange="onFotoSelecionada(this)">
+      <button class="btn-foto" id="btn-foto" onclick="document.getElementById('foto-input').click()"
+        title="Foto da refeição (estimativa visual ±20%)">📸 <span class="btn-foto-label">foto</span></button>
+      <button class="btn-enviar" id="btn-enviar" onclick="enviarMensagem()" title="Enviar">➤</button>
+    </div>
+  </div>
+
+  <!-- Registros -->
+  <div class="pnp-card">
+    <div class="reg-header">
+      <div class="pnp-card-title" style="margin:0;">📋 Registros de hoje</div>
+      <button class="btn-limpar" onclick="limparDiario()">🗑 Limpar</button>
+    </div>
+    <div id="lista-registros">
+      <div class="empty-msg">Nenhum registro ainda.<br>Use o modo <strong>📊 Vou comer isso</strong> para registrar! 🚦</div>
+    </div>
+  </div>
+
+  <!-- Editorial -->
+  <div class="editorial">
+    <h2>🧠 Decida antes, acompanhe depois</h2>
+    <p>
+      A maioria dos apps de dieta só serve <em>depois</em> que você já comeu — e aí já foi.
+      O <strong>Pode, Não Pode?</strong> funciona nos dois momentos:
+      antes da escolha (restaurante, delivery, supermercado) e depois, para acompanhar o impacto no dia.
+    </p>
+    <p>
+      O semáforo avalia <em>cada refeição separadamente</em>. Com meta de 2.000 kcal,
+      o almoço "pode" até 700 kcal (35%). Assim o alerta chega na hora certa — não só à noite quando não tem mais jeito.
+    </p>
+    <p>
+      Escreva como quiser: "vale pedir o X-burguer ou a salada?", "comi frango com arroz integral".
+      A IA entende o contexto e responde diferente para cada situação.
+      Use a <a href="https://www.saudemundo.com.br/index.html">Calculadora de Calorias e Macros</a> para descobrir sua meta ideal.
+    </p>
+    <p style="font-size:.82rem;color:var(--text-muted, #64748b);">
+      ⚠️ Ferramenta educacional. Valores são estimativas médias. Para dietas individualizadas, consulte um nutricionista ou médico.
+    </p>
+  </div>
+
+  <!-- FAQ -->
+  <div class="pnp-card">
+    <div class="card-title">❓ Perguntas Frequentes</div>
+    <div class="faq-item">
+      <div class="faq-q">Posso usar antes de comer para decidir o pedido?</div>
+      <div class="faq-a">Sim — esse é o uso principal. Pergunte "vale o X ou o Y?" e a IA compara o impacto e recomenda a melhor escolha para sua meta.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Como funciona o semáforo por refeição?</div>
+      <div class="faq-a">Cada refeição tem um limite proporcional: café 20%, almoço 35%, jantar 20%, lanches 10% cada, ceia 5%. O semáforo avalia aquela refeição — não o dia inteiro.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Preciso selecionar alimentos em lista?</div>
+      <div class="faq-a">Não. Escreva como quiser: "vale o frango ou o hambúrguer?", "comi um pote de iogurte com granola". A IA entende e responde.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Os dados ficam salvos se eu fechar o celular?</div>
+      <div class="faq-a">Sim. Salvo localmente no dispositivo. Reabra no mesmo navegador no mesmo dia e estará lá.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">O Pode, Não Pode substitui um nutricionista?</div>
+      <div class="faq-a">Não. Para dietas individualizadas, consulte um nutricionista ou médico.</div>
+    </div>
+  </div>
+
+  <div id="sm-blog-placeholder"></div>
+</main>
+
+<script src="shared.js"></script>
+<script>
+const WORKER_URL  = "https://summer-hill-da28.philipdesousa.workers.dev";
+const META_KEY    = "sm_pnp_meta_kcal";
+const STORAGE_KEY = "sm_pnp_" + new Date().toISOString().slice(0,10);
+const ATIV_KEY = "sm_pnp_ativ_" + new Date().toISOString().slice(0,10);
+function carregarAtividadesQC() {
+  try { const r = localStorage.getItem(ATIV_KEY); return r ? JSON.parse(r) : []; }
+  catch(e) { return []; }
+}
+function totalQueimadoHoje() {
+  return carregarAtividadesQC().reduce((s,a) => s + (a.kcal||0), 0);
+}
+
+const PESO_REFEICAO = { cafe:0.20, lanche1:0.10, almoco:0.35, lanche2:0.10, jantar:0.20, ceia:0.05 };
+const NOME_REFEICAO = { cafe:"Café da manhã", lanche1:"Lanche manhã", almoco:"Almoço", lanche2:"Lanche tarde", jantar:"Jantar", ceia:"Ceia" };
+
+const EXEMPLOS_DECISAO = [
+  { texto:"qual o melhor prato no rodízio japonês?", label:"🧠 Decisão" },
+  { texto:"suco natural ou refrigerante zero?", label:"🧠 Decisão" },
+];
+const EXEMPLOS_REGISTRO = [
+  { texto:"comi peito de frango grelhado 120g com salada", label:"📊 Registro" },
+  { texto:"scoop de whey com 200ml de leite desnatado", label:"📊 Registro" },
+];
+
+let registros  = carregarRegistros();
+let historico  = [];
+let metaAberta = true;
+let modoAtual  = "auto";
+
+function selecionarRefeicaoPorHorario() {
+  const h = new Date().getHours();
+  let ref;
+  if      (h >= 6  && h < 10) ref = "cafe";
+  else if (h >= 10 && h < 12) ref = "lanche1";
+  else if (h >= 12 && h < 15) ref = "almoco";
+  else if (h >= 15 && h < 18) ref = "lanche2";
+  else if (h >= 18 && h < 21) ref = "jantar";
+  else                         ref = "ceia";
+  document.getElementById("refeicao-select").value = ref;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const metaLocal = carregarMeta();
+  if (metaLocal > 0) {
+    document.getElementById("meta-input").value = metaLocal;
+    fecharMetaSePreenchida(metaLocal);
+  } else {
+    try {
+      const ud = typeof smGetUserData === "function" ? smGetUserData() : null;
+      if (ud) {
+        const m = parseInt(ud.metaCalorica || ud.meta || ud.calorias || ud.tdee || 0);
+        if (m > 0) { document.getElementById("meta-input").value = m; salvarMeta(m); fecharMetaSePreenchida(m); }
+      }
+    } catch(e) {}
+  }
+  document.getElementById("chat-input").addEventListener("keydown", e => {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); enviarMensagem(); }
+  });
+  selecionarRefeicaoPorHorario();
+  renderLista();
+  atualizarTudo();
+  renderExemplos();
+  atualizarVisuaisModo();
+});
+
+// ── Meta ──
+function salvarMeta(v) { try { localStorage.setItem(META_KEY, String(v)); } catch(e) {} }
+function carregarMeta() { try { return parseInt(localStorage.getItem(META_KEY)) || 0; } catch(e) { return 0; } }
+
+function onMetaChange() {
+  const meta = parseInt(document.getElementById("meta-input").value) || 0;
+  if (meta > 0) {
+    salvarMeta(meta);
+    try {
+      const ud = typeof smGetUserData === "function" ? (smGetUserData()||{}) : {};
+      ud.metaCalorica = meta;
+      if (typeof smSaveUserData === "function") smSaveUserData(ud);
+    } catch(e) {}
+  }
+  atualizarTudo();
+}
+
+function onMetaBlur() {
+  const meta = parseInt(document.getElementById("meta-input").value) || 0;
+  fecharMetaSePreenchida(meta);
+}
+
+function fecharMetaSePreenchida(meta) {
+  if (meta > 0 && metaAberta) {
+    document.getElementById("meta-card").classList.remove("meta-destaque");
+    document.getElementById("meta-corpo").classList.remove("aberto");
+    document.getElementById("meta-icon").classList.remove("aberto");
+    document.getElementById("meta-toggle-label").textContent = "🎯 Meta: " + meta + " kcal/dia";
+    metaAberta = false;
+  }
+}
+
+function toggleMeta() {
+  const corpo = document.getElementById("meta-corpo");
+  const icon  = document.getElementById("meta-icon");
+  const aberto = corpo.classList.toggle("aberto");
+  icon.classList.toggle("aberto", aberto);
+  metaAberta = aberto;
+}
+
+// ── Modo ──
+function setModo(modo) {
+  modoAtual = modo;
+  atualizarVisuaisModo();
+  renderExemplos();
+  document.getElementById("chat-input").focus();
+}
+
+function atualizarVisuaisModo() {
+  const input  = document.getElementById("chat-input");
+  const btnEnv = document.getElementById("btn-enviar");
+  const hint   = document.getElementById("modo-hint");
+  const pillD  = document.getElementById("pill-decisao");
+  const pillR  = document.getElementById("pill-registro");
+
+  pillD.className = "modo-pill";
+  pillR.className = "modo-pill";
+
+  if (modoAtual === "decisao") {
+    pillD.className = "modo-pill ativo-decisao";
+    input.className = "chat-input modo-decisao";
+    input.placeholder = "Ex: vale mais o frango ou o hambúrguer?";
+    btnEnv.className = "btn-enviar modo-decisao";
+    hint.className = "modo-hint hint-decisao";
+    hint.innerHTML = "🧠 <strong>Modo Decisão</strong> — me diga as opções que está considerando e eu indico a melhor para sua meta.";
+  } else if (modoAtual === "registro") {
+    pillR.className = "modo-pill ativo-registro";
+    input.className = "chat-input";
+    input.placeholder = "Ex: comi peito de frango grelhado 120g com salada...";
+    btnEnv.className = "btn-enviar";
+    hint.className = "modo-hint hint-registro";
+    hint.innerHTML = "📊 <strong>Modo Registro</strong> — me diga o que você comeu e eu calculo as calorias para lançar no diário.";
+  } else {
+    input.className = "chat-input";
+    input.placeholder = "Ex: vale mais pedir o frango ou o hambúrguer?";
+    btnEnv.className = "btn-enviar";
+    hint.className = "modo-hint";
+    hint.innerHTML = "A IA detecta automaticamente se você quer <strong>decidir</strong> ou <strong>registrar</strong> — ou use os botões acima para deixar explícito.";
+  }
+}
+
+function renderExemplos() {
+  const box = document.getElementById("chat-exemplos");
+  let html = "";
+  if (modoAtual === "decisao" || modoAtual === "auto") {
+    if (modoAtual === "auto") html += "<span class='chips-titulo'>Exemplos — decidir antes de comer:</span>";
+    EXEMPLOS_DECISAO.forEach(e => {
+      html += `<span class="chip-ex chip-ex-decisao" onclick="preencherEx(this)">${e.texto}</span>`;
+    });
+  }
+  if (modoAtual === "registro" || modoAtual === "auto") {
+    if (modoAtual === "auto") html += "<span class='chips-titulo'>Exemplos — registrar o que comeu:</span>";
+    EXEMPLOS_REGISTRO.forEach(e => {
+      html += `<span class="chip-ex chip-ex-registro" onclick="preencherEx(this)">${e.texto}</span>`;
+    });
+  }
+  box.innerHTML = html;
+}
+
+function preencherEx(el) {
+  document.getElementById("chat-input").value = el.textContent.trim();
+  document.getElementById("chat-input").focus();
+}
+
+// ── Chat ──
+function addMsg(html, tipo, isDecisao) {
+  const box = document.getElementById("chat-mensagens");
+  const div = document.createElement("div");
+  let cls = "msg msg-" + tipo;
+  if (isDecisao && (tipo === "ia" || tipo === "user")) cls += " decisao";
+  div.className = cls;
+  div.innerHTML = html;
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+  return div;
+}
+
+function detectarModoMensagem(texto) {
+  const decisaoRegex = /\b(posso|vale|devo|melhor|pedir|escolher|ou|comparar|delivery|restaurante|pede|comprar|qual|quero comer|o que comer|sugere|recomenda)\b/i;
+  const registroRegex = /\b(comi|tomei|almocei|jantei|caf[eé]|bebi|comi hoje|acabei de comer|tive|jantar foi|almo[cç]o foi)\b/i;
+  if (registroRegex.test(texto) && !decisaoRegex.test(texto)) return "registro";
+  if (decisaoRegex.test(texto) && !registroRegex.test(texto)) return "decisao";
+  return modoAtual !== "auto" ? modoAtual : "misto";
+}
+
+function onRefeicaoChange() { atualizarTudo(); }
+function kcalRefeicaoAtual() {
+  const ref = document.getElementById("refeicao-select").value;
+  return registros.filter(r => r.refeicao === ref).reduce((s,r) => s + r.kcal, 0);
+}
+
+async function enviarMensagem() {
+  const input  = document.getElementById("chat-input");
+  const texto  = input.value.trim();
+  const btnEnv = document.getElementById("btn-enviar");
+  if (!texto) { input.focus(); return; }
+  document.getElementById("chat-exemplos").style.display = "none";
+
+  const meta     = parseInt(document.getElementById("meta-input").value) || 0;
+  const ref      = document.getElementById("refeicao-select").value;
+  const limRef   = meta > 0 ? Math.round(meta * PESO_REFEICAO[ref]) : null;
+  const usadoRef = kcalRefeicaoAtual();
+  const modoMsg   = detectarModoMensagem(texto);
+  const isDecisao = modoMsg === "decisao";
+
+  if (modoAtual !== "auto") {
+    const decisaoRegex = /\b(posso|vale|devo|melhor|pedir|escolher|ou|comparar|delivery|restaurante|pede|comprar|qual|quero comer|o que comer|sugere|recomenda)\b/i;
+    const registroRegex = /\b(comi|tomei|almocei|jantei|caf[eé]|bebi|comi hoje|acabei de comer|tive|jantar foi|almo[cç]o foi)\b/i;
+    const conflito =
+      (modoAtual === "decisao" && registroRegex.test(texto) && !decisaoRegex.test(texto)) ||
+      (modoAtual === "registro" && decisaoRegex.test(texto) && !registroRegex.test(texto));
+    if (conflito) {
+      const modoOposto  = modoAtual === "decisao" ? "registro" : "decisao";
+      const labelOposto = modoAtual === "decisao" ? "📊 registrar em vez de comparar?" : "🧠 comparar em vez de registrar?";
+      const avisoId = "aviso-conflito-" + Date.now();
+      const avisoHtml = `<div id="${avisoId}" style="font-size:.8rem;color:var(--text-muted, #64748b);margin-bottom:.4rem;padding:.4rem .6rem;background:var(--dark2, #ffffff);border:1px solid var(--border, #e2e8f0);border-radius:6px;">
+        ⚠️ Parece que o texto não combina com o modo selecionado.
+        <button onclick="setModo('${modoOposto}');document.getElementById('${avisoId}').remove()"
+          style="background:none;border:none;color:var(--azul);cursor:pointer;font-size:.8rem;text-decoration:underline;padding:0">
+          Quer ${labelOposto}
+        </button>
+      </div>`;
+      document.getElementById("chat-mensagens").insertAdjacentHTML("beforeend", avisoHtml);
+      document.getElementById("chat-mensagens").scrollTop = 999999;
+    }
+  }
+
+  addMsg(texto, "user", isDecisao);
+  historico.push({ role:"user", content: texto });
+  input.value = "";
+  btnEnv.disabled = true;
+
+  const contexto = meta > 0
+    ? "\n\n[CONTEXTO DO APP: meta diária = " + meta + " kcal. Refeição atual = "
+      + NOME_REFEICAO[ref] + " (limite: " + limRef + " kcal, já consumido nela: " + usadoRef + " kcal)."
+      + (isDecisao ? " O usuário está DECIDINDO o que comer — NÃO use [KCAL:X]." : " O usuário está REGISTRANDO o que comeu — use [KCAL:X].")
+      + "]"
+    : (isDecisao ? "\n\n[CONTEXTO: O usuário está DECIDINDO o que comer — NÃO use [KCAL:X].]"
+                 : "\n\n[CONTEXTO: O usuário está REGISTRANDO o que comeu — use [KCAL:X].]");
+
+  const mensagensEnvio = [
+    ...historico.slice(0, -1),
+    { role:"user", content: texto + contexto }
+  ];
+
+  const dig = addMsg("⏳ Analisando…", "digitando", false);
+
+  try {
+    const resp = await fetch(WORKER_URL, {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ messages: mensagensEnvio }),
+    });
+    if (!resp.ok) throw new Error("Servidor retornou HTTP " + resp.status);
+
+    const data = await resp.json();
+    let resposta = data.resposta || data.content || data.reply || data.message || data.text || null;
+    if (!resposta && Array.isArray(data.choices) && data.choices[0])
+      resposta = (data.choices[0].message && data.choices[0].message.content) || data.choices[0].text || null;
+    if (!resposta && Array.isArray(data.content))
+      resposta = data.content.filter(b => b.type==="text").map(b => b.text).join("\n") || null;
+    if (!resposta) throw new Error("Formato de resposta desconhecido.");
+
+    dig.remove();
+    const match = resposta.match(/\[KCAL:(\d+)\]/);
+    const kcal  = match ? parseInt(match[1]) : null;
+    const limpo = resposta.replace(/\[KCAL:\d+\]/g,"").trim();
+    let html = limpo.replace(/\n/g,"<br>");
+    if (kcal && kcal > 0) {
+      html += "<br><button class=\"btn-lancar\" onclick=\"lancar("
+            + kcal + ",'" + encodeURIComponent(texto) + "')\">✅ Lançar "
+            + kcal + " kcal no diário</button>";
+    }
+    addMsg(html, "ia", isDecisao);
+    historico.push({ role:"assistant", content: resposta });
+
+  } catch(err) {
+    dig.remove();
+    console.error("[PNP] Erro:", err);
+    addMsg("❌ Erro ao falar com o assistente.<br><small style='opacity:.7'>" + err.message + "</small>", "erro", false);
+  } finally {
+    btnEnv.disabled = false;
+  }
+}
+
+// ── Foto ──
+function onFotoSelecionada(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    const base64   = reader.result.split(",")[1];
+    const mimeType = file.type || "image/jpeg";
+    enviarComFoto(base64, mimeType);
+  };
+  reader.readAsDataURL(file);
+  input.value = "";
+}
+
+async function enviarComFoto(base64, mimeType) {
+  const btnEnv  = document.getElementById("btn-enviar");
+  const btnFoto = document.getElementById("btn-foto");
+  const meta     = parseInt(document.getElementById("meta-input").value) || 0;
+  const ref      = document.getElementById("refeicao-select").value;
+  const limRef   = meta > 0 ? Math.round(meta * PESO_REFEICAO[ref]) : null;
+  const usadoRef = kcalRefeicaoAtual();
+
+  document.getElementById("chat-exemplos").style.display = "none";
+
+  const textoContexto = meta > 0
+    ? "[CONTEXTO DO APP: meta diária = " + meta + " kcal. Refeição atual = "
+      + NOME_REFEICAO[ref] + " (limite: " + limRef + " kcal, já consumido: " + usadoRef + " kcal)."
+      + " O usuário enviou uma FOTO — estime as calorias visualmente e use [KCAL:X].]"
+    : "[CONTEXTO: O usuário enviou uma FOTO de refeição — estime as calorias visualmente e use [KCAL:X].]";
+
+  addMsg("📸 <em>Foto enviada para análise…</em>", "user", false);
+  historico.push({ role:"user", content: textoContexto });
+
+  btnEnv.disabled  = true;
+  btnFoto.disabled = true;
+
+  const dig = addMsg("📸 Analisando sua foto…", "digitando", false);
+
+  try {
+    const resp = await fetch(WORKER_URL, {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ messages: historico, imagem: { mimeType, data: base64 } }),
+    });
+    if (!resp.ok) throw new Error("Servidor retornou HTTP " + resp.status);
+
+    const data = await resp.json();
+    let resposta = data.resposta || null;
+    if (!resposta) throw new Error("Formato de resposta desconhecido.");
+
+    dig.remove();
+    const match = resposta.match(/\[KCAL:(\d+)\]/);
+    const kcal  = match ? parseInt(match[1]) : null;
+    const limpo = resposta.replace(/\[KCAL:\d+\]/g,"").trim();
+    let html = limpo.replace(/\n/g,"<br>");
+    if (kcal && kcal > 0) {
+      html += "<br><button class=\"btn-lancar\" onclick=\"lancar("
+            + kcal + ",'" + encodeURIComponent("📸 foto da refeição") + "')\">✅ Lançar "
+            + kcal + " kcal no diário</button>";
+    }
+    addMsg(html, "ia", false);
+    historico.push({ role:"assistant", content: resposta });
+
+  } catch(err) {
+    dig.remove();
+    console.error("[PNP] Erro foto:", err);
+    addMsg("❌ Não consegui analisar a foto.<br><small style='opacity:.7'>" + err.message + "</small>", "erro", false);
+  } finally {
+    btnEnv.disabled  = false;
+    btnFoto.disabled = false;
+  }
+}
+
+function lancar(kcal, descCod) {
+  const desc     = decodeURIComponent(descCod);
+  const refeicao = document.getElementById("refeicao-select").value;
+  const resumo   = desc.length > 55 ? desc.slice(0,52)+"…" : desc;
+  registros.push({ id:Date.now(), nome:resumo, refeicao, kcal });
+  salvarRegistros(); renderLista(); atualizarTudo();
+  addMsg("✅ <strong>" + kcal + " kcal</strong> lançadas no diário!", "ia", false);
+  if (typeof showToast === "function") showToast("✅ Lançado no diário!");
+}
+
+// ── Registros ──
+const REF_CFG = {
+  cafe:{l:"Café da manhã",c:"b-cafe"}, lanche1:{l:"Lanche manhã",c:"b-lanche1"},
+  almoco:{l:"Almoço",c:"b-almoco"},   lanche2:{l:"Lanche tarde",c:"b-lanche2"},
+  jantar:{l:"Jantar",c:"b-jantar"},   ceia:{l:"Ceia",c:"b-ceia"},
+};
+
+function renderLista() {
+  const el = document.getElementById("lista-registros");
+  const atividades = carregarAtividadesQC();
+
+  if (!registros.length && !atividades.length) {
+    el.innerHTML = "<div class=\"empty-msg\">Nenhum registro ainda.<br>Use o modo <strong>📊 Vou comer isso</strong> para registrar refeições, ou registre um treino na <a href=\"calculadora-queima-calorica.html\">calculadora de queima</a>! 🚦</div>";
+    return;
+  }
+
+  let html = "";
+
+  if (registros.length) {
+    html += "<div class=\"reg-subtitle\">🍽️ Refeições</div>";
+    html += registros.map(r => {
+      const rf = REF_CFG[r.refeicao]||{l:r.refeicao,c:""};
+      return "<div class=\"reg-item\">"
+        + "<span class=\"reg-badge " + rf.c + "\">" + rf.l + "</span>"
+        + "<span class=\"reg-info\"><span class=\"reg-nome\">" + r.nome + "</span></span>"
+        + "<span class=\"reg-kcal\">" + r.kcal + " kcal</span>"
+        + "<button class=\"reg-del\" onclick=\"removerRegistro(" + r.id + ")\" title=\"Remover\">✕</button>"
+        + "</div>";
+    }).join("");
+  }
+
+  if (atividades.length) {
+    html += "<div class=\"reg-subtitle reg-subtitle-treino\">🔥 Treinos</div>";
+    html += atividades.map(a =>
+      "<div class=\"reg-item\">"
+      + "<span class=\"reg-badge b-treino\">⚡ Queima</span>"
+      + "<span class=\"reg-info\"><span class=\"reg-nome\">" + a.nome + "</span></span>"
+      + "<span class=\"reg-kcal reg-kcal-credito\">+" + a.kcal + " kcal</span>"
+      + "<a class=\"reg-edit-link\" href=\"calculadora-queima-calorica.html\">editar →</a>"
+      + "</div>"
+    ).join("");
+  }
+
+  el.innerHTML = html;
+}
+
+function removerRegistro(id) {
+  registros = registros.filter(r => r.id !== id);
+  salvarRegistros(); renderLista(); atualizarTudo();
+}
+
+function limparDiario() {
+  if (!confirm("Limpar todos os registros de hoje?")) return;
+  registros = []; salvarRegistros(); renderLista(); atualizarTudo();
+}
+
+// ── Semáforo ──
+function atualizarTudo() {
+  const meta     = parseInt(document.getElementById("meta-input").value) || 0;
+  const queimado    = totalQueimadoHoje();
+  const metaEfetiva = meta > 0 ? meta + queimado : 0;
+  const ref      = document.getElementById("refeicao-select").value;
+  const totalDia = registros.reduce((s,r) => s + r.kcal, 0);
+  const totalRef = kcalRefeicaoAtual();
+  const limRef   = metaEfetiva > 0 ? Math.round(metaEfetiva * PESO_REFEICAO[ref]) : 0;
+  const saldo    = metaEfetiva > 0 ? metaEfetiva - totalDia : 0;
+
+  document.getElementById("chip-total").textContent = totalDia + " kcal";
+  document.getElementById("chip-itens").textContent = registros.length;
+  document.getElementById("chip-saldo").textContent = metaEfetiva > 0
+    ? (saldo >= 0 ? saldo + " kcal" : "-" + Math.abs(saldo) + " kcal") : "—";
+  document.getElementById("limite-valor").textContent = metaEfetiva > 0
+    ? limRef + " kcal (" + Math.round(PESO_REFEICAO[ref]*100) + "% de " + metaEfetiva + " kcal)"
+    : "— (defina sua meta)";
+  document.getElementById("limite-usado").textContent = totalRef + " kcal";
+
+  const barWrap = document.getElementById("bar-wrap");
+  if (metaEfetiva > 0) {
+    barWrap.style.display = "block";
+    const pct  = Math.min((totalDia/metaEfetiva)*100, 100);
+    const fill = document.getElementById("bar-fill");
+    fill.style.width = pct + "%";
+    fill.className = "bar-fill" + (pct > 100 ? " vermelho" : pct > 80 ? " amarelo" : "");
+    document.getElementById("bar-lbl-ref").textContent = NOME_REFEICAO[ref] + ": " + totalRef + " kcal";
+    document.getElementById("bar-lbl-dia").textContent = "Dia: " + totalDia + " / " + metaEfetiva + " kcal";
+  } else {
+    barWrap.style.display = "none";
+  }
+
+  const creditoChip = document.getElementById("credito-chip");
+  if (queimado > 0) {
+    creditoChip.style.display = "inline-flex";
+    document.getElementById("credito-chip-valor").textContent = queimado;
+  } else {
+    creditoChip.style.display = "none";
+  }
+
+  const painel = document.getElementById("painel-topo");
+  const verd   = document.getElementById("sinal-veredicto");
+  const det    = document.getElementById("sinal-detalhe");
+  painel.className = "painel-topo";
+
+  if (registros.length === 0) {
+    painel.style.display = "none";
+    return;
+  }
+  painel.style.display = "";
+
+  if (!metaEfetiva) {
+    verd.textContent = "Aguardando…";
+    det.textContent  = "Defina sua meta acima para ativar o semáforo.";
+    return;
+  }
+
+  if (!registros.filter(r => r.refeicao === ref).length) {
+    verd.textContent = NOME_REFEICAO[ref] + " — pronto!";
+    det.textContent  = "Limite: " + limRef + " kcal. Escreva o que vai comer ou comeu.";
+    return;
+  }
+
+  const pctRef = (totalRef / limRef) * 100;
+  if (pctRef <= 80) {
+    painel.classList.add("sinal-ativo-verde");
+    verd.textContent = "🟢 Boa escolha!";
+    det.textContent  = NOME_REFEICAO[ref] + ": " + totalRef + " de " + limRef + " kcal. Ainda tem " + (limRef-totalRef) + " kcal.";
+  } else if (pctRef <= 100) {
+    painel.classList.add("sinal-ativo-amarelo");
+    verd.textContent = "🟡 Atenção!";
+    det.textContent  = NOME_REFEICAO[ref] + ": restam apenas " + (limRef-totalRef) + " kcal. Escolha com cuidado.";
+  } else {
+    painel.classList.add("sinal-ativo-verm");
+    verd.textContent = "🔴 Passou do limite!";
+    det.textContent  = NOME_REFEICAO[ref] + " passou " + (totalRef-limRef) + " kcal acima. Compense na próxima.";
+  }
+}
+
+function salvarRegistros() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(registros)); } catch(e) {} }
+function carregarRegistros() {
+  try { const r = localStorage.getItem(STORAGE_KEY); return r ? JSON.parse(r) : []; }
+  catch(e) { return []; }
+}
+window.addEventListener("storage", (e) => {
+  if (e.key === ATIV_KEY || e.key === META_KEY || e.key === STORAGE_KEY) {
+    atualizarTudo();
+  }
+});
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") atualizarTudo();
+});
+</script>
+</body>
+</html>
+```
+
+---
+
+## 4. Arquivos NÃO confirmados nesta sessão (usar com cautela)
+
+Uma versão anterior de `index.html`, `calculadora-queima-calorica.html` e `shared.js` foi trabalhada em sessão passada (implementando o stepper "🎯 Meta → 🔥 Treino → 🚦 Refeições", o CTA duplo na home, e o selo `🔗` de "sistema conectado" em `SM_TOOLS`). **Não tenho certeza se essas versões estão de fato em produção** — não foram recoladas nesta sessão como o `pode-nao-pode.html` foi.
+
+**Antes de editar qualquer um desses 3 arquivos**, peça ao usuário para colar o trecho relevante (não o arquivo inteiro) — ele vai indicar exatamente qual função/seção precisa, para economizar tokens. Não assuma que o stepper ou o CTA duplo já existem sem confirmação.
+
+---
+
+## 5. Bug conhecido, ainda não corrigido
+
+No CSS do `pode-nao-pode.html` (visto acima), a regra:
+```css
+.sinal-detalhe { display:none; }
+```
+Isso esconde o `<div id="sinal-detalhe">`, que é preenchido dinamicamente em `atualizarTudo()` com o texto que mostra o **saldo em número** da refeição atual (ex.: `"Almoço: 400 de 700 kcal. Ainda tem 300 kcal."`). Ou seja, o cálculo já existe e já é populado em JS — só está oculto por CSS. Esse é o núcleo do problema "vejo a cor mas não sei quanto".
+
+---
+
+## 6. Plano acordado nesta sessão (ordem de prioridade)
+
+Discutimos e decidimos, nesta ordem:
+
+### Passo 1 — Resolver o "quanto" (saldo numérico), já pensando em gamificação futura
+O objetivo é que o usuário veja não só a cor do semáforo, mas o número/saldo — sem re-trabalho quando a gamificação (streak, score, badges) for implementada depois.
+
+Abordagem proposta (a validar/refinar com o usuário no início do próximo chat):
+- Destravar/redesenhar a exibição do saldo numérico (hoje escondido em `.sinal-detalhe { display:none }`, e fragmentado em `.bar-chips`).
+- Centralizar o cálculo numa função única, por exemplo `calcularStatusDia()`, que retorna um objeto padronizado: `{ meta, queimado, metaEfetiva, totalDia, saldo, pct, classificacao, itens }`. Essa função alimentaria tanto o semáforo quanto a barra quanto (no futuro) o motor de gamificação, evitando lógica duplicada.
+- Considerar salvar um snapshot diário (`sm_pnp_status_YYYY-MM-DD`) toda vez que `atualizarTudo()` roda, para já existir histórico quando a gamificação (streak/calendário) for implementada — sem essa base, dá muito mais trabalho depois.
+- **Importante:** qualquer mudança de layout precisa respeitar que `pode-nao-pode.html`, `calculadora-queima-calorica.html` e `index.html` são páginas linkadas/compartilham `shared.js`/`shared.css` com as outras 10 calculadoras do site — mudanças estruturais não podem quebrar o restante.
+
+### Passo 2 — Limpeza da hierarquia mobile
+A página está poluída no mobile: nome do site + nome da ferramenta + autor + data de atualização + as 3 calculadoras do fluxo + semáforo + meta, tudo antes de chegar na calculadora/chat em si. Reorganizar hierarquia para mobile-first:
+1. Nome da ferramenta compacto (autor/data podem virar rodapé ou ícone "ℹ️" clicável, não texto fixo no topo).
+2. Semáforo + saldo numérico (o resultado que a pessoa busca).
+3. Calculadora/chat.
+4. Acesso às outras 2 ferramentas do fluxo (pode virar abas/menu, não precisa estar tudo visível de cara).
+
+### Passo 3 — PWA (instalável)
+Deliberadamente **por último**. Decisão do usuário: instalar como PWA antes do produto estar consolidado passaria uma primeira impressão ruim; melhor fazer isso quando a experiência já estiver redonda (depois dos passos 1 e 2).
+
+---
+
+## 7. Instruções para o Claude que for continuar
+
+1. Comece confirmando com o usuário: "Vamos começar pelo Passo 1 (saldo numérico / `calcularStatusDia()`), certo?" — não pule direto pro código.
+2. Para editar `pode-nao-pode.html`, você já tem o arquivo completo e atual acima — pode trabalhar direto nele.
+3. Para qualquer mudança que toque `index.html`, `calculadora-queima-calorica.html` ou `shared.js`, primeiro peça ao usuário para colar o trecho relevante (ele vai fornecer só o necessário — ver seção 4).
+4. Preserve nomes de funções, IDs e classes existentes sempre que possível.
+5. Não mexa em Google Ads, Analytics, Pinterest Tag, meta tags de SEO, JSON-LD, ou nas 10 calculadoras standalone fora do fluxo.
+6. Ao entregar código, adicione comentários curtos (`<!-- ALTERAÇÃO: ... -->` / `// ALTERAÇÃO: ...`) nos trechos modificados, para facilitar a revisão do usuário.
+7. Ao final de cada entrega, um resumo curto (2-3 linhas) do que mudou em cada arquivo tocado.
