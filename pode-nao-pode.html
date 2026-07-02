@@ -127,6 +127,17 @@
     .sinal-ativo-verm    .sinal-veredicto { color:var(--verm); }
     .sinal-detalhe { display:none; }
 
+    /* ── Chip de crédito de calorias queimadas (recuperado da versão anterior) ── */
+    .credito-chip {
+      display:none; align-items:center; gap:.35rem;
+      background:#fff7ed; border:1px solid #fed7aa;
+      color:#ea580c; font-size:.78rem; font-weight:700; padding:.4rem .8rem;
+      border-radius:20px; text-decoration:none; margin-bottom:.5rem; width:fit-content;
+      transition:background .2s;
+    }
+    .credito-chip:hover { background:#ffedd5; }
+    body.dark .credito-chip { background:#3b1a00; border-color:#7c2d12; color:#fb923c; }
+
     /* ── Barra ── */
     .bar-wrap { margin-bottom:1rem; }
     .bar-bg { height:6px; background:var(--border, #e2e8f0); border-radius:99px; overflow:hidden; }
@@ -262,6 +273,14 @@
     .b-cafe{background:#fff3e0;color:#c2410c;} .b-lanche1{background:#f3e5f5;color:#7e22ce;}
     .b-almoco{background:#eff6ff;color:#1d4ed8;} .b-lanche2{background:#f3e5f5;color:#7e22ce;}
     .b-jantar{background:#eef2ff;color:#3730a3;} .b-ceia{background:#fdf2f8;color:#9d174d;}
+    .reg-subtitle { font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted, #64748b); margin:.7rem 0 .2rem; }
+    .reg-subtitle:first-child { margin-top:0; }
+    .reg-subtitle-treino { color:#ea580c; }
+    .b-treino { background:#fff7ed; color:#c2410c; }
+    body.dark .b-treino { background:#3b1a00; color:#fb923c; }
+    .reg-kcal-credito { color:#ea580c; }
+    .reg-edit-link { font-size:.72rem; color:var(--text-muted, #64748b); text-decoration:none; white-space:nowrap; }
+    .reg-edit-link:hover { text-decoration:underline; color:#ea580c; }
     .reg-info { flex:1; }
     .reg-nome { font-weight:600; color:var(--text); font-size:.86rem; }
     .reg-kcal { font-weight:700; white-space:nowrap; color:var(--text); padding-top:.1rem; font-size:.86rem; }
@@ -376,6 +395,11 @@
       <div class="sinal-detalhe" id="sinal-detalhe"></div>
     </div>
   </div>
+
+  <!-- Chip de crédito de calorias queimadas (recuperado da versão anterior) -->
+  <a href="calculadora-queima-calorica.html" class="credito-chip" id="credito-chip" title="Ver/editar treino na calculadora de queima">
+    🔥 <span id="credito-chip-valor">0</span> kcal de treino creditados hoje →
+  </a>
 
   <!-- Barra do dia -->
   <div class="bar-wrap" id="bar-wrap" style="display:none;">
@@ -498,7 +522,7 @@
     <p>
       Escreva como quiser: "vale pedir o X-burguer ou a salada?", "comi frango com arroz integral".
       A IA entende o contexto e responde diferente para cada situação.
-      Use a <a href="https://www.saudemundo.com.br/index.html" class="meta-link">Calculadora de Calorias e Macros</a> para descobrir sua meta ideal.
+      Use a <a href="https://www.saudemundo.com.br/index.html">Calculadora de Calorias e Macros</a> para descobrir sua meta ideal.
     </p>
     <p style="font-size:.82rem;color:var(--text-muted, #64748b);">
       ⚠️ Ferramenta educacional. Valores são estimativas médias. Para dietas individualizadas, consulte um nutricionista ou médico.
@@ -916,21 +940,47 @@ const REF_CFG = {
   jantar:{l:"Jantar",c:"b-jantar"},   ceia:{l:"Ceia",c:"b-ceia"},
 };
 
+// Exibe, dentro do mesmo card "📋 Registros de hoje", tanto as refeições (registros)
+// quanto os treinos (carregarAtividadesQC()) — em duas seções, para manter a leitura
+// limpa sem fragmentar em cards separados. Treinos não têm botão de apagar aqui (evita
+// dessincronizar com a calculadora de queima) — em vez disso, um link para editar lá.
 function renderLista() {
   const el = document.getElementById("lista-registros");
-  if (!registros.length) {
-    el.innerHTML = "<div class=\"empty-msg\">Nenhum registro ainda.<br>Use o modo <strong>📊 Vou comer isso</strong> para registrar! 🚦</div>";
+  const atividades = carregarAtividadesQC();
+
+  if (!registros.length && !atividades.length) {
+    el.innerHTML = "<div class=\"empty-msg\">Nenhum registro ainda.<br>Use o modo <strong>📊 Vou comer isso</strong> para registrar refeições, ou registre um treino na <a href=\"calculadora-queima-calorica.html\">calculadora de queima</a>! 🚦</div>";
     return;
   }
-  el.innerHTML = registros.map(r => {
-    const rf = REF_CFG[r.refeicao]||{l:r.refeicao,c:""};
-    return "<div class=\"reg-item\">"
-      + "<span class=\"reg-badge " + rf.c + "\">" + rf.l + "</span>"
-      + "<span class=\"reg-info\"><span class=\"reg-nome\">" + r.nome + "</span></span>"
-      + "<span class=\"reg-kcal\">" + r.kcal + " kcal</span>"
-      + "<button class=\"reg-del\" onclick=\"removerRegistro(" + r.id + ")\" title=\"Remover\">✕</button>"
-      + "</div>";
-  }).join("");
+
+  let html = "";
+
+  if (registros.length) {
+    html += "<div class=\"reg-subtitle\">🍽️ Refeições</div>";
+    html += registros.map(r => {
+      const rf = REF_CFG[r.refeicao]||{l:r.refeicao,c:""};
+      return "<div class=\"reg-item\">"
+        + "<span class=\"reg-badge " + rf.c + "\">" + rf.l + "</span>"
+        + "<span class=\"reg-info\"><span class=\"reg-nome\">" + r.nome + "</span></span>"
+        + "<span class=\"reg-kcal\">" + r.kcal + " kcal</span>"
+        + "<button class=\"reg-del\" onclick=\"removerRegistro(" + r.id + ")\" title=\"Remover\">✕</button>"
+        + "</div>";
+    }).join("");
+  }
+
+  if (atividades.length) {
+    html += "<div class=\"reg-subtitle reg-subtitle-treino\">🔥 Treinos</div>";
+    html += atividades.map(a =>
+      "<div class=\"reg-item\">"
+      + "<span class=\"reg-badge b-treino\">🔥 Queima</span>"
+      + "<span class=\"reg-info\"><span class=\"reg-nome\">" + a.nome + "</span></span>"
+      + "<span class=\"reg-kcal reg-kcal-credito\">+" + a.kcal + " kcal</span>"
+      + "<a class=\"reg-edit-link\" href=\"calculadora-queima-calorica.html\">editar →</a>"
+      + "</div>"
+    ).join("");
+  }
+
+  el.innerHTML = html;
 }
 
 function removerRegistro(id) {
@@ -971,10 +1021,20 @@ function atualizarTudo() {
     fill.style.width = pct + "%";
     fill.className = "bar-fill" + (pct > 100 ? " vermelho" : pct > 80 ? " amarelo" : "");
     document.getElementById("bar-lbl-ref").textContent = NOME_REFEICAO[ref] + ": " + totalRef + " kcal";
-    document.getElementById("bar-lbl-dia").textContent = "Dia: " + totalDia + " / " + metaEfetiva + " kcal"
-      + (queimado > 0 ? " (+" + queimado + " queimadas)" : "");
+    // O crédito de calorias queimadas não fica mais escondido aqui dentro de um texto
+    // pequeno — agora tem o chip próprio abaixo (#credito-chip).
+    document.getElementById("bar-lbl-dia").textContent = "Dia: " + totalDia + " / " + metaEfetiva + " kcal";
   } else {
     barWrap.style.display = "none";
+  }
+
+  // Chip de destaque do crédito de treino, clicável.
+  const creditoChip = document.getElementById("credito-chip");
+  if (queimado > 0) {
+    creditoChip.style.display = "inline-flex";
+    document.getElementById("credito-chip-valor").textContent = queimado;
+  } else {
+    creditoChip.style.display = "none";
   }
 
   const painel = document.getElementById("painel-topo");
