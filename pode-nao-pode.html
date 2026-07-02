@@ -455,7 +455,7 @@
   <div class="modo-pills">
     <span class="modo-label">Modo:</span>
     <button class="modo-pill" id="pill-decisao" onclick="setModo('decisao')">
-      ⚖️ O que vou comer?
+      ⚖️ O que comer?
     </button>
     <button class="modo-pill" id="pill-registro" onclick="setModo('registro')">
       📊 Vou comer isso
@@ -529,7 +529,7 @@
 
   <!-- Editorial -->
   <div class="editorial">
-    <h2>🧠 Decida antes, acompanhe depois</h2>
+    <h2>⚖️ Decida antes, acompanhe depois</h2>
     <p>
       A maioria dos apps de dieta só serve <em>depois</em> que você já comeu — e aí já foi.
       O <strong>Pode, Não Pode?</strong> funciona nos dois momentos:
@@ -595,8 +595,8 @@ const PESO_REFEICAO = { cafe:0.20, lanche1:0.10, almoco:0.35, lanche2:0.10, jant
 const NOME_REFEICAO = { cafe:"Café da manhã", lanche1:"Lanche manhã", almoco:"Almoço", lanche2:"Lanche tarde", jantar:"Jantar", ceia:"Ceia" };
 
 const EXEMPLOS_DECISAO = [
-  { texto:"qual o melhor prato no rodízio japonês?", label:"🧠 Decisão" },
-  { texto:"suco natural ou refrigerante zero?", label:"🧠 Decisão" },
+  { texto:"qual o melhor prato no rodízio japonês?", label:"⚖️ Decisão" },
+  { texto:"suco natural ou refrigerante zero?", label:"⚖️ Decisão" },
 ];
 const EXEMPLOS_REGISTRO = [
   { texto:"comi peito de frango grelhado 120g com salada", label:"📊 Registro" },
@@ -708,7 +708,7 @@ function atualizarVisuaisModo() {
     input.placeholder = "Ex: vale mais o frango ou o hambúrguer?";
     btnEnv.className = "btn-enviar modo-decisao";
     hint.className = "modo-hint hint-decisao";
-    hint.innerHTML = "🧠 <strong>Modo Decisão</strong> — me diga as opções que está considerando e eu indico a melhor para sua meta.";
+    hint.innerHTML = "⚖️ <strong>Modo Decisão</strong> — me diga as opções que está considerando e eu indico a melhor para sua meta.";
   } else if (modoAtual === "registro") {
     pillR.className = "modo-pill ativo-registro";
     input.className = "chat-input";
@@ -798,7 +798,7 @@ async function enviarMensagem() {
       (modoAtual === "registro" && decisaoRegex.test(texto) && !registroRegex.test(texto));
     if (conflito) {
       const modoOposto  = modoAtual === "decisao" ? "registro" : "decisao";
-      const labelOposto = modoAtual === "decisao" ? "📊 registrar em vez de comparar?" : "🧠 comparar em vez de registrar?";
+      const labelOposto = modoAtual === "decisao" ? "📊 registrar em vez de comparar?" : "⚖️ comparar em vez de registrar?";
       const avisoId = "aviso-conflito-" + Date.now();
       const avisoHtml = `<div id="${avisoId}" style="font-size:.8rem;color:var(--text-muted, #64748b);margin-bottom:.4rem;padding:.4rem .6rem;background:var(--dark2, #ffffff);border:1px solid var(--border, #e2e8f0);border-radius:6px;">
         ⚠️ Parece que o texto não combina com o modo selecionado.
