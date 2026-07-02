@@ -99,6 +99,7 @@
     .mini-sinal { display:inline-flex; flex-direction:column; gap:2px; }
     .mini-sinal span { width:6px;height:6px;border-radius:50%;display:block; }
     .ms-r{background:#dc2626;} .ms-y{background:#d97706;} .ms-g{background:#16a34a;}
+    .pnp-star { font-size:.75rem; line-height:1; }
     .pnp-header h1 {
       font-family:'Playfair Display',serif; font-weight:900;
       font-size:clamp(1.8rem,5vw,2.6rem); letter-spacing:-.02em;
@@ -150,7 +151,7 @@
 
     /* ── Barra ── */
     .bar-wrap { margin-bottom:1rem; }
-    .bar-bg { height:6px; background:var(--border, #e2e8f0); border-radius:99px; overflow:hidden; }
+    .bar-bg { height:12px; background:var(--border, #e2e8f0); border-radius:99px; overflow:hidden; }
     .bar-fill { height:100%; border-radius:99px; background:var(--verde); transition:width .4s,background .4s; width:0%; }
     .bar-fill.amarelo { background:var(--amarelo); }
     .bar-fill.vermelho { background:var(--verm); }
@@ -375,18 +376,33 @@
 <!-- ALTERAÇÃO: header revertido para posição e conteúdo originais -->
 <header class="pnp-header">
   <div class="pnp-badge">
-    <span class="mini-sinal"><span class="ms-r"></span><span class="ms-y"></span><span class="ms-g"></span></span>
-    SaúdeMundo · Decisão alimentar
+    <span class="pnp-star">✦</span>
+    SaúdeMundo · Decisão alimentar com IA
   </div>
   <h1><em>Pode,</em> Não Pode?</h1>
-  <p class="pnp-tagline">Assistente de decisão alimentar com IA</p>
    <details class="conceito-caixa">
     <summary>💡 Entenda o conceito</summary>
     <p>Pense nas calorias como dinheiro. Cada refeição é um depósito. Cada gasto de energia — do coração batendo ao treino na academia — é um saque. No fim do dia, o corpo fecha as contas: depositou mais do que gastou, o saldo vira reserva (gordura). Gastou mais do que depositou, o corpo usa as reservas guardadas (você emagrece). O <strong>Pode, Não Pode?</strong> é o seu extrato em tempo real: antes de fazer o próximo "gasto", você já sabe se o saldo do dia aguenta.</p>
   </details>
 </header>
-<p class="pnp-intro">Me diga o que vai pedir ou o que já comeu — eu calculo as calorias e mostro se está dentro da sua meta 🚦</p>
+<!-- ALTERAÇÃO: badge passa a usar a estrela ✦ (padrão do site) em vez do mini-semáforo;
+     texto "Assistente de decisão alimentar com IA" incorporado ao badge; tagline separada removida. -->
+<p class="pnp-intro">Calculou sua meta? Agora me mande uma foto do que vai comer ou diga o que comeu e me mande seu treino de hoje - eu calculo tudo e mostro seu saldo em tempo real.</p>
 <main class="container">
+
+  <!-- ALTERAÇÃO: barra (agora mais espessa) e chip de treino ficam no topo; só o
+       card do semáforo desce para depois do diário (ver mais abaixo). -->
+  <div class="bar-wrap" id="bar-wrap" style="display:none;">
+    <div class="bar-labels">
+      <span id="bar-lbl-ref">Refeição atual: 0 kcal</span>
+      <span id="bar-lbl-dia">Dia: 0 / 0 kcal</span>
+    </div>
+    <div class="bar-bg"><div class="bar-fill" id="bar-fill"></div></div>
+  </div>
+
+  <a href="calculadora-queima-calorica.html" class="credito-chip" id="credito-chip" title="Ver/editar treino na calculadora de queima">
+    🔥 <span id="credito-chip-valor">0</span> kcal de treino creditados hoje →
+  </a>
 
   <!-- Meta colapsável -->
   <div class="pnp-card meta-destaque" id="meta-card">
@@ -480,8 +496,8 @@
     </div>
   </div>
 
-  <!-- ALTERAÇÃO (revisão do Passo 2): semáforo + saldo movidos para depois do diário,
-       antes do editorial — evita caixa densa de números logo no topo da página. -->
+  <!-- ALTERAÇÃO: apenas o card do semáforo desce, para depois do diário e antes do
+       editorial — barra e chip de treino permanecem no topo (ver acima). -->
   <div class="painel-topo" id="painel-topo">
     <div class="sinal-mini">
       <div class="luz-mini luz-mini-verm"></div>
@@ -492,18 +508,6 @@
       <div class="sinal-veredicto" id="sinal-veredicto">Aguardando…</div>
       <div class="sinal-detalhe" id="sinal-detalhe"></div>
     </div>
-  </div>
-
-  <a href="calculadora-queima-calorica.html" class="credito-chip" id="credito-chip" title="Ver/editar treino na calculadora de queima">
-    🔥 <span id="credito-chip-valor">0</span> kcal de treino creditados hoje →
-  </a>
-
-  <div class="bar-wrap" id="bar-wrap" style="display:none;">
-    <div class="bar-labels">
-      <span id="bar-lbl-ref">Refeição atual: 0 kcal</span>
-      <span id="bar-lbl-dia">Dia: 0 / 0 kcal</span>
-    </div>
-    <div class="bar-bg"><div class="bar-fill" id="bar-fill"></div></div>
   </div>
 
   <!-- Editorial -->
