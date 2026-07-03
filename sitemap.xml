@@ -88,6 +88,13 @@
 
   <!-- Blog -->
   <url>
+    <loc>https://saudemundo.com.br/artigos/artigo-automonitoramento-calculadoras.html</loc>
+    <lastmod>2026-07-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://saudemundo.com.br/artigos/artigo-deficit-calorico.html</loc>
     <lastmod>2026-06-21</lastmod>
     <changefreq>monthly</changefreq>
