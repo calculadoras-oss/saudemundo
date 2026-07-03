@@ -60,6 +60,7 @@ function smArtigoHref(file) { return SM_IN_ARTIGOS ? file : 'artigos/' + file; }
 /* ---------- Artigos do blog ---------- */
 const SM_ARTIGOS = [
   { file: 'artigo-deficit-calorico.html',             icon: '📉', cat: 'Nutrição',                name: 'O que é Déficit Calórico? O Guia Definitivo para Começar',        desc: 'Entenda o conceito biológico mais importante por trás do emagrecimento saudável e como aplicá-lo.' },
+  { file: 'artigo-automonitoramento-calculadoras.html', icon: '🎯', cat: 'Nutrição',              name: 'Automonitoramento Baseado em Evidências',                         desc: 'Entenda o Método das 3 calculadoras do SaúdeMundo.' },
   { file: 'artigo-creatina.html',                     icon: '💊', cat: 'Suplementação',           name: 'Guia Prático sobre Creatina: Como Tomar, Horários e Mitos',        desc: 'O suplemento mais estudado do mundo. Saiba se vale a pena fazer saturação e se ela causa retenção.' },
   { file: 'artigo-guia-whey-protein.html',            icon: '🥛', cat: 'Suplementação',           name: 'Whey Protein Concentrado, Isolado e Hidrolisado: As Diferenças',   desc: 'Não jogue dinheiro fora. Aprenda as reais distinções industriais e escolha o melhor custo-benefício.' },
   { file: 'artigo-whey-protein-emagrece.html',        icon: '⚖️', cat: 'Emagrecimento',           name: 'Whey Protein Engorda ou Ajuda a Emagrecer? Descubra a Verdade',    desc: 'Entenda o grande mito e aprenda a usar o suplemento proteico como um forte aliado na saciedade.' },
