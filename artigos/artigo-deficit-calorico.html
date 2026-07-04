@@ -32,7 +32,19 @@
 <link rel="stylesheet" href="../shared.css">
 
 <style>
-  .article-hero { margin-bottom: 2rem; }
+  /* CORREÇÃO: article-hero e article-body agora seguem o mesmo padrão de
+     coluna centralizada (760px, com card fechado) usado em artigo-creatina.html.
+     Antes, .article-hero não tinha max-width/margin:auto (esticava pelos
+     1100px do .container) e .article-body tinha max-width mas sem margin:auto
+     (ficava encostado à esquerda) — isso causava a pastilha/título desalinhados. */
+  .article-hero {
+    max-width: 760px;
+    margin: 0 auto 2rem;
+    background: linear-gradient(135deg, var(--dark2), var(--dark));
+    border: 1px solid var(--border);
+    border-radius: var(--radius, 16px);
+    padding: 40px;
+  }
   .article-hero h1 {
     font-size: clamp(1.7rem, 4vw, 2.4rem);
     line-height: 1.25;
@@ -40,7 +52,7 @@
   }
   .article-lead {
     font-size: 1.1rem;
-    color: var(--muted);
+    color: var(--text-muted);
     margin-bottom: 1.25rem;
     line-height: 1.65;
   }
@@ -49,40 +61,54 @@
     flex-wrap: wrap;
     gap: .5rem 1.25rem;
     font-size: .85rem;
-    color: var(--muted);
-    margin-bottom: 2rem;
+    color: var(--text-muted);
   }
-  .article-meta a { color: var(--green); text-decoration: none; font-weight: 600; }
-  .article-body { max-width: 720px; }
-  .article-body p { margin-bottom: 1.4rem; font-size: 1.05rem; line-height: 1.75; }
+  .article-meta a { color: var(--green-dark); text-decoration: none; font-weight: 600; }
+  body.dark .article-meta a { color: var(--green); }
+
+  .article-body {
+    max-width: 760px;
+    margin: 0 auto;
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius, 16px);
+    padding: 40px;
+  }
+  .article-body p { margin-bottom: 1.4rem; font-size: 1.05rem; line-height: 1.75; color: var(--text); }
   .article-body h2 {
     font-size: 1.4rem;
     font-weight: 700;
     margin: 2.25rem 0 .9rem;
-    color: var(--green);
+    color: var(--green-dark);
   }
+  body.dark .article-body h2 { color: var(--green); }
+  .article-body h2:first-of-type { margin-top: 0; }
   .article-body h3 {
     font-size: 1.1rem;
     font-weight: 600;
     margin: 1.75rem 0 .65rem;
+    color: var(--text);
   }
   .article-body ul { padding-left: 1.4rem; margin-bottom: 1.4rem; }
-  .article-body li { margin-bottom: .55rem; font-size: 1.05rem; line-height: 1.65; }
-  .article-body a { color: var(--green); }
+  .article-body li { margin-bottom: .55rem; font-size: 1.05rem; line-height: 1.65; color: var(--text); }
+  .article-body a { color: var(--green-dark); }
+  body.dark .article-body a { color: var(--green); }
 
   .card-cta {
     background: linear-gradient(135deg, rgba(16,185,129,.1), rgba(5,150,105,.1));
-    border: 2px dashed var(--green);
+    border: 2px dashed var(--green-dark);
     border-radius: 14px;
     padding: 2rem;
     margin: 2.5rem 0;
     text-align: center;
   }
-  .card-cta h3 { color: var(--green); font-size: 1.3rem; margin-bottom: .5rem; }
-  .card-cta p { font-size: .95rem; margin-bottom: 1.25rem; }
+  body.dark .card-cta { border-color: var(--green); }
+  .card-cta h3 { color: var(--green-dark); font-size: 1.3rem; margin-bottom: .5rem; }
+  body.dark .card-cta h3 { color: var(--green); }
+  .card-cta p { font-size: .95rem; margin-bottom: 1.25rem; color: var(--text); }
   .btn-cta {
     display: inline-block;
-    background: var(--green);
+    background: var(--green-dark);
     color: #fff;
     text-decoration: none;
     padding: .8rem 1.8rem;
@@ -90,6 +116,7 @@
     font-weight: 700;
     transition: opacity .2s, transform .2s;
   }
+  body.dark .btn-cta { background: var(--green); }
   .btn-cta:hover { opacity: .9; transform: translateY(-2px); }
 
   .references {
@@ -97,31 +124,36 @@
     padding-top: 1.5rem;
     border-top: 1px solid var(--border);
     font-size: .88rem;
-    color: var(--muted);
+    color: var(--text-muted);
   }
   .references h2 { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; color: var(--text); }
   .references ol { padding-left: 1.4rem; }
   .references li { margin-bottom: .5rem; line-height: 1.55; }
-  .references a { color: var(--green); }
+  .references a { color: var(--green-dark); }
+  body.dark .references a { color: var(--green); }
+
+  @media (max-width: 600px) {
+    .article-hero, .article-body { padding: 24px; }
+  }
 </style>
 </head>
 <body>
+<div class="bg-grid"></div>
 <!-- NAV injetado pelo shared.js -->
 
 <div class="container">
-  <article>
-    <div class="article-hero">
-      <div class="badge">✦ saudemundo · Emagrecimento</div>
-      <h1>Quantas Calorias Comer para Emagrecer? O Guia do Déficit Calórico Sem Passar Fome</h1>
-      <p class="article-lead">O déficit calórico é o mecanismo central de todo emagrecimento. Entenda como ele funciona, qual o nível ideal e como sustentá-lo sem fome.</p>
-      <div class="article-meta">
-        <span>✍️ Por <a href="../sobre.html">Lucas Andrade</a></span>
-        <span>✅ Revisão técnica: <a href="../sobre.html">Carolina Velneri</a></span>
-        <span data-date="2026-06-14">📅 Atualizado recentemente</span>
-      </div>
+  <div class="article-hero">
+    <div class="badge">✦ saudemundo · Emagrecimento</div>
+    <h1>Quantas Calorias Comer para Emagrecer? O Guia do Déficit Calórico Sem Passar Fome</h1>
+    <p class="article-lead">O déficit calórico é o mecanismo central de todo emagrecimento. Entenda como ele funciona, qual o nível ideal e como sustentá-lo sem fome.</p>
+    <div class="article-meta">
+      <span>✍️ Por <a href="../sobre.html">Lucas Andrade</a></span>
+      <span>✅ Revisão técnica: <a href="../sobre.html">Carolina Velneri</a></span>
+      <span data-date="2026-06-14">📅 Atualizado recentemente</span>
     </div>
+  </div>
 
-    <div class="article-body">
+  <article class="article-body">
       <p>Emagrecer depende principalmente de um conceito simples, mas que gera muitas dúvidas: o <strong>déficit calórico</strong>. Isso significa, basicamente, consumir menos energia (calorias) através da alimentação do que o seu corpo gasta para se manter ativo ao longo do dia. Quando isso acontece de forma consistente, o organismo é obrigado a utilizar a gordura corporal estocada como fonte de combustível.</p>
 
       <h2>O Que é Déficit Calórico e Como Ele Funciona?</h2>
@@ -182,7 +214,6 @@
           <li>Astrup A, et al. <em>The role of higher protein diets in weight control and obesity-related comorbidities.</em> Int J Obes. 2015;39(5):721-726.</li>
         </ol>
       </div>
-    </div>
   </article>
 
   <div id="sm-blog-placeholder"></div>
@@ -191,4 +222,3 @@
 <script src="../shared.js"></script>
 </body>
 </html>
-

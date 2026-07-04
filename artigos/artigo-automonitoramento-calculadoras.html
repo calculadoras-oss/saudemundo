@@ -89,10 +89,55 @@
   ]
 }
 </script>
+
+<style>
+  /* Estilos locais para alinhar este artigo ao padrão de coluna
+     centralizada usado nos demais artigos (ex: artigo-creatina.html) */
+  .article-container { max-width: 760px; margin: 0 auto; padding: 0 20px 80px; position: relative; z-index: 10; }
+  .article-body { background: var(--dark2); border: 1px solid var(--border); border-radius: var(--radius, 16px); padding: 40px; margin-bottom: 24px; }
+  .article-body p, .article-body ul, .article-body li { color: var(--text); line-height: 1.8; }
+  .article-body h1 { margin-bottom: 8px; }
+  .article-body h2 { color: var(--green-dark); margin: 32px 0 14px; }
+  body.dark .article-body h2 { color: var(--green); }
+  .article-byline { font-size: .85rem; color: var(--text-muted); margin: 8px 0 24px; }
+  .article-byline a { color: var(--green-dark); text-decoration: none; font-weight: 600; }
+  body.dark .article-byline a { color: var(--green); }
+
+  /* Tabela — o shared.css não define estilos de tabela, então tratamos aqui */
+  .article-body table {
+    width: 100%; border-collapse: collapse; margin: 20px 0;
+    background: var(--dark3); border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden; font-size: 0.88rem;
+  }
+  .article-body th, .article-body td {
+    padding: 12px 14px; text-align: left;
+    border-bottom: 1px solid var(--border);
+    color: var(--text); vertical-align: top;
+  }
+  .article-body tbody tr:last-child td { border-bottom: none; }
+  .article-body th {
+    background: rgba(46,204,113,0.10); color: var(--green-dark);
+    font-family: 'Playfair Display', serif; font-weight: 700;
+  }
+  body.dark .article-body th { color: var(--green); background: rgba(46,204,113,0.08); }
+
+  @media (max-width: 600px) {
+    .article-body { padding: 24px; }
+    .article-body table, .article-body thead, .article-body tbody,
+    .article-body th, .article-body td, .article-body tr { display: block; }
+    .article-body thead { display: none; }
+    .article-body tr { border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 8px; }
+    .article-body td { border-bottom: none; padding: 4px 0; }
+    .article-body td::before { content: attr(data-label); display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--green-dark); font-weight: 700; }
+    body.dark .article-body td::before { color: var(--green); }
+  }
+</style>
 </head>
 <body>
+<div class="bg-grid"></div>
 
-<article>
+<div class="article-container">
+<article class="article-body">
 
 <p><em>Por Lucas Andrade, redator especializado em saúde e performance · Revisão técnica: <a href="../sobre.html">Carolina Velneri, formação em ciências da saúde</a> · Atualizado em 3 de julho de 2026</em></p>
 
@@ -127,34 +172,34 @@
 </thead>
 <tbody>
 <tr>
-<td>Metas claras</td>
-<td>Metas de processo (ex: kcal/dia) superam metas vagas de resultado (ex: "quero emagrecer")</td>
-<td><a href="https://www.saudemundo.com.br/index.html">Calculadora de Calorias e Macros</a> (home)</td>
-<td>Definir a meta calórica e de proteína diária a partir do seu TMB e TDEE reais</td>
+<td data-label="Pilar da evidência">Metas claras</td>
+<td data-label="O que a ciência mostra">Metas de processo (ex: kcal/dia) superam metas vagas de resultado (ex: "quero emagrecer")</td>
+<td data-label="Ferramenta no SaúdeMundo"><a href="https://www.saudemundo.com.br/index.html">Calculadora de Calorias e Macros</a> (home)</td>
+<td data-label="Como usar na prática">Definir a meta calórica e de proteína diária a partir do seu TMB e TDEE reais</td>
 </tr>
 <tr>
-<td>Automonitoramento</td>
-<td>Relação de dose-resposta: mais frequência de registro, mais resultado</td>
-<td><a href="https://www.saudemundo.com.br/pode-nao-pode.html">Pode, Não Pode?</a></td>
-<td>Registrar cada refeição (e o treino do dia) no mesmo momento em que acontece</td>
+<td data-label="Pilar da evidência">Automonitoramento</td>
+<td data-label="O que a ciência mostra">Relação de dose-resposta: mais frequência de registro, mais resultado</td>
+<td data-label="Ferramenta no SaúdeMundo"><a href="https://www.saudemundo.com.br/pode-nao-pode.html">Pode, Não Pode?</a></td>
+<td data-label="Como usar na prática">Registrar cada refeição (e o treino do dia) no mesmo momento em que acontece</td>
 </tr>
 <tr>
-<td>Qualidade da dieta</td>
-<td>Alimentos minimamente processados geram mais saciedade com as mesmas calorias</td>
-<td>Distribuição de macros (home) + decisão assistida no Pode, Não Pode</td>
-<td>Priorizar proteína e fibra dentro do espaço calórico disponível na refeição</td>
+<td data-label="Pilar da evidência">Qualidade da dieta</td>
+<td data-label="O que a ciência mostra">Alimentos minimamente processados geram mais saciedade com as mesmas calorias</td>
+<td data-label="Ferramenta no SaúdeMundo">Distribuição de macros (home) + decisão assistida no Pode, Não Pode</td>
+<td data-label="Como usar na prática">Priorizar proteína e fibra dentro do espaço calórico disponível na refeição</td>
 </tr>
 <tr>
-<td>Controle calórico</td>
-<td>Déficit energético sustentado é condição necessária para perda de gordura, independente da estratégia específica</td>
-<td>Home (déficit de 500 kcal) + saldo diário do Pode, Não Pode</td>
-<td>Manter o déficit sem cair abaixo da TMB por longos períodos</td>
+<td data-label="Pilar da evidência">Controle calórico</td>
+<td data-label="O que a ciência mostra">Déficit energético sustentado é condição necessária para perda de gordura, independente da estratégia específica</td>
+<td data-label="Ferramenta no SaúdeMundo">Home (déficit de 500 kcal) + saldo diário do Pode, Não Pode</td>
+<td data-label="Como usar na prática">Manter o déficit sem cair abaixo da TMB por longos períodos</td>
 </tr>
 <tr>
-<td>Atividade física</td>
-<td>Apoia manutenção de peso e composição corporal, mais do que a perda inicial</td>
-<td><a href="https://www.saudemundo.com.br/calculadora-queima-calorica.html">Calculadora de Queima Calórica</a></td>
-<td>Registrar o treino para que o gasto entre como crédito no saldo do dia</td>
+<td data-label="Pilar da evidência">Atividade física</td>
+<td data-label="O que a ciência mostra">Apoia manutenção de peso e composição corporal, mais do que a perda inicial</td>
+<td data-label="Ferramenta no SaúdeMundo"><a href="https://www.saudemundo.com.br/calculadora-queima-calorica.html">Calculadora de Queima Calórica</a></td>
+<td data-label="Como usar na prática">Registrar o treino para que o gasto entre como crédito no saldo do dia</td>
 </tr>
 </tbody>
 </table>
@@ -224,12 +269,16 @@
   </div>
 </div>
 
-<div class="card-title">🎯 Comece agora</div>
-<p>Se você ainda não tem uma meta calórica calculada, esse é o ponto de partida de tudo o que foi explicado acima: sem ela, nem o crédito do treino nem o semáforo das refeições têm um número de referência para trabalhar. Abra a <a href="https://www.saudemundo.com.br/index.html">Calculadora de Calorias e Macros</a>, calcule sua meta em menos de um minuto e já registre seu primeiro treino do dia direto na <a href="https://www.saudemundo.com.br/calculadora-queima-calorica.html">Calculadora de Queima Calórica</a>.</p>
+<div class="card-cta" style="background:linear-gradient(135deg, rgba(16,185,129,.08), rgba(5,150,105,.08)); border:2px dashed var(--green-dark); border-radius:14px; padding:2rem; margin:2.5rem 0; text-align:center;">
+  <h3 style="color:var(--green-dark); font-size:1.25rem; margin-bottom:.5rem;">🎯 Comece agora</h3>
+  <p style="font-size:.95rem; margin-bottom:1.25rem;">Se você ainda não tem uma meta calórica calculada, esse é o ponto de partida de tudo o que foi explicado acima: sem ela, nem o crédito do treino nem o semáforo das refeições têm um número de referência para trabalhar. Abra a Calculadora de Calorias e Macros, calcule sua meta em menos de um minuto e já registre seu primeiro treino do dia direto na Calculadora de Queima Calórica.</p>
+  <a href="https://www.saudemundo.com.br/index.html" style="display:inline-block;background:var(--green-dark);color:#fff;text-decoration:none;padding:.8rem 1.8rem;border-radius:8px;font-weight:700;">🧮 Calcular Minha Meta →</a>
+</div>
 
 <p><small>⚠️ Este artigo tem finalidade educacional. As calculadoras citadas fornecem estimativas baseadas em fórmulas de referência (Mifflin-St Jeor e tabelas MET) e não substituem avaliação individualizada com nutricionista ou médico.</small></p>
 
 </article>
+</div>
 
 <div id="sm-blog-placeholder"></div>
 <script src="../shared.js"></script>
