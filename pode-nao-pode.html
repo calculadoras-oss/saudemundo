@@ -116,8 +116,12 @@
       background:var(--dark2, #ffffff); border:1px solid var(--border, #e2e8f0);
       border-radius:var(--radius); padding:.5rem .8rem; margin-bottom:.5rem;
     }
-    .sinal-mini { display:flex; flex-direction:row; gap:4px; flex-shrink:0; }
-    .luz-mini { width:10px; height:10px; border-radius:50%; background:#e2e8f0; transition:background .4s,box-shadow .4s; }
+    .sinal-mini {
+      display:flex; flex-direction:column; gap:6px; flex-shrink:0;
+      background:#1e293b; padding:9px 7px; border-radius:10px;
+      box-shadow:inset 0 0 0 2px #0f172a;
+    }
+    .luz-mini { width:14px; height:14px; border-radius:50%; background:#334155; transition:background .4s,box-shadow .4s; }
     .sinal-ativo-verde   .luz-mini-verde   { background:var(--verde);   box-shadow:0 0 8px 2px #86efac; }
     .sinal-ativo-amarelo .luz-mini-amarelo { background:var(--amarelo); box-shadow:0 0 8px 2px #fde68a; }
     .sinal-ativo-verm    .luz-mini-verm    { background:var(--verm);    box-shadow:0 0 8px 2px #fca5a5; }
@@ -277,11 +281,24 @@
     .btn-foto:hover { background:var(--border, #e2e8f0); }
     .btn-foto:disabled { opacity:.5; cursor:not-allowed; }
     .btn-foto-label { font-size:.65rem; display:block; line-height:1; color:var(--text-muted, #64748b); }
+    .btn-mic {
+      padding:.7rem .8rem; background:var(--dark2, #ffffff); border:1px solid var(--border, #e2e8f0);
+      border-radius:10px; font-size:1.1rem; cursor:pointer;
+      transition:background .2s; align-self:flex-end; line-height:1; flex-shrink:0;
+    }
+    .btn-mic:hover { background:var(--border, #e2e8f0); }
+    .btn-mic.gravando { background:var(--verm); border-color:var(--verm); color:#fff; animation:pulseMic 1s infinite; }
+    @keyframes pulseMic { 0%,100%{opacity:1;} 50%{opacity:.6;} }
+    .btn-mic-label { font-size:.65rem; display:block; line-height:1; color:var(--text-muted, #64748b); }
+    .btn-mic.gravando .btn-mic-label { color:#fff; }
 
     /* ── Registros ── */
-    .reg-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:.75rem; }
+    .reg-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:.75rem; gap:.5rem; flex-wrap:wrap; }
+    .reg-header-btns { display:flex; gap:.4rem; }
     .btn-limpar { font-size:.72rem; color:var(--verm); background:none; border:1px solid var(--verm); border-radius:6px; padding:.22rem .55rem; cursor:pointer; }
     .btn-limpar:hover { background:var(--verm-bg); }
+    .btn-compartilhar { font-size:.72rem; color:#25D366; background:none; border:1px solid #25D366; border-radius:6px; padding:.22rem .55rem; cursor:pointer; }
+    .btn-compartilhar:hover { background:#f0fdf4; }
     .reg-item { display:flex; align-items:flex-start; gap:.45rem; padding:.6rem 0; border-bottom:1px solid var(--border, #e2e8f0); font-size:.86rem; }
     .reg-item:last-child { border-bottom:none; }
     .reg-badge { flex-shrink:0; font-size:.6rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:.15rem .38rem; border-radius:5px; margin-top:.15rem; }
@@ -302,6 +319,13 @@
     .reg-del  { background:none; border:none; color:var(--text-muted, #64748b); cursor:pointer; padding:.1rem .25rem; font-size:.9rem; }
     .reg-del:hover { color:var(--verm); }
     .empty-msg { text-align:center; color:var(--text-muted, #64748b); font-size:.85rem; padding:1.5rem 0; line-height:1.7; }
+
+    /* ── Gamificação ── */
+    .gami-stats { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:.6rem; }
+    .gami-stat-num { font-size:1.4rem; font-weight:700; line-height:1.1; }
+    .gami-stat-label { font-size:.72rem; color:var(--text-muted, #64748b); }
+    .gami-interpretacao { font-size:.85rem; line-height:1.55; }
+    .gami-interpretacao strong { color:var(--text); }
 
     /* ── Editorial ── */
     .editorial { font-size:.9rem; line-height:1.75; color:var(--text); }
@@ -326,8 +350,8 @@
        (injetado pelo shared.js), que é o verde padrão do site — diferente do --verde
        local (#16a34a) usado no resto desta página. */
     .conceito-caixa {
-      margin: 12px auto 16px;
-      padding: 12px 16px;
+      margin: 8px auto 10px;
+      padding: 10px 16px;
       border: 1px solid var(--green, #00A651);
       border-radius: 10px;
       background: rgba(46,204,113,0.12);
@@ -353,10 +377,16 @@
       text-align: left;
     }
 
+    /* ALTERAÇÃO (layout): reduz o espaço acima do stepper "Meta → Treino → Refeições"
+       injetado pelo shared.js logo após o </header>, para ele e o "Entenda o conceito"
+       ficarem mais colados ao topo da página, como pedido. */
+    .sm-stepper-wrap { margin-top:.2rem !important; }
+
     /* ── Dark mode ── */
     body.dark .pnp-badge { background:#052e16; }
     body.dark .painel-topo { border-color:#2d2d2d; }
-    body.dark .luz-mini { background:#2d2d2d; }
+    body.dark .sinal-mini { background:#0b1220; box-shadow:inset 0 0 0 2px #000; }
+    body.dark .luz-mini { background:#334155; }
     body.dark .chat-mensagens { background:#111; border-color:#2d2d2d; }
     body.dark .msg-ia { background:#052e16; border-color:#166534; }
     body.dark .msg-ia.decisao { background:#0c1d3d; border-color:#1e40af; }
@@ -379,6 +409,8 @@
     body.dark .b-ceia{background:#2d0030;color:#f9a8d4;}
     body.dark .modo-hint { background:#1a1a1a; border-color:#2d2d2d; }
     body.dark .btn-foto { border-color:#2d2d2d; }
+    body.dark .btn-mic { border-color:#2d2d2d; }
+    body.dark .btn-compartilhar:hover { background:#052e16; }
     body.dark .conceito-caixa { background:rgba(76,217,138,0.08); border-color:rgba(76,217,138,0.3); }
     body.dark .conceito-caixa summary { color: var(--green, #4CD98A); }
   </style>
@@ -438,7 +470,9 @@
   <p class="pnp-intro">Calculou sua meta? Agora, me mande uma foto do que vai comer ou diga o que comeu e me mande seu treino de hoje - eu calculo tudo e mostro seu saldo em tempo real.</p>
 
   <!-- ALTERAÇÃO: card do semáforo reposicionado para imediatamente acima do seletor de
-       modo, já que ele indica que a pessoa deve escrever o que vai comer/comeu. -->
+       modo, já que ele indica que a pessoa deve escrever o que vai comer/comeu.
+       Layout do semáforo agora é vertical (bolinhas empilhadas dentro de uma "caixa"
+       escura), lembrando um semáforo de trânsito de verdade. -->
   <div class="painel-topo" id="painel-topo">
     <div class="sinal-mini">
       <div class="luz-mini luz-mini-verm"></div>
@@ -512,15 +546,26 @@
              style="display:none" onchange="onFotoSelecionada(this)">
       <button class="btn-foto" id="btn-foto" onclick="document.getElementById('foto-input').click()"
         title="Foto da refeição (estimativa visual ±20%)">📸 <span class="btn-foto-label">foto</span></button>
+      <button class="btn-mic" id="btn-mic" onclick="toggleMic()"
+        title="Falar em vez de digitar">🎤 <span class="btn-mic-label">falar</span></button>
       <button class="btn-enviar" id="btn-enviar" onclick="enviarMensagem()" title="Enviar">➤</button>
     </div>
+  </div>
+
+  <!-- Gamificação -->
+  <div class="pnp-card" id="gamificacao-card" style="display:none;">
+    <div class="pnp-card-title">🏆 Seu progresso</div>
+    <div id="gami-corpo"></div>
   </div>
 
   <!-- Registros -->
   <div class="pnp-card">
     <div class="reg-header">
       <div class="pnp-card-title" style="margin:0;">📋 Registros de hoje</div>
-      <button class="btn-limpar" onclick="limparDiario()">🗑 Limpar</button>
+      <div class="reg-header-btns">
+        <button class="btn-compartilhar" onclick="compartilharWhatsApp()">📱 Compartilhar</button>
+        <button class="btn-limpar" onclick="limparDiario()">🗑 Limpar</button>
+      </div>
     </div>
     <div id="lista-registros">
       <div class="empty-msg">Nenhum registro ainda.<br>Use o modo <strong>📊 Vou comer isso</strong> para registrar! 🚦</div>
@@ -583,6 +628,8 @@ const WORKER_URL  = "https://summer-hill-da28.philipdesousa.workers.dev";
 const META_KEY    = "sm_pnp_meta_kcal";
 const STORAGE_KEY = "sm_pnp_" + new Date().toISOString().slice(0,10);
 const ATIV_KEY = "sm_pnp_ativ_" + new Date().toISOString().slice(0,10);
+const RECORDE_KEY = "sm_pnp_recorde";
+const KCAL_POR_KG = 7700;
 function carregarAtividadesQC() {
   try { const r = localStorage.getItem(ATIV_KEY); return r ? JSON.parse(r) : []; }
   catch(e) { return []; }
@@ -607,6 +654,8 @@ let registros  = carregarRegistros();
 let historico  = [];
 let metaAberta = true;
 let modoAtual  = "auto";
+let reconhecimentoVoz = null;
+let gravandoVoz = false;
 
 function selecionarRefeicaoPorHorario() {
   const h = new Date().getHours();
@@ -642,6 +691,7 @@ document.addEventListener("DOMContentLoaded", () => {
   atualizarTudo();
   renderExemplos();
   atualizarVisuaisModo();
+  configurarMicrofone();
 });
 
 // ── Meta ──
@@ -746,6 +796,49 @@ function renderExemplos() {
 function preencherEx(el) {
   document.getElementById("chat-input").value = el.textContent.trim();
   document.getElementById("chat-input").focus();
+}
+
+// ── Microfone (Web Speech API) ──
+// Funciona nativamente no Chrome/Android e no Safari/iOS (a partir do iOS 14.5).
+// NÃO funciona no Chrome do iPhone nem no Firefox — nesses casos o botão fica
+// desabilitado com uma dica explicando o motivo.
+function configurarMicrofone() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const btnMic = document.getElementById("btn-mic");
+  if (!SpeechRecognition) {
+    btnMic.disabled = true;
+    btnMic.title = "Ditado por voz não é suportado neste navegador. Funciona no Chrome (Android) e no Safari (iPhone).";
+    btnMic.style.opacity = ".4";
+    return;
+  }
+  reconhecimentoVoz = new SpeechRecognition();
+  reconhecimentoVoz.lang = "pt-BR";
+  reconhecimentoVoz.continuous = false;
+  reconhecimentoVoz.interimResults = false;
+
+  reconhecimentoVoz.onresult = (e) => {
+    const texto = e.results[0][0].transcript;
+    const input = document.getElementById("chat-input");
+    input.value = (input.value ? input.value + " " : "") + texto;
+  };
+  reconhecimentoVoz.onerror = () => { pararGravacao(); };
+  reconhecimentoVoz.onend   = () => { pararGravacao(); };
+}
+
+function toggleMic() {
+  if (!reconhecimentoVoz) return;
+  if (gravandoVoz) { reconhecimentoVoz.stop(); return; }
+  try {
+    reconhecimentoVoz.start();
+    gravandoVoz = true;
+    document.getElementById("btn-mic").classList.add("gravando");
+  } catch(e) { /* já estava gravando ou permissão negada */ }
+}
+
+function pararGravacao() {
+  gravandoVoz = false;
+  const btn = document.getElementById("btn-mic");
+  if (btn) btn.classList.remove("gravando");
 }
 
 // ── Chat ──
@@ -854,8 +947,10 @@ async function enviarMensagem() {
     const limpo = resposta.replace(/\[KCAL:\d+\]/g,"").trim();
     let html = limpo.replace(/\n/g,"<br>");
     if (kcal && kcal > 0) {
-      html += "<br><button class=\"btn-lancar\" onclick=\"lancar("
-            + kcal + ",'" + encodeURIComponent(texto) + "')\">✅ Lançar "
+      // ALTERAÇÃO (#9): usa o texto da própria IA (itens identificados), não a
+      // mensagem crua do usuário, como descrição a ser salva no diário.
+      html += "<br><button class=\"btn-lancar\" onclick=\"confirmarLancamento("
+            + kcal + ",'" + encodeURIComponent(limpo) + "', this)\">✅ Lançar "
             + kcal + " kcal no diário</button>";
     }
     addMsg(html, "ia", isDecisao);
@@ -926,8 +1021,10 @@ async function enviarComFoto(base64, mimeType) {
     const limpo = resposta.replace(/\[KCAL:\d+\]/g,"").trim();
     let html = limpo.replace(/\n/g,"<br>");
     if (kcal && kcal > 0) {
-      html += "<br><button class=\"btn-lancar\" onclick=\"lancar("
-            + kcal + ",'" + encodeURIComponent("📸 foto da refeição") + "')\">✅ Lançar "
+      // ALTERAÇÃO (#9): usa os itens identificados pela IA na foto como descrição,
+      // em vez do texto genérico "📸 foto da refeição".
+      html += "<br><button class=\"btn-lancar\" onclick=\"confirmarLancamento("
+            + kcal + ",'" + encodeURIComponent(limpo) + "', this)\">✅ Lançar "
             + kcal + " kcal no diário</button>";
     }
     addMsg(html, "ia", false);
@@ -943,13 +1040,41 @@ async function enviarComFoto(base64, mimeType) {
   }
 }
 
-function lancar(kcal, descCod) {
+// ── Confirmação antes de lançar (#3) ──
+// Evita lançar na refeição errada por distração: antes de gravar no diário,
+// mostra qual refeição está selecionada e permite trocar/cancelar.
+function confirmarLancamento(kcal, descCod, btnEl) {
+  const refAtual = document.getElementById("refeicao-select").value;
+  const id = "conf-" + Date.now();
+  const opts = Object.keys(REF_CFG).map(k =>
+    `<option value="${k}"${k === refAtual ? " selected" : ""}>${REF_CFG[k].l}</option>`
+  ).join("");
+  const html = `<div id="${id}" style="margin-top:.5rem;font-size:.8rem;display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;">
+      Confirmar em:
+      <select id="${id}-sel" style="padding:.25rem .45rem;border-radius:6px;border:1px solid var(--border,#e2e8f0);background:transparent;color:var(--text);">${opts}</select>
+      <button onclick="confirmarLancarFinal('${id}', ${kcal}, '${descCod}')"
+        style="background:var(--verde);color:#fff;border:none;border-radius:6px;padding:.3rem .65rem;cursor:pointer;font-weight:700;">✔ Confirmar</button>
+      <button onclick="document.getElementById('${id}').remove()"
+        style="background:none;border:1px solid var(--border,#e2e8f0);border-radius:6px;padding:.3rem .55rem;cursor:pointer;color:var(--text-muted,#64748b);">✕ Cancelar</button>
+    </div>`;
+  btnEl.insertAdjacentHTML("afterend", html);
+  btnEl.remove();
+}
+
+function confirmarLancarFinal(id, kcal, descCod) {
+  const sel = document.getElementById(id + "-sel");
+  const refEscolhida = sel ? sel.value : document.getElementById("refeicao-select").value;
+  const bloco = document.getElementById(id);
+  if (bloco) bloco.remove();
+  lancarEm(refEscolhida, kcal, descCod);
+}
+
+function lancarEm(refeicao, kcal, descCod) {
   const desc     = decodeURIComponent(descCod);
-  const refeicao = document.getElementById("refeicao-select").value;
   const resumo   = desc.length > 55 ? desc.slice(0,52)+"…" : desc;
   registros.push({ id:Date.now(), nome:resumo, refeicao, kcal });
   salvarRegistros(); renderLista(); atualizarTudo();
-  addMsg("✅ <strong>" + kcal + " kcal</strong> lançadas no diário!", "ia", false);
+  addMsg("✅ <strong>" + kcal + " kcal</strong> lançadas em <strong>" + REF_CFG[refeicao].l + "</strong>!", "ia", false);
   if (typeof showToast === "function") showToast("✅ Lançado no diário!");
 }
 
@@ -1056,6 +1181,99 @@ function salvarSnapshotDia(status) {
   } catch(e) {}
 }
 
+// ── Gamificação (#1 + #4) ──
+function obterStatusDoDia(dataStr) {
+  try { const r = localStorage.getItem("sm_pnp_status_" + dataStr); return r ? JSON.parse(r) : null; }
+  catch(e) { return null; }
+}
+
+function diaCumpriuMeta(status) {
+  return !!status && status.metaEfetiva > 0 && status.itens > 0 && status.saldoDia >= 0;
+}
+
+// Conta dias consecutivos ANTERIORES a hoje em que a meta foi cumprida.
+function calcularSequenciaAnterior() {
+  let streak = 0;
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  while (true) {
+    const dataStr = d.toISOString().slice(0,10);
+    const status = obterStatusDoDia(dataStr);
+    if (diaCumpriuMeta(status)) { streak++; d.setDate(d.getDate() - 1); }
+    else break;
+  }
+  return streak;
+}
+
+function atualizarRecordePessoal(streakAtual) {
+  let recorde = parseInt(localStorage.getItem(RECORDE_KEY)) || 0;
+  if (streakAtual > recorde) { recorde = streakAtual; try { localStorage.setItem(RECORDE_KEY, String(recorde)); } catch(e) {} }
+  return recorde;
+}
+
+function medalhaPara(streak) {
+  if (streak >= 30) return "🏅 30 dias";
+  if (streak >= 14) return "🥇 14 dias";
+  if (streak >= 7)  return "🥈 7 dias";
+  if (streak >= 3)  return "🥉 3 dias";
+  return null;
+}
+
+function renderGamificacao(status) {
+  const card  = document.getElementById("gamificacao-card");
+  const corpo = document.getElementById("gami-corpo");
+
+  if (status.metaEfetiva <= 0) { card.style.display = "none"; return; }
+
+  const streakAnterior = calcularSequenciaAnterior();
+  const cumpriuHoje     = diaCumpriuMeta(status);
+  const streakComHoje   = streakAnterior + (status.itens > 0 && cumpriuHoje ? 1 : 0);
+  const recorde         = atualizarRecordePessoal(streakComHoje);
+  const medalha         = medalhaPara(streakComHoje);
+
+  let interpretacao;
+  if (status.itens === 0) {
+    interpretacao = "Registre suas refeições para acompanhar seu progresso de hoje.";
+  } else if (status.saldoDia > 0) {
+    const kgSemana = ((status.saldoDia * 7) / KCAL_POR_KG).toFixed(2);
+    interpretacao = "✅ Sobrou <strong>" + status.saldoDia + " kcal</strong> hoje — isso é ótimo, não é um problema! "
+      + "Mantendo essa mesma sobra todos os dias, dá aproximadamente <strong>" + kgSemana + " kg a menos por semana</strong> (estimativa com base em ~7.700 kcal por kg de gordura).";
+  } else if (status.saldoDia === 0) {
+    interpretacao = "🎯 Você bateu sua meta certinha hoje!";
+  } else {
+    interpretacao = "Você passou <strong>" + Math.abs(status.saldoDia) + " kcal</strong> da meta diária hoje. Não é o fim do mundo — o que importa é a média da semana.";
+  }
+
+  card.style.display = "";
+  corpo.innerHTML =
+    "<div class=\"gami-stats\">"
+    + "<div><div class=\"gami-stat-num\" style=\"color:var(--verde);\">🔥 " + streakComHoje + "</div><div class=\"gami-stat-label\">dias seguidos na meta</div></div>"
+    + "<div><div class=\"gami-stat-num\">🏆 " + recorde + "</div><div class=\"gami-stat-label\">recorde pessoal</div></div>"
+    + (medalha ? "<div><div class=\"gami-stat-num\">" + medalha + "</div><div class=\"gami-stat-label\">conquista</div></div>" : "")
+    + "</div>"
+    + "<div class=\"gami-interpretacao\">" + interpretacao + "</div>";
+}
+
+// ── Compartilhar no WhatsApp (#6) ──
+function compartilharWhatsApp() {
+  const status = calcularStatusDia();
+  if (status.itens === 0 && status.queimado === 0) {
+    alert("Registre pelo menos uma refeição ou treino antes de compartilhar!");
+    return;
+  }
+  const streak = calcularSequenciaAnterior() + (diaCumpriuMeta(status) ? 1 : 0);
+  const linhaSaldo = status.metaEfetiva > 0
+    ? (status.saldoDia >= 0
+        ? "✅ Fechei o dia com " + status.saldoDia + " kcal de sobra!"
+        : "Passei " + Math.abs(status.saldoDia) + " kcal da minha meta hoje.")
+    : "";
+  const txt = "🚦 Meu dia no Pode, Não Pode?\n"
+    + (status.metaEfetiva > 0 ? "🎯 Meta: " + status.metaEfetiva + " kcal\n🍽️ Consumido: " + status.totalDia + " kcal\n" + linhaSaldo + "\n" : "")
+    + "🔥 Sequência: " + streak + " dia(s) na meta\n\n"
+    + "Acompanhe o seu: " + SITE_URL + "/pode-nao-pode.html";
+  window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(txt), "_blank");
+}
+
 // ── Semáforo ──
 function atualizarTudo() {
   const status = calcularStatusDia();
@@ -1099,6 +1317,7 @@ function atualizarTudo() {
   if (itens === 0 && queimado === 0) {
     painel.style.display = "none";
     salvarSnapshotDia(status);
+    renderGamificacao(status);
     return;
   }
   painel.style.display = "";
@@ -1128,6 +1347,7 @@ function atualizarTudo() {
   }
 
   salvarSnapshotDia(status);
+  renderGamificacao(status);
 }
 
 function salvarRegistros() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(registros)); } catch(e) {} }
