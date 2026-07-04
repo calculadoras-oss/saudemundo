@@ -371,21 +371,32 @@ const DIARIO_KEY = "sm_pnp_" + HOJE;          // registros de comida do Pode, N�
 const META_KEY = "sm_pnp_meta_kcal";
 
 // Tabela MET (Compendium of Physical Activities, valores aproximados)
+// Ordem: das atividades mais praticadas no Brasil às mais nichadas/menos praticadas.
 const ATIVIDADES = {
+  caminh_rap: { label: "🚶 Caminhada rápida (~6km/h)",      met: 4.3 },
+  caminh_len: { label: "🚶 Caminhada lenta (~3km/h)",       met: 2.8 },
   musc_mod:   { label: "🏋️ Musculação (moderada)",        met: 3.5 },
   musc_int:   { label: "🏋️ Musculação (intensa/circuito)", met: 6.0 },
   corrida:    { label: "🏃 Corrida (por distância)",        met: null }, // especial
-  caminh_len: { label: "🚶 Caminhada lenta (~3km/h)",       met: 2.8 },
-  caminh_rap: { label: "🚶 Caminhada rápida (~6km/h)",      met: 4.3 },
+  futebol:    { label: "⚽ Futebol recreativo",             met: 7.0 },
   ciclismo_l: { label: "🚴 Ciclismo leve (<16km/h)",        met: 4.0 },
   ciclismo_m: { label: "🚴 Ciclismo moderado (16–19km/h)",  met: 6.8 },
-  spinning:   { label: "🚴 Spinning / bike indoor",         met: 8.5 },
+  natacao:    { label: "🏊 Natação (moderada)",             met: 6.0 },
   yoga:       { label: "🧘 Yoga",                           met: 2.5 },
   pilates:    { label: "🧘 Pilates",                        met: 3.0 },
-  natacao:    { label: "🏊 Natação (moderada)",             met: 6.0 },
   danca:      { label: "💃 Dança",                          met: 4.8 },
-  futebol:    { label: "⚽ Futebol recreativo",             met: 7.0 },
+  crossfit:   { label: "🏋️‍♂️ Crossfit",                    met: 8.0 },
   hiit:       { label: "⚡ HIIT / treino funcional intenso", met: 8.0 },
+  volei:      { label: "🏐 Vôlei",                          met: 4.0 },
+  basquete:   { label: "🏀 Basquete",                       met: 6.5 },
+  tenis:      { label: "🎾 Tênis",                          met: 7.3 },
+  luta_mod:   { label: "🥋 Lutas (moderada)",               met: 5.0 },
+  luta_int:   { label: "🥊 Lutas (intensa/sparring)",       met: 10.3 },
+  spinning:   { label: "🚴 Spinning / bike indoor",         met: 8.5 },
+  handebol:   { label: "🤾 Handebol",                       met: 8.0 },
+  beach_tennis:{ label: "🎾 Beach tennis",                  met: 6.0 },
+  surf:       { label: "🏄 Surf",                           met: 5.0 },
+  skate:      { label: "🛹 Skate",                          met: 5.0 },
 };
 
 let modoQC = "registrar";
