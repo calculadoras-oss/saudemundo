@@ -168,7 +168,7 @@
     /* ── Meta ── */
     .meta-toggle { display:flex; align-items:center; justify-content:space-between; cursor:pointer; user-select:none; }
     .meta-toggle-label { font-size:.8rem; font-weight:600; color:var(--text-muted, #64748b); flex:1; white-space:normal; }
-    ..meta-toggle-icon { font-size:.8rem; color:var(--text-muted, #64748b); transition:transform .2s; flex-shrink:0; margin-left:.5rem; }
+    .meta-toggle-icon { font-size:.8rem; color:var(--text-muted, #64748b); transition:transform .2s; flex-shrink:0; margin-left:.5rem; }
     .meta-toggle-icon.aberto { transform:rotate(180deg); }
     .meta-corpo { margin-top:.8rem; display:none; }
     .meta-corpo.aberto { display:block; }
@@ -215,7 +215,13 @@
     /* ── Seletor refeição ── */
     .chat-refeicao-row { display:flex; align-items:center; gap:.6rem; margin-bottom:.7rem; flex-wrap:wrap; }
     .chat-refeicao-row label { font-size:.8rem; font-weight:600; color:var(--text-muted, #64748b); white-space:nowrap; }
-    .chat-refeicao-row select { flex:1; padding:.45rem .7rem; border:1.5px solid var(--border, #e2e8f0); border-radius:8px; font-size:.88rem; background:transparent; color:var(--text); cursor:pointer; }
+    .chat-refeicao-row select {
+      flex:1; padding:.55rem .8rem; border:2px solid var(--verde); border-radius:8px;
+      font-size:.9rem; font-weight:700; background:var(--verde-bg); color:var(--text);
+      cursor:pointer; transition:border-color .2s, box-shadow .2s;
+    }
+    .chat-refeicao-row select:hover,
+    .chat-refeicao-row select:focus { border-color:#15803d; box-shadow:0 0 0 3px #bbf7d0; outline:none; }
 
     .limite-refeicao { font-size:.75rem; color:var(--text-muted, #64748b); margin-bottom:.6rem; background:#f8fafc; border-radius:8px; padding:.4rem .7rem; border:1px solid var(--border, #e2e8f0); }
     .limite-refeicao strong { color:var(--text); }
@@ -234,7 +240,7 @@
 
     /* ── Chat ── */
     .chat-mensagens {
-      min-height:160px; max-height:320px; overflow-y:auto;
+      min-height:240px; max-height:440px; overflow-y:auto;
       border:1.5px solid var(--border, #e2e8f0); border-radius:10px;
       padding:.75rem; margin-bottom:.7rem;
       display:flex; flex-direction:column; gap:.55rem;
@@ -274,35 +280,39 @@
     .btn-enviar:active { transform:scale(.96); }
     .btn-enviar:disabled { background:#94a3b8; cursor:not-allowed; }
     .btn-foto {
-      padding:.7rem .8rem; background:var(--dark2, #ffffff); border:1px solid var(--border, #e2e8f0);
-      border-radius:10px; font-size:1.1rem; cursor:pointer;
-      transition:background .2s; align-self:flex-end; line-height:1; flex-shrink:0;
+      padding:.65rem .85rem; background:var(--azul-bg); border:1.5px solid var(--azul-brd);
+      border-radius:10px; font-size:1.25rem; cursor:pointer;
+      transition:background .2s, transform .1s, box-shadow .2s; align-self:flex-end; line-height:1; flex-shrink:0;
+      box-shadow:0 1px 4px rgba(37,99,235,.18);
     }
-    .btn-foto:hover { background:var(--border, #e2e8f0); }
-    .btn-foto:disabled { opacity:.5; cursor:not-allowed; }
-    .btn-foto-label { font-size:.65rem; display:block; line-height:1; color:var(--text-muted, #64748b); }
+    .btn-foto:hover { background:#dbeafe; transform:translateY(-1px); }
+    .btn-foto:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+    .btn-foto-label { font-size:.62rem; font-weight:700; display:block; line-height:1; color:var(--azul); margin-top:2px; }
     .btn-mic {
-      padding:.7rem .8rem; background:var(--dark2, #ffffff); border:1px solid var(--border, #e2e8f0);
-      border-radius:10px; font-size:1.1rem; cursor:pointer;
-      transition:background .2s; align-self:flex-end; line-height:1; flex-shrink:0;
+      padding:.65rem .85rem; background:var(--verde-bg); border:1.5px solid var(--verde-brd);
+      border-radius:10px; font-size:1.25rem; cursor:pointer;
+      transition:background .2s, transform .1s, box-shadow .2s; align-self:flex-end; line-height:1; flex-shrink:0;
+      box-shadow:0 1px 4px rgba(22,163,74,.18);
     }
-    .btn-mic:hover { background:var(--border, #e2e8f0); }
-    .btn-mic.gravando { background:var(--verm); border-color:var(--verm); color:#fff; animation:pulseMic 1s infinite; }
+    .btn-mic:hover { background:#dcfce7; transform:translateY(-1px); }
+    .btn-mic.gravando { background:var(--verm); border-color:var(--verm); color:#fff; animation:pulseMic 1s infinite; transform:none; }
     @keyframes pulseMic { 0%,100%{opacity:1;} 50%{opacity:.6;} }
-    .btn-mic-label { font-size:.65rem; display:block; line-height:1; color:var(--text-muted, #64748b); }
+    .btn-mic-label { font-size:.62rem; font-weight:700; display:block; line-height:1; color:var(--verde); margin-top:2px; }
     .btn-mic.gravando .btn-mic-label { color:#fff; }
 
     /* ── Registros ── */
     .reg-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:.75rem; gap:.5rem; flex-wrap:wrap; }
-    .reg-header-btns { display:flex; gap:.4rem; }
+    .reg-header-btns { display:flex; gap:.4rem; flex-wrap:wrap; }
     .btn-limpar { font-size:.72rem; color:var(--verm); background:none; border:1px solid var(--verm); border-radius:6px; padding:.22rem .55rem; cursor:pointer; }
     .btn-limpar:hover { background:var(--verm-bg); }
     .btn-compartilhar { font-size:.72rem; color:#25D366; background:none; border:1px solid #25D366; border-radius:6px; padding:.22rem .55rem; cursor:pointer; }
     .btn-compartilhar:hover { background:#f0fdf4; }
+    .btn-copiar { font-size:.72rem; color:var(--azul); background:none; border:1px solid var(--azul); border-radius:6px; padding:.22rem .55rem; cursor:pointer; }
+    .btn-copiar:hover { background:var(--azul-bg); }
     .reg-item { display:flex; align-items:flex-start; gap:.45rem; padding:.6rem 0; border-bottom:1px solid var(--border, #e2e8f0); font-size:.86rem; }
     .reg-item:last-child { border-bottom:none; }
     .reg-badge { flex-shrink:0; font-size:.6rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:.15rem .38rem; border-radius:5px; margin-top:.15rem; }
-    .b-cafe{background:#fff3e0;color:#c2410c;} .b-lanche1{background:#f3e5f5;color:#7e22ce;}
+    .b-cafe{background:#fef9c3;color:#854d0e;} .b-lanche1{background:#f3e5f5;color:#7e22ce;}
     .b-almoco{background:#eff6ff;color:#1d4ed8;} .b-lanche2{background:#f3e5f5;color:#7e22ce;}
     .b-jantar{background:#eef2ff;color:#3730a3;} .b-ceia{background:#fdf2f8;color:#9d174d;}
     .reg-subtitle { font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted, #64748b); margin:.7rem 0 .2rem; }
@@ -313,8 +323,8 @@
     .reg-kcal-credito { color:#ea580c; }
     .reg-edit-link { font-size:.72rem; color:var(--text-muted, #64748b); text-decoration:none; white-space:nowrap; }
     .reg-edit-link:hover { text-decoration:underline; color:#ea580c; }
-    .reg-info { flex:1; }
-    .reg-nome { font-weight:600; color:var(--text); font-size:.86rem; }
+    .reg-info { flex:1; min-width:0; }
+    .reg-nome { font-weight:600; color:var(--text); font-size:.86rem; word-break:break-word; }
     .reg-kcal { font-weight:700; white-space:nowrap; color:var(--text); padding-top:.1rem; font-size:.86rem; }
     .reg-del  { background:none; border:none; color:var(--text-muted, #64748b); cursor:pointer; padding:.1rem .25rem; font-size:.9rem; }
     .reg-del:hover { color:var(--verm); }
@@ -402,15 +412,23 @@
     body.dark .modo-pill.ativo-registro { background:#052e16; border-color:#166534; color:#86efac; }
     body.dark #pill-decisao { background:#0c1d3d; border-color:#1e40af; color:#93c5fd; }
     body.dark #pill-registro { background:#052e16; border-color:#166534; color:#86efac; }
-    body.dark .b-cafe{background:#3b1a00;color:#fb923c;}
+    body.dark .b-cafe{background:#422006;color:#fde047;}
     body.dark .b-lanche1,body.dark .b-lanche2{background:#2e0059;color:#d8b4fe;}
     body.dark .b-almoco{background:#0c1d3d;color:#93c5fd;}
     body.dark .b-jantar{background:#0f0d2e;color:#a5b4fc;}
     body.dark .b-ceia{background:#2d0030;color:#f9a8d4;}
     body.dark .modo-hint { background:#1a1a1a; border-color:#2d2d2d; }
-    body.dark .btn-foto { border-color:#2d2d2d; }
-    body.dark .btn-mic { border-color:#2d2d2d; }
+    body.dark .chat-refeicao-row select { background:#052e16; border-color:#22c55e; }
+    body.dark .chat-refeicao-row select:hover,
+    body.dark .chat-refeicao-row select:focus { border-color:#4ade80; box-shadow:0 0 0 3px #14532d; }
+    body.dark .btn-foto { background:#0c1d3d; border-color:#1e40af; }
+    body.dark .btn-foto:hover { background:#123163; }
+    body.dark .btn-foto-label { color:#93c5fd; }
+    body.dark .btn-mic { background:#052e16; border-color:#166534; }
+    body.dark .btn-mic:hover { background:#0a4020; }
+    body.dark .btn-mic-label { color:#86efac; }
     body.dark .btn-compartilhar:hover { background:#052e16; }
+    body.dark .btn-copiar:hover { background:#0c1d3d; }
     body.dark .conceito-caixa { background:rgba(76,217,138,0.08); border-color:rgba(76,217,138,0.3); }
     body.dark .conceito-caixa summary { color: var(--green, #4CD98A); }
   </style>
@@ -467,7 +485,7 @@
   <!-- ALTERAÇÃO: texto reposicionado para depois do meta-card (só faz sentido perguntar
        "calculou sua meta?" depois do card de meta) — vírgula após "Agora" e emoji de
        semáforo no final, como no texto original. -->
-  <p class="pnp-intro">Calculou sua meta? Agora, me mande uma foto do que vai comer ou diga o que comeu e me mande seu treino de hoje - eu calculo tudo e mostro seu saldo em tempo real.</p>
+  <p class="pnp-intro">Calculou sua meta? Agora me mande uma 📸 <strong>foto</strong>, um 🎤 <strong>áudio</strong> ou um 💬 <strong>texto</strong> do que vai comer (ou do que já comeu) e do seu treino de hoje — eu calculo tudo e mostro seu saldo em tempo real.</p>
 
   <!-- ALTERAÇÃO: card do semáforo reposicionado para imediatamente acima do seletor de
        modo, já que ele indica que a pessoa deve escrever o que vai comer/comeu.
@@ -564,6 +582,7 @@
       <div class="pnp-card-title" style="margin:0;">📋 Registros de hoje</div>
       <div class="reg-header-btns">
         <button class="btn-compartilhar" onclick="compartilharWhatsApp()">📱 Compartilhar</button>
+        <button class="btn-copiar" onclick="copiarDiario()">📋 Copiar diário</button>
         <button class="btn-limpar" onclick="limparDiario()">🗑 Limpar</button>
       </div>
     </div>
@@ -656,6 +675,25 @@ let metaAberta = true;
 let modoAtual  = "auto";
 let reconhecimentoVoz = null;
 let gravandoVoz = false;
+
+// ALTERAÇÃO (correção do diário): o texto da IA fica guardado aqui em memória,
+// em vez de embutido dentro de um atributo onclick via encodeURIComponent.
+// encodeURIComponent NÃO escapa o caractere apóstrofo ('), então qualquer
+// resposta natural da IA contendo uma aspa simples quebrava o HTML do botão
+// e cortava o texto exatamente ali. Guardando por id, o texto nunca precisa
+// virar string dentro de HTML.
+let pendingLancamentos = {};
+let seqLancamento = 0;
+function registrarPendente(texto) {
+  const pid = "p" + (++seqLancamento) + "_" + Date.now();
+  pendingLancamentos[pid] = texto;
+  return pid;
+}
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, ch => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  }[ch]));
+}
 
 function selecionarRefeicaoPorHorario() {
   const h = new Date().getHours();
@@ -947,10 +985,12 @@ async function enviarMensagem() {
     const limpo = resposta.replace(/\[KCAL:\d+\]/g,"").trim();
     let html = limpo.replace(/\n/g,"<br>");
     if (kcal && kcal > 0) {
-      // ALTERAÇÃO (#9): usa o texto da própria IA (itens identificados), não a
-      // mensagem crua do usuário, como descrição a ser salva no diário.
-      html += "<br><button class=\"btn-lancar\" onclick=\"confirmarLancamento("
-            + kcal + ",'" + encodeURIComponent(limpo) + "', this)\">✅ Lançar "
+      // ALTERAÇÃO (#9 + correção do diário): usa o texto da própria IA (itens
+      // identificados) como descrição, guardado em memória por id — nunca mais
+      // embutido cru dentro do atributo onclick.
+      const pid = registrarPendente(limpo);
+      html += "<br><button class=\"btn-lancar\" onclick=\"confirmarLancamento('"
+            + pid + "', " + kcal + ", this)\">✅ Lançar "
             + kcal + " kcal no diário</button>";
     }
     addMsg(html, "ia", isDecisao);
@@ -1021,10 +1061,11 @@ async function enviarComFoto(base64, mimeType) {
     const limpo = resposta.replace(/\[KCAL:\d+\]/g,"").trim();
     let html = limpo.replace(/\n/g,"<br>");
     if (kcal && kcal > 0) {
-      // ALTERAÇÃO (#9): usa os itens identificados pela IA na foto como descrição,
-      // em vez do texto genérico "📸 foto da refeição".
-      html += "<br><button class=\"btn-lancar\" onclick=\"confirmarLancamento("
-            + kcal + ",'" + encodeURIComponent(limpo) + "', this)\">✅ Lançar "
+      // ALTERAÇÃO (#9 + correção do diário): usa os itens identificados pela IA
+      // na foto como descrição, guardado em memória por id.
+      const pid = registrarPendente(limpo);
+      html += "<br><button class=\"btn-lancar\" onclick=\"confirmarLancamento('"
+            + pid + "', " + kcal + ", this)\">✅ Lançar "
             + kcal + " kcal no diário</button>";
     }
     addMsg(html, "ia", false);
@@ -1043,36 +1084,39 @@ async function enviarComFoto(base64, mimeType) {
 // ── Confirmação antes de lançar (#3) ──
 // Evita lançar na refeição errada por distração: antes de gravar no diário,
 // mostra qual refeição está selecionada e permite trocar/cancelar.
-function confirmarLancamento(kcal, descCod, btnEl) {
+function confirmarLancamento(pid, kcal, btnEl) {
   const refAtual = document.getElementById("refeicao-select").value;
   const id = "conf-" + Date.now();
   const opts = Object.keys(REF_CFG).map(k =>
     `<option value="${k}"${k === refAtual ? " selected" : ""}>${REF_CFG[k].l}</option>`
   ).join("");
-  const html = `<div id="${id}" style="margin-top:.5rem;font-size:.8rem;display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;">
+  const html = `<div id="${id}" style="margin-top:.35rem;font-size:.76rem;display:flex;align-items:center;gap:.3rem;flex-wrap:wrap;">
       Confirmar em:
-      <select id="${id}-sel" style="padding:.25rem .45rem;border-radius:6px;border:1px solid var(--border,#e2e8f0);background:transparent;color:var(--text);">${opts}</select>
-      <button onclick="confirmarLancarFinal('${id}', ${kcal}, '${descCod}')"
-        style="background:var(--verde);color:#fff;border:none;border-radius:6px;padding:.3rem .65rem;cursor:pointer;font-weight:700;">✔ Confirmar</button>
+      <select id="${id}-sel" style="padding:.2rem .4rem;border-radius:6px;border:1px solid var(--border,#e2e8f0);background:transparent;color:var(--text);font-size:.76rem;">${opts}</select>
+      <button onclick="confirmarLancarFinal('${id}', '${pid}', ${kcal})"
+        style="background:var(--verde);color:#fff;border:none;border-radius:6px;padding:.22rem .55rem;cursor:pointer;font-weight:700;font-size:.76rem;">✔ Confirmar</button>
       <button onclick="document.getElementById('${id}').remove()"
-        style="background:none;border:1px solid var(--border,#e2e8f0);border-radius:6px;padding:.3rem .55rem;cursor:pointer;color:var(--text-muted,#64748b);">✕ Cancelar</button>
+        style="background:none;border:1px solid var(--border,#e2e8f0);border-radius:6px;padding:.22rem .5rem;cursor:pointer;color:var(--text-muted,#64748b);font-size:.76rem;">✕ Cancelar</button>
     </div>`;
   btnEl.insertAdjacentHTML("afterend", html);
   btnEl.remove();
 }
 
-function confirmarLancarFinal(id, kcal, descCod) {
+function confirmarLancarFinal(id, pid, kcal) {
   const sel = document.getElementById(id + "-sel");
   const refEscolhida = sel ? sel.value : document.getElementById("refeicao-select").value;
   const bloco = document.getElementById(id);
   if (bloco) bloco.remove();
-  lancarEm(refEscolhida, kcal, descCod);
+  const desc = pendingLancamentos[pid] || "Registro";
+  delete pendingLancamentos[pid];
+  lancarEm(refEscolhida, kcal, desc);
 }
 
-function lancarEm(refeicao, kcal, descCod) {
-  const desc     = decodeURIComponent(descCod);
-  const resumo   = desc.length > 55 ? desc.slice(0,52)+"…" : desc;
-  registros.push({ id:Date.now(), nome:resumo, refeicao, kcal });
+// ALTERAÇÃO (correção do diário): recebe o texto já pronto (sem encode/decode) e
+// grava o registro por completo, sem o slice(0,52) que cortava o nome — o texto
+// integral é o que permite compartilhar um diário útil com nutricionista/personal.
+function lancarEm(refeicao, kcal, desc) {
+  registros.push({ id:Date.now(), nome:desc, refeicao, kcal });
   salvarRegistros(); renderLista(); atualizarTudo();
   addMsg("✅ <strong>" + kcal + " kcal</strong> lançadas em <strong>" + REF_CFG[refeicao].l + "</strong>!", "ia", false);
   if (typeof showToast === "function") showToast("✅ Lançado no diário!");
@@ -1104,9 +1148,10 @@ function renderLista() {
     html += "<div class=\"reg-subtitle\">🍽️ Refeições</div>";
     html += registros.map(r => {
       const rf = REF_CFG[r.refeicao]||{l:r.refeicao,c:""};
+      const nomeHtml = escapeHtml(r.nome).replace(/\n/g,"<br>");
       return "<div class=\"reg-item\">"
         + "<span class=\"reg-badge " + rf.c + "\">" + rf.l + "</span>"
-        + "<span class=\"reg-info\"><span class=\"reg-nome\">" + r.nome + "</span></span>"
+        + "<span class=\"reg-info\"><span class=\"reg-nome\">" + nomeHtml + "</span></span>"
         + "<span class=\"reg-kcal\">" + r.kcal + " kcal</span>"
         + "<button class=\"reg-del\" onclick=\"removerRegistro(" + r.id + ")\" title=\"Remover\">✕</button>"
         + "</div>";
@@ -1118,7 +1163,7 @@ function renderLista() {
     html += atividades.map(a =>
       "<div class=\"reg-item\">"
       + "<span class=\"reg-badge b-treino\">⚡ Queima</span>"
-      + "<span class=\"reg-info\"><span class=\"reg-nome\">" + a.nome + "</span></span>"
+      + "<span class=\"reg-info\"><span class=\"reg-nome\">" + escapeHtml(a.nome) + "</span></span>"
       + "<span class=\"reg-kcal reg-kcal-credito\">+" + a.kcal + " kcal</span>"
       + "<a class=\"reg-edit-link\" href=\"calculadora-queima-calorica.html\">editar →</a>"
       + "</div>"
@@ -1254,24 +1299,87 @@ function renderGamificacao(status) {
     + "<div class=\"gami-interpretacao\">" + interpretacao + "</div>";
 }
 
-// ── Compartilhar no WhatsApp (#6) ──
+// ── Diário detalhado, compartilhar e copiar (#6 + correção do diário) ──
+// Monta um relatório completo — cada refeição com seus itens e cada treino —
+// para que quem receber (personal, nutricionista) veja exatamente o que foi
+// consumido/gasto, não só o total do dia.
+function montarDiarioDetalhado() {
+  const status = calcularStatusDia();
+  const atividades = carregarAtividadesQC();
+  const linhas = [];
+
+  linhas.push("🚦 Meu diário — Pode, Não Pode?");
+  linhas.push("📅 " + new Date().toLocaleDateString("pt-BR"));
+
+  if (status.metaEfetiva > 0) {
+    linhas.push("");
+    linhas.push("🎯 Meta do dia: " + status.metaEfetiva + " kcal"
+      + (status.queimado > 0 ? " (inclui +" + status.queimado + " kcal de treino)" : ""));
+  }
+
+  if (registros.length) {
+    linhas.push("");
+    linhas.push("🍽️ Refeições:");
+    Object.keys(REF_CFG).forEach(refKey => {
+      const itens = registros.filter(r => r.refeicao === refKey);
+      if (!itens.length) return;
+      const totalRef = itens.reduce((s,r) => s + r.kcal, 0);
+      linhas.push("• " + REF_CFG[refKey].l + " (" + totalRef + " kcal):");
+      itens.forEach(r => linhas.push("   - " + r.nome + " — " + r.kcal + " kcal"));
+    });
+  }
+
+  if (atividades.length) {
+    linhas.push("");
+    linhas.push("🔥 Treinos:");
+    atividades.forEach(a => linhas.push("• " + a.nome + " — +" + a.kcal + " kcal"));
+  }
+
+  linhas.push("");
+  linhas.push("📊 Total consumido: " + status.totalDia + " kcal");
+  if (status.metaEfetiva > 0) {
+    linhas.push(status.saldoDia >= 0
+      ? "✅ Saldo: +" + status.saldoDia + " kcal de sobra"
+      : "⚠️ Saldo: " + status.saldoDia + " kcal (acima da meta)");
+  }
+
+  const streak = calcularSequenciaAnterior() + (diaCumpriuMeta(status) ? 1 : 0);
+  linhas.push("🔥 Sequência: " + streak + " dia(s) na meta");
+  linhas.push("");
+  linhas.push("Acompanhe o seu: " + (typeof SITE_URL !== "undefined" ? SITE_URL : "https://www.saudemundo.com.br") + "/pode-nao-pode.html");
+
+  return linhas.join("\n");
+}
+
 function compartilharWhatsApp() {
   const status = calcularStatusDia();
   if (status.itens === 0 && status.queimado === 0) {
     alert("Registre pelo menos uma refeição ou treino antes de compartilhar!");
     return;
   }
-  const streak = calcularSequenciaAnterior() + (diaCumpriuMeta(status) ? 1 : 0);
-  const linhaSaldo = status.metaEfetiva > 0
-    ? (status.saldoDia >= 0
-        ? "✅ Fechei o dia com " + status.saldoDia + " kcal de sobra!"
-        : "Passei " + Math.abs(status.saldoDia) + " kcal da minha meta hoje.")
-    : "";
-  const txt = "🚦 Meu dia no Pode, Não Pode?\n"
-    + (status.metaEfetiva > 0 ? "🎯 Meta: " + status.metaEfetiva + " kcal\n🍽️ Consumido: " + status.totalDia + " kcal\n" + linhaSaldo + "\n" : "")
-    + "🔥 Sequência: " + streak + " dia(s) na meta\n\n"
-    + "Acompanhe o seu: " + SITE_URL + "/pode-nao-pode.html";
+  const txt = montarDiarioDetalhado();
   window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(txt), "_blank");
+}
+
+function copiarDiario() {
+  const status = calcularStatusDia();
+  if (status.itens === 0 && status.queimado === 0) {
+    alert("Registre pelo menos uma refeição ou treino antes de copiar!");
+    return;
+  }
+  const txt = montarDiarioDetalhado();
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(() => {
+      if (typeof showToast === "function") showToast("📋 Diário copiado!");
+      else alert("Diário copiado!");
+    }).catch(() => promptFallbackCopy(txt));
+  } else {
+    promptFallbackCopy(txt);
+  }
+}
+
+function promptFallbackCopy(txt) {
+  window.prompt("Copie o texto abaixo (Ctrl+C ou Cmd+C):", txt);
 }
 
 // ── Semáforo ──
