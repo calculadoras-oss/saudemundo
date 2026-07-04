@@ -78,8 +78,11 @@ body.dark nav { background: rgba(7,13,10,0.96); }
   font-size: 1.1rem; color: var(--green-dark);
   text-decoration: none; font-weight: 700;
   letter-spacing: -0.5px; flex-shrink: 0;
+  display: inline-flex; align-items: center; gap: 6px;
 }
 body.dark .nav-logo { color: var(--green); }
+.nav-logo-leaf { width: 16px; height: 16px; flex-shrink: 0; display: inline-flex; }
+.nav-logo-leaf svg { width: 100%; height: 100%; display: block; }
 
 .nav-links { display: flex; gap: 3px; flex-wrap: wrap; }
 .nav-links a {

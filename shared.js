@@ -7,6 +7,12 @@
 const SITE_URL = 'https://saudemundo.com.br';
 const SM_STORAGE_KEY = 'sm-user-data';
 
+/* ---------- Ícone da folha (marca SaúdeMundo) ----------
+   Usado no lugar do antigo caractere "✦" em todo o site.
+   currentColor herda a cor do elemento pai, então funciona
+   automaticamente no tema claro e no tema escuro. */
+const SM_LEAF_SVG = '<span class="nav-logo-leaf" aria-hidden="true"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><rect x="54" y="47" width="46" height="6" rx="3"/><path d="M 54.0 50.0 C 37.9 33.0 24.1 33.0 8.0 50.0 C 24.1 67.0 37.9 67.0 54.0 50.0 Z"/><path d="M 54.0 50.0 C 56.7 31.8 50.7 20.7 34.0 13.0 C 31.3 31.2 37.3 42.3 54.0 50.0 Z"/><path d="M 54.0 50.0 C 37.3 57.7 31.3 68.8 34.0 87.0 C 50.7 79.3 56.7 68.2 54.0 50.0 Z"/></svg></span>';
+
 /* ---------- Detecta se está dentro de /artigos/ ---------- */
 const SM_IN_ARTIGOS = window.location.pathname.includes('/artigos/');
 const SM_ROOT = SM_IN_ARTIGOS ? '../' : '';
@@ -48,7 +54,7 @@ function smArtigoHref(file) { return SM_IN_ARTIGOS ? file : 'artigos/' + file; }
   const navHTML = `
     <nav>
       <div class="nav-inner">
-        <a href="${smRootHref('index.html')}" class="nav-logo">✦ saudemundo</a>
+        <a href="${smRootHref('index.html')}" class="nav-logo">${SM_LEAF_SVG} saudemundo</a>
         <div class="nav-links">${links}</div>
         <button class="theme-btn" id="theme-btn" onclick="toggleTheme()">🌙</button>
       </div>
