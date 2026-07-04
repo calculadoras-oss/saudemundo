@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Automonitoramento Baseado em Evidências: o Método das 3 Calculadoras do SaúdeMundo | SaúdeMundo</title>
 <meta name="description" content="A ciência mostra que registrar refeições e treinos é o fator mais associado ao sucesso na perda de peso. Veja como transformar isso em rotina com as calculadoras do SaúdeMundo.">
-<link rel="canonical" href="https://www.saudemundo.com.br/artigos/artigo-automonitoramento-calculadoras.html">
+<link rel="canonical" href="https://saudemundo.com.br/artigos/artigo-automonitoramento-calculadoras.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../shared.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
 
@@ -17,12 +20,12 @@
   "author": {
     "@type": "Person",
     "name": "Lucas Andrade",
-    "url": "https://www.saudemundo.com.br/sobre.html"
+    "url": "https://saudemundo.com.br/sobre.html"
   },
   "reviewedBy": {
     "@type": "Person",
     "name": "Carolina Velneri",
-    "url": "https://www.saudemundo.com.br/sobre.html"
+    "url": "https://saudemundo.com.br/sobre.html"
   },
   "datePublished": "2026-07-03",
   "dateModified": "2026-07-03",
@@ -31,12 +34,12 @@
     "name": "SaúdeMundo",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://www.saudemundo.com.br/og-image.jpg"
+      "url": "https://saudemundo.com.br/og-image.jpg"
     }
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://www.saudemundo.com.br/artigos/artigo-automonitoramento-calculadoras.html"
+    "@id": "https://saudemundo.com.br/artigos/artigo-automonitoramento-calculadoras.html"
   }
 }
 </script>
@@ -91,201 +94,204 @@
 </script>
 
 <style>
-  /* Estilos locais para alinhar este artigo ao padrão de coluna
-     centralizada usado nos demais artigos (ex: artigo-creatina.html) */
-  .article-container { max-width: 760px; margin: 0 auto; padding: 0 20px 80px; position: relative; z-index: 10; }
-  .article-body { background: var(--dark2); border: 1px solid var(--border); border-radius: var(--radius, 16px); padding: 40px; margin-bottom: 24px; }
-  .article-body p, .article-body ul, .article-body li { color: var(--text); line-height: 1.8; }
-  .article-body h1 { margin-bottom: 8px; }
-  .article-body h2 { color: var(--green-dark); margin: 32px 0 14px; }
-  body.dark .article-body h2 { color: var(--green); }
-  .article-byline { font-size: .85rem; color: var(--text-muted); margin: 8px 0 24px; }
-  .article-byline a { color: var(--green-dark); text-decoration: none; font-weight: 600; }
-  body.dark .article-byline a { color: var(--green); }
-
-  /* Tabela — o shared.css não define estilos de tabela, então tratamos aqui */
-  .article-body table {
-    width: 100%; border-collapse: collapse; margin: 20px 0;
+  /* Estilos locais apenas para a tabela comparativa — o shared.css não
+     define estilos de tabela, então tratamos aqui, dentro de .card. */
+  .article-table {
+    width: 100%; border-collapse: collapse; margin: 4px 0 0;
     background: var(--dark3); border: 1px solid var(--border);
     border-radius: 12px; overflow: hidden; font-size: 0.88rem;
   }
-  .article-body th, .article-body td {
+  .article-table th, .article-table td {
     padding: 12px 14px; text-align: left;
     border-bottom: 1px solid var(--border);
     color: var(--text); vertical-align: top;
   }
-  .article-body tbody tr:last-child td { border-bottom: none; }
-  .article-body th {
+  .article-table tbody tr:last-child td { border-bottom: none; }
+  .article-table th {
     background: rgba(46,204,113,0.10); color: var(--green-dark);
     font-family: 'Playfair Display', serif; font-weight: 700;
   }
-  body.dark .article-body th { color: var(--green); background: rgba(46,204,113,0.08); }
+  body.dark .article-table th { color: var(--green); background: rgba(46,204,113,0.08); }
 
   @media (max-width: 600px) {
-    .article-body { padding: 24px; }
-    .article-body table, .article-body thead, .article-body tbody,
-    .article-body th, .article-body td, .article-body tr { display: block; }
-    .article-body thead { display: none; }
-    .article-body tr { border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 8px; }
-    .article-body td { border-bottom: none; padding: 4px 0; }
-    .article-body td::before { content: attr(data-label); display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--green-dark); font-weight: 700; }
-    body.dark .article-body td::before { color: var(--green); }
+    .article-table, .article-table thead, .article-table tbody,
+    .article-table th, .article-table td, .article-table tr { display: block; }
+    .article-table thead { display: none; }
+    .article-table tr { border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 8px; }
+    .article-table td { border-bottom: none; padding: 4px 0; }
+    .article-table td::before { content: attr(data-label); display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--green-dark); font-weight: 700; }
+    body.dark .article-table td::before { color: var(--green); }
   }
 </style>
 </head>
 <body>
 <div class="bg-grid"></div>
 
-<div class="article-container">
-<article class="article-body">
+<header>
+  <h1>Automonitoramento Baseado em Evidências: o Método das 3 Calculadoras do SaúdeMundo</h1>
+  <p class="subtitle">A ciência mostra que registrar refeições e treinos é o fator mais associado ao sucesso na perda de peso. Veja como transformar isso em rotina.</p>
+</header>
 
-<p><em>Por Lucas Andrade, redator especializado em saúde e performance · Revisão técnica: <a href="../sobre.html">Carolina Velneri, formação em ciências da saúde</a> · Atualizado em 3 de julho de 2026</em></p>
+<div class="container" style="max-width:760px;">
 
-<h1>Automonitoramento Baseado em Evidências: o Método das 3 Calculadoras do SaúdeMundo</h1>
+  <div class="author-box">
+    <span>✍️ Por <a href="../sobre.html">Lucas Andrade</a></span>
+    <span>✅ Revisão técnica: <a href="../sobre.html">Carolina Velneri</a></span>
+    <span>📅 Atualizado em 3 de julho de 2026</span>
+  </div>
 
-<p>Existe uma pergunta que aparece antes de qualquer dieta: por que tanta gente que "sabe o que fazer" não consegue manter o resultado? A resposta que a literatura de mudança comportamental vem dando há quase uma década não está em qual dieta é melhor. Está em quem consegue medir, todo dia, o que está fazendo — e ajustar em cima disso.</p>
+  <div class="card">
+    <p>Existe uma pergunta que aparece antes de qualquer dieta: por que tanta gente que "sabe o que fazer" não consegue manter o resultado? A resposta que a literatura de mudança comportamental vem dando há quase uma década não está em qual dieta é melhor. Está em quem consegue medir, todo dia, o que está fazendo — e ajustar em cima disso.</p>
+  </div>
 
-<h2>Por que "fazer dieta" sozinho falha tanto</h2>
+  <div class="section-title">🤔 Por Que "Fazer Dieta" Sozinho Falha Tanto</div>
+  <div class="card">
+    <p>Revisões sistemáticas e meta-análises sobre perda de peso convergem para um achado pouco confortável: intervenções isoladas, como restringir um grupo alimentar ou apenas aumentar o exercício, têm resultado inconsistente no longo prazo. O que separa quem mantém o peso de quem recupera tudo em poucos meses não é a dieta em si, mas a combinação de metas claras, registro contínuo, qualidade alimentar e déficit calórico sustentado.</p>
+    <p>Isso é bom, porque significa que o problema raramente é falta de força de vontade. É falta de estrutura — e estrutura é exatamente o que uma calculadora bem desenhada entrega de graça.</p>
+  </div>
 
-<p>Revisões sistemáticas e meta-análises sobre perda de peso convergem para um achado pouco confortável: intervenções isoladas, como restringir um grupo alimentar ou apenas aumentar o exercício, têm resultado inconsistente no longo prazo. O que separa quem mantém o peso de quem recupera tudo em poucos meses não é a dieta em si, mas a combinação de metas claras, registro contínuo, qualidade alimentar e déficit calórico sustentado.</p>
+  <div class="section-title">🎯 O Fator Mais Determinante, Segundo a Ciência: Automonitoramento</div>
+  <div class="card">
+    <p>Entre os cinco pilares estudados — metas, automonitoramento, qualidade da dieta, controle calórico e atividade física — o automonitoramento é o que aparece com a associação mais consistente ao sucesso. Estudos mostram uma relação de dose-resposta: quanto mais frequente o registro de alimentação, peso e atividade física, maior o efeito na perda e na manutenção de peso. O mecanismo por trás disso é simples de entender: registrar aumenta a consciência sobre o que você está comendo, reduz a subestimação calórica que todo mundo comete de cabeça, e dá feedback imediato antes que o erro já tenha sido cometido.</p>
+    <p>É exatamente esse "antes que o erro já tenha sido cometido" que separa uma calculadora de um diário alimentar comum. A maioria dos aplicativos de dieta só serve depois que você já comeu. O <a href="../pode-nao-pode.html">Pode, Não Pode?</a> foi pensado para funcionar nos dois momentos: antes da escolha, quando ainda dá para decidir, e depois, para fechar a conta do dia.</p>
+  </div>
 
-<p>Isso é bom, porque significa que o problema raramente é falta de força de vontade. É falta de estrutura — e estrutura é exatamente o que uma calculadora bem desenhada entrega de graça.</p>
+  <div class="section-title">🧮 Como o Ecossistema das 3 Calculadoras Traduz Isso na Prática</div>
+  <div class="card">
+    <p>Pense nas suas calorias como uma conta bancária. Cada refeição é um depósito. Cada gasto de energia — do coração batendo ao treino na academia — é um saque. No fim do dia, o corpo fecha as contas: depositou mais do que gastou, o saldo vira reserva de gordura; gastou mais do que depositou, o corpo usa as reservas guardadas e você emagrece. As três calculadoras do SaúdeMundo foram desenhadas para operar essa conta em conjunto, cada uma cuidando de uma parte:</p>
 
-<h2>O fator mais determinante, segundo a ciência: automonitoramento</h2>
+    <table class="article-table">
+      <thead>
+        <tr>
+          <th>Pilar da evidência</th>
+          <th>O que a ciência mostra</th>
+          <th>Ferramenta no SaúdeMundo</th>
+          <th>Como usar na prática</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Pilar da evidência">Metas claras</td>
+          <td data-label="O que a ciência mostra">Metas de processo (ex: kcal/dia) superam metas vagas de resultado (ex: "quero emagrecer")</td>
+          <td data-label="Ferramenta no SaúdeMundo"><a href="../index.html">Calculadora de Calorias e Macros</a> (home)</td>
+          <td data-label="Como usar na prática">Definir a meta calórica e de proteína diária a partir do seu TMB e TDEE reais</td>
+        </tr>
+        <tr>
+          <td data-label="Pilar da evidência">Automonitoramento</td>
+          <td data-label="O que a ciência mostra">Relação de dose-resposta: mais frequência de registro, mais resultado</td>
+          <td data-label="Ferramenta no SaúdeMundo"><a href="../pode-nao-pode.html">Pode, Não Pode?</a></td>
+          <td data-label="Como usar na prática">Registrar cada refeição (e o treino do dia) no mesmo momento em que acontece</td>
+        </tr>
+        <tr>
+          <td data-label="Pilar da evidência">Qualidade da dieta</td>
+          <td data-label="O que a ciência mostra">Alimentos minimamente processados geram mais saciedade com as mesmas calorias</td>
+          <td data-label="Ferramenta no SaúdeMundo">Distribuição de macros (home) + decisão assistida no Pode, Não Pode</td>
+          <td data-label="Como usar na prática">Priorizar proteína e fibra dentro do espaço calórico disponível na refeição</td>
+        </tr>
+        <tr>
+          <td data-label="Pilar da evidência">Controle calórico</td>
+          <td data-label="O que a ciência mostra">Déficit energético sustentado é condição necessária para perda de gordura, independente da estratégia específica</td>
+          <td data-label="Ferramenta no SaúdeMundo">Home (déficit de 500 kcal) + saldo diário do Pode, Não Pode</td>
+          <td data-label="Como usar na prática">Manter o déficit sem cair abaixo da TMB por longos períodos</td>
+        </tr>
+        <tr>
+          <td data-label="Pilar da evidência">Atividade física</td>
+          <td data-label="O que a ciência mostra">Apoia manutenção de peso e composição corporal, mais do que a perda inicial</td>
+          <td data-label="Ferramenta no SaúdeMundo"><a href="../calculadora-queima-calorica.html">Calculadora de Queima Calórica</a></td>
+          <td data-label="Como usar na prática">Registrar o treino para que o gasto entre como crédito no saldo do dia</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-<p>Entre os cinco pilares estudados — metas, automonitoramento, qualidade da dieta, controle calórico e atividade física — o automonitoramento é o que aparece com a associação mais consistente ao sucesso. Estudos mostram uma relação de dose-resposta: quanto mais frequente o registro de alimentação, peso e atividade física, maior o efeito na perda e na manutenção de peso. O mecanismo por trás disso é simples de entender: registrar aumenta a consciência sobre o que você está comendo, reduz a subestimação calórica que todo mundo comete de cabeça, e dá feedback imediato antes que o erro já tenha sido cometido.</p>
+  <div class="section-title">📋 Passo a Passo com Números Reais: um Dia Inteiro nas Três Calculadoras</div>
+  <div class="card">
+    <p>Para sair da teoria, vale seguir um exemplo completo. Considere uma mulher de 30 anos, 65 kg, 165 cm, moderadamente ativa, com objetivo de emagrecer.</p>
+    <p><strong>1. Meta na home.</strong> Pela fórmula de Mifflin-St Jeor, a TMB dela fica em aproximadamente 1.370 kcal. Aplicando o fator de atividade moderada (≈1,55), o TDEE chega a cerca de 2.124 kcal. Como o objetivo é emagrecer, a calculadora aplica o déficit padrão de 500 kcal, resultando em uma meta diária de <strong>1.624 kcal</strong>.</p>
+    <p><strong>2. Distribuição por refeição no Pode, Não Pode.</strong> O semáforo divide essa meta proporcionalmente: café da manhã 20% (≈325 kcal), almoço 35% (≈568 kcal), jantar 20% (≈325 kcal), lanches 10% cada (≈162 kcal cada) e ceia 5% (≈81 kcal). Isso é o que permite ao semáforo avisar já no almoço se a refeição está estourando, em vez de só à noite, quando não há mais o que fazer.</p>
+    <p><strong>3. Crédito do treino na calculadora de queima calórica.</strong> Ela pedala 30 minutos em ritmo moderado (MET 6,8). Pela fórmula calorias = MET × peso (kg) × tempo (horas), o gasto é 6,8 × 65 × 0,5 ≈ <strong>221 kcal</strong>. Ao registrar essa atividade, o valor entra automaticamente como crédito extra no saldo do dia.</p>
+    <p><strong>4. Saldo final do dia.</strong> Com o treino registrado, o orçamento efetivo do dia passa de 1.624 kcal para aproximadamente <strong>1.845 kcal</strong> — sem que ela precise refazer nenhuma conta manualmente. É essa integração automática entre as três ferramentas que reduz o atrito do automonitoramento, justamente o fator que a literatura aponta como mais determinante.</p>
 
-<p>É exatamente esse "antes que o erro já tenha sido cometido" que separa uma calculadora de um diário alimentar comum. A maioria dos aplicativos de dieta só serve depois que você já comeu. O <a href="https://www.saudemundo.com.br/pode-nao-pode.html">Pode, Não Pode?</a> foi pensado para funcionar nos dois momentos: antes da escolha, quando ainda dá para decidir, e depois, para fechar a conta do dia.</p>
+    <div style="max-width:100%;margin:1.5rem auto 0;">
+      <canvas id="graficoAdesao" width="640" height="360" aria-label="Gráfico ilustrativo de adesão ao longo de 12 semanas, comparando registro diário e ausência de registro" role="img"></canvas>
+    </div>
+    <p style="font-size:12px;color:var(--text-muted);margin-top:10px;">Ilustração conceitual do padrão de dose-resposta descrito na literatura de automonitoramento — não são dados extraídos de um estudo específico, mas uma representação didática da tendência relatada em meta-análises sobre o tema.</p>
+  </div>
 
-<h2>Como o ecossistema das 3 calculadoras traduz isso na prática</h2>
+  <div class="section-title">🥗 Contar Calorias é o Suficiente? A Qualidade da Dieta Também Pesa</div>
+  <div class="card">
+    <p>Déficit calórico é a condição física necessária para perder gordura, mas não é a única variável que determina se você vai conseguir sustentar esse déficit sem sofrer. Estudos controlados mostram que, mesmo em igualdade de calorias, alimentos minimamente processados levam a menor ingestão total espontânea do que alimentos ultraprocessados, porque geram mais saciedade por caloria consumida. Na prática, isso significa que dois almoços de 568 kcal não são equivalentes: um prato com proteína, fibra e volume tende a segurar a fome até o jantar; um alimento ultraprocessado com a mesma contagem calórica tende a deixar fome residual. O Pode, Não Pode entende essa diferença quando você descreve a refeição em linguagem natural, e não apenas soma números.</p>
+  </div>
 
-<p>Pense nas suas calorias como uma conta bancária. Cada refeição é um depósito. Cada gasto de energia — do coração batendo ao treino na academia — é um saque. No fim do dia, o corpo fecha as contas: depositou mais do que gastou, o saldo vira reserva de gordura; gastou mais do que depositou, o corpo usa as reservas guardadas e você emagrece. As três calculadoras do SaúdeMundo foram desenhadas para operar essa conta em conjunto, cada uma cuidando de uma parte:</p>
+  <div class="section-title">🏃 Por Que Registrar o Treino Muda a Conta do Dia Inteiro</div>
+  <div class="card">
+    <p>O impacto direto do exercício na perda de peso é, na verdade, moderado — quem carrega o processo é o déficit calórico. Mas a atividade física tem um papel que a métrica de "quanto emagreci essa semana" não captura bem: ela é o fator mais associado à manutenção do peso perdido no longo prazo, além de melhorar sensibilidade à insulina e reduzir risco cardiovascular. Registrar o treino na calculadora de queima calórica não é sobre "ganhar direito" de comer mais — é sobre manter o saldo do dia realista, para que a meta calórica não fique artificialmente apertada nos dias em que você se exercitou mais.</p>
+  </div>
 
-<table>
-<thead>
-<tr>
-<th>Pilar da evidência</th>
-<th>O que a ciência mostra</th>
-<th>Ferramenta no SaúdeMundo</th>
-<th>Como usar na prática</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td data-label="Pilar da evidência">Metas claras</td>
-<td data-label="O que a ciência mostra">Metas de processo (ex: kcal/dia) superam metas vagas de resultado (ex: "quero emagrecer")</td>
-<td data-label="Ferramenta no SaúdeMundo"><a href="https://www.saudemundo.com.br/index.html">Calculadora de Calorias e Macros</a> (home)</td>
-<td data-label="Como usar na prática">Definir a meta calórica e de proteína diária a partir do seu TMB e TDEE reais</td>
-</tr>
-<tr>
-<td data-label="Pilar da evidência">Automonitoramento</td>
-<td data-label="O que a ciência mostra">Relação de dose-resposta: mais frequência de registro, mais resultado</td>
-<td data-label="Ferramenta no SaúdeMundo"><a href="https://www.saudemundo.com.br/pode-nao-pode.html">Pode, Não Pode?</a></td>
-<td data-label="Como usar na prática">Registrar cada refeição (e o treino do dia) no mesmo momento em que acontece</td>
-</tr>
-<tr>
-<td data-label="Pilar da evidência">Qualidade da dieta</td>
-<td data-label="O que a ciência mostra">Alimentos minimamente processados geram mais saciedade com as mesmas calorias</td>
-<td data-label="Ferramenta no SaúdeMundo">Distribuição de macros (home) + decisão assistida no Pode, Não Pode</td>
-<td data-label="Como usar na prática">Priorizar proteína e fibra dentro do espaço calórico disponível na refeição</td>
-</tr>
-<tr>
-<td data-label="Pilar da evidência">Controle calórico</td>
-<td data-label="O que a ciência mostra">Déficit energético sustentado é condição necessária para perda de gordura, independente da estratégia específica</td>
-<td data-label="Ferramenta no SaúdeMundo">Home (déficit de 500 kcal) + saldo diário do Pode, Não Pode</td>
-<td data-label="Como usar na prática">Manter o déficit sem cair abaixo da TMB por longos períodos</td>
-</tr>
-<tr>
-<td data-label="Pilar da evidência">Atividade física</td>
-<td data-label="O que a ciência mostra">Apoia manutenção de peso e composição corporal, mais do que a perda inicial</td>
-<td data-label="Ferramenta no SaúdeMundo"><a href="https://www.saudemundo.com.br/calculadora-queima-calorica.html">Calculadora de Queima Calórica</a></td>
-<td data-label="Como usar na prática">Registrar o treino para que o gasto entre como crédito no saldo do dia</td>
-</tr>
-</tbody>
-</table>
+  <div class="section-title">⚠️ Erros Comuns de Quem Tenta Fazer Isso de Cabeça</div>
+  <div class="card">
+    <p><strong>Focar só na quantidade e ignorar a qualidade.</strong> Bater a meta calórica com alimentos de baixa saciedade tende a gerar fome constante e abandono da rotina em poucas semanas.</p>
+    <p><strong>Esquecer de registrar o treino.</strong> Sem esse crédito, o semáforo fica mais restritivo do que precisaria ser, e a sensação de "estou sempre no limite" desmotiva sem necessidade.</p>
+    <p><strong>Fazer déficit agressivo demais.</strong> Cortar muito abaixo da TMB para acelerar o resultado tende a comprometer massa muscular e sustentabilidade — a meta da home já calcula um déficit moderado por um motivo.</p>
+    <p><strong>Registrar só à noite.</strong> Usar o Pode, Não Pode apenas para revisar o que já comeu perde o principal diferencial da ferramenta, que é decidir antes do pedido, quando ainda dá para escolher diferente.</p>
+    <p><strong>Abandonar o registro depois de poucos dias.</strong> A relação de dose-resposta da literatura é clara: o efeito cresce com a consistência, não com a perfeição pontual de um único dia.</p>
+  </div>
 
-<h2>Passo a passo com números reais: um dia inteiro nas três calculadoras</h2>
+  <div class="section-title">📊 O Que a Ciência da Manutenção de Peso a Longo Prazo Ensina</div>
+  <div class="card">
+    <p>Estudos longitudinais com pessoas que mantêm a perda de peso por anos não encontram uma dieta padrão comum entre elas — encontram padrões comportamentais. Atividade física regular, monitoramento contínuo do peso corporal, consistência alimentar e rotina estruturada de refeições aparecem repetidamente. Não é a complexidade da estratégia que determina o resultado, é a adesão consistente ao longo do tempo. Um sistema de calculadoras que reduz o esforço de calcular, registrar e comparar existe justamente para tornar essa consistência mais fácil de manter do que de abandonar.</p>
+  </div>
 
-<p>Para sair da teoria, vale seguir um exemplo completo. Considere uma mulher de 30 anos, 65 kg, 165 cm, moderadamente ativa, com objetivo de emagrecer.</p>
+  <p style="font-size:14px;color:var(--text-muted);line-height:1.8;margin:0 0 20px;"><em>As calculadoras citadas entregam estimativas; ajustes finos de dieta e treino devem ser definidos com nutricionista ou médico, considerando seu histórico individual.</em></p>
 
-<p><strong>1. Meta na home.</strong> Pela fórmula de Mifflin-St Jeor, a TMB dela fica em aproximadamente 1.370 kcal. Aplicando o fator de atividade moderada (≈1,55), o TDEE chega a cerca de 2.124 kcal. Como o objetivo é emagrecer, a calculadora aplica o déficit padrão de 500 kcal, resultando em uma meta diária de <strong>1.624 kcal</strong>.</p>
+  <div style="background:linear-gradient(135deg, rgba(16,185,129,.08), rgba(5,150,105,.08)); border:2px dashed var(--green-dark); border-radius:12px; padding:1.5rem; margin:2rem 0; text-align:center;">
+    <p><strong>🎯 Comece agora pela meta calórica.</strong></p>
+    <p>Sem ela, nem o crédito do treino nem o semáforo das refeições têm um número de referência para trabalhar. Calcule sua meta em menos de um minuto e já registre seu primeiro treino do dia.</p>
+    <a href="../index.html" style="display:inline-flex; align-items:center; gap:0.5rem; background-color:var(--green-dark); color:#fff; text-decoration:none; padding:0.7rem 1.5rem; border-radius:8px; font-weight:600; margin-top:1rem;">🧮 Calcular Minha Meta →</a>
+  </div>
 
-<p><strong>2. Distribuição por refeição no Pode, Não Pode.</strong> O semáforo divide essa meta proporcionalmente: café da manhã 20% (≈325 kcal), almoço 35% (≈568 kcal), jantar 20% (≈325 kcal), lanches 10% cada (≈162 kcal cada) e ceia 5% (≈81 kcal). Isso é o que permite ao semáforo avisar já no almoço se a refeição está estourando, em vez de só à noite, quando não há mais o que fazer.</p>
+  <a href="../pode-nao-pode.html" class="tool-card" style="margin-bottom:24px;">
+    <div class="tool-icon">🚦</div>
+    <div class="tool-name">Pode, Não Pode?</div>
+    <div class="tool-desc">Depois de calcular sua meta, registre cada refeição aqui e veja o semáforo (verde, amarelo ou vermelho) antes de decidir o que comer.</div>
+  </a>
 
-<p><strong>3. Crédito do treino na calculadora de queima calórica.</strong> Ela pedala 30 minutos em ritmo moderado (MET 6,8). Pela fórmula calorias = MET × peso (kg) × tempo (horas), o gasto é 6,8 × 65 × 0,5 ≈ <strong>221 kcal</strong>. Ao registrar essa atividade, o valor entra automaticamente como crédito extra no saldo do dia.</p>
+  <div class="faq-section">
+    <div class="card-title">❓ Perguntas Frequentes</div>
+    <div class="faq-item">
+      <div class="faq-q">Preciso usar as três calculadoras do SaúdeMundo juntas, ou posso usar só uma?</div>
+      <div class="faq-a">Elas funcionam melhor em conjunto porque cada uma resolve uma parte da equação: a home define quanto você pode comer por dia, a calculadora de queima calórica mede o que você gasta treinando, e o Pode, Não Pode? junta as duas pontas em tempo real. Usar só uma isoladamente é possível, mas você perde a visão do saldo do dia, que é justamente o que a literatura de automonitoramento aponta como mais associado a resultado.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Qual calculadora eu uso primeiro?</div>
+      <div class="faq-a">Comece pela Calculadora de Calorias e Macros na home. Ela usa a fórmula de Mifflin-St Jeor para estimar sua Taxa Metabólica Basal e seu gasto total diário, e a partir disso calcula sua meta calórica conforme o objetivo. Sem essa meta, o semáforo do Pode, Não Pode? não tem parâmetro para avaliar suas refeições.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">O que significa o "crédito" de treino no Pode, Não Pode?</div>
+      <div class="faq-a">Quando você registra uma atividade na calculadora de queima calórica, esse gasto entra automaticamente como crédito extra no saldo do dia dentro do Pode, Não Pode?. Na prática, isso significa que treinar amplia levemente o espaço calórico disponível para as próximas refeições, porque o corpo gastou mais energia do que a meta base já previa.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Contar calorias de cabeça, sem as calculadoras, também funciona?</div>
+      <div class="faq-a">Funciona pior. A literatura mostra relação de dose-resposta entre frequência de registro e resultado: quanto mais consistente e menos sujeito a estimativas de memória, maior o efeito. Fazer de cabeça tende a subestimar a ingestão calórica, especialmente em porções maiores ou refeições fora de casa, que é justamente onde o modo "Vou comer isso" do Pode, Não Pode ajuda antes da decisão.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Isso substitui o acompanhamento de um nutricionista ou educador físico?</div>
+      <div class="faq-a">Não. As três calculadoras entregam estimativas baseadas em fórmulas de referência (Mifflin-St Jeor e tabelas MET) e servem como ferramenta de automonitoramento e educação, não como prescrição individualizada. Para ajuste fino de dieta ou treino, considerando histórico de saúde e objetivos específicos, a orientação de um nutricionista ou médico continua sendo necessária.</div>
+    </div>
+  </div>
 
-<p><strong>4. Saldo final do dia.</strong> Com o treino registrado, o orçamento efetivo do dia passa de 1.624 kcal para aproximadamente <strong>1.845 kcal</strong> — sem que ela precise refazer nenhuma conta manualmente. É essa integração automática entre as três ferramentas que reduz o atrito do automonitoramento, justamente o fator que a literatura aponta como mais determinante.</p>
+  <div id="sm-blog-placeholder"></div>
 
-<div style="max-width:640px;margin:2rem auto;">
-<canvas id="graficoAdesao" width="640" height="360" aria-label="Gráfico ilustrativo de adesão ao longo de 12 semanas, comparando registro diário e ausência de registro" role="img"></canvas>
 </div>
-<p><small>Ilustração conceitual do padrão de dose-resposta descrito na literatura de automonitoramento — não são dados extraídos de um estudo específico, mas uma representação didática da tendência relatada em meta-análises sobre o tema.</small></p>
 
-<h2>Contar calorias é o suficiente? A qualidade da dieta também pesa</h2>
-
-<p>Déficit calórico é a condição física necessária para perder gordura, mas não é a única variável que determina se você vai conseguir sustentar esse déficit sem sofrer. Estudos controlados mostram que, mesmo em igualdade de calorias, alimentos minimamente processados levam a menor ingestão total espontânea do que alimentos ultraprocessados, porque geram mais saciedade por caloria consumida. Na prática, isso significa que dois almoços de 568 kcal não são equivalentes: um prato com proteína, fibra e volume tende a segurar a fome até o jantar; um alimento ultraprocessado com a mesma contagem calórica tende a deixar fome residual. O Pode, Não Pode entende essa diferença quando você descreve a refeição em linguagem natural, e não apenas soma números.</p>
-
-<h2>Por que registrar o treino muda a conta do dia inteiro</h2>
-
-<p>O impacto direto do exercício na perda de peso é, na verdade, moderado — quem carrega o processo é o déficit calórico. Mas a atividade física tem um papel que a métrica de "quanto emagreci essa semana" não captura bem: ela é o fator mais associado à manutenção do peso perdido no longo prazo, além de melhorar sensibilidade à insulina e reduzir risco cardiovascular. Registrar o treino na calculadora de queima calórica não é sobre "ganhar direito" de comer mais — é sobre manter o saldo do dia realista, para que a meta calórica não fique artificialmente apertada nos dias em que você se exercitou mais.</p>
-
-<h2>Erros comuns de quem tenta fazer isso de cabeça</h2>
-
-<ul>
-<li><strong>Focar só na quantidade e ignorar a qualidade.</strong> Bater a meta calórica com alimentos de baixa saciedade tende a gerar fome constante e abandono da rotina em poucas semanas.</li>
-<li><strong>Esquecer de registrar o treino.</strong> Sem esse crédito, o semáforo fica mais restritivo do que precisaria ser, e a sensação de "estou sempre no limite" desmotiva sem necessidade.</li>
-<li><strong>Fazer déficit agressivo demais.</strong> Cortar muito abaixo da TMB para acelerar o resultado tende a comprometer massa muscular e sustentabilidade — a meta da home já calcula um déficit moderado por um motivo.</li>
-<li><strong>Registrar só à noite.</strong> Usar o Pode, Não Pode apenas para revisar o que já comeu perde o principal diferencial da ferramenta, que é decidir antes do pedido, quando ainda dá para escolher diferente.</li>
-<li><strong>Abandonar o registro depois de poucos dias.</strong> A relação de dose-resposta da literatura é clara: o efeito cresce com a consistência, não com a perfeição pontual de um único dia.</li>
-</ul>
-
-<h2>O que a ciência da manutenção de peso a longo prazo ensina</h2>
-
-<p>Estudos longitudinais com pessoas que mantêm a perda de peso por anos não encontram uma dieta padrão comum entre elas — encontram padrões comportamentais. Atividade física regular, monitoramento contínuo do peso corporal, consistência alimentar e rotina estruturada de refeições aparecem repetidamente. Não é a complexidade da estratégia que determina o resultado, é a adesão consistente ao longo do tempo. Um sistema de calculadoras que reduz o esforço de calcular, registrar e comparar existe justamente para tornar essa consistência mais fácil de manter do que de abandonar.</p>
-
-<h2>❓ Perguntas Frequentes</h2>
-
-<div class="faq-section">
-  <div class="card-title">❓ Perguntas Frequentes</div>
-  <div class="faq-item">
-    <div class="faq-q">Preciso usar as três calculadoras do SaúdeMundo juntas, ou posso usar só uma?</div>
-    <div class="faq-a">Elas funcionam melhor em conjunto porque cada uma resolve uma parte da equação: a home define quanto você pode comer por dia, a calculadora de queima calórica mede o que você gasta treinando, e o Pode, Não Pode? junta as duas pontas em tempo real. Usar só uma isoladamente é possível, mas você perde a visão do saldo do dia, que é justamente o que a literatura de automonitoramento aponta como mais associado a resultado.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q">Qual calculadora eu uso primeiro?</div>
-    <div class="faq-a">Comece pela Calculadora de Calorias e Macros na home. Ela usa a fórmula de Mifflin-St Jeor para estimar sua Taxa Metabólica Basal e seu gasto total diário, e a partir disso calcula sua meta calórica conforme o objetivo. Sem essa meta, o semáforo do Pode, Não Pode? não tem parâmetro para avaliar suas refeições.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q">O que significa o "crédito" de treino no Pode, Não Pode?</div>
-    <div class="faq-a">Quando você registra uma atividade na calculadora de queima calórica, esse gasto entra automaticamente como crédito extra no saldo do dia dentro do Pode, Não Pode?. Na prática, isso significa que treinar amplia levemente o espaço calórico disponível para as próximas refeições, porque o corpo gastou mais energia do que a meta base já previa.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q">Contar calorias de cabeça, sem as calculadoras, também funciona?</div>
-    <div class="faq-a">Funciona pior. A literatura mostra relação de dose-resposta entre frequência de registro e resultado: quanto mais consistente e menos sujeito a estimativas de memória, maior o efeito. Fazer de cabeça tende a subestimar a ingestão calórica, especialmente em porções maiores ou refeições fora de casa, que é justamente onde o modo "Vou comer isso" do Pode, Não Pode ajuda antes da decisão.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q">Isso substitui o acompanhamento de um nutricionista ou educador físico?</div>
-    <div class="faq-a">Não. As três calculadoras entregam estimativas baseadas em fórmulas de referência (Mifflin-St Jeor e tabelas MET) e servem como ferramenta de automonitoramento e educação, não como prescrição individualizada. Para ajuste fino de dieta ou treino, considerando histórico de saúde e objetivos específicos, a orientação de um nutricionista ou médico continua sendo necessária.</div>
-  </div>
-</div>
-
-<div class="card-cta" style="background:linear-gradient(135deg, rgba(16,185,129,.08), rgba(5,150,105,.08)); border:2px dashed var(--green-dark); border-radius:14px; padding:2rem; margin:2.5rem 0; text-align:center;">
-  <h3 style="color:var(--green-dark); font-size:1.25rem; margin-bottom:.5rem;">🎯 Comece agora</h3>
-  <p style="font-size:.95rem; margin-bottom:1.25rem;">Se você ainda não tem uma meta calórica calculada, esse é o ponto de partida de tudo o que foi explicado acima: sem ela, nem o crédito do treino nem o semáforo das refeições têm um número de referência para trabalhar. Abra a Calculadora de Calorias e Macros, calcule sua meta em menos de um minuto e já registre seu primeiro treino do dia direto na Calculadora de Queima Calórica.</p>
-  <a href="https://www.saudemundo.com.br/index.html" style="display:inline-block;background:var(--green-dark);color:#fff;text-decoration:none;padding:.8rem 1.8rem;border-radius:8px;font-weight:700;">🧮 Calcular Minha Meta →</a>
-</div>
-
-<p><small>⚠️ Este artigo tem finalidade educacional. As calculadoras citadas fornecem estimativas baseadas em fórmulas de referência (Mifflin-St Jeor e tabelas MET) e não substituem avaliação individualizada com nutricionista ou médico.</small></p>
-
-</article>
-</div>
-
-<div id="sm-blog-placeholder"></div>
 <script src="../shared.js"></script>
 <script>
 (function() {
   var ctx = document.getElementById('graficoAdesao');
   if (!ctx || typeof Chart === 'undefined') return;
+  var isDark = document.body.classList.contains('dark');
+  var gridColor = isDark ? 'rgba(240,255,244,0.08)' : 'rgba(17,24,39,0.08)';
+  var tickColor = isDark ? '#6EE7A0' : '#4B5563';
   new Chart(ctx, {
     type: 'line',
     data: {
@@ -294,16 +300,16 @@
         {
           label: 'Com registro diário (automonitoramento)',
           data: [70, 74, 78, 80, 84, 87, 89, 91],
-          borderColor: '#e8590c',
-          backgroundColor: 'rgba(232,89,12,0.15)',
+          borderColor: '#00A651',
+          backgroundColor: 'rgba(0,166,81,0.15)',
           tension: 0.35,
           fill: true
         },
         {
           label: 'Sem registro',
           data: [70, 62, 55, 50, 44, 40, 37, 35],
-          borderColor: '#868e96',
-          backgroundColor: 'rgba(134,142,150,0.10)',
+          borderColor: '#9CA3AF',
+          backgroundColor: 'rgba(156,163,175,0.10)',
           tension: 0.35,
           fill: true
         }
@@ -314,15 +320,22 @@
       plugins: {
         title: {
           display: true,
-          text: 'Adesão ao plano ao longo de 12 semanas (ilustração conceitual)'
+          text: 'Adesão ao plano ao longo de 12 semanas (ilustração conceitual)',
+          color: tickColor
         },
-        legend: { position: 'bottom' }
+        legend: { position: 'bottom', labels: { color: tickColor } }
       },
       scales: {
         y: {
-          title: { display: true, text: 'Índice de adesão (0–100, ilustrativo)' },
+          title: { display: true, text: 'Índice de adesão (0–100, ilustrativo)', color: tickColor },
           min: 0,
-          max: 100
+          max: 100,
+          ticks: { color: tickColor },
+          grid: { color: gridColor }
+        },
+        x: {
+          ticks: { color: tickColor },
+          grid: { color: gridColor }
         }
       }
     }
