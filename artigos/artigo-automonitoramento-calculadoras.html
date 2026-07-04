@@ -10,7 +10,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../shared.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
 
 <script type="application/ld+json">
 {
@@ -213,7 +212,70 @@
     <p><strong>4. Saldo final do dia.</strong> Com o treino registrado, o orçamento efetivo do dia passa de 1.624 kcal para aproximadamente <strong>1.845 kcal</strong> — sem que ela precise refazer nenhuma conta manualmente. É essa integração automática entre as três ferramentas que reduz o atrito do automonitoramento, justamente o fator que a literatura aponta como mais determinante.</p>
 
     <div style="max-width:100%;margin:1.5rem auto 0;">
-      <canvas id="graficoAdesao" width="640" height="360" aria-label="Gráfico ilustrativo de adesão ao longo de 12 semanas, comparando registro diário e ausência de registro" role="img"></canvas>
+      <svg viewBox="0 0 750 430" role="img" aria-label="Gráfico ilustrativo de adesão ao longo de 12 semanas, comparando registro diário e ausência de registro" style="width:100%;height:auto;font-family:'DM Sans',Arial,sans-serif;">
+        <title>Adesão ao plano ao longo de 12 semanas (ilustração conceitual)</title>
+        <desc>Duas linhas comparando um índice de adesão de 0 a 100: quem registra refeições e treinos diariamente sobe de 70 para 91 ao longo de 12 semanas; quem não registra cai de 70 para 35 no mesmo período.</desc>
+
+        <text x="375" y="28" text-anchor="middle" font-size="16" font-weight="700" fill="var(--text)">Adesão ao plano ao longo de 12 semanas</text>
+        <text x="375" y="46" text-anchor="middle" font-size="12" fill="var(--text-muted)">(ilustração conceitual)</text>
+
+        <!-- Legenda -->
+        <rect x="220" y="58" width="12" height="12" rx="2" fill="var(--green)"/>
+        <text x="238" y="68" font-size="12" fill="var(--text-muted)">Com registro diário</text>
+        <rect x="410" y="58" width="12" height="12" rx="2" fill="#9CA3AF"/>
+        <text x="428" y="68" font-size="12" fill="var(--text-muted)">Sem registro</text>
+
+        <!-- Grid + eixo Y -->
+        <g stroke="var(--border)" stroke-width="1">
+          <line x1="70" y1="90" x2="680" y2="90"/>
+          <line x1="70" y1="144" x2="680" y2="144"/>
+          <line x1="70" y1="198" x2="680" y2="198"/>
+          <line x1="70" y1="252" x2="680" y2="252"/>
+          <line x1="70" y1="306" x2="680" y2="306"/>
+          <line x1="70" y1="360" x2="680" y2="360"/>
+        </g>
+        <g font-size="11" fill="var(--text-muted)" text-anchor="end">
+          <text x="60" y="94">100</text>
+          <text x="60" y="148">80</text>
+          <text x="60" y="202">60</text>
+          <text x="60" y="256">40</text>
+          <text x="60" y="310">20</text>
+          <text x="60" y="364">0</text>
+        </g>
+
+        <!-- Eixo X -->
+        <line x1="70" y1="360" x2="680" y2="360" stroke="var(--border)" stroke-width="1.5"/>
+        <g font-size="11" fill="var(--text-muted)" text-anchor="middle">
+          <text x="70.0" y="380">1</text>
+          <text x="125.5" y="380">2</text>
+          <text x="180.9" y="380">3</text>
+          <text x="236.4" y="380">4</text>
+          <text x="291.8" y="380">5</text>
+          <text x="347.3" y="380">6</text>
+          <text x="402.7" y="380">7</text>
+          <text x="458.2" y="380">8</text>
+          <text x="513.6" y="380">9</text>
+          <text x="569.1" y="380">10</text>
+          <text x="624.5" y="380">11</text>
+          <text x="680.0" y="380">12</text>
+        </g>
+        <text x="375" y="404" text-anchor="middle" font-size="12" fill="var(--text-muted)">Semanas</text>
+        <text x="-225" y="24" transform="rotate(-90)" text-anchor="middle" font-size="12" fill="var(--text-muted)">Índice de adesão (0–100, ilustrativo)</text>
+
+        <!-- Área + linha: Sem registro (cinza) -->
+        <path d="M70.0,360 L70.0,171.0 L125.5,184.5 L180.9,198.0 L236.4,208.8 L291.8,219.6 L347.3,230.4 L402.7,238.5 L458.2,246.6 L513.6,254.7 L569.1,260.1 L624.5,262.8 L680.0,265.5 L680.0,360 Z" fill="#9CA3AF" fill-opacity="0.10"/>
+        <polyline points="70.0,171.0 125.5,184.5 180.9,198.0 236.4,208.8 291.8,219.6 347.3,230.4 402.7,238.5 458.2,246.6 513.6,254.7 569.1,260.1 624.5,262.8 680.0,265.5" fill="none" stroke="#9CA3AF" stroke-width="3"/>
+        <g fill="#9CA3AF" stroke="var(--bg,#fff)" stroke-width="1.5">
+          <circle cx="70.0" cy="171.0" r="4.5"/><circle cx="125.5" cy="184.5" r="4.5"/><circle cx="180.9" cy="198.0" r="4.5"/><circle cx="236.4" cy="208.8" r="4.5"/><circle cx="291.8" cy="219.6" r="4.5"/><circle cx="347.3" cy="230.4" r="4.5"/><circle cx="402.7" cy="238.5" r="4.5"/><circle cx="458.2" cy="246.6" r="4.5"/><circle cx="513.6" cy="254.7" r="4.5"/><circle cx="569.1" cy="260.1" r="4.5"/><circle cx="624.5" cy="262.8" r="4.5"/><circle cx="680.0" cy="265.5" r="4.5"/>
+        </g>
+
+        <!-- Área + linha: Com registro diário (verde) -->
+        <path d="M70.0,360 L70.0,171.0 L125.5,162.9 L180.9,154.8 L236.4,149.4 L291.8,144.0 L347.3,138.6 L402.7,133.2 L458.2,127.8 L513.6,125.1 L569.1,122.4 L624.5,119.7 L680.0,114.3 L680.0,360 Z" fill="var(--green)" fill-opacity="0.15"/>
+        <polyline points="70.0,171.0 125.5,162.9 180.9,154.8 236.4,149.4 291.8,144.0 347.3,138.6 402.7,133.2 458.2,127.8 513.6,125.1 569.1,122.4 624.5,119.7 680.0,114.3" fill="none" stroke="var(--green)" stroke-width="3"/>
+        <g fill="var(--green)" stroke="var(--bg,#fff)" stroke-width="1.5">
+          <circle cx="70.0" cy="171.0" r="4.5"/><circle cx="125.5" cy="162.9" r="4.5"/><circle cx="180.9" cy="154.8" r="4.5"/><circle cx="236.4" cy="149.4" r="4.5"/><circle cx="291.8" cy="144.0" r="4.5"/><circle cx="347.3" cy="138.6" r="4.5"/><circle cx="402.7" cy="133.2" r="4.5"/><circle cx="458.2" cy="127.8" r="4.5"/><circle cx="513.6" cy="125.1" r="4.5"/><circle cx="569.1" cy="122.4" r="4.5"/><circle cx="624.5" cy="119.7" r="4.5"/><circle cx="680.0" cy="114.3" r="4.5"/>
+        </g>
+      </svg>
     </div>
     <p style="font-size:12px;color:var(--text-muted);margin-top:10px;">Ilustração conceitual do padrão de dose-resposta descrito na literatura de automonitoramento — não são dados extraídos de um estudo específico, mas uma representação didática da tendência relatada em meta-análises sobre o tema.</p>
   </div>
@@ -285,116 +347,6 @@
 </div>
 
 <script src="../shared.js"></script>
-<script>
-(function() {
-  var ctx = document.getElementById('graficoAdesao');
-  if (!ctx || typeof Chart === 'undefined') return;
-
-  function smCoresTemaGrafico() {
-    var isDark = document.body.classList.contains('dark');
-    return {
-      grid: isDark ? 'rgba(240,255,244,0.08)' : 'rgba(17,24,39,0.08)',
-      tick: isDark ? '#6EE7A0' : '#4B5563'
-    };
-  }
-  var cores = smCoresTemaGrafico();
-  var gridColor = cores.grid;
-  var tickColor = cores.tick;
-
-  // Semanas contínuas de 1 a 12 (sem pular semanas), para que o eixo X
-  // represente espaçamento real e a curva não "estoure" além dos pontos.
-  var labels = ['Sem. 1','Sem. 2','Sem. 3','Sem. 4','Sem. 5','Sem. 6','Sem. 7','Sem. 8','Sem. 9','Sem. 10','Sem. 11','Sem. 12'];
-  var comRegistro = [70, 73, 76, 78, 80, 82, 84, 86, 87, 88, 89, 91];
-  var semRegistro = [70, 65, 60, 56, 52, 48, 45, 42, 39, 37, 36, 35];
-
-  var corVerde = '#00A651';
-  var corCinza = '#9CA3AF';
-
-  var graficoAdesaoChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          label: 'Com registro diário (automonitoramento)',
-          data: comRegistro,
-          borderColor: corVerde,
-          backgroundColor: 'rgba(0,166,81,0.15)',
-          borderWidth: 3,
-          pointRadius: 5,
-          pointHoverRadius: 7,
-          pointBackgroundColor: corVerde,
-          pointBorderColor: '#fff',
-          pointBorderWidth: 2,
-          cubicInterpolationMode: 'monotone',
-          fill: true
-        },
-        {
-          label: 'Sem registro',
-          data: semRegistro,
-          borderColor: corCinza,
-          backgroundColor: 'rgba(156,163,175,0.10)',
-          borderWidth: 3,
-          pointRadius: 5,
-          pointHoverRadius: 7,
-          pointBackgroundColor: corCinza,
-          pointBorderColor: '#fff',
-          pointBorderWidth: 2,
-          cubicInterpolationMode: 'monotone',
-          fill: true
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        title: {
-          display: true,
-          text: 'Adesão ao plano ao longo de 12 semanas (ilustração conceitual)',
-          color: tickColor
-        },
-        legend: { position: 'bottom', labels: { color: tickColor } }
-      },
-      scales: {
-        y: {
-          title: { display: true, text: 'Índice de adesão (0–100, ilustrativo)', color: tickColor },
-          min: 0,
-          max: 100,
-          ticks: { color: tickColor },
-          grid: { color: gridColor }
-        },
-        x: {
-          ticks: { color: tickColor },
-          grid: { color: gridColor }
-        }
-      }
-    }
-  });
-
-  // Mantém o gráfico sincronizado quando o usuário troca o tema claro/escuro
-  // pelo botão da nav (toggleTheme, definido em shared.js). Em vez de alterar
-  // o shared.js, envolvemos a função global aqui, só para esta página.
-  function smAtualizarTemaGrafico() {
-    var c = smCoresTemaGrafico();
-    graficoAdesaoChart.options.plugins.title.color = c.tick;
-    graficoAdesaoChart.options.plugins.legend.labels.color = c.tick;
-    graficoAdesaoChart.options.scales.y.title.color = c.tick;
-    graficoAdesaoChart.options.scales.y.ticks.color = c.tick;
-    graficoAdesaoChart.options.scales.y.grid.color = c.grid;
-    graficoAdesaoChart.options.scales.x.ticks.color = c.tick;
-    graficoAdesaoChart.options.scales.x.grid.color = c.grid;
-    graficoAdesaoChart.update();
-  }
-
-  if (typeof window.toggleTheme === 'function') {
-    var smToggleThemeOriginal = window.toggleTheme;
-    window.toggleTheme = function() {
-      smToggleThemeOriginal();
-      smAtualizarTemaGrafico();
-    };
-  }
-})();
-</script>
 
 </body>
 </html>
