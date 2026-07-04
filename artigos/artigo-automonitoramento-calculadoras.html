@@ -289,28 +289,58 @@
 (function() {
   var ctx = document.getElementById('graficoAdesao');
   if (!ctx || typeof Chart === 'undefined') return;
-  var isDark = document.body.classList.contains('dark');
-  var gridColor = isDark ? 'rgba(240,255,244,0.08)' : 'rgba(17,24,39,0.08)';
-  var tickColor = isDark ? '#6EE7A0' : '#4B5563';
-  new Chart(ctx, {
+
+  function smCoresTemaGrafico() {
+    var isDark = document.body.classList.contains('dark');
+    return {
+      grid: isDark ? 'rgba(240,255,244,0.08)' : 'rgba(17,24,39,0.08)',
+      tick: isDark ? '#6EE7A0' : '#4B5563'
+    };
+  }
+  var cores = smCoresTemaGrafico();
+  var gridColor = cores.grid;
+  var tickColor = cores.tick;
+
+  // Semanas contínuas de 1 a 12 (sem pular semanas), para que o eixo X
+  // represente espaçamento real e a curva não "estoure" além dos pontos.
+  var labels = ['Sem. 1','Sem. 2','Sem. 3','Sem. 4','Sem. 5','Sem. 6','Sem. 7','Sem. 8','Sem. 9','Sem. 10','Sem. 11','Sem. 12'];
+  var comRegistro = [70, 73, 76, 78, 80, 82, 84, 86, 87, 88, 89, 91];
+  var semRegistro = [70, 65, 60, 56, 52, 48, 45, 42, 39, 37, 36, 35];
+
+  var corVerde = '#00A651';
+  var corCinza = '#9CA3AF';
+
+  var graficoAdesaoChart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: ['Sem. 1','Sem. 2','Sem. 3','Sem. 4','Sem. 6','Sem. 8','Sem. 10','Sem. 12'],
+      labels: labels,
       datasets: [
         {
           label: 'Com registro diário (automonitoramento)',
-          data: [70, 74, 78, 80, 84, 87, 89, 91],
-          borderColor: '#00A651',
+          data: comRegistro,
+          borderColor: corVerde,
           backgroundColor: 'rgba(0,166,81,0.15)',
-          tension: 0.35,
+          borderWidth: 3,
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          pointBackgroundColor: corVerde,
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          cubicInterpolationMode: 'monotone',
           fill: true
         },
         {
           label: 'Sem registro',
-          data: [70, 62, 55, 50, 44, 40, 37, 35],
-          borderColor: '#9CA3AF',
+          data: semRegistro,
+          borderColor: corCinza,
           backgroundColor: 'rgba(156,163,175,0.10)',
-          tension: 0.35,
+          borderWidth: 3,
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          pointBackgroundColor: corCinza,
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          cubicInterpolationMode: 'monotone',
           fill: true
         }
       ]
@@ -340,6 +370,29 @@
       }
     }
   });
+
+  // Mantém o gráfico sincronizado quando o usuário troca o tema claro/escuro
+  // pelo botão da nav (toggleTheme, definido em shared.js). Em vez de alterar
+  // o shared.js, envolvemos a função global aqui, só para esta página.
+  function smAtualizarTemaGrafico() {
+    var c = smCoresTemaGrafico();
+    graficoAdesaoChart.options.plugins.title.color = c.tick;
+    graficoAdesaoChart.options.plugins.legend.labels.color = c.tick;
+    graficoAdesaoChart.options.scales.y.title.color = c.tick;
+    graficoAdesaoChart.options.scales.y.ticks.color = c.tick;
+    graficoAdesaoChart.options.scales.y.grid.color = c.grid;
+    graficoAdesaoChart.options.scales.x.ticks.color = c.tick;
+    graficoAdesaoChart.options.scales.x.grid.color = c.grid;
+    graficoAdesaoChart.update();
+  }
+
+  if (typeof window.toggleTheme === 'function') {
+    var smToggleThemeOriginal = window.toggleTheme;
+    window.toggleTheme = function() {
+      smToggleThemeOriginal();
+      smAtualizarTemaGrafico();
+    };
+  }
 })();
 </script>
 
