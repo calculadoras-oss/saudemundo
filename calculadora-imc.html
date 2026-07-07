@@ -12,39 +12,32 @@
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EPL2XNX6H');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
 <!-- CSS COMPARTILHADO -->
 <link rel="stylesheet" href="shared.css">
-
 <style>
 /* === CSS ESPECÍFICO DO IMC === */
-
 /* Container mais estreito (calculadora simples, não precisa de grid largo) */
 .container { max-width: 760px; }
-
 /* Resultado IMC */
 .result-card { display: none; animation: fadeIn 0.5s ease; }
 .result-card.show { display: block; }
-
 .imc-main { background: var(--dark2); border: 1px solid rgba(46,204,113,0.2); border-radius: var(--radius); padding: 28px; text-align: center; margin-bottom: 16px; }
 .imc-value { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 8vw, 4.5rem); font-weight: 900; margin-bottom: 8px; transition: color 0.4s; }
 .imc-label { font-size: 1.1rem; font-weight: 600; margin-bottom: 6px; }
-.imc-desc  { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
-
+.imc-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
 .imc-bar-wrap { background: linear-gradient(90deg, #3498DB 0%, #2ECC71 30%, #F39C12 55%, #E67E22 72%, #E74C3C 85%, #C0392B 100%); border-radius: 100px; height: 10px; position: relative; margin: 0 0 8px; }
 .imc-marker { position: absolute; top: -4px; width: 18px; height: 18px; border-radius: 50%; background: white; border: 3px solid var(--text); transform: translateX(-50%); transition: left 0.8s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
 .imc-scale { display: flex; justify-content: space-between; font-size: 10px; color: var(--text-muted); }
-
 /* Banner de dados pré-preenchidos */
 .prefill-banner {
-  background: rgba(46,204,113,0.08);
-  border: 1px solid rgba(46,204,113,0.25);
-  border-radius: 10px;
-  padding: 10px 16px;
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-bottom: 18px;
-  display: none;
+background: rgba(46,204,113,0.08);
+border: 1px solid rgba(46,204,113,0.25);
+border-radius: 10px;
+padding: 10px 16px;
+font-size: 12px;
+color: var(--text-muted);
+margin-bottom: 18px;
+display: none;
 }
 .prefill-banner.show { display: block; }
 .prefill-banner a { color: var(--green-dark); font-weight: 600; text-decoration: none; }
@@ -53,112 +46,129 @@ body.dark .prefill-banner a { color: var(--green); }
 </head>
 <body>
 <div class="bg-grid"></div>
-
 <!-- NAV É INJETADO PELO shared.js -->
-
 <header data-date="2026-06-14">
-  <div class="badge">✦ saudemundo · Composição Corporal</div>
-  <h1>Calculadora de IMC</h1>
-  <p class="subtitle">Descubra seu Índice de Massa Corporal e o que ele significa para a sua saúde, segundo critérios da OMS.</p>
+<div class="badge">✦ saudemundo · Composição Corporal</div>
+<h1>Calculadora de IMC</h1>
+<p class="subtitle">Descubra seu Índice de Massa Corporal e o que ele significa para a sua saúde, segundo critérios da OMS.</p>
 </header>
-
 <div class="container">
-  <div class="card">
-    <div class="card-title">⚖️ Seus dados</div>
-
-    <!-- Banner aparece se dados vieram do index -->
-    <div class="prefill-banner" id="prefill-banner">
-      ✦ Dados carregados da sua última calculada. <a href="index.html">Recalcular na página principal →</a>
-    </div>
-
-    <div class="field"><label>Peso (kg)</label><div class="input-row"><span class="input-prefix">kg</span><input type="number" id="peso" value="70" min="30" max="300"></div></div>
-    <div class="field"><label>Altura (cm)</label><div class="input-row"><span class="input-prefix">cm</span><input type="number" id="altura" value="170" min="100" max="250"></div></div>
-    <button class="btn-calc" onclick="calcIMC()">Calcular meu IMC →</button>
-  </div>
-
-  <div class="result-card" id="result">
-    <div class="imc-main">
-      <div class="imc-value" id="imc-val">—</div>
-      <div class="imc-label" id="imc-label">—</div>
-      <div class="imc-desc"  id="imc-desc">—</div>
-      <div class="imc-bar-wrap"><div class="imc-marker" id="imc-marker" style="left:35%"></div></div>
-      <div class="imc-scale"><span>Abaixo do peso</span><span>Normal</span><span>Sobrepeso</span><span>Obesidade</span></div>
-    </div>
-    <div class="meta-grid">
-      <div class="meta-item"><div class="meta-item-label">✅ Peso ideal mínimo</div><div class="meta-item-value" id="peso-min">—</div></div>
-      <div class="meta-item"><div class="meta-item-label">✅ Peso ideal máximo</div><div class="meta-item-value" id="peso-max">—</div></div>
-      <div class="meta-item"><div class="meta-item-label">📉 Diferença para peso ideal</div><div class="meta-item-value" id="peso-diff">—</div></div>
-      <div class="meta-item"><div class="meta-item-label">📊 Classificação OMS</div><div class="meta-item-value" id="imc-class">—</div></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="section-title">📖 O que é IMC?</div>
-    <p style="line-height:1.8;color:var(--text-muted);">O Índice de Massa Corporal é calculado dividindo seu peso (kg) pela sua altura ao quadrado (m²). É um indicador rápido do estado nutricional, amplamente adotado pela Organização Mundial da Saúde para triagem populacional.</p>
-    <p style="line-height:1.8;color:var(--text-muted);margin-top:12px;">O IMC tem limitações: não diferencia massa muscular de gordura. Um atleta pode ter IMC alto sem estar acima do peso. Para avaliação completa, combine com circunferência abdominal e percentual de gordura.</p>
-  </div>
-
-  <div class="section-title">❓ Perguntas Frequentes</div>
-  <div class="faq-section">
-    <div class="faq-item"><div class="faq-q">Qual o IMC ideal?</div><div class="faq-a">Entre 18,5 e 24,9 kg/m² segundo a OMS. Abaixo de 18,5 é considerado abaixo do peso; acima de 25, sobrepeso; acima de 30, obesidade.</div></div>
-    <div class="faq-item"><div class="faq-q">IMC alto significa que sou gordo?</div><div class="faq-a">Não necessariamente. Pessoas musculosas podem ter IMC elevado por massa muscular, não gordura. O IMC é um indicador de triagem, não diagnóstico.</div></div>
-    <div class="faq-item"><div class="faq-q">O IMC vale para crianças?</div><div class="faq-a">Para crianças e adolescentes usa-se o IMC por idade (percentis), que é diferente da tabela adulta da OMS.</div></div>
-  </div>
-
-  <div class="section-title">🛠️ Outras Calculadoras</div>
-  <div class="tools-grid">
-  </div>
+<div class="card">
+<div class="card-title">⚖️ Seus dados</div>
+<!-- Banner aparece se dados vieram do index -->
+<div class="prefill-banner" id="prefill-banner">
+✦ Dados carregados da sua última calculada. <a href="index.html">Recalcular na página principal →</a>
+</div>
+<div class="field"><label>Peso (kg)</label><div class="input-row"><span class="input-prefix">kg</span><input type="number" id="peso" value="70" min="30" max="300"></div></div>
+<div class="field"><label>Altura (cm)</label><div class="input-row"><span class="input-prefix">cm</span><input type="number" id="altura" value="170" min="100" max="250"></div></div>
+<button class="btn-calc" onclick="calcIMC()">Calcular meu IMC →</button>
 </div>
 
+<div class="result-card" id="result">
+<div class="imc-main">
+<div class="imc-value" id="imc-val">—</div>
+<div class="imc-label" id="imc-label">—</div>
+<div class="imc-desc" id="imc-desc">—</div>
+<div class="imc-bar-wrap"><div class="imc-marker" id="imc-marker" style="left:35%"></div></div>
+<div class="imc-scale"><span>Abaixo do peso</span><span>Normal</span><span>Sobrepeso</span><span>Obesidade</span></div>
+</div>
+<div class="meta-grid">
+<div class="meta-item"><div class="meta-item-label">✅ Peso ideal mínimo</div><div class="meta-item-value" id="peso-min">—</div></div>
+<div class="meta-item"><div class="meta-item-label">✅ Peso ideal máximo</div><div class="meta-item-value" id="peso-max">—</div></div>
+<div class="meta-item"><div class="meta-item-label">📉 Diferença para peso ideal</div><div class="meta-item-value" id="peso-diff">—</div></div>
+<div class="meta-item"><div class="meta-item-label">📊 Classificação OMS</div><div class="meta-item-value" id="imc-class">—</div></div>
+</div>
+</div>
+
+<div class="card">
+<div class="section-title">📖 O que é IMC?</div>
+<p style="line-height:1.8;color:var(--text-muted);">O Índice de Massa Corporal é calculado dividindo seu peso (kg) pela sua altura ao quadrado (m²). É um indicador rápido do estado nutricional, amplamente adotado pela Organização Mundial da Saúde para triagem populacional. Criado no século XIX pelo estatístico belga Adolphe Quetelet, o IMC se popularizou por ser fácil de calcular e não exigir equipamentos especiais — apenas peso e altura.</p>
+<p style="line-height:1.8;color:var(--text-muted);margin-top:12px;">O IMC tem limitações: não diferencia massa muscular de gordura. Um atleta pode ter IMC alto sem estar acima do peso. Para avaliação completa, combine com circunferência abdominal e percentual de gordura. Ele também varia com idade e sexo, e não se aplica da mesma forma a crianças e adolescentes, que são avaliados por percentis específicos.</p>
+</div>
+
+<div class="card">
+<div class="section-title">📊 Tabela de classificação do IMC</div>
+<p style="line-height:1.8;color:var(--text-muted);">Essas são as faixas de referência da Organização Mundial da Saúde (OMS) para adultos:</p>
+<table style="width:100%;margin-top:14px;border-collapse:collapse;color:var(--text-muted);font-size:14px;">
+<tr style="border-bottom:1px solid rgba(255,255,255,0.1);"><td style="padding:8px 0;">Abaixo do peso</td><td style="padding:8px 0;text-align:right;">Menor que 18,5</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.1);"><td style="padding:8px 0;">Peso normal</td><td style="padding:8px 0;text-align:right;">18,5 a 24,9</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.1);"><td style="padding:8px 0;">Sobrepeso</td><td style="padding:8px 0;text-align:right;">25,0 a 29,9</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.1);"><td style="padding:8px 0;">Obesidade grau I</td><td style="padding:8px 0;text-align:right;">30,0 a 34,9</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.1);"><td style="padding:8px 0;">Obesidade grau II</td><td style="padding:8px 0;text-align:right;">35,0 a 39,9</td></tr>
+<tr><td style="padding:8px 0;">Obesidade grau III</td><td style="padding:8px 0;text-align:right;">40,0 ou mais</td></tr>
+</table>
+</div>
+
+<div class="card">
+<div class="section-title">🔍 Outros indicadores que complementam o IMC</div>
+<p style="line-height:1.8;color:var(--text-muted);">Para uma visão mais completa da saúde, profissionais costumam olhar também para:</p>
+<p style="line-height:1.8;color:var(--text-muted);margin-top:12px;"><strong>Circunferência da cintura:</strong> ajuda a identificar concentração de gordura abdominal, um fator de risco independente do IMC.</p>
+<p style="line-height:1.8;color:var(--text-muted);margin-top:12px;"><strong>Percentual de gordura corporal:</strong> medido por bioimpedância ou dobras cutâneas, mostra a proporção real de gordura, algo que o IMC sozinho não capta.</p>
+<p style="line-height:1.8;color:var(--text-muted);margin-top:12px;"><strong>Idade e sexo:</strong> a composição corporal muda ao longo da vida, e as faixas de IMC podem ser interpretadas de forma diferente para idosos, por exemplo.</p>
+<p style="line-height:1.8;color:var(--text-muted);margin-top:12px;">Se o seu resultado indicar sobrepeso, obesidade ou abaixo do peso, o ideal é conversar com um médico ou nutricionista, que pode avaliar seu contexto individual e orientar os próximos passos.</p>
+</div>
+
+<div class="section-title">❓ Perguntas Frequentes</div>
+<div class="faq-section">
+<div class="faq-item"><div class="faq-q">Qual o IMC ideal?</div><div class="faq-a">Entre 18,5 e 24,9 kg/m² segundo a OMS. Abaixo de 18,5 é considerado abaixo do peso; acima de 25, sobrepeso; acima de 30, obesidade.</div></div>
+<div class="faq-item"><div class="faq-q">IMC alto significa que sou gordo?</div><div class="faq-a">Não necessariamente. Pessoas musculosas podem ter IMC elevado por massa muscular, não gordura. O IMC é um indicador de triagem, não diagnóstico.</div></div>
+<div class="faq-item"><div class="faq-q">O IMC vale para crianças?</div><div class="faq-a">Para crianças e adolescentes usa-se o IMC por idade (percentis), que é diferente da tabela adulta da OMS.</div></div>
+<div class="faq-item"><div class="faq-q">O IMC serve para atletas e gestantes?</div><div class="faq-a">Não da mesma forma. Atletas com muita massa muscular podem ter IMC "alto" sem excesso de gordura, e gestantes têm faixas de referência próprias, avaliadas por um médico.</div></div>
+<div class="faq-item"><div class="faq-q">Qual a diferença entre IMC e percentual de gordura?</div><div class="faq-a">O IMC usa só peso e altura. O percentual de gordura mede diretamente quanto do seu corpo é gordura, dando um retrato mais preciso da composição corporal.</div></div>
+</div>
+
+<div class="section-title">🛠️ Outras Calculadoras</div>
+<div class="tools-grid">
+</div>
+</div>
 <!-- JS COMPARTILHADO -->
 <script src="shared.js"></script>
-
 <!-- JS ESPECÍFICO DO IMC -->
 <script>
 // Mostra banner se dados vieram do index
 document.addEventListener('DOMContentLoaded', function() {
-  const d = smGetUserData();
-  if (d && d.peso && d.altura) {
-    document.getElementById('prefill-banner').classList.add('show');
-  }
+const d = smGetUserData();
+if (d && d.peso && d.altura) {
+document.getElementById('prefill-banner').classList.add('show');
+}
 });
 
 function calcIMC() {
-  const peso  = parseFloat(document.getElementById('peso').value)   || 0;
-  const altCm = parseFloat(document.getElementById('altura').value) || 0;
-  if (!peso || !altCm) return;
+const peso = parseFloat(document.getElementById('peso').value) || 0;
+const altCm = parseFloat(document.getElementById('altura').value) || 0;
+if (!peso || !altCm) return;
 
-  // Salva/atualiza dados do usuário
-  smSaveUserData({ peso, altura: altCm });
+// Salva/atualiza dados do usuário
+smSaveUserData({ peso, altura: altCm });
 
-  const alt = altCm / 100;
-  const imc = peso / (alt * alt);
-  const imcF = imc.toFixed(1);
+const alt = altCm / 100;
+const imc = peso / (alt * alt);
+const imcF = imc.toFixed(1);
 
-  let label, desc, color, pct;
-  if      (imc < 18.5) { label = 'Abaixo do peso';      desc = 'Seu IMC está abaixo do recomendado pela OMS.';                          color = '#3498DB'; pct = 10; }
-  else if (imc < 25)   { label = 'Peso normal ✅';       desc = 'Parabéns! Seu peso está dentro da faixa saudável.';                    color = '#00A651'; pct = 35; }
-  else if (imc < 30)   { label = 'Sobrepeso';            desc = 'Seu IMC indica sobrepeso. Ajustes na alimentação e exercício ajudam.'; color = '#F39C12'; pct = 60; }
-  else if (imc < 35)   { label = 'Obesidade grau I';     desc = 'Consulte um profissional de saúde para orientação.';                   color = '#E67E22'; pct = 75; }
-  else if (imc < 40)   { label = 'Obesidade grau II';    desc = 'É recomendável acompanhamento médico especializado.';                  color = '#E74C3C'; pct = 87; }
-  else                  { label = 'Obesidade grau III';   desc = 'Procure orientação médica especializada com urgência.';                color = '#C0392B'; pct = 96; }
+let label, desc, color, pct;
+if (imc < 18.5) { label = 'Abaixo do peso'; desc = 'Seu IMC está abaixo do recomendado pela OMS.'; color = '#3498DB'; pct = 10; }
+else if (imc < 25) { label = 'Peso normal ✅'; desc = 'Parabéns! Seu peso está dentro da faixa saudável.'; color = '#00A651'; pct = 35; }
+else if (imc < 30) { label = 'Sobrepeso'; desc = 'Seu IMC indica sobrepeso. Ajustes na alimentação e exercício ajudam.'; color = '#F39C12'; pct = 60; }
+else if (imc < 35) { label = 'Obesidade grau I'; desc = 'Consulte um profissional de saúde para orientação.'; color = '#E67E22'; pct = 75; }
+else if (imc < 40) { label = 'Obesidade grau II'; desc = 'É recomendável acompanhamento médico especializado.'; color = '#E74C3C'; pct = 87; }
+else { label = 'Obesidade grau III'; desc = 'Procure orientação médica especializada com urgência.'; color = '#C0392B'; pct = 96; }
 
-  const pMin = (18.5 * alt * alt).toFixed(1);
-  const pMax = (24.9 * alt * alt).toFixed(1);
-  const diff = peso - (24.9 * alt * alt);
+const pMin = (18.5 * alt * alt).toFixed(1);
+const pMax = (24.9 * alt * alt).toFixed(1);
+const diff = peso - (24.9 * alt * alt);
 
-  const valEl = document.getElementById('imc-val');
-  valEl.textContent = imcF;
-  valEl.style.color = color;
-  document.getElementById('imc-label').textContent  = label;
-  document.getElementById('imc-label').style.color  = color;
-  document.getElementById('imc-desc').textContent   = desc;
-  document.getElementById('imc-marker').style.left  = pct + '%';
-  document.getElementById('peso-min').textContent   = pMin + ' kg';
-  document.getElementById('peso-max').textContent   = pMax + ' kg';
-  document.getElementById('peso-diff').textContent  = diff > 0 ? '-' + diff.toFixed(1) + ' kg' : '✅ No peso ideal!';
-  document.getElementById('imc-class').textContent  = label;
-  document.getElementById('result').classList.add('show');
+const valEl = document.getElementById('imc-val');
+valEl.textContent = imcF;
+valEl.style.color = color;
+document.getElementById('imc-label').textContent = label;
+document.getElementById('imc-label').style.color = color;
+document.getElementById('imc-desc').textContent = desc;
+document.getElementById('imc-marker').style.left = pct + '%';
+document.getElementById('peso-min').textContent = pMin + ' kg';
+document.getElementById('peso-max').textContent = pMax + ' kg';
+document.getElementById('peso-diff').textContent = diff > 0 ? '-' + diff.toFixed(1) + ' kg' : '✅ No peso ideal!';
+document.getElementById('imc-class').textContent = label;
+document.getElementById('result').classList.add('show');
 }
 </script>
 </body>
