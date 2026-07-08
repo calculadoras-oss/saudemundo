@@ -1442,15 +1442,15 @@ function atualizarTudo() {
     det.innerHTML = "Limite: <strong>" + limRef + " kcal</strong>. Escreva o que vai comer ou comeu.<br>" + saldoDiaTxt;
   } else if (classificacao === "verde") {
     painel.classList.add("sinal-ativo-verde");
-    verd.textContent = "🟢 Boa escolha!";
+    verd.textContent = "Boa escolha!";
     det.innerHTML = NOME_REFEICAO[ref] + ": <strong>" + totalRef + "/" + limRef + " kcal</strong> · restam " + saldoRef + " kcal<br>" + saldoDiaTxt;
   } else if (classificacao === "amarelo") {
     painel.classList.add("sinal-ativo-amarelo");
-    verd.textContent = "🟡 Atenção!";
+    verd.textContent = "Atenção!";
     det.innerHTML = NOME_REFEICAO[ref] + ": restam apenas <strong>" + saldoRef + " kcal</strong>. Escolha com cuidado.<br>" + saldoDiaTxt;
   } else {
     painel.classList.add("sinal-ativo-verm");
-    verd.textContent = "🔴 Passou do limite!";
+    verd.textContent = "Passou do limite!";
     det.innerHTML = NOME_REFEICAO[ref] + " passou <strong>" + Math.abs(saldoRef) + " kcal</strong> acima. Compense na próxima.<br>" + saldoDiaTxt;
   }
 
