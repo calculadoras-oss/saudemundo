@@ -1373,7 +1373,30 @@ function compartilharWhatsApp() {
   const txt = montarDiarioDetalhado();
   window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(txt), "_blank");
 }
+// ALTERAÇÃO: Instagram não tem link que abra já com texto preenchido (diferente
+// do WhatsApp) — por isso copiamos o texto e avisamos o usuário para colar
+// manualmente nos Stories, mesmo padrão usado no outro site.
+function compartilharInstagram() {
+  const status = calcularStatusDia();
+  if (status.itens === 0 && status.queimado === 0) {
+    alert("Registre pelo menos uma refeição ou treino antes de compartilhar!");
+    return;
+  }
+  const txt = montarDiarioDetalhado();
+  const abrirInstagram = () => window.open("https://www.instagram.com/", "_blank");
 
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(() => {
+      if (typeof showToast === "function") showToast("📋 Texto copiado! Cole nos Stories do Instagram.");
+      else alert("Texto copiado! Cole nos Stories do Instagram.");
+      abrirInstagram();
+    }).catch(() => { promptFallbackCopy(txt); abrirInstagram(); });
+  } else {
+    promptFallbackCopy(txt);
+    abrirInstagram();
+  }
+}
+  
 function copiarDiario() {
   const status = calcularStatusDia();
   if (status.itens === 0 && status.queimado === 0) {
