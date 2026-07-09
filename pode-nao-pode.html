@@ -309,6 +309,8 @@
     .btn-compartilhar:hover { background:#f0fdf4; }
     .btn-instagram { font-size:.72rem; color:#C13584; background:none; border:1px solid #C13584; border-radius:6px; padding:.22rem .55rem; cursor:pointer; }
     .btn-instagram:hover { background:#fdf2f8; }
+    .btn-fechar-dia { font-size:.72rem; color:var(--azul); background:none; border:1px solid var(--azul); border-radius:6px; padding:.22rem .55rem; cursor:pointer; }
+    .btn-fechar-dia:hover { background:var(--azul-bg); }
     .btn-copiar { font-size:.72rem; color:var(--azul); background:none; border:1px solid var(--azul); border-radius:6px; padding:.22rem .55rem; cursor:pointer; }
     .btn-copiar:hover { background:var(--azul-bg); }
     .reg-item { display:flex; align-items:flex-start; gap:.45rem; padding:.6rem 0; border-bottom:1px solid var(--border, #e2e8f0); font-size:.86rem; }
@@ -596,6 +598,7 @@
         <button class="btn-compartilhar" onclick="compartilharWhatsApp()" title="Compartilhar no WhatsApp">💬 WhatsApp</button>
         <button class="btn-instagram" onclick="compartilharInstagram()" title="Copiar e compartilhar nos Stories do Instagram">📷 Instagram</button>
         <button class="btn-copiar" onclick="copiarDiario()">📋 Copiar diário</button>
+        <button class="btn-fechar-dia" onclick="fecharDia()" title="Fecha a conta do dia e libera o resumo/tendência">🧾 Fechar a conta de hoje</button>
         <button class="btn-limpar" onclick="limparDiario()">🗑 Limpar</button>
       </div>
     </div>
@@ -658,16 +661,96 @@
 <script>
 const WORKER_URL  = "https://summer-hill-da28.philipdesousa.workers.dev";
 const META_KEY    = "sm_pnp_meta_kcal";
-const STORAGE_KEY = "sm_pnp_" + new Date().toISOString().slice(0,10);
-const ATIV_KEY = "sm_pnp_ativ_" + new Date().toISOString().slice(0,10);
+// ALTERAÇÃO (#4): DATA_HOJE centraliza "qual é o dia de hoje" — STORAGE_KEY e
+// ATIV_KEY continuam com o mesmo valor de sempre (100% compatível com dados
+// já salvos), só que agora derivados de uma única fonte.
+const DATA_HOJE   = new Date().toISOString().slice(0,10);
+const STORAGE_KEY = "sm_pnp_" + DATA_HOJE;
+const ATIV_KEY = "sm_pnp_ativ_" + DATA_HOJE;
 const RECORDE_KEY = "sm_pnp_recorde";
 const KCAL_POR_KG = 7700;
-function carregarAtividadesQC() {
-  try { const r = localStorage.getItem(ATIV_KEY); return r ? JSON.parse(r) : []; }
+
+// ── Acesso a dados de qualquer data (#4) ──
+// Funções genéricas que recebem a data como parâmetro, em vez de sempre
+// assumirem "hoje". As chaves geradas são EXATAMENTE as mesmas que o site já
+// usa (sm_pnp_YYYY-MM-DD, sm_pnp_ativ_YYYY-MM-DD) — nenhum dado antigo muda de
+// lugar, só passa a ser possível ler/escrever em datas diferentes de hoje.
+function chaveRegistros(dataStr)   { return "sm_pnp_" + dataStr; }
+function chaveAtividades(dataStr)  { return "sm_pnp_ativ_" + dataStr; }
+
+function carregarRegistrosData(dataStr) {
+  try { const r = localStorage.getItem(chaveRegistros(dataStr)); return r ? JSON.parse(r) : []; }
   catch(e) { return []; }
+}
+function salvarRegistrosData(dataStr, arr) {
+  try { localStorage.setItem(chaveRegistros(dataStr), JSON.stringify(arr)); } catch(e) {}
+}
+function carregarAtividadesData(dataStr) {
+  try { const r = localStorage.getItem(chaveAtividades(dataStr)); return r ? JSON.parse(r) : []; }
+  catch(e) { return []; }
+}
+
+// carregarAtividadesQC() continua existindo (várias partes do código já
+// chamam ela) mas agora é só um atalho para "as atividades de hoje".
+function carregarAtividadesQC() {
+  return carregarAtividadesData(DATA_HOJE);
 }
 function totalQueimadoHoje() {
   return carregarAtividadesQC().reduce((s,a) => s + (a.kcal||0), 0);
+}
+
+// ALTERAÇÃO (#4): em vez de manter um índice separado (que pode ficar
+// dessincronizado se algo falhar ao salvar), a lista de dias com dados é
+// obtida na hora, varrendo as chaves que já existem no localStorage. Isso
+// funciona com dados antigos automaticamente — sem precisar de migração.
+function listarDiasComDados() {
+  const datas = new Set();
+  const regex = /^sm_pnp_(?:ativ_|status_)?(\d{4}-\d{2}-\d{2})$/;
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (!key) continue;
+    const m = key.match(regex);
+    if (m) datas.add(m[1]);
+  }
+  return Array.from(datas).sort().reverse(); // mais recente primeiro
+}
+
+function formatarDataBR(dataStr) {
+  const [ano, mes, dia] = dataStr.split("-");
+  return dia + "/" + mes + "/" + ano;
+}
+
+// ALTERAÇÃO (#4): reconhece referências temporais no texto digitado no chat
+// ("ontem", "anteontem", "dia 05/07", "05/07/2026"...). Retorna a data em
+// formato YYYY-MM-DD, ou null se nenhuma referência foi encontrada (nesse
+// caso o comportamento padrão continua sendo "hoje").
+function parseReferenciaTemporal(texto) {
+  const txt  = texto.toLowerCase();
+  const hoje = new Date();
+
+  if (/\bhoje\b/.test(txt)) return null;
+
+  if (/\bante ?ontem\b/.test(txt)) {
+    const d = new Date(hoje); d.setDate(d.getDate() - 2);
+    return d.toISOString().slice(0,10);
+  }
+  if (/\bontem\b/.test(txt)) {
+    const d = new Date(hoje); d.setDate(d.getDate() - 1);
+    return d.toISOString().slice(0,10);
+  }
+
+  const m = txt.match(/\bdia\s+(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?\b/) ||
+            txt.match(/\b(\d{1,2})\/(\d{1,2})\/(\d{2,4})\b/);
+  if (m) {
+    const dd = parseInt(m[1]), mm = parseInt(m[2]);
+    let ano = m[3] ? parseInt(m[3]) : hoje.getFullYear();
+    if (m[3] && m[3].length === 2) ano = 2000 + ano;
+    if (dd >= 1 && dd <= 31 && mm >= 1 && mm <= 12) {
+      const d = new Date(ano, mm - 1, dd);
+      return d.toISOString().slice(0,10);
+    }
+  }
+  return null;
 }
 
 const PESO_REFEICAO = { cafe:0.20, lanche1:0.10, almoco:0.35, lanche2:0.10, jantar:0.20, ceia:0.05 };
@@ -695,11 +778,13 @@ let gravandoVoz = false;
 // resposta natural da IA contendo uma aspa simples quebrava o HTML do botão
 // e cortava o texto exatamente ali. Guardando por id, o texto nunca precisa
 // virar string dentro de HTML.
+// ALTERAÇÃO (#4): pendingLancamentos agora guarda { texto, data } em vez de só
+// o texto — "data" é a data-alvo detectada na mensagem (ou hoje, por padrão).
 let pendingLancamentos = {};
 let seqLancamento = 0;
-function registrarPendente(texto) {
+function registrarPendente(texto, dataAlvo) {
   const pid = "p" + (++seqLancamento) + "_" + Date.now();
-  pendingLancamentos[pid] = texto;
+  pendingLancamentos[pid] = { texto, data: dataAlvo || DATA_HOJE };
   return pid;
 }
 function escapeHtml(str) {
@@ -932,6 +1017,8 @@ async function enviarMensagem() {
   const usadoRef = kcalRefeicaoAtual();
   const modoMsg   = detectarModoMensagem(texto);
   const isDecisao = modoMsg === "decisao";
+  // ALTERAÇÃO (#4): detecta se o usuário mencionou "ontem", "dia 05/07" etc.
+  const dataDetectada = parseReferenciaTemporal(texto) || DATA_HOJE;
 
   // Etapa 5 — aviso de conflito entre modo manual e conteúdo digitado
   if (modoAtual !== "auto") {
@@ -1001,7 +1088,7 @@ async function enviarMensagem() {
       // ALTERAÇÃO (#9 + correção do diário): usa o texto da própria IA (itens
       // identificados) como descrição, guardado em memória por id — nunca mais
       // embutido cru dentro do atributo onclick.
-      const pid = registrarPendente(limpo);
+      const pid = registrarPendente(limpo, dataDetectada);
       html += "<br><button class=\"btn-lancar\" onclick=\"confirmarLancamento('"
             + pid + "', " + kcal + ", this)\">✅ Lançar "
             + kcal + " kcal no diário</button>";
@@ -1097,42 +1184,131 @@ async function enviarComFoto(base64, mimeType) {
 // ── Confirmação antes de lançar (#3) ──
 // Evita lançar na refeição errada por distração: antes de gravar no diário,
 // mostra qual refeição está selecionada e permite trocar/cancelar.
+// ALTERAÇÃO (#4): balão de confirmação ganhou um segundo seletor — a data do
+// lançamento (padrão: detectada na mensagem, ou hoje). Se a data escolhida já
+// tiver a conta fechada, mostra um aviso de que lançar ali vai reabri-la.
 function confirmarLancamento(pid, kcal, btnEl) {
-  const refAtual = document.getElementById("refeicao-select").value;
+  const refAtual  = document.getElementById("refeicao-select").value;
+  const pendente  = pendingLancamentos[pid] || {};
+  const dataAlvo  = pendente.data || DATA_HOJE;
   const id = "conf-" + Date.now();
-  const opts = Object.keys(REF_CFG).map(k =>
+
+  const optsRef = Object.keys(REF_CFG).map(k =>
     `<option value="${k}"${k === refAtual ? " selected" : ""}>${REF_CFG[k].l}</option>`
   ).join("");
+  const optsData = gerarOpcoesData(dataAlvo);
+
   const html = `<div id="${id}" style="margin-top:.35rem;font-size:.76rem;display:flex;align-items:center;gap:.3rem;flex-wrap:wrap;">
       Confirmar em:
-      <select id="${id}-sel" style="padding:.2rem .4rem;border-radius:6px;border:1px solid var(--border,#e2e8f0);background:transparent;color:var(--text);font-size:.76rem;">${opts}</select>
+      <select id="${id}-sel" style="padding:.2rem .4rem;border-radius:6px;border:1px solid var(--border,#e2e8f0);background:transparent;color:var(--text);font-size:.76rem;">${optsRef}</select>
+      <select id="${id}-data" onchange="atualizarAvisoDataFechada('${id}')" style="padding:.2rem .4rem;border-radius:6px;border:1px solid var(--border,#e2e8f0);background:transparent;color:var(--text);font-size:.76rem;">${optsData}</select>
       <button onclick="confirmarLancarFinal('${id}', '${pid}', ${kcal})"
         style="background:var(--verde);color:#fff;border:none;border-radius:6px;padding:.22rem .55rem;cursor:pointer;font-weight:700;font-size:.76rem;">✔ Confirmar</button>
       <button onclick="document.getElementById('${id}').remove()"
         style="background:none;border:1px solid var(--border,#e2e8f0);border-radius:6px;padding:.22rem .5rem;cursor:pointer;color:var(--text-muted,#64748b);font-size:.76rem;">✕ Cancelar</button>
+      <span id="${id}-aviso" style="width:100%;color:#d97706;font-size:.72rem;"></span>
     </div>`;
   btnEl.insertAdjacentHTML("afterend", html);
   btnEl.remove();
+  atualizarAvisoDataFechada(id);
+}
+
+// Gera as opções do seletor de data: hoje + 7 dias anteriores, e garante que
+// a data detectada apareça mesmo se for mais antiga que esses 8 dias.
+function gerarOpcoesData(dataSelecionada) {
+  const opts = [];
+  const d = new Date();
+  for (let i = 0; i < 8; i++) {
+    const dataStr = d.toISOString().slice(0,10);
+    let label;
+    if (i === 0) label = "Hoje (" + formatarDataBR(dataStr) + ")";
+    else if (i === 1) label = "Ontem (" + formatarDataBR(dataStr) + ")";
+    else label = formatarDataBR(dataStr);
+    opts.push({ dataStr, label });
+    d.setDate(d.getDate() - 1);
+  }
+  if (!opts.some(o => o.dataStr === dataSelecionada)) {
+    opts.push({ dataStr: dataSelecionada, label: formatarDataBR(dataSelecionada) });
+  }
+  return opts.map(o =>
+    `<option value="${o.dataStr}"${o.dataStr === dataSelecionada ? " selected" : ""}>${o.label}</option>`
+  ).join("");
+}
+
+function atualizarAvisoDataFechada(id) {
+  const sel   = document.getElementById(id + "-data");
+  const aviso = document.getElementById(id + "-aviso");
+  if (!sel || !aviso) return;
+  const st = obterStatusDoDia(sel.value);
+  aviso.textContent = (st && st.fechado)
+    ? "⚠️ Esse dia já está com a conta fechada — lançar aqui vai reabri-la."
+    : "";
 }
 
 function confirmarLancarFinal(id, pid, kcal) {
-  const sel = document.getElementById(id + "-sel");
-  const refEscolhida = sel ? sel.value : document.getElementById("refeicao-select").value;
+  const selRef  = document.getElementById(id + "-sel");
+  const selData = document.getElementById(id + "-data");
+  const refEscolhida  = selRef  ? selRef.value  : document.getElementById("refeicao-select").value;
+  const dataEscolhida = selData ? selData.value : DATA_HOJE;
   const bloco = document.getElementById(id);
   if (bloco) bloco.remove();
-  const desc = pendingLancamentos[pid] || "Registro";
+  const pendente = pendingLancamentos[pid] || {};
+  const desc = pendente.texto || "Registro";
   delete pendingLancamentos[pid];
-  lancarEm(refEscolhida, kcal, desc);
+  lancarEm(refEscolhida, kcal, desc, dataEscolhida);
 }
 
 // ALTERAÇÃO (correção do diário): recebe o texto já pronto (sem encode/decode) e
 // grava o registro por completo, sem o slice(0,52) que cortava o nome — o texto
 // integral é o que permite compartilhar um diário útil com nutricionista/personal.
-function lancarEm(refeicao, kcal, desc) {
-  registros.push({ id:Date.now(), nome:desc, refeicao, kcal });
-  salvarRegistros(); renderLista(); atualizarTudo();
-  addMsg("✅ <strong>" + kcal + " kcal</strong> lançadas em <strong>" + REF_CFG[refeicao].l + "</strong>!", "ia", false);
+// ALTERAÇÃO (#4): agora aceita uma data-alvo. Se for hoje, comportamento igual
+// a antes (usa o array "registros" em memória, que alimenta o painel ao
+// vivo). Se for outra data, grava direto na chave daquele dia e regrava o
+// snapshot dele — sem tocar no dia de hoje.
+function lancarEm(refeicao, kcal, desc, dataAlvo) {
+  dataAlvo = dataAlvo || DATA_HOJE;
+  const ehHoje = dataAlvo === DATA_HOJE;
+
+  if (ehHoje) {
+    registros.push({ id:Date.now(), nome:desc, refeicao, kcal });
+    salvarRegistros(); renderLista(); atualizarTudo();
+  } else {
+    const statusAnterior = obterStatusDoDia(dataAlvo);
+    const jaFechado = !!(statusAnterior && statusAnterior.fechado);
+    const listaAlvo = carregarRegistrosData(dataAlvo);
+    listaAlvo.push({ id:Date.now(), nome:desc, refeicao, kcal });
+    salvarRegistrosData(dataAlvo, listaAlvo);
+    salvarSnapshotParaData(dataAlvo);
+    if (jaFechado) {
+      addMsg("⚠️ O dia " + formatarDataBR(dataAlvo) + " já estava com a conta fechada — reabri para incluir esse lançamento. Feche de novo quando quiser recalcular a tendência.", "ia", false);
+    }
+  }
+
+  const labelData = ehHoje ? "hoje" : formatarDataBR(dataAlvo);
+  addMsg("✅ <strong>" + kcal + " kcal</strong> lançadas em <strong>" + REF_CFG[refeicao].l + "</strong> (" + labelData + ")!", "ia", false);
   if (typeof showToast === "function") showToast("✅ Lançado no diário!");
+  if (ehHoje) talvezSugerirFechamento(refeicao);
+}
+
+// Recalcula e regrava o snapshot de um dia que NÃO é hoje (usado ao lançar
+// retroativamente). Reabre a conta por padrão (fechado:false) — dado novo
+// invalida o fechamento anterior; o aviso acima já avisa o usuário disso.
+function calcularStatusParaData(dataStr) {
+  const meta = parseInt(document.getElementById("meta-input").value) || 0;
+  const registrosData   = carregarRegistrosData(dataStr);
+  const atividadesData  = carregarAtividadesData(dataStr);
+  const queimado    = atividadesData.reduce((s,a) => s + (a.kcal||0), 0);
+  const metaEfetiva = meta > 0 ? meta + queimado : 0;
+  const totalDia    = registrosData.reduce((s,r) => s + r.kcal, 0);
+  const saldoDia    = metaEfetiva > 0 ? metaEfetiva - totalDia : 0;
+  return {
+    data: dataStr, meta, queimado, metaEfetiva,
+    totalDia, itens: registrosData.length, saldoDia,
+    fechado: false,
+  };
+}
+function salvarSnapshotParaData(dataStr) {
+  salvarSnapshotDia(calcularStatusParaData(dataStr));
 }
 
 // ── Registros ──
@@ -1198,6 +1374,9 @@ function limparDiario() {
 
 // ALTERAÇÃO: função central de status do dia. Hoje alimenta o semáforo e a
 // barra; no futuro alimenta gamificação (streak/score) sem duplicar lógica.
+// ALTERAÇÃO (#3): agora também retorna se o dia já foi fechado (snapshot com
+// fechado:true), lido do próprio snapshot salvo — necessário para a função de
+// "fechar a conta" e para a projeção semanal só aparecer no dia fechado.
 function calcularStatusDia() {
   const meta        = parseInt(document.getElementById("meta-input").value) || 0;
   const queimado     = totalQueimadoHoje();
@@ -1219,12 +1398,17 @@ function calcularStatusDia() {
     else                          classificacao = "vermelho";
   }
 
+  const dataDoDia = DATA_HOJE;
+  const snapshotExistente = obterStatusDoDia(dataDoDia);
+  const fechado = !!(snapshotExistente && snapshotExistente.fechado);
+
   return {
-    data: STORAGE_KEY.replace("sm_pnp_", ""),
+    data: dataDoDia,
     meta, queimado, metaEfetiva,
     totalDia, itens: registros.length, saldoDia,
     refeicaoAtual: ref, totalRef, limRef, saldoRef,
     pctRef: Math.round(pctRef), classificacao,
+    fechado,
   };
 }
 
@@ -1237,6 +1421,68 @@ function salvarSnapshotDia(status) {
     const payload = { versao: 1, atualizadoEm: new Date().toISOString(), ...status };
     localStorage.setItem(key, JSON.stringify(payload));
   } catch(e) {}
+}
+
+// ── Fechar a conta do dia (#3) ──
+// Calcula a média de saldo apenas dos dias que já passaram por fecharDia(),
+// nunca de um dia parcial — é o que corrige a projeção estatística sem sentido
+// que antes aparecia a qualquer hora do dia.
+function calcularMediaSaldoFechados(maxDias) {
+  const saldos = [];
+  const d = new Date();
+  for (let i = 0; i < maxDias; i++) {
+    const dataStr = d.toISOString().slice(0,10);
+    const st = obterStatusDoDia(dataStr);
+    if (st && st.fechado) saldos.push(st.saldoDia);
+    d.setDate(d.getDate() - 1);
+  }
+  if (!saldos.length) return null;
+  return saldos.reduce((a,b) => a+b, 0) / saldos.length;
+}
+
+function mostrarResumoFechamento(status) {
+  const mediaSaldo = calcularMediaSaldoFechados(7);
+  let projecaoTxt = "Feche mais alguns dias para eu calcular sua tendência semanal com segurança.";
+  if (mediaSaldo !== null) {
+    const kgSemana = ((mediaSaldo * 7) / KCAL_POR_KG).toFixed(2);
+    projecaoTxt = mediaSaldo >= 0
+      ? "Com sua média dos últimos dias fechados (" + Math.round(mediaSaldo) + " kcal/dia de sobra), a tendência é de aproximadamente <strong>" + kgSemana + " kg a menos por semana</strong>."
+      : "Sua média dos últimos dias fechados está " + Math.round(Math.abs(mediaSaldo)) + " kcal acima da meta — nesse ritmo a tendência é de ganho, não perda.";
+  }
+  const html = "🧾 <strong>Conta fechada!</strong><br>"
+    + "Total consumido: <strong>" + status.totalDia + " kcal</strong> de " + status.metaEfetiva + " kcal<br>"
+    + "Saldo do dia: <strong>" + (status.saldoDia >= 0 ? "+" : "") + status.saldoDia + " kcal</strong>"
+    + "<br><br>📈 " + projecaoTxt;
+  addMsg(html, "ia", false);
+}
+
+function fecharDia() {
+  const status = calcularStatusDia();
+  if (status.itens === 0 && status.queimado === 0) {
+    alert("Ainda não há nada registrado hoje para fechar.");
+    return;
+  }
+  if (status.fechado) {
+    if (!confirm("A conta de hoje já está fechada. Quer reabrir e fechar de novo com os dados atuais?")) return;
+  }
+  status.fechado = true;
+  salvarSnapshotDia(status);
+  mostrarResumoFechamento(status);
+  renderGamificacao(status);
+}
+
+// Sugestão automática: depois de lançar jantar/ceia, ou depois das 20h.
+function talvezSugerirFechamento(refeicaoLancada) {
+  const status = calcularStatusDia();
+  if (status.fechado) return;
+  const hora = new Date().getHours();
+  const ultimaRefeicao = (refeicaoLancada === "jantar" || refeicaoLancada === "ceia");
+  if (ultimaRefeicao || hora >= 20) {
+    setTimeout(() => {
+      addMsg("🌙 Foi sua última refeição de hoje? Posso fechar a conta e te dar o resumo.<br>"
+        + "<button class=\"btn-lancar\" onclick=\"fecharDia()\">🧾 Sim, fechar a conta</button>", "ia", false);
+    }, 350);
+  }
 }
 
 // ── Gamificação (#1 + #4) ──
@@ -1289,17 +1535,22 @@ function renderGamificacao(status) {
   const recorde         = atualizarRecordePessoal(streakComHoje);
   const medalha         = medalhaPara(streakComHoje);
 
+  // ALTERAÇÃO (#2 + #3): a projeção semanal (kg/semana) deixou de aparecer no
+  // meio do dia — agora só mostra o saldo parcial, e a tendência semanal
+  // aparece só quando o dia é fechado via fecharDia() (mostrarResumoFechamento).
   let interpretacao;
   if (status.itens === 0) {
     interpretacao = "Registre suas refeições para acompanhar seu progresso de hoje.";
+  } else if (status.fechado) {
+    interpretacao = status.saldoDia >= 0
+      ? "✅ Conta fechada com <strong>" + status.saldoDia + " kcal</strong> de sobra."
+      : "Conta fechada com <strong>" + Math.abs(status.saldoDia) + " kcal</strong> acima da meta.";
   } else if (status.saldoDia > 0) {
-    const kgSemana = ((status.saldoDia * 7) / KCAL_POR_KG).toFixed(2);
-    interpretacao = "✅ Sobrou <strong>" + status.saldoDia + " kcal</strong> hoje — isso é ótimo, não é um problema! "
-      + "Mantendo essa mesma sobra todos os dias, dá aproximadamente <strong>" + kgSemana + " kg a menos por semana</strong> (estimativa com base em ~7.700 kcal por kg de gordura).";
+    interpretacao = "✅ Por enquanto sobraram <strong>" + status.saldoDia + " kcal</strong> hoje. Feche a conta (botão acima) quando terminar de comer para ver a tendência semanal.";
   } else if (status.saldoDia === 0) {
-    interpretacao = "🎯 Você bateu sua meta certinha hoje!";
+    interpretacao = "🎯 Você bateu sua meta certinha até agora!";
   } else {
-    interpretacao = "Você passou <strong>" + Math.abs(status.saldoDia) + " kcal</strong> da meta diária hoje. Não é o fim do mundo — o que importa é a média da semana.";
+    interpretacao = "Você já passou <strong>" + Math.abs(status.saldoDia) + " kcal</strong> da meta hoje. Não é o fim do mundo — feche a conta pra ver a média da semana.";
   }
 
   card.style.display = "";
@@ -1373,10 +1624,36 @@ function compartilharWhatsApp() {
   const txt = montarDiarioDetalhado();
   window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(txt), "_blank");
 }
+
 // ALTERAÇÃO: Instagram não tem link que abra já com texto preenchido (diferente
 // do WhatsApp) — por isso copiamos o texto e avisamos o usuário para colar
-// manualmente nos Stories, mesmo padrão usado no outro site.
-  
+// manualmente nos Stories. O aviso aparece ANTES de abrir o Instagram (aba nova
+// tira o foco imediatamente, então o Instagram só abre 1,5s depois do aviso).
+function compartilharInstagram() {
+  const status = calcularStatusDia();
+  if (status.itens === 0 && status.queimado === 0) {
+    alert("Registre pelo menos uma refeição ou treino antes de compartilhar!");
+    return;
+  }
+  const txt = montarDiarioDetalhado();
+  const abrirInstagram = () => window.open("https://www.instagram.com/", "_blank");
+  const avisarEAbrir = () => {
+    if (typeof showToast === "function") showToast("📋 Texto copiado! Cole nos Stories do Instagram.");
+    else alert("Texto copiado! Cole nos Stories do Instagram.");
+    setTimeout(abrirInstagram, 1500);
+  };
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(avisarEAbrir).catch(() => {
+      promptFallbackCopy(txt);
+      abrirInstagram();
+    });
+  } else {
+    promptFallbackCopy(txt);
+    abrirInstagram();
+  }
+}
+
 function copiarDiario() {
   const status = calcularStatusDia();
   if (status.itens === 0 && status.queimado === 0) {
@@ -1474,11 +1751,11 @@ function atualizarTudo() {
   renderGamificacao(status);
 }
 
-function salvarRegistros() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(registros)); } catch(e) {} }
-function carregarRegistros() {
-  try { const r = localStorage.getItem(STORAGE_KEY); return r ? JSON.parse(r) : []; }
-  catch(e) { return []; }
-}
+// ALTERAÇÃO (#4): agora delega para as funções genéricas por data — mesma
+// chave de sempre (STORAGE_KEY === chaveRegistros(DATA_HOJE)), sem duplicar
+// a lógica de leitura/gravação.
+function salvarRegistros() { salvarRegistrosData(DATA_HOJE, registros); }
+function carregarRegistros() { return carregarRegistrosData(DATA_HOJE); }
 window.addEventListener("storage", (e) => {
   if (e.key === ATIV_KEY || e.key === META_KEY || e.key === STORAGE_KEY) {
     atualizarTudo();
