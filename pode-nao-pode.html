@@ -257,6 +257,46 @@
     .btn-lancar { display:inline-block; margin-top:.45rem; padding:.38rem .85rem; background:var(--verde); color:#fff; border:none; border-radius:8px; font-size:.78rem; font-weight:700; cursor:pointer; transition:background .2s; }
     .btn-lancar:hover { background:#15803d; }
 
+    /* CORREÇÃO (balão de confirmação de lançamento ilegível no celular):
+       antes usava font-size .72–.76rem e paddings mínimos, tudo em uma
+       linha só via style inline. Agora tem classes próprias com fonte e
+       toque bem maiores (o dobro no celular, conforme pedido), e no
+       celular os controles empilham em largura total para dar espaço
+       de leitura e de toque (mínimo 44px de altura). */
+    .confirmar-lancamento {
+      margin-top:.5rem; font-size:.95rem; display:flex; align-items:center;
+      gap:.5rem; flex-wrap:wrap;
+    }
+    .confirmar-lancamento-label { font-weight:600; width:100%; }
+    .confirmar-lancamento select {
+      padding:.4rem .6rem; border-radius:8px; border:1px solid var(--border,#e2e8f0);
+      background:transparent; color:var(--text); font-size:.95rem; min-height:40px;
+    }
+    .btn-confirmar-lanc {
+      background:var(--verde); color:#fff; border:none; border-radius:8px;
+      padding:.5rem 1rem; cursor:pointer; font-weight:700; font-size:.95rem; min-height:40px;
+    }
+    .btn-cancelar-lanc {
+      background:none; border:1px solid var(--border,#e2e8f0); border-radius:8px;
+      padding:.5rem 1rem; cursor:pointer; color:var(--text-muted,#64748b); font-size:.95rem; min-height:40px;
+    }
+    .aviso-data-fechada { width:100%; color:#d97706; font-size:.85rem; }
+
+    @media (max-width: 480px) {
+      /* Original era .76rem (~12px) e mal cabia numa linha só — abaixo fica
+         ~1.6rem (~26px), mais que o dobro, e cada controle ocupa a largura
+         toda para não precisar espremer texto nem mirar num alvo pequeno. */
+      .confirmar-lancamento { font-size:1.1rem; gap:.7rem; }
+      .confirmar-lancamento-label { font-size:1.2rem; }
+      .confirmar-lancamento select {
+        flex:1 1 100%; padding:.85rem .9rem; font-size:1.6rem; min-height:52px;
+      }
+      .btn-confirmar-lanc, .btn-cancelar-lanc {
+        flex:1 1 100%; padding:.85rem .9rem; font-size:1.6rem; min-height:52px;
+      }
+      .aviso-data-fechada { font-size:1.05rem; }
+    }
+
     /* ── Input ── */
     .chat-input-row { display:flex; gap:.45rem; align-items:flex-end; }
     .chat-input {
@@ -635,15 +675,29 @@
     .modal-diario-overlay {
       position:fixed; inset:0; background:rgba(15,23,42,.55); z-index:1000;
       display:flex; align-items:flex-start; justify-content:center; padding:2rem 1rem; overflow-y:auto;
+      overscroll-behavior:contain; -webkit-overflow-scrolling:touch;
     }
     .modal-diario-caixa {
       background:var(--card-bg, #fff); border-radius:14px; max-width:640px; width:100%;
-      padding:1.1rem 1.2rem 1.4rem; box-shadow:0 10px 40px rgba(0,0,0,.25);
+      padding:0 1.2rem 1.4rem; box-shadow:0 10px 40px rgba(0,0,0,.25);
+      position:relative;
     }
-    .modal-diario-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:.6rem; }
+    /* CORREÇÃO (bug diário travado no celular): o cabeçalho (título + ✕) agora
+       fica "sticky" no topo da própria caixa do modal. Assim, não importa o
+       quanto o conteúdo (ou qualquer elemento externo, como o menu do site)
+       empurre o layout, o botão de fechar nunca fica fora da área visível —
+       basta rolar para cima dentro do modal que ele reaparece. O scroll do
+       fundo da página também é travado enquanto o modal está aberto (ver
+       abrirDiarioCompleto/fecharDiarioCompleto no JS), que é o que evitava
+       o usuário conseguir "sair" da tela antes. */
+    .modal-diario-header {
+      display:flex; align-items:center; justify-content:space-between;
+      position:sticky; top:0; z-index:2; background:var(--card-bg, #fff);
+      padding:1.1rem 0 .6rem; margin-bottom:.6rem;
+    }
     .modal-diario-fechar {
-      background:none; border:none; font-size:1.1rem; cursor:pointer; color:var(--text-muted,#64748b);
-      line-height:1; padding:.2rem .4rem;
+      background:none; border:none; font-size:1.6rem; cursor:pointer; color:var(--text-muted,#64748b);
+      line-height:1; padding:.3rem .5rem; min-width:44px; min-height:44px;
     }
     .modal-diario-tabs { display:flex; gap:.4rem; margin-bottom:.8rem; }
     .tab-diario {
@@ -805,12 +859,23 @@ function formatarDataBR(dataStr) {
 // ── Diário completo (#5): visão semana/mês, card por dia, parcial ou fechado ──
 let diarioModoAtual = "semana";
 
+// CORREÇÃO (bug diário travado no celular): trava o scroll do fundo da página
+// enquanto o diário está aberto (evita que o layout por trás — incluindo o
+// menu do site, injetado pelo shared.js — se redesenhe e "engula" o botão de
+// fechar) e permite fechar com a tecla Esc, além do ✕ e do clique fora.
 function abrirDiarioCompleto() {
   document.getElementById("modal-diario-completo").style.display = "flex";
+  document.body.style.overflow = "hidden";
+  document.addEventListener("keydown", fecharDiarioComEsc);
   renderizarDiarioCompleto();
 }
 function fecharDiarioCompleto() {
   document.getElementById("modal-diario-completo").style.display = "none";
+  document.body.style.overflow = "";
+  document.removeEventListener("keydown", fecharDiarioComEsc);
+}
+function fecharDiarioComEsc(e) {
+  if (e.key === "Escape") fecharDiarioCompleto();
 }
 function alternarVisaoDiario(modo) {
   diarioModoAtual = modo;
@@ -1415,15 +1480,13 @@ function confirmarLancamento(pid, kcal, btnEl) {
   ).join("");
   const optsData = gerarOpcoesData(dataAlvo);
 
-  const html = `<div id="${id}" style="margin-top:.35rem;font-size:.76rem;display:flex;align-items:center;gap:.3rem;flex-wrap:wrap;">
-      Confirmar em:
-      <select id="${id}-sel" style="padding:.2rem .4rem;border-radius:6px;border:1px solid var(--border,#e2e8f0);background:transparent;color:var(--text);font-size:.76rem;">${optsRef}</select>
-      <select id="${id}-data" onchange="atualizarAvisoDataFechada('${id}')" style="padding:.2rem .4rem;border-radius:6px;border:1px solid var(--border,#e2e8f0);background:transparent;color:var(--text);font-size:.76rem;">${optsData}</select>
-      <button onclick="confirmarLancarFinal('${id}', '${pid}', ${kcal})"
-        style="background:var(--verde);color:#fff;border:none;border-radius:6px;padding:.22rem .55rem;cursor:pointer;font-weight:700;font-size:.76rem;">✔ Confirmar</button>
-      <button onclick="document.getElementById('${id}').remove()"
-        style="background:none;border:1px solid var(--border,#e2e8f0);border-radius:6px;padding:.22rem .5rem;cursor:pointer;color:var(--text-muted,#64748b);font-size:.76rem;">✕ Cancelar</button>
-      <span id="${id}-aviso" style="width:100%;color:#d97706;font-size:.72rem;"></span>
+  const html = `<div id="${id}" class="confirmar-lancamento">
+      <span class="confirmar-lancamento-label">Confirmar em:</span>
+      <select id="${id}-sel">${optsRef}</select>
+      <select id="${id}-data" onchange="atualizarAvisoDataFechada('${id}')">${optsData}</select>
+      <button class="btn-confirmar-lanc" onclick="confirmarLancarFinal('${id}', '${pid}', ${kcal})">✔ Confirmar</button>
+      <button class="btn-cancelar-lanc" onclick="document.getElementById('${id}').remove()">✕ Cancelar</button>
+      <span id="${id}-aviso" class="aviso-data-fechada"></span>
     </div>`;
   btnEl.insertAdjacentHTML("afterend", html);
   btnEl.remove();
