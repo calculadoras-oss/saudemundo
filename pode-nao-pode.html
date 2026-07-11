@@ -257,6 +257,46 @@
     .btn-lancar { display:inline-block; margin-top:.45rem; padding:.38rem .85rem; background:var(--verde); color:#fff; border:none; border-radius:8px; font-size:.78rem; font-weight:700; cursor:pointer; transition:background .2s; }
     .btn-lancar:hover { background:#15803d; }
 
+    /* CORREÇÃO (balão de confirmação de lançamento ilegível no celular):
+       antes usava font-size .72–.76rem e paddings mínimos, tudo em uma
+       linha só via style inline. Agora tem classes próprias com fonte e
+       toque bem maiores (o dobro no celular, conforme pedido), e no
+       celular os controles empilham em largura total para dar espaço
+       de leitura e de toque (mínimo 44px de altura). */
+    .confirmar-lancamento {
+      margin-top:.5rem; font-size:.95rem; display:flex; align-items:center;
+      gap:.5rem; flex-wrap:wrap;
+    }
+    .confirmar-lancamento-label { font-weight:600; width:100%; }
+    .confirmar-lancamento select {
+      padding:.4rem .6rem; border-radius:8px; border:1px solid var(--border,#e2e8f0);
+      background:transparent; color:var(--text); font-size:.95rem; min-height:40px;
+    }
+    .btn-confirmar-lanc {
+      background:var(--verde); color:#fff; border:none; border-radius:8px;
+      padding:.5rem 1rem; cursor:pointer; font-weight:700; font-size:.95rem; min-height:40px;
+    }
+    .btn-cancelar-lanc {
+      background:none; border:1px solid var(--border,#e2e8f0); border-radius:8px;
+      padding:.5rem 1rem; cursor:pointer; color:var(--text-muted,#64748b); font-size:.95rem; min-height:40px;
+    }
+    .aviso-data-fechada { width:100%; color:#d97706; font-size:.85rem; }
+
+    @media (max-width: 480px) {
+      /* Original era .76rem (~12px) e mal cabia numa linha só — abaixo fica
+         ~1.6rem (~26px), mais que o dobro, e cada controle ocupa a largura
+         toda para não precisar espremer texto nem mirar num alvo pequeno. */
+      .confirmar-lancamento { font-size:1.1rem; gap:.7rem; }
+      .confirmar-lancamento-label { font-size:1.2rem; }
+      .confirmar-lancamento select {
+        flex:1 1 100%; padding:.85rem .9rem; font-size:1.6rem; min-height:52px;
+      }
+      .btn-confirmar-lanc, .btn-cancelar-lanc {
+        flex:1 1 100%; padding:.85rem .9rem; font-size:1.6rem; min-height:52px;
+      }
+      .aviso-data-fechada { font-size:1.05rem; }
+    }
+
     /* ── Input ── */
     .chat-input-row { display:flex; gap:.45rem; align-items:flex-end; }
     .chat-input {
@@ -436,60 +476,6 @@
     body.dark .btn-copiar:hover { background:#0c1d3d; }
     body.dark .conceito-caixa { background:rgba(76,217,138,0.08); border-color:rgba(76,217,138,0.3); }
     body.dark .conceito-caixa summary { color: var(--green, #4CD98A); }
-
-    /* ── Diário completo (#5) ── */
-    .btn-diario-abrir { width:100%; padding:.6rem; background:var(--verde-bg); border:1.5px solid var(--verde-brd); border-radius:8px; color:var(--verde); font-weight:700; font-size:.85rem; cursor:pointer; }
-    .btn-diario-abrir:hover { background:#dcfce7; }
-    body.dark .btn-diario-abrir { background:#052e16; border-color:#166534; color:#86efac; }
-    body.dark .btn-diario-abrir:hover { background:#0a4020; }
-
-    .diario-overlay {
-      position:fixed; inset:0; background:rgba(0,0,0,.5);
-      z-index:2147483000; /* ALTERAÇÃO: bem acima de qualquer elemento fixo do site (nav) */
-      display:flex; align-items:flex-end; justify-content:center;
-      padding-bottom: env(safe-area-inset-bottom, 0px);
-    }
-    /* ALTERAÇÃO: respiro extra embaixo no mobile — empurra o modal pra cima do
-       nav fixo do shared.js, que sem isso cobria o botão de fechar (✕). */
-    @media (max-width:639px) {
-      .diario-overlay { padding-bottom: 72px; }
-    }
-    @media (min-width:640px) { .diario-overlay { align-items:center; } }
-    .diario-modal { background:var(--dark2,#fff); width:100%; max-width:600px; max-height:88vh; border-radius:16px 16px 0 0; overflow:hidden; display:flex; flex-direction:column; }
-    @media (min-width:640px) { .diario-modal { border-radius:16px; max-height:80vh; } }
-    .diario-modal-header { display:flex; align-items:center; justify-content:space-between; gap:.5rem; padding:.9rem 1rem; border-bottom:1px solid var(--border,#e2e8f0); }
-    .diario-modal-header span { font-weight:700; font-size:.95rem; flex:1; text-align:center; }
-    .diario-mes-nav, .diario-fechar { background:none; border:1px solid var(--border,#e2e8f0); border-radius:8px; padding:.3rem .6rem; cursor:pointer; font-size:.9rem; color:var(--text); }
-    .diario-modal-actions { padding:.6rem 1rem; border-bottom:1px solid var(--border,#e2e8f0); }
-    .diario-lista-dias { overflow-y:auto; padding:.8rem 1rem 1.2rem; flex:1; }
-
-    .dia-card { border:1px solid var(--border,#e2e8f0); border-radius:10px; margin-bottom:.6rem; overflow:hidden; }
-    .dia-card-header { display:flex; align-items:center; justify-content:space-between; gap:.5rem; padding:.65rem .8rem; cursor:pointer; background:var(--dark2,#fff); }
-    .dia-card-data { font-weight:700; font-size:.85rem; }
-    .dia-card-dow { font-size:.68rem; color:var(--text-muted,#64748b); text-transform:uppercase; }
-    .dia-card-badge { font-size:.72rem; font-weight:700; padding:.15rem .5rem; border-radius:20px; white-space:nowrap; }
-    .dia-badge-superavit { background:var(--verde-bg); color:var(--verde); }
-    .dia-badge-deficit { background:var(--verm-bg); color:var(--verm); }
-    .dia-badge-semmeta { background:#f1f5f9; color:var(--text-muted,#64748b); }
-    .dia-card-corpo { display:none; padding:0 .8rem .7rem; border-top:1px dashed var(--border,#e2e8f0); }
-    .dia-card-corpo.aberto { display:block; }
-    .dia-item-row { display:flex; align-items:center; gap:.4rem; padding:.4rem 0; font-size:.8rem; border-bottom:1px solid var(--border,#e2e8f0); }
-    .dia-item-row:last-child { border-bottom:none; }
-    .dia-item-nome { flex:1; min-width:0; word-break:break-word; }
-    .dia-item-kcal-input { width:58px; padding:.15rem .3rem; border:1px solid var(--border,#e2e8f0); border-radius:5px; background:transparent; color:var(--text); font-size:.78rem; }
-    .dia-item-del { background:none; border:none; color:var(--text-muted,#64748b); cursor:pointer; font-size:.85rem; padding:.1rem .2rem; }
-    .dia-item-del:hover { color:var(--verm); }
-    .dia-vazio { text-align:center; color:var(--text-muted,#64748b); font-size:.82rem; padding:1.2rem 0; }
-
-    body.dark .diario-modal { background:#111; }
-    body.dark .dia-card { border-color:#2d2d2d; }
-    body.dark .dia-card-header { background:#111; }
-    body.dark .dia-badge-superavit { background:#052e16; color:#86efac; }
-    body.dark .dia-badge-deficit { background:#3b0d0d; color:#fca5a5; }
-    body.dark .dia-badge-semmeta { background:#1a1a1a; color:#94a3b8; }
-    body.dark .diario-modal-header, body.dark .diario-modal-actions { border-color:#2d2d2d; }
-    body.dark .dia-item-row, body.dark .dia-card-corpo { border-color:#2d2d2d; }
-    body.dark .diario-mes-nav, body.dark .diario-fechar { border-color:#2d2d2d; color:#e2e8f0; }
     @media (max-width: 480px) {
       .chat-input { font-size: 16px; }
       .msg { font-size: .95rem; padding: .7rem 1rem; }
@@ -651,7 +637,6 @@
       <div class="reg-header-btns">
         <button class="btn-compartilhar" onclick="compartilharWhatsApp()" title="Compartilhar no WhatsApp">💬 WhatsApp</button>
         <button class="btn-instagram" onclick="compartilharInstagram()" title="Copiar e compartilhar nos Stories do Instagram">📷 Instagram</button>
-        <button class="btn-copiar" onclick="copiarDiario()">📋 Copiar diário</button>
         <button class="btn-fechar-dia" onclick="fecharDia()" title="Fecha a conta do dia e libera o resumo/tendência">🧾 Fechar a conta de hoje</button>
         <button class="btn-limpar" onclick="limparDiario()">🗑 Limpar</button>
       </div>
@@ -659,28 +644,105 @@
     <div id="lista-registros">
       <div class="empty-msg">Nenhum registro ainda.<br>Use o modo <strong>📊 Vou comer isso</strong> para registrar! 🚦</div>
     </div>
-  </div>
-
-  <!-- Diário completo (#5) -->
-  <div class="pnp-card">
-    <div class="pnp-card-title" style="margin-bottom:.6rem;">📔 Diário completo</div>
-    <button class="btn-diario-abrir" onclick="abrirDiario()">📖 Ver diário por dia / navegar por mês</button>
-  </div>
-
-  <div id="diario-overlay" class="diario-overlay" style="display:none;">
-    <div class="diario-modal">
-      <div class="diario-modal-header">
-        <button class="diario-mes-nav" onclick="mudarMes(-1)" title="Mês anterior">◀</button>
-        <span id="diario-mes-label">—</span>
-        <button class="diario-mes-nav" onclick="mudarMes(1)" title="Próximo mês">▶</button>
-        <button class="diario-fechar" onclick="fecharDiario()" title="Fechar">✕</button>
-      </div>
-      <div class="diario-modal-actions">
-        <button class="btn-copiar" onclick="exportarPeriodo()">📤 Exportar mês (copiar texto)</button>
-      </div>
-      <div id="diario-lista-dias" class="diario-lista-dias"></div>
+    <div class="reg-diario-completo-link">
+      <button class="btn-ver-diario-completo" onclick="abrirDiarioCompleto()">📅 Ver diário completo (semana/mês)</button>
     </div>
   </div>
+
+  <!-- ── Diário completo (item 5): visão histórica por semana/mês ── -->
+  <div id="modal-diario-completo" class="modal-diario-overlay" style="display:none;" onclick="if(event.target===this) fecharDiarioCompleto()">
+    <div class="modal-diario-caixa">
+      <div class="modal-diario-header">
+        <div class="pnp-card-title" style="margin:0;">📅 Diário completo</div>
+        <button class="modal-diario-fechar" onclick="fecharDiarioCompleto()" title="Fechar">✕</button>
+      </div>
+      <div class="modal-diario-tabs">
+        <button class="tab-diario ativo" data-modo="semana" onclick="alternarVisaoDiario('semana')">Semana</button>
+        <button class="tab-diario" data-modo="mes" onclick="alternarVisaoDiario('mes')">Mês</button>
+      </div>
+      <div id="diario-completo-corpo" class="modal-diario-corpo"></div>
+    </div>
+  </div>
+
+  <style>
+    .reg-diario-completo-link { text-align:center; margin-top:.6rem; }
+    .btn-ver-diario-completo {
+      font-size:.78rem; color:var(--azul); background:none; border:1px solid var(--azul);
+      border-radius:8px; padding:.4rem .9rem; cursor:pointer;
+    }
+    .btn-ver-diario-completo:hover { background:var(--azul-bg); }
+
+    .modal-diario-overlay {
+      position:fixed; inset:0; background:rgba(15,23,42,.55);
+      z-index:2147483000; /* CORREÇÃO: bem acima de qualquer elemento fixo do site (nav do shared.js) */
+      display:flex; align-items:flex-start; justify-content:center; padding:2rem 1rem; overflow-y:auto;
+      overscroll-behavior:contain; -webkit-overflow-scrolling:touch;
+    }
+    .modal-diario-caixa {
+      background:var(--card-bg, #fff); border-radius:14px; max-width:640px; width:100%;
+      padding:0 1.2rem 1.4rem; box-shadow:0 10px 40px rgba(0,0,0,.25);
+      position:relative;
+    }
+    /* CORREÇÃO (bug diário travado no celular): o cabeçalho (título + ✕) agora
+       fica "sticky" no topo da própria caixa do modal. Assim, não importa o
+       quanto o conteúdo (ou qualquer elemento externo, como o menu do site)
+       empurre o layout, o botão de fechar nunca fica fora da área visível —
+       basta rolar para cima dentro do modal que ele reaparece. O scroll do
+       fundo da página também é travado enquanto o modal está aberto (ver
+       abrirDiarioCompleto/fecharDiarioCompleto no JS), que é o que evitava
+       o usuário conseguir "sair" da tela antes. */
+    .modal-diario-header {
+      display:flex; align-items:center; justify-content:space-between;
+      position:sticky; top:0; z-index:2; background:var(--card-bg, #fff);
+      padding:1.1rem 0 .6rem; margin-bottom:.6rem;
+    }
+    .modal-diario-fechar {
+      background:none; border:none; font-size:1.6rem; cursor:pointer; color:var(--text-muted,#64748b);
+      line-height:1; padding:.3rem .5rem; min-width:44px; min-height:44px;
+    }
+    .modal-diario-tabs { display:flex; gap:.4rem; margin-bottom:.8rem; }
+    .tab-diario {
+      flex:1; font-size:.8rem; font-weight:600; padding:.45rem 0; border-radius:8px;
+      border:1px solid var(--azul); background:none; color:var(--azul); cursor:pointer;
+    }
+    .tab-diario.ativo { background:var(--azul); color:#fff; }
+
+    .dia-card { border:1px solid var(--borda,#e2e8f0); border-radius:10px; margin-bottom:.55rem; overflow:hidden; }
+    .dia-card-head {
+      display:flex; align-items:center; gap:.5rem; padding:.6rem .75rem; cursor:pointer;
+      background:var(--card-bg-2, #f8fafc);
+    }
+    .dia-card-data { font-weight:700; font-size:.85rem; flex-shrink:0; }
+    .dia-card-status {
+      font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.03em;
+      padding:.15rem .4rem; border-radius:5px; flex-shrink:0;
+    }
+    .dia-card-status.st-fechado { background:var(--verde-bg,#dcfce7); color:var(--verde,#16a34a); }
+    .dia-card-status.st-parcial { background:var(--amarelo-bg,#fef9c3); color:var(--amarelo-escuro,#a16207); }
+    .dia-card-resumo { margin-left:auto; font-size:.8rem; color:var(--text-muted,#64748b); text-align:right; }
+    .dia-card-saldo-pos { color:var(--verde,#16a34a); font-weight:700; }
+    .dia-card-saldo-neg { color:var(--vermelho,#dc2626); font-weight:700; }
+    .dia-card-corpo { display:none; padding:.5rem .75rem .8rem; border-top:1px solid var(--borda,#e2e8f0); }
+    .dia-card.aberto .dia-card-corpo { display:block; }
+    .dia-card-vazio { font-size:.8rem; color:var(--text-muted,#64748b); font-style:italic; }
+    .diario-completo-vazio { font-size:.85rem; color:var(--text-muted,#64748b); text-align:center; padding:1.2rem 0; }
+    .diario-completo-grupo-titulo {
+      display:flex; align-items:center; justify-content:space-between;
+      font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em;
+      color:var(--text-muted,#64748b); margin:.9rem 0 .35rem;
+    }
+    .grupo-copiar {
+      font-size:.68rem; font-weight:700; text-transform:none; letter-spacing:0;
+      color:var(--azul); background:none; border:1px solid var(--azul); border-radius:6px;
+      padding:.15rem .5rem; cursor:pointer;
+    }
+    .grupo-copiar:hover { background:var(--azul-bg); }
+    .dia-card-copiar {
+      background:none; border:none; cursor:pointer; font-size:.85rem; flex-shrink:0;
+      padding:.1rem .3rem; opacity:.7;
+    }
+    .dia-card-copiar:hover { opacity:1; }
+  </style>
 
   <!-- Editorial -->
   <div class="editorial">
@@ -795,6 +857,164 @@ function formatarDataBR(dataStr) {
   return dia + "/" + mes + "/" + ano;
 }
 
+// ── Diário completo (#5): visão semana/mês, card por dia, parcial ou fechado ──
+let diarioModoAtual = "semana";
+
+// CORREÇÃO (bug diário travado no celular): trava o scroll do fundo da página
+// enquanto o diário está aberto (evita que o layout por trás — incluindo o
+// menu do site, injetado pelo shared.js — se redesenhe e "engula" o botão de
+// fechar) e permite fechar com a tecla Esc, além do ✕ e do clique fora.
+// CORREÇÃO 2 (mesmo bug, causa raiz): mesmo com scroll travado e z-index alto,
+// se algum elemento ANCESTRAL do modal (ex: .container, main) tiver
+// transform/filter/perspective definidos em CSS, isso cria um novo "contexto
+// de empilhamento" que prende o z-index do modal dentro dele — nesse caso,
+// nenhum z-index resolve, porque o modal nunca disputa camada diretamente
+// com o nav (que é fixo direto no <body>). A solução definitiva é mover o
+// modal para ser filho direto do <body> quando abre, escapando de qualquer
+// ancestral problemático. Ele só reaparece nesse lugar quando aberto de novo.
+function abrirDiarioCompleto() {
+  const modal = document.getElementById("modal-diario-completo");
+  if (modal.parentElement !== document.body) {
+    document.body.appendChild(modal);
+  }
+  modal.style.display = "flex";
+  document.body.style.overflow = "hidden";
+  document.addEventListener("keydown", fecharDiarioComEsc);
+  renderizarDiarioCompleto();
+}
+function fecharDiarioCompleto() {
+  document.getElementById("modal-diario-completo").style.display = "none";
+  document.body.style.overflow = "";
+  document.removeEventListener("keydown", fecharDiarioComEsc);
+}
+function fecharDiarioComEsc(e) {
+  if (e.key === "Escape") fecharDiarioCompleto();
+}
+function alternarVisaoDiario(modo) {
+  diarioModoAtual = modo;
+  document.querySelectorAll(".tab-diario").forEach(b => b.classList.toggle("ativo", b.dataset.modo === modo));
+  renderizarDiarioCompleto();
+}
+
+// Divide o número da semana ISO (ano-semana) para agrupar dias.
+function chaveSemana(dataStr) {
+  const d = new Date(dataStr + "T00:00:00");
+  const d2 = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const diaSemana = (d2.getUTCDay() + 6) % 7; // segunda=0
+  d2.setUTCDate(d2.getUTCDate() - diaSemana + 3);
+  const anoISO = d2.getUTCFullYear();
+  const primeiraQuinta = new Date(Date.UTC(anoISO, 0, 4));
+  const semana = 1 + Math.round(((d2 - primeiraQuinta) / 86400000 - 3 + ((primeiraQuinta.getUTCDay() + 6) % 7)) / 7);
+  return anoISO + "-S" + String(semana).padStart(2, "0");
+}
+function chaveMes(dataStr) { return dataStr.slice(0, 7); } // YYYY-MM
+
+function rotuloGrupo(chave, modo) {
+  if (modo === "mes") {
+    const [ano, mes] = chave.split("-");
+    const nomes = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+    return nomes[parseInt(mes,10)-1] + "/" + ano;
+  }
+  return "Semana " + chave.split("-S")[1] + " · " + chave.split("-S")[0];
+}
+
+function montarCardDia(dataStr) {
+  const status = obterStatusDoDia(dataStr);
+  const registrosDia = carregarRegistrosData(dataStr);
+  const atividadesDia = carregarAtividadesData(dataStr);
+  const temDados = registrosDia.length > 0 || atividadesDia.length > 0 || !!status;
+
+  const fechado = !!(status && status.fechado);
+  const totalDia = status ? status.totalDia : registrosDia.reduce((s,r)=>s+r.kcal,0);
+  const saldoDia = status ? status.saldoDia : null;
+
+  let resumoHtml = "";
+  if (temDados) {
+    resumoHtml = totalDia + " kcal";
+    if (saldoDia !== null) {
+      const cls = saldoDia >= 0 ? "dia-card-saldo-pos" : "dia-card-saldo-neg";
+      resumoHtml += " · <span class=\"" + cls + "\">" + (saldoDia >= 0 ? "+" : "") + saldoDia + " kcal</span>";
+    }
+  } else {
+    resumoHtml = "sem registros";
+  }
+
+  let corpoHtml;
+  if (!temDados) {
+    corpoHtml = "<div class=\"dia-card-vazio\">Nenhum registro nesse dia.</div>";
+  } else {
+    corpoHtml = "";
+    if (registrosDia.length) {
+      corpoHtml += registrosDia.map(r => {
+        const rf = REF_CFG[r.refeicao] || { l: r.refeicao, c: "" };
+        return "<div class=\"reg-item\">"
+          + "<span class=\"reg-badge " + rf.c + "\">" + rf.l + "</span>"
+          + "<span class=\"reg-info\"><span class=\"reg-nome\">" + escapeHtml(r.nome).replace(/\n/g,"<br>") + "</span></span>"
+          + "<span class=\"reg-kcal\">" + r.kcal + " kcal</span>"
+          + "</div>";
+      }).join("");
+    }
+    if (atividadesDia.length) {
+      corpoHtml += atividadesDia.map(a =>
+        "<div class=\"reg-item\">"
+        + "<span class=\"reg-badge b-treino\">⚡ Queima</span>"
+        + "<span class=\"reg-info\"><span class=\"reg-nome\">" + escapeHtml(a.nome) + "</span></span>"
+        + "<span class=\"reg-kcal reg-kcal-credito\">+" + a.kcal + " kcal</span>"
+        + "</div>"
+      ).join("");
+    }
+    if (!registrosDia.length && !atividadesDia.length) {
+      corpoHtml = "<div class=\"dia-card-vazio\">Dia fechado sem refeições ou treinos registrados.</div>";
+    }
+  }
+
+  return "<div class=\"dia-card\" id=\"dia-card-" + dataStr + "\">"
+    + "<div class=\"dia-card-head\" onclick=\"toggleDiaCard('" + dataStr + "')\">"
+    + "<span class=\"dia-card-data\">" + formatarDataBR(dataStr) + "</span>"
+    + (temDados ? "<span class=\"dia-card-status " + (fechado ? "st-fechado" : "st-parcial") + "\">" + (fechado ? "Fechado" : "Parcial") + "</span>" : "")
+    + "<span class=\"dia-card-resumo\">" + resumoHtml + "</span>"
+    + (temDados ? "<button class=\"dia-card-copiar\" onclick=\"copiarDia('" + dataStr + "', event)\" title=\"Copiar esse dia\">📋</button>" : "")
+    + "</div>"
+    + "<div class=\"dia-card-corpo\">" + corpoHtml + "</div>"
+    + "</div>";
+}
+
+function toggleDiaCard(dataStr) {
+  const el = document.getElementById("dia-card-" + dataStr);
+  if (el) el.classList.toggle("aberto");
+}
+
+function renderizarDiarioCompleto() {
+  const corpo = document.getElementById("diario-completo-corpo");
+  const dias = listarDiasComDados();
+  // Garante que hoje sempre apareça, mesmo sem snapshot fechado ainda.
+  if (!dias.includes(DATA_HOJE)) dias.unshift(DATA_HOJE);
+  dias.sort().reverse();
+
+  if (!dias.length) {
+    corpo.innerHTML = "<div class=\"diario-completo-vazio\">Nenhum dia registrado ainda.</div>";
+    return;
+  }
+
+  const chaveFn = diarioModoAtual === "mes" ? chaveMes : chaveSemana;
+  const grupos = new Map();
+  dias.forEach(d => {
+    const k = chaveFn(d);
+    if (!grupos.has(k)) grupos.set(k, []);
+    grupos.get(k).push(d);
+  });
+
+  let html = "";
+  for (const [chave, diasDoGrupo] of grupos) {
+    html += "<div class=\"diario-completo-grupo-titulo\">"
+      + "<span>" + rotuloGrupo(chave, diarioModoAtual) + "</span>"
+      + "<button class=\"grupo-copiar\" onclick=\"copiarGrupoDiario('" + chave + "', '" + diarioModoAtual + "', event)\" title=\"Copiar relatório desse período\">📋 Copiar</button>"
+      + "</div>";
+    html += diasDoGrupo.map(montarCardDia).join("");
+  }
+  corpo.innerHTML = html;
+}
+
 // ALTERAÇÃO (#4): reconhece referências temporais no texto digitado no chat
 // ("ontem", "anteontem", "dia 05/07", "05/07/2026"...). Retorna a data em
 // formato YYYY-MM-DD, ou null se nenhuma referência foi encontrada (nesse
@@ -846,14 +1066,6 @@ let metaAberta = true;
 let modoAtual  = "auto";
 let reconhecimentoVoz = null;
 let gravandoVoz = false;
-// ALTERAÇÃO (#5): controla qual mês está sendo exibido no modal do diário.
-let mesExibidoDiario = new Date();
-const NOMES_MES = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-const NOMES_DOW = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
-function diaDaSemana(dataStr) {
-  const [ano, mes, dia] = dataStr.split("-").map(Number);
-  return new Date(ano, mes - 1, dia).getDay();
-}
 
 // ALTERAÇÃO (correção do diário): o texto da IA fica guardado aqui em memória,
 // em vez de embutido dentro de um atributo onclick via encodeURIComponent.
@@ -1281,15 +1493,13 @@ function confirmarLancamento(pid, kcal, btnEl) {
   ).join("");
   const optsData = gerarOpcoesData(dataAlvo);
 
-  const html = `<div id="${id}" style="margin-top:.35rem;font-size:.76rem;display:flex;align-items:center;gap:.3rem;flex-wrap:wrap;">
-      Confirmar em:
-      <select id="${id}-sel" style="padding:.2rem .4rem;border-radius:6px;border:1px solid var(--border,#e2e8f0);background:transparent;color:var(--text);font-size:.76rem;">${optsRef}</select>
-      <select id="${id}-data" onchange="atualizarAvisoDataFechada('${id}')" style="padding:.2rem .4rem;border-radius:6px;border:1px solid var(--border,#e2e8f0);background:transparent;color:var(--text);font-size:.76rem;">${optsData}</select>
-      <button onclick="confirmarLancarFinal('${id}', '${pid}', ${kcal})"
-        style="background:var(--verde);color:#fff;border:none;border-radius:6px;padding:.22rem .55rem;cursor:pointer;font-weight:700;font-size:.76rem;">✔ Confirmar</button>
-      <button onclick="document.getElementById('${id}').remove()"
-        style="background:none;border:1px solid var(--border,#e2e8f0);border-radius:6px;padding:.22rem .5rem;cursor:pointer;color:var(--text-muted,#64748b);font-size:.76rem;">✕ Cancelar</button>
-      <span id="${id}-aviso" style="width:100%;color:#d97706;font-size:.72rem;"></span>
+  const html = `<div id="${id}" class="confirmar-lancamento">
+      <span class="confirmar-lancamento-label">Confirmar em:</span>
+      <select id="${id}-sel">${optsRef}</select>
+      <select id="${id}-data" onchange="atualizarAvisoDataFechada('${id}')">${optsData}</select>
+      <button class="btn-confirmar-lanc" onclick="confirmarLancarFinal('${id}', '${pid}', ${kcal})">✔ Confirmar</button>
+      <button class="btn-cancelar-lanc" onclick="document.getElementById('${id}').remove()">✕ Cancelar</button>
+      <span id="${id}-aviso" class="aviso-data-fechada"></span>
     </div>`;
   btnEl.insertAdjacentHTML("afterend", html);
   btnEl.remove();
@@ -1392,158 +1602,6 @@ function calcularStatusParaData(dataStr) {
 }
 function salvarSnapshotParaData(dataStr) {
   salvarSnapshotDia(calcularStatusParaData(dataStr));
-}
-
-// ── Diário completo (#5) ──
-// Modal com navegação por mês, cards expansíveis por dia (mostrando refeições
-// e treinos), edição/exclusão retroativa direto na UI, e exportação de texto
-// do período — tudo reaproveitando as funções genéricas do item 4
-// (listarDiasComDados, carregarRegistrosData, calcularStatusParaData).
-function abrirDiario() {
-  mesExibidoDiario = new Date();
-  document.getElementById("diario-overlay").style.display = "flex";
-  renderDiario();
-}
-function fecharDiario() {
-  document.getElementById("diario-overlay").style.display = "none";
-}
-function mudarMes(delta) {
-  mesExibidoDiario.setMonth(mesExibidoDiario.getMonth() + delta);
-  renderDiario();
-}
-
-function renderDiario() {
-  const ano = mesExibidoDiario.getFullYear();
-  const mes = mesExibidoDiario.getMonth(); // 0-11
-  document.getElementById("diario-mes-label").textContent = NOMES_MES[mes] + " de " + ano;
-
-  const prefixo = ano + "-" + String(mes + 1).padStart(2, "0");
-  const datasDoMes = listarDiasComDados().filter(d => d.startsWith(prefixo)).sort().reverse();
-
-  const box = document.getElementById("diario-lista-dias");
-  if (!datasDoMes.length) {
-    box.innerHTML = "<div class=\"dia-vazio\">Nenhum registro neste mês.</div>";
-    return;
-  }
-  box.innerHTML = datasDoMes.map(d => montarDiaCardHtml(d)).join("");
-}
-
-function montarDiaCardHtml(dataStr) {
-  const status = calcularStatusParaData(dataStr);
-  const dow = NOMES_DOW[diaDaSemana(dataStr)];
-
-  let badgeHtml;
-  if (status.metaEfetiva > 0) {
-    badgeHtml = status.saldoDia >= 0
-      ? "<span class=\"dia-card-badge dia-badge-superavit\">+" + status.saldoDia + " kcal</span>"
-      : "<span class=\"dia-card-badge dia-badge-deficit\">" + status.saldoDia + " kcal</span>";
-  } else {
-    badgeHtml = "<span class=\"dia-card-badge dia-badge-semmeta\">" + status.totalDia + " kcal</span>";
-  }
-
-  const idCorpo = "diacorpo-" + dataStr;
-  return "<div class=\"dia-card\">"
-    + "<div class=\"dia-card-header\" onclick=\"toggleDiaCard('" + idCorpo + "')\">"
-    + "<div><div class=\"dia-card-data\">" + formatarDataBR(dataStr) + (status.fechado ? " 🧾" : "") + "</div>"
-    + "<div class=\"dia-card-dow\">" + dow + "</div></div>"
-    + badgeHtml
-    + "</div>"
-    + "<div class=\"dia-card-corpo\" id=\"" + idCorpo + "\">" + montarCorpoDiaHtml(dataStr) + "</div>"
-    + "</div>";
-}
-
-function toggleDiaCard(id) {
-  const el = document.getElementById(id);
-  if (el) el.classList.toggle("aberto");
-}
-
-function montarCorpoDiaHtml(dataStr) {
-  const registrosDia   = carregarRegistrosData(dataStr);
-  const atividadesDia  = carregarAtividadesData(dataStr);
-  if (!registrosDia.length && !atividadesDia.length) {
-    return "<div class=\"dia-vazio\">Sem itens neste dia.</div>";
-  }
-  let html = "";
-  if (registrosDia.length) {
-    html += registrosDia.map(r =>
-      "<div class=\"dia-item-row\">"
-      + "<span class=\"dia-item-nome\">" + escapeHtml(r.nome) + "</span>"
-      + "<input type=\"number\" class=\"dia-item-kcal-input\" value=\"" + r.kcal + "\""
-      + " onchange=\"editarKcalRegistro('" + dataStr + "', " + r.id + ", this.value)\" /> kcal"
-      + "<button class=\"dia-item-del\" onclick=\"excluirRegistroData('" + dataStr + "', " + r.id + ")\" title=\"Remover\">✕</button>"
-      + "</div>"
-    ).join("");
-  }
-  if (atividadesDia.length) {
-    html += atividadesDia.map(a =>
-      "<div class=\"dia-item-row\">"
-      + "<span class=\"dia-item-nome\">🔥 " + escapeHtml(a.nome) + "</span>"
-      + "<span>+" + a.kcal + " kcal</span>"
-      + "</div>"
-    ).join("");
-  }
-  return html;
-}
-
-// ALTERAÇÃO (#5): editar/excluir aqui também regrava o snapshot do dia (que,
-// por padrão, volta com fechado:false — reabre automaticamente um dia que já
-// estava fechado, sem popup, já que a edição aqui é sempre intencional).
-function editarKcalRegistro(dataStr, id, novoValor) {
-  const kcal = parseInt(novoValor) || 0;
-  const lista = carregarRegistrosData(dataStr);
-  const item = lista.find(r => r.id === id);
-  if (item) item.kcal = kcal;
-  salvarRegistrosData(dataStr, lista);
-  salvarSnapshotParaData(dataStr);
-  if (dataStr === DATA_HOJE) { registros = lista; renderLista(); atualizarTudo(); }
-  renderDiario();
-}
-
-function excluirRegistroData(dataStr, id) {
-  if (!confirm("Remover este item do dia " + formatarDataBR(dataStr) + "?")) return;
-  const lista = carregarRegistrosData(dataStr).filter(r => r.id !== id);
-  salvarRegistrosData(dataStr, lista);
-  salvarSnapshotParaData(dataStr);
-  if (dataStr === DATA_HOJE) { registros = lista; renderLista(); atualizarTudo(); }
-  renderDiario();
-}
-
-// Exportação de período — texto com todos os dias do mês visível no modal,
-// pronto para copiar e enviar a um nutricionista/personal. (Comentários do
-// chat NÃO entram aqui: o histórico de chat não é persistido por data hoje,
-// só existe em memória durante a sessão — ver observação na entrega.)
-function exportarPeriodo() {
-  const ano = mesExibidoDiario.getFullYear();
-  const mes = mesExibidoDiario.getMonth();
-  const prefixo = ano + "-" + String(mes + 1).padStart(2, "0");
-  const datas = listarDiasComDados().filter(d => d.startsWith(prefixo)).sort();
-
-  if (!datas.length) { alert("Nenhum dado neste mês para exportar."); return; }
-
-  const linhas = ["🚦 Diário — Pode, Não Pode?", "📅 Período: " + NOMES_MES[mes] + "/" + ano, ""];
-
-  datas.forEach(dataStr => {
-    const status = calcularStatusParaData(dataStr);
-    const registrosDia  = carregarRegistrosData(dataStr);
-    const atividadesDia = carregarAtividadesData(dataStr);
-    linhas.push("── " + formatarDataBR(dataStr) + (status.fechado ? " (conta fechada)" : "") + " ──");
-    if (status.metaEfetiva > 0) linhas.push("Meta: " + status.metaEfetiva + " kcal");
-    registrosDia.forEach(r => linhas.push("• " + r.nome + " — " + r.kcal + " kcal"));
-    atividadesDia.forEach(a => linhas.push("🔥 " + a.nome + " — +" + a.kcal + " kcal"));
-    linhas.push("Total: " + status.totalDia + " kcal"
-      + (status.metaEfetiva > 0 ? " (saldo " + (status.saldoDia >= 0 ? "+" : "") + status.saldoDia + " kcal)" : ""));
-    linhas.push("");
-  });
-
-  const txt = linhas.join("\n");
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(txt).then(() => {
-      if (typeof showToast === "function") showToast("📋 Relatório do mês copiado!");
-      else alert("Relatório copiado!");
-    }).catch(() => promptFallbackCopy(txt));
-  } else {
-    promptFallbackCopy(txt);
-  }
 }
 
 // ── Registros ──
@@ -1726,12 +1784,8 @@ function obterStatusDoDia(dataStr) {
   catch(e) { return null; }
 }
 
-// ALTERAÇÃO (#6): diaCumpriuMeta agora EXIGE status.fechado — antes um dia
-// parcial (ainda em andamento) podia contar no streak só por ter saldoDia>=0
-// no momento da leitura, o que violava a regra "nunca sobre dia
-// parcial/incompleto". Streak só avança quando a conta é fechada de fato.
 function diaCumpriuMeta(status) {
-  return !!status && status.fechado && status.metaEfetiva > 0 && status.itens > 0 && status.saldoDia >= 0;
+  return !!status && status.metaEfetiva > 0 && status.itens > 0 && status.saldoDia >= 0;
 }
 
 // Conta dias consecutivos ANTERIORES a hoje em que a meta foi cumprida.
@@ -1785,7 +1839,7 @@ function renderGamificacao(status) {
       ? "✅ Conta fechada com <strong>" + status.saldoDia + " kcal</strong> de sobra."
       : "Conta fechada com <strong>" + Math.abs(status.saldoDia) + " kcal</strong> acima da meta.";
   } else if (status.saldoDia > 0) {
-    interpretacao = "✅ Por enquanto sobraram <strong>" + status.saldoDia + " kcal</strong> hoje. Feche a conta (botão acima) quando terminar de comer para contar no seu streak e ver a tendência semanal.";
+    interpretacao = "✅ Por enquanto sobraram <strong>" + status.saldoDia + " kcal</strong> hoje. Feche a conta (botão acima) quando terminar de comer para ver a tendência semanal.";
   } else if (status.saldoDia === 0) {
     interpretacao = "🎯 Você bateu sua meta certinha até agora!";
   } else {
@@ -1793,41 +1847,32 @@ function renderGamificacao(status) {
   }
 
   card.style.display = "";
-
-  // ALTERAÇÃO (#6): saldo médio da semana/mês, calculado só sobre dias com a
-  // conta fechada (reaproveita a mesma função usada no resumo de fechamento).
-  const mediaSemana = calcularMediaSaldoFechados(7);
-  const mediaMes    = calcularMediaSaldoFechados(30);
-  const statSemana = mediaSemana !== null
-    ? "<div><div class=\"gami-stat-num\" style=\"color:" + (mediaSemana >= 0 ? "var(--verde)" : "var(--verm)") + ";\">"
-      + (mediaSemana >= 0 ? "+" : "") + Math.round(mediaSemana) + "</div><div class=\"gami-stat-label\">média kcal/dia (7d)</div></div>"
-    : "";
-  const statMes = mediaMes !== null
-    ? "<div><div class=\"gami-stat-num\" style=\"color:" + (mediaMes >= 0 ? "var(--verde)" : "var(--verm)") + ";\">"
-      + (mediaMes >= 0 ? "+" : "") + Math.round(mediaMes) + "</div><div class=\"gami-stat-label\">média kcal/dia (30d)</div></div>"
-    : "";
-
   corpo.innerHTML =
     "<div class=\"gami-stats\">"
     + "<div><div class=\"gami-stat-num\" style=\"color:var(--verde);\">🔥 " + streakComHoje + "</div><div class=\"gami-stat-label\">dias seguidos na meta</div></div>"
     + "<div><div class=\"gami-stat-num\">🏆 " + recorde + "</div><div class=\"gami-stat-label\">recorde pessoal</div></div>"
     + (medalha ? "<div><div class=\"gami-stat-num\">" + medalha + "</div><div class=\"gami-stat-label\">conquista</div></div>" : "")
-    + statSemana + statMes
     + "</div>"
     + "<div class=\"gami-interpretacao\">" + interpretacao + "</div>";
 }
 
 // ── Diário detalhado, compartilhar e copiar (#6 + correção do diário) ──
-// Monta um relatório completo — cada refeição com seus itens e cada treino —
-// para que quem receber (personal, nutricionista) veja exatamente o que foi
-// consumido/gasto, não só o total do dia.
-function montarDiarioDetalhado() {
-  const status = calcularStatusDia();
-  const atividades = carregarAtividadesQC();
+// Monta um relatório completo de UM dia — cada refeição com seus itens e
+// cada treino — para que quem receber (personal, nutricionista) veja
+// exatamente o que foi consumido/gasto, não só o total do dia.
+// ALTERAÇÃO (correção #2): agora aceita `dataStr` opcional. Sem argumento,
+// mantém o comportamento de sempre (hoje, usando os arrays em memória —
+// necessário pro WhatsApp/Instagram continuarem refletindo edições ainda
+// não salvas). Com uma data histórica, lê tudo do localStorage daquele dia.
+function montarDiarioDetalhado(dataStr) {
+  const ehHoje = !dataStr || dataStr === DATA_HOJE;
+  const status = ehHoje ? calcularStatusDia() : (obterStatusDoDia(dataStr) || calcularStatusParaData(dataStr));
+  const registrosDoDia = ehHoje ? registros : carregarRegistrosData(dataStr);
+  const atividades = ehHoje ? carregarAtividadesQC() : carregarAtividadesData(dataStr);
   const linhas = [];
 
   linhas.push("🚦 Meu diário — Pode, Não Pode?");
-  linhas.push("📅 " + new Date().toLocaleDateString("pt-BR"));
+  linhas.push("📅 " + formatarDataBR(status.data || dataStr || DATA_HOJE));
 
   if (status.metaEfetiva > 0) {
     linhas.push("");
@@ -1835,11 +1880,11 @@ function montarDiarioDetalhado() {
       + (status.queimado > 0 ? " (inclui +" + status.queimado + " kcal de treino)" : ""));
   }
 
-  if (registros.length) {
+  if (registrosDoDia.length) {
     linhas.push("");
     linhas.push("🍽️ Refeições:");
     Object.keys(REF_CFG).forEach(refKey => {
-      const itens = registros.filter(r => r.refeicao === refKey);
+      const itens = registrosDoDia.filter(r => r.refeicao === refKey);
       if (!itens.length) return;
       const totalRef = itens.reduce((s,r) => s + r.kcal, 0);
       linhas.push("• " + REF_CFG[refKey].l + " (" + totalRef + " kcal):");
@@ -1861,10 +1906,61 @@ function montarDiarioDetalhado() {
       : "⚠️ Saldo: " + status.saldoDia + " kcal (acima da meta)");
   }
 
-  const streak = calcularSequenciaAnterior() + (diaCumpriuMeta(status) ? 1 : 0);
-  linhas.push("🔥 Sequência: " + streak + " dia(s) na meta");
+  if (ehHoje) {
+    const streak = calcularSequenciaAnterior() + (diaCumpriuMeta(status) ? 1 : 0);
+    linhas.push("🔥 Sequência: " + streak + " dia(s) na meta");
+  }
   linhas.push("");
   linhas.push("Acompanhe o seu: " + (typeof SITE_URL !== "undefined" ? SITE_URL : "https://www.saudemundo.com.br") + "/pode-nao-pode.html");
+
+  return linhas.join("\n");
+}
+
+// Relatório de VÁRIOS dias (semana ou mês) — pensado pra compartilhar com
+// médico/nutricionista/personal: um resumo do período + o detalhe dia a dia,
+// só dos dias que realmente têm dado (dias vazios do período são pulados).
+function montarRelatorioPeriodo(diasArr, rotuloPeriodo) {
+  const dias = diasArr.slice().sort(); // ordem cronológica no relatório
+  const linhas = [];
+  linhas.push("🚦 Diário — Pode, Não Pode?");
+  linhas.push("📆 Período: " + rotuloPeriodo);
+  linhas.push("");
+
+  let somaSaldoFechados = 0, qtdFechados = 0, totalGeral = 0, diasComDado = 0;
+
+  dias.forEach(dataStr => {
+    const registrosDia = carregarRegistrosData(dataStr);
+    const atividadesDia = carregarAtividadesData(dataStr);
+    if (!registrosDia.length && !atividadesDia.length) return; // dia vazio: não polui o relatório
+    diasComDado++;
+
+    const status = obterStatusDoDia(dataStr);
+    const totalDia = status ? status.totalDia : registrosDia.reduce((s,r)=>s+r.kcal,0);
+    const saldoDia = status ? status.saldoDia : null;
+    const fechado = !!(status && status.fechado);
+    totalGeral += totalDia;
+    if (fechado && saldoDia !== null) { somaSaldoFechados += saldoDia; qtdFechados++; }
+
+    linhas.push("📅 " + formatarDataBR(dataStr) + (fechado ? " (fechado)" : " (parcial)") + ":");
+    linhas.push("   Total: " + totalDia + " kcal"
+      + (saldoDia !== null ? " · saldo " + (saldoDia >= 0 ? "+" : "") + saldoDia + " kcal" : ""));
+  });
+
+  if (!diasComDado) {
+    linhas.push("Nenhum dado registrado nesse período.");
+    return linhas.join("\n");
+  }
+
+  linhas.push("");
+  linhas.push("📊 Resumo do período:");
+  linhas.push("• Dias com registro: " + diasComDado);
+  linhas.push("• Consumo total: " + totalGeral + " kcal (média " + Math.round(totalGeral/diasComDado) + " kcal/dia)");
+  if (qtdFechados > 0) {
+    const mediaSaldo = somaSaldoFechados / qtdFechados;
+    linhas.push("• Saldo médio nos dias fechados: " + (mediaSaldo >= 0 ? "+" : "") + Math.round(mediaSaldo) + " kcal/dia");
+  }
+  linhas.push("");
+  linhas.push("Acompanhe: " + (typeof SITE_URL !== "undefined" ? SITE_URL : "https://www.saudemundo.com.br") + "/pode-nao-pode.html");
 
   return linhas.join("\n");
 }
@@ -1908,21 +2004,39 @@ function compartilharInstagram() {
   }
 }
 
-function copiarDiario() {
-  const status = calcularStatusDia();
-  if (status.itens === 0 && status.queimado === 0) {
-    alert("Registre pelo menos uma refeição ou treino antes de copiar!");
-    return;
-  }
-  const txt = montarDiarioDetalhado();
+// Helper genérico de cópia (usado pelas novas ações do diário completo).
+function copiarTexto(txt, msgSucesso) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(txt).then(() => {
-      if (typeof showToast === "function") showToast("📋 Diário copiado!");
-      else alert("Diário copiado!");
+      if (typeof showToast === "function") showToast(msgSucesso);
+      else alert(msgSucesso);
     }).catch(() => promptFallbackCopy(txt));
   } else {
     promptFallbackCopy(txt);
   }
+}
+
+// Copia o relatório de UM dia específico — chamado pelo botão "📋" de cada
+// card do diário completo (não precisa abrir o dia, funciona parcial ou fechado).
+function copiarDia(dataStr, ev) {
+  if (ev) ev.stopPropagation(); // não deixa o clique também expandir/recolher o card
+  const registrosDia = carregarRegistrosData(dataStr);
+  const atividadesDia = carregarAtividadesData(dataStr);
+  if (!registrosDia.length && !atividadesDia.length) {
+    alert("Esse dia não tem nada registrado pra copiar.");
+    return;
+  }
+  copiarTexto(montarDiarioDetalhado(dataStr), "📋 Diário de " + formatarDataBR(dataStr) + " copiado!");
+}
+
+// Copia o relatório do período (semana ou mês) atualmente aberto no diário
+// completo — chamado pelo botão "📋" de cada título de grupo.
+function copiarGrupoDiario(chave, modo, ev) {
+  if (ev) ev.stopPropagation();
+  const chaveFn = modo === "mes" ? chaveMes : chaveSemana;
+  const dias = listarDiasComDados().filter(d => chaveFn(d) === chave);
+  if (!dias.includes(DATA_HOJE) && chaveFn(DATA_HOJE) === chave) dias.push(DATA_HOJE);
+  copiarTexto(montarRelatorioPeriodo(dias, rotuloGrupo(chave, modo)), "📋 Relatório de " + rotuloGrupo(chave, modo) + " copiado!");
 }
 
 function promptFallbackCopy(txt) {
